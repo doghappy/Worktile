@@ -1,16 +1,13 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.Models.Results;
+using Worktile.WindowsUI.Views.Start;
 
 namespace Worktile.WindowsUI.ViewModels.Start
 {
@@ -54,8 +51,8 @@ namespace Worktile.WindowsUI.ViewModels.Start
                     if (data.Data)
                     {
                         Configuration.BaseAddress = $"https://{Domain}.worktile.com";
-                        var fe = Window.Current.Content as FrameworkElement;
-                        fe.GetChildren<Frame>().FirstOrDefault().Navigate(typeof())
+                        var frame = Window.Current.Content as Frame;
+                        frame.Navigate(typeof(UserSignInPage));
                     }
                     else
                     {

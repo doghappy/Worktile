@@ -7,6 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <SolidColorBrush x:Key="PrimaryColor" Color="#22d7bb"/>
+            <SolidColorBrush x:Key="DangerColor" Color="#ff5b57"/>
 
             <Style TargetType="Button" x:Key="PrimaryButton">
                 <Setter Property="Background" Value="{ThemeResource PrimaryColor}"/>

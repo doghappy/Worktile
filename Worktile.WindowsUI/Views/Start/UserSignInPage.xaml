@@ -5,10 +5,63 @@
     xmlns:local="using:Worktile.WindowsUI.Views.Start"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="/Assets/Images/Start/signup-bg.png" Stretch="UniformToFill"/>
+            </Grid.Background>
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image Source="{x:Bind ViewModel.Config.Box.LogoUrl, Mode=OneWay}"
+               Height="70"
+               Margin="0,40,0,60"/>
+            <Grid Grid.Row="1" Width="500"
+              Padding="20"
+              VerticalAlignment="Top"
+              Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Uid="Start-UserSignIn-SignInTextBlock"
+                               FontSize="22"
+                               Foreground="#4d5250"/>
+                    <TextBlock Foreground="{ThemeResource DangerColor}"
+                               FontSize="22"
+                               Text="{x:Bind}"/>
+                </StackPanel>
+                <Rectangle Grid.Row="1" Height="1" Fill="#eaeaea" Margin="0 16"/>
+                <TextBox x:Uid="Start-UserSignIn-AccountTextBox"
+                         Grid.Row="2"
+                         Margin="0 0 0 16"
+                         Text="{x:Bind ViewModel.Account, Mode=TwoWay}"/>
+                <PasswordBox x:Uid="Start-UserSignIn-PasswordBox"
+                             Grid.Row="3"
+                             Margin="0 0 0 16"
+                             Password="{x:Bind ViewModel.Password, Mode=TwoWay}"/>
+                <Button Grid.Row="4"
+                        Margin="0 0 0 16"
+                        x:Uid="Start-UserSignIn-SignInButton"
+                        Style="{ThemeResource PrimaryButton}"
+                        Click="SignIn_Click"
+                        HorizontalAlignment="Stretch"/>
+                <!--<StackPanel Orientation="Horizontal" Grid.Row="4">
+                    <TextBlock x:Uid="Start-SignIn-SignUpLabel" VerticalAlignment="Center"/>
+                    <HyperlinkButton x:Uid="Start-SignIn-SignUpButton" Click="HyperlinkButton_Click"/>
+                </StackPanel>-->
+            </Grid>
+        </Grid>
+        <controls:InAppNotification Margin="0"/>
     </Grid>
 </Page>

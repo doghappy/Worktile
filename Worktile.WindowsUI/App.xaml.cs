@@ -54,6 +54,7 @@ namespace Worktile.WindowsUI
             {
                 notification.Show(e.Message, 0);
             }
+            e.Handled = true;
         }
 
         /// <summary>

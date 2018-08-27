@@ -117,19 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Start-SignIn-DomainTextBox.PlaceholderText" xml:space="preserve">
+  <data name="Start-EnterpriseSignIn-DomainTextBox.PlaceholderText" xml:space="preserve">
     <value>Enter the domain of the enterprise</value>
   </data>
-  <data name="Start-SignIn-NextButton.Content" xml:space="preserve">
+  <data name="Start-EnterpriseSignIn-NextButton.Content" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="Start-SignIn-SignInTextBlock.Text" xml:space="preserve">
+  <data name="Start-EnterpriseSignIn-SignInTextBlock.Text" xml:space="preserve">
     <value>Sign In</value>
   </data>
-  <data name="Start-SignIn-SignUpButton.Content" xml:space="preserve">
+  <data name="Start-EnterpriseSignIn-SignUpButton.Content" xml:space="preserve">
     <value>Sign up</value>
   </data>
-  <data name="Start-SignIn-SignUpLabel.Text" xml:space="preserve">
+  <data name="Start-EnterpriseSignIn-SignUpLabel.Text" xml:space="preserve">
     <value>No enterprise has been created yet?</value>
+  </data>
+  <data name="Start-UserSignIn-AccountTextBox.Text" xml:space="preserve">
+    <value>Mobile/UserName/Email</value>
+  </data>
+  <data name="Start-UserSignIn-PasswordBox.PlaceholderText" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+  <data name="Start-UserSignIn-SignInButton.Content" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="Start-UserSignIn-SignInTextBlock.Text" xml:space="preserve">
+    <value>Sign In</value>
   </data>
 </root>
