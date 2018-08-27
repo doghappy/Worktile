@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.Views;
 
 namespace Worktile.WindowsUI
@@ -29,8 +31,29 @@ namespace Worktile.WindowsUI
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
+            UnhandledException += App_UnhandledException;
+        }
+
+        private async void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            var fe = Window.Current.Content as FrameworkElement;
+            var notification = fe.GetChildren<InAppNotification>().FirstOrDefault();
+            if (notification == null)
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "错误",
+                    Content = e.Message,
+                    PrimaryButtonText = "确定"
+                };
+                await dialog.ShowAsync();
+            }
+            else
+            {
+                notification.Show(e.Message, 0);
+            }
         }
 
         /// <summary>
@@ -67,7 +90,8 @@ namespace Worktile.WindowsUI
                     // 当导航堆栈尚未还原时，导航到第一页，
                     // 并通过将所需信息作为导航参数传入来配置
                     // 参数
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    //rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(Views.Start.EnterpriseSignInPage), e.Arguments);
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
