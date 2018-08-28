@@ -48,7 +48,7 @@ namespace Worktile.WindowsUI.Views.Start
 
         private async void SignIn_Click(object sender, RoutedEventArgs e)
         {
-            await ViewModel.SignInAsync();
+            await ViewModel.SignInAsync(false);
         }
 
         private async void ForgotPassword_Click(object sender, RoutedEventArgs e)

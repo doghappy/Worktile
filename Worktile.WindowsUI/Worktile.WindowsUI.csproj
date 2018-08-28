@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Configuration.cs" />
+    <Compile Include="Common\HashEncryptor.cs" />
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Extensions\BoolConverter.cs" />
     <Compile Include="Models\Results\DataResult.cs" />

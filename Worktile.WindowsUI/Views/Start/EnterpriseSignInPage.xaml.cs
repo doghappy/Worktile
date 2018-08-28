@@ -33,6 +33,7 @@ namespace Worktile.WindowsUI.Views.Start
         {
             base.OnNavigatedTo(e);
             ViewModel = new EnterpriseSignInViewModel();
+            ViewModel.Initialize();
         }
 
         private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -42,7 +43,7 @@ namespace Worktile.WindowsUI.Views.Start
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            await ViewModel.VerifyDomainAsync();
+            await ViewModel.VerifyDomainAsync(false);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.Security.Credentials;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.WindowsUI.Common;
@@ -45,7 +46,17 @@ namespace Worktile.WindowsUI.ViewModels.Start
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public async Task VerifyDomainAsync()
+        public void Initialize()
+        {
+            var vault = new PasswordVault();
+            if (vault.RetrieveAll().Any(v => v.Resource == Configuration.DomainVaultResource))
+            {
+                var crendential = vault.FindAllByResource(Configuration.DomainVaultResource).FirstOrDefault();
+                Domain = crendential.UserName;
+            }
+        }
+
+        public async Task VerifyDomainAsync(bool isAuto)
         {
             if (string.IsNullOrWhiteSpace(Domain))
             {
@@ -63,17 +74,36 @@ namespace Worktile.WindowsUI.ViewModels.Start
                     if (data.Data)
                     {
                         Configuration.BaseAddress = $"https://{Domain}.worktile.com";
-                        var frame = Window.Current.Content as Frame;
-                        frame.Navigate(typeof(UserSignInPage));
+                        if (!isAuto)
+                        {
+                            var frame = Window.Current.Content as Frame;
+                            frame.Navigate(typeof(UserSignInPage));
+                        }
                     }
                     else
                     {
-                        ShowNotification("你输入的企业域名不存在。", 5000);
+                        if (isAuto)
+                        {
+                            var frame = Window.Current.Content as Frame;
+                            frame.Navigate(typeof(EnterpriseSignInPage));
+                        }
+                        else
+                        {
+                            ShowNotification("你输入的企业域名不存在。", 5000);
+                        }
                     }
                 }
                 else
                 {
-                    await HandleErrorStatusCodeAsync(resMsg);
+                    if (isAuto)
+                    {
+                        var frame = Window.Current.Content as Frame;
+                        frame.Navigate(typeof(EnterpriseSignInPage));
+                    }
+                    else
+                    {
+                        await HandleErrorStatusCodeAsync(resMsg);
+                    }
                 }
                 IsActive = false;
             }

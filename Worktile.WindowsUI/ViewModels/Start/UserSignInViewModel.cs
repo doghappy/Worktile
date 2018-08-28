@@ -8,17 +8,27 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Security.Credentials;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.Models.Results;
 using Worktile.WindowsUI.Models.Start;
+using Worktile.WindowsUI.Views;
+using Worktile.WindowsUI.Views.Start;
 
 namespace Worktile.WindowsUI.ViewModels.Start
 {
     public class UserSignInViewModel : ViewModel, INotifyPropertyChanged
     {
+        public UserSignInViewModel()
+        {
+            vault = new PasswordVault();
+        }
+
         public new event PropertyChangedEventHandler PropertyChanged;
+
+        readonly PasswordVault vault;
 
         private string account;
         public string Account
@@ -128,16 +138,23 @@ namespace Worktile.WindowsUI.ViewModels.Start
         {
             await GetTeamConfigAsync();
             await GetTeamInfoAsync();
+            if (vault.RetrieveAll().Any(v => v.Resource == Configuration.UserVaultResource))
+            {
+                var crendential = vault.FindAllByResource(Configuration.UserVaultResource).FirstOrDefault();
+                crendential.RetrievePassword();
+                Account = crendential.UserName;
+                Password = crendential.Password;
+            }
         }
 
-        public async Task SignInAsync()
+        public async Task SignInAsync(bool isAuto)
         {
             string url = $"{Configuration.BaseAddress}/api/user/signin";
             var body = new
             {
                 locale = TeamLite.Locale,
                 name = Account,
-                password = Password,
+                password = HashEncryptor.ComputeMd5(Password),
                 team_id = TeamLite.Id
             };
             string json = JsonConvert.SerializeObject(body);
@@ -148,16 +165,58 @@ namespace Worktile.WindowsUI.ViewModels.Start
                 var baseResult = await ReadHttpResponseMessageAsync<BaseResult>(resMsg);
                 if (baseResult.Code == 200)
                 {
-
+                    await GetTeamInfoAsync();
+                    Configuration.IsAuthorized = true;
+                    if (!isAuto)
+                    {
+                        var frame = Window.Current.Content as Frame;
+                        frame.Navigate(typeof(MainPage));
+                        if (vault.RetrieveAll().Any(v => v.Resource == Configuration.UserVaultResource))
+                        {
+                            var crendentialList = vault.FindAllByResource(Configuration.UserVaultResource);
+                            foreach (var item in crendentialList)
+                            {
+                                vault.Remove(item);
+                            }
+                        }
+                        vault.Add(new PasswordCredential
+                        {
+                            Resource = Configuration.UserVaultResource,
+                            UserName = Account,
+                            Password = Password
+                        });
+                        vault.Add(new PasswordCredential
+                        {
+                            Resource = Configuration.DomainVaultResource,
+                            UserName = Configuration.TeamLite.Domain,
+                            Password = "a"
+                        });
+                    }
                 }
                 else
                 {
-                    ShowNotification("用户名或密码错误", 5000);
+                    if (isAuto)
+                    {
+                        var frame = Window.Current.Content as Frame;
+                        frame.Navigate(typeof(UserSignInPage));
+                    }
+                    else
+                    {
+                        ShowNotification("用户名或密码错误", 5000);
+                    }
                 }
             }
             else
             {
-                await HandleErrorStatusCodeAsync(resMsg);
+                if (isAuto)
+                {
+                    var frame = Window.Current.Content as Frame;
+                    frame.Navigate(typeof(UserSignInPage));
+                }
+                else
+                {
+                    await HandleErrorStatusCodeAsync(resMsg);
+                }
             }
         }
     }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Worktile.WindowsUI.Models.Start;
+﻿using Worktile.WindowsUI.Models.Start;
 
 namespace Worktile.WindowsUI.Common
 {
@@ -14,9 +9,12 @@ namespace Worktile.WindowsUI.Common
             BaseAddress = "https://worktile.com";
         }
 
-        public static string BaseAddress { get; set; }
+        public const string UserVaultResource = "User";
+        public const string DomainVaultResource = "Domain";
 
+        public static string BaseAddress { get; set; }
         public static TeamConfig TeamConfig { get; set; }
         public static TeamLite TeamLite { get; set; }
+        public static bool IsAuthorized { get; set; }
     }
 }
