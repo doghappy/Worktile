@@ -97,9 +97,13 @@
     </Compile>
     <Compile Include="Common\Configuration.cs" />
     <Compile Include="Common\UiExtension.cs" />
+    <Compile Include="Extensions\BoolConverter.cs" />
     <Compile Include="Models\Results\DataResult.cs" />
-    <Compile Include="Models\Start\Config.cs" />
+    <Compile Include="Models\Results\BaseResult.cs" />
+    <Compile Include="Models\Start\ConfigInfo.cs" />
+    <Compile Include="Models\Start\MeInfo.cs" />
     <Compile Include="Models\Start\PricingCheckPoint.cs" />
+    <Compile Include="Models\Start\TeamConfig.cs" />
     <Compile Include="Models\Start\TeamLite.cs" />
     <Compile Include="Models\Start\UrlBox.cs" />
     <Compile Include="ViewModels\Start\UserSignInViewModel.cs" />

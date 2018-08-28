@@ -1,6 +1,6 @@
 ﻿namespace Worktile.WindowsUI.Models.Start
 {
-    public class Config
+    public class ConfigInfo
     {
         public string Domain { get; set; }
         public string Version { get; set; }

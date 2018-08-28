@@ -1,8 +1,7 @@
 ﻿namespace Worktile.WindowsUI.Models.Results
 {
-    public class DataResult<T>
+    public class DataResult<T> : BaseResult
     {
-        public int Code { get; set; }
         public T Data { get; set; }
     }
 }

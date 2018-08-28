@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -13,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.ViewModels.Start;
 
 namespace Worktile.WindowsUI.Views.Start
@@ -44,9 +46,15 @@ namespace Worktile.WindowsUI.Views.Start
             await ViewModel.InitializeAsync();
         }
 
-        private void SignIn_Click(object sender, RoutedEventArgs e)
+        private async void SignIn_Click(object sender, RoutedEventArgs e)
         {
+            await ViewModel.SignInAsync();
+        }
 
+        private async void ForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+            string url = Configuration.BaseAddress + "/forgot";
+            await Launcher.LaunchUriAsync(new Uri(url));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Worktile.WindowsUI.Common
 
         public static string BaseAddress { get; set; }
 
-        public static Config TeamConfig { get; set; }
+        public static TeamConfig TeamConfig { get; set; }
         public static TeamLite TeamLite { get; set; }
     }
 }

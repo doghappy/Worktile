@@ -4,6 +4,9 @@ namespace Worktile.WindowsUI.Models.Start
 {
     public class TeamLite
     {
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string Domain { get; set; }

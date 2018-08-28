@@ -22,7 +22,7 @@ namespace Worktile.WindowsUI.ViewModels
         public ViewModel()
         {
             //IsAuthorized = Configuration.IsAuthorized;
-            
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -89,23 +89,24 @@ namespace Worktile.WindowsUI.ViewModels
             }
         }
 
-        protected virtual InAppNotification GetNotification()
-        {
-            var fe = Window.Current.Content as FrameworkElement;
-            return fe.GetChild<InAppNotification>("MainNotification");
-        }
+        //protected virtual InAppNotification GetNotification()
+        //{
+        //    var fe = Window.Current.Content as FrameworkElement;
+        //    return fe.GetChild<InAppNotification>("MainNotification");
+        //}
 
-        protected async virtual Task<DataResult<bool>> ReadHttpResponseMessageAsync(HttpResponseMessage resMsg)
+        protected async virtual Task<T> ReadHttpResponseMessageAsync<T>(HttpResponseMessage resMsg)
         {
             string json = await resMsg.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<DataResult<bool>>(json);
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
         protected async virtual Task OnDefaultAsync(HttpResponseMessage resMsg)
         {
-            var notification = GetNotification();
-            var result = await ReadHttpResponseMessageAsync(resMsg);
-            notification.Show("not implement", 4000);
+            //var notification = GetNotification();
+            var result = await ReadHttpResponseMessageAsync<BaseResult>(resMsg);
+            //notification.Show("error: code is " + result.Code, 4000);
+            ShowNotification("error: code is " + result.Code, 4000);
         }
 
         protected async virtual Task OnUnauthorizedAsync(HttpResponseMessage resMsg)

@@ -29,6 +29,17 @@ namespace Worktile.WindowsUI.ViewModels.Start
             }
         }
 
+        private bool isActive;
+        public bool IsActive
+        {
+            get => isActive;
+            set
+            {
+                isActive = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+            }
+        }
+
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -42,6 +53,7 @@ namespace Worktile.WindowsUI.ViewModels.Start
             }
             else
             {
+                IsActive = true;
                 string url = $"{Configuration.BaseAddress}/api/team/domain/check?domain={Domain}&absolute=true";
                 var resMsg = await HttpClient.GetAsync(url);
                 if (resMsg.IsSuccessStatusCode)
@@ -63,6 +75,7 @@ namespace Worktile.WindowsUI.ViewModels.Start
                 {
                     await HandleErrorStatusCodeAsync(resMsg);
                 }
+                IsActive = false;
             }
         }
     }

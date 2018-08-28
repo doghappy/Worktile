@@ -132,8 +132,11 @@
   <data name="Start-EnterpriseSignIn-SignUpLabel.Text" xml:space="preserve">
     <value>No enterprise has been created yet?</value>
   </data>
-  <data name="Start-UserSignIn-AccountTextBox.Text" xml:space="preserve">
+  <data name="Start-UserSignIn-AccountTextBox.PlaceholderText" xml:space="preserve">
     <value>Mobile/UserName/Email</value>
+  </data>
+  <data name="Start-UserSignIn-ForgotPasswordLink.Content" xml:space="preserve">
+    <value>Forgot password?</value>
   </data>
   <data name="Start-UserSignIn-PasswordBox.PlaceholderText" xml:space="preserve">
     <value>Enter password</value>
