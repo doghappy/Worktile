@@ -127,6 +127,7 @@
     </AppxManifest>
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
+    <Content Include="Assets\Fonts\iconfont.ttf" />
     <None Include="Worktile.WindowsUI_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

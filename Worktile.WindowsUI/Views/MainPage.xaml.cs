@@ -21,5 +21,20 @@ namespace Worktile.WindowsUI.Views
         {
             InitializeComponent();
         }
+
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
+
+        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+
+        }
+
+        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+
+        }
     }
 }

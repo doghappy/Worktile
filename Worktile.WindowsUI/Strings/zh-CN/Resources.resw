@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Main-Nav-App.Content" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="Main-Nav-Me.Content" xml:space="preserve">
+    <value>我</value>
+  </data>
+  <data name="Main-Nav-Message.Content" xml:space="preserve">
+    <value>消息</value>
+  </data>
+  <data name="Main-Nav-Project.Content" xml:space="preserve">
+    <value>项目</value>
+  </data>
   <data name="Start-EnterpriseSignIn-DomainTextBox.PlaceholderText" xml:space="preserve">
     <value>请输入企业域名</value>
   </data>

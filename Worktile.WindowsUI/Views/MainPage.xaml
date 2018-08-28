@@ -5,10 +5,54 @@
     xmlns:local="using:Worktile.WindowsUI.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <NavigationView x:Name="NavView" 
+                        IsBackButtonVisible="Visible"
+                        BackRequested="NavView_BackRequested"
+                        Header="{Binding Path=Content.NavTitile, ElementName=ContentFrame}"
+                        AlwaysShowHeader="False">
 
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox x:Name="SearchBox"
+                                QueryIcon="Find"
+                                QuerySubmitted="SearchBox_QuerySubmitted"/>
+            </NavigationView.AutoSuggestBox>
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="message" x:Uid="Main-Nav-Message">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe618;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Tag="project" x:Uid="Main-Nav-Project">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe70d;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Tag="app" x:Uid="Main-Nav-App">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe61b;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Tag="me" x:Uid="Main-Nav-Me">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe642;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame" Navigated="ContentFrame_Navigated">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>
+        <controls:InAppNotification x:Name="MainNotification" Margin="0"/>
     </Grid>
 </Page>
