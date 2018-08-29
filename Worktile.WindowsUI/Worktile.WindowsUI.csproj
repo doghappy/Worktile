@@ -114,6 +114,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Project\ProjectPage.xaml.cs">
+      <DependentUpon>ProjectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Start\EnterpriseSignInPage.xaml.cs">
       <DependentUpon>EnterpriseSignInPage.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Project\ProjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Start\EnterpriseSignInPage.xaml">
       <SubType>Designer</SubType>
