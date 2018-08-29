@@ -5,10 +5,49 @@
     xmlns:local="using:Worktile.WindowsUI.Views.Project"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBlock" x:Key="ProjectItem">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="#333"/>
+                <Setter Property="Margin" Value="10,0,0,0"/>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+
     <Grid>
-        <TextBlock Text="Project"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Grid Margin="0 10 0 0">
+                <!--<TextBlock x:Uid="Project-Left-ProjectTextBlock" Foreground="#333" FontSize="16" VerticalAlignment="Center"/>-->
+                <HyperlinkButton HorizontalAlignment="Right" Padding="0" VerticalAlignment="Center">
+                    <HyperlinkButton.Content>
+                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe600;"/>
+                    </HyperlinkButton.Content>
+                </HyperlinkButton>
+            </Grid>
+            <ListView>
+                <ListView.Header>
+                    <TextBlock x:Uid="Project-Left-DashboardTextBlock" Style="{ThemeResource ProjectItem}"/>
+                </ListView.Header>
+                <ListViewItem>1</ListViewItem>
+            </ListView>
+            <ListView>
+                <ListView.Header>
+                    <TextBlock x:Uid="Project-Left-ProjectTextBlock" Style="{ThemeResource ProjectItem}"/>
+                </ListView.Header>
+                <ListViewItem>1</ListViewItem>
+                <ListViewItem>1</ListViewItem>
+                <ListViewItem>1</ListViewItem>
+                <ListViewItem>1</ListViewItem>
+            </ListView>
+        </StackPanel>
     </Grid>
 </Page>

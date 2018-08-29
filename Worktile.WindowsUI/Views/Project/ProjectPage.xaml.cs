@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.WindowsUI.Common;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -25,6 +26,22 @@ namespace Worktile.WindowsUI.Views.Project
         public ProjectPage()
         {
             this.InitializeComponent();
+        }
+
+        private void MasterDetailsView_Loaded(object sender, RoutedEventArgs e)
+        {
+            var workNode = new TreeViewNode
+            {
+                Content = "work"
+            };
+
+            var projectNode = new TreeViewNode
+            {
+                Content = "project"
+            };
+            var tree = Frame.GetChild<TreeView>("Tree");
+            tree.RootNodes.Add(workNode);
+            tree.RootNodes.Add(projectNode);
         }
     }
 }

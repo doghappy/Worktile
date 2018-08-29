@@ -129,6 +129,12 @@
   <data name="Main-Nav-Project.Content" xml:space="preserve">
     <value>项目</value>
   </data>
+  <data name="Project-Left-DashboardTextBlock.Text" xml:space="preserve">
+    <value>工作</value>
+  </data>
+  <data name="Project-Left-ProjectTextBlock.Text" xml:space="preserve">
+    <value>项目</value>
+  </data>
   <data name="Start-EnterpriseSignIn-DomainTextBox.PlaceholderText" xml:space="preserve">
     <value>请输入企业域名</value>
   </data>
