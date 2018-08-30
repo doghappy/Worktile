@@ -26,22 +26,22 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="message" x:Uid="Main-Nav-Message">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe618;"/>
+                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe618;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Tag="project" x:Uid="Main-Nav-Project">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe70d;"/>
+                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe70d;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Tag="app" x:Uid="Main-Nav-App">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe61b;"/>
+                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe61b;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem Tag="me" x:Uid="Main-Nav-Me">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="/Assets/Fonts/iconfont.ttf#wtf" Glyph="&#xe642;"/>
+                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe642;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

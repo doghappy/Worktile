@@ -38,7 +38,7 @@
                     <TextBlock FontSize="22"
                                x:Uid="Start-UserSignIn-SignInTextBlock"
                                Foreground="#4d5250"/>
-                    <TextBlock Foreground="{ThemeResource DangerColor}"
+                    <TextBlock Foreground="{ThemeResource Danger}"
                                FontSize="22"
                                Text="{x:Bind ViewModel.TeamLite.Name, Mode=OneWay}"/>
                 </StackPanel>

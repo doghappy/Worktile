@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,35 +14,36 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.WindowsUI.Common;
-
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
+using Worktile.WindowsUI.ViewModels.Project;
 
 namespace Worktile.WindowsUI.Views.Project
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
-    public sealed partial class ProjectPage : Page
+    public sealed partial class ProjectPage : Page, INotifyPropertyChanged
     {
         public ProjectPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
-        private void MasterDetailsView_Loaded(object sender, RoutedEventArgs e)
-        {
-            var workNode = new TreeViewNode
-            {
-                Content = "work"
-            };
+        public event PropertyChangedEventHandler PropertyChanged;
 
-            var projectNode = new TreeViewNode
+        private ProjectViewModel viewModel;
+        public ProjectViewModel ViewModel
+        {
+            get => viewModel;
+            set
             {
-                Content = "project"
-            };
-            var tree = Frame.GetChild<TreeView>("Tree");
-            tree.RootNodes.Add(workNode);
-            tree.RootNodes.Add(projectNode);
+                viewModel = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewModel)));
+            }
+        }
+
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ViewModel = new ProjectViewModel();
+            await ViewModel.InitializeAsync();
         }
     }
 }

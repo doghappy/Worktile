@@ -6,12 +6,17 @@
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="PrimaryColor" Color="#22d7bb"/>
-            <SolidColorBrush x:Key="DangerColor" Color="#ff5b57"/>
+            <SolidColorBrush x:Key="Primary" Color="#22d7bb"/>
+            <SolidColorBrush x:Key="Danger" Color="#ff5b57"/>
+            <SolidColorBrush x:Key="TextPrimary" Color="#48525c"/>
 
             <Style TargetType="Button" x:Key="PrimaryButton">
-                <Setter Property="Background" Value="{ThemeResource PrimaryColor}"/>
+                <Setter Property="Background" Value="{ThemeResource Primary}"/>
                 <Setter Property="Foreground" Value="White"/>
+            </Style>
+
+            <Style TargetType="FontIcon" x:Key="WtfIcon">
+                <Setter Property="FontFamily" Value="/Assets/Fonts/iconfont.ttf#wtf"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

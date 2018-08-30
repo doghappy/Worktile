@@ -129,11 +129,23 @@
   <data name="Main-Nav-Project.Content" xml:space="preserve">
     <value>Project</value>
   </data>
+  <data name="Project-Left-AdvancedTextBlock.Text" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="Project-Left-ConfigurationCenterTextBlock.Text" xml:space="preserve">
+    <value>Configuration center</value>
+  </data>
   <data name="Project-Left-DashboardTextBlock.Text" xml:space="preserve">
     <value>Dashboard</value>
   </data>
+  <data name="Project-Left-FavoriteTextBlock.Text" xml:space="preserve">
+    <value>Stick</value>
+  </data>
   <data name="Project-Left-ProjectTextBlock.Text" xml:space="preserve">
     <value>Project</value>
+  </data>
+  <data name="Project-Left-RecycleBinTextBlock.Text" xml:space="preserve">
+    <value>Recycle bin</value>
   </data>
   <data name="Start-EnterpriseSignIn-DomainTextBox.PlaceholderText" xml:space="preserve">
     <value>Enter the domain of the enterprise</value>

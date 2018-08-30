@@ -100,6 +100,15 @@
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\WtfIconHelper.cs" />
     <Compile Include="Extensions\BoolConverter.cs" />
+    <Compile Include="Models\General\Member.cs" />
+    <Compile Include="Models\Project\Archive.cs" />
+    <Compile Include="Models\Project\Project.cs" />
+    <Compile Include="Models\Project\ProjectNav.cs" />
+    <Compile Include="Models\Project\ProjectNavDto.cs" />
+    <Compile Include="Models\Project\ProjectNavItem.cs" />
+    <Compile Include="Models\Project\WorkAddon.cs" />
+    <Compile Include="Models\General\KeyName.cs" />
+    <Compile Include="Models\Project\WorkAddonDto.cs" />
     <Compile Include="Models\Results\DataResult.cs" />
     <Compile Include="Models\Results\BaseResult.cs" />
     <Compile Include="Models\Start\ConfigInfo.cs" />
