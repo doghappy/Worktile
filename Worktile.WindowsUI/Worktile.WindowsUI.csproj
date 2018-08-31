@@ -95,11 +95,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\ColorMap.cs" />
     <Compile Include="Common\Configuration.cs" />
     <Compile Include="Common\HashEncryptor.cs" />
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\WtfIconHelper.cs" />
     <Compile Include="Extensions\BoolConverter.cs" />
+    <Compile Include="Models\ColorMapItem.cs" />
     <Compile Include="Models\General\Member.cs" />
     <Compile Include="Models\Project\Archive.cs" />
     <Compile Include="Models\Project\Project.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Models\Results\BaseResult.cs" />
     <Compile Include="Models\Start\ConfigInfo.cs" />
     <Compile Include="Models\Start\MeInfo.cs" />
+    <Compile Include="Models\Start\MePreference.cs" />
     <Compile Include="Models\Start\PricingCheckPoint.cs" />
     <Compile Include="Models\Start\TeamConfig.cs" />
     <Compile Include="Models\Start\TeamLite.cs" />

@@ -59,6 +59,7 @@ namespace Worktile.WindowsUI.ViewModels.Project
                         var project = data.Data.Projects.FirstOrDefault(p => p.Id == item);
                         if (project != null)
                         {
+                            project.Color = ColorMap.GetNewColor(project.Color);
                             StickProjects.Add(project);
                         }
                     }
@@ -69,6 +70,7 @@ namespace Worktile.WindowsUI.ViewModels.Project
                             var project = data.Data.Projects.FirstOrDefault(p => p.Id == item.Id);
                             if (project != null)
                             {
+                                project.Color = ColorMap.GetNewColor(project.Color);
                                 Projects.Add(project);
                             }
                         }
@@ -79,6 +81,7 @@ namespace Worktile.WindowsUI.ViewModels.Project
                                 var project = data.Data.Projects.FirstOrDefault(p => p.Id == subItem.Id);
                                 if (project != null)
                                 {
+                                    project.Color = ColorMap.GetNewColor(project.Color);
                                     Projects.Add(project);
                                 }
                             }

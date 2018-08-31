@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
+using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.Models.General;
 
 namespace Worktile.WindowsUI.Models.Project
@@ -16,7 +18,12 @@ namespace Worktile.WindowsUI.Models.Project
 
         public string Description { get; set; }
 
-        public string Icon { get; set; }
+        public string Icon
+        {
+            get => Visibility == 1
+                ? WtfIconHelper.Icons.SingleOrDefault(i => i.Class == "wtf-mission").Glyph
+                : WtfIconHelper.Icons.SingleOrDefault(i => i.Class == "wtf-project-private").Glyph;
+        }
 
         public string Color { get; set; }
 
