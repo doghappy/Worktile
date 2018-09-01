@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.WindowsUI.ViewModels.Start;
 
-namespace Worktile.WindowsUI.Views.Start
+namespace Worktile.WindowsUI.Views.SignIn
 {
     public sealed partial class EnterpriseSignInPage : Page, INotifyPropertyChanged
     {

@@ -13,9 +13,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.Models.Results;
-using Worktile.WindowsUI.Models.Start;
+using Worktile.WindowsUI.Models.SignIn;
 using Worktile.WindowsUI.Views;
-using Worktile.WindowsUI.Views.Start;
+using Worktile.WindowsUI.Views.SignIn;
 
 namespace Worktile.WindowsUI.ViewModels.Start
 {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Worktile.WindowsUI.Models.Start
+namespace Worktile.WindowsUI.Models.SignIn
 {
     public class MePreference
     {

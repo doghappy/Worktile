@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 
-namespace Worktile.WindowsUI.Models.Start
+namespace Worktile.WindowsUI.Models.SignIn
 {
     public class TeamLite
     {

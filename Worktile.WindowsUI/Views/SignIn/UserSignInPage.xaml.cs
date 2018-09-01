@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.ViewModels.Start;
 
-namespace Worktile.WindowsUI.Views.Start
+namespace Worktile.WindowsUI.Views.SignIn
 {
     public sealed partial class UserSignInPage : Page,INotifyPropertyChanged
     {

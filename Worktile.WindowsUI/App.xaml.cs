@@ -112,7 +112,7 @@ namespace Worktile.WindowsUI
                     if (Configuration.IsAuthorized)
                         rootFrame.Navigate(typeof(MainPage), e.Arguments);
                     else
-                        rootFrame.Navigate(typeof(Views.Start.EnterpriseSignInPage), e.Arguments);
+                        rootFrame.Navigate(typeof(Views.SignIn.EnterpriseSignInPage), e.Arguments);
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Worktile.WindowsUI.Extensions;
 
-namespace Worktile.WindowsUI.Models.Start
+namespace Worktile.WindowsUI.Models.SignIn
 {
     public class PricingCheckPoint
     {

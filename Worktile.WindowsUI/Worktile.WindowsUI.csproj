@@ -114,13 +114,13 @@
     <Compile Include="Models\Mission\WorkAddonDto.cs" />
     <Compile Include="Models\Results\DataResult.cs" />
     <Compile Include="Models\Results\BaseResult.cs" />
-    <Compile Include="Models\Start\ConfigInfo.cs" />
-    <Compile Include="Models\Start\MeInfo.cs" />
-    <Compile Include="Models\Start\MePreference.cs" />
-    <Compile Include="Models\Start\PricingCheckPoint.cs" />
-    <Compile Include="Models\Start\TeamConfig.cs" />
-    <Compile Include="Models\Start\TeamLite.cs" />
-    <Compile Include="Models\Start\UrlBox.cs" />
+    <Compile Include="Models\SignIn\ConfigInfo.cs" />
+    <Compile Include="Models\SignIn\MeInfo.cs" />
+    <Compile Include="Models\SignIn\MePreference.cs" />
+    <Compile Include="Models\SignIn\PricingCheckPoint.cs" />
+    <Compile Include="Models\SignIn\TeamConfig.cs" />
+    <Compile Include="Models\SignIn\TeamLite.cs" />
+    <Compile Include="Models\SignIn\UrlBox.cs" />
     <Compile Include="Models\WtfIcon.cs" />
     <Compile Include="ViewModels\Mission\HomeViewModel.cs" />
     <Compile Include="ViewModels\Start\UserSignInViewModel.cs" />
@@ -136,10 +136,10 @@
     <Compile Include="Views\Mission\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Start\EnterpriseSignInPage.xaml.cs">
+    <Compile Include="Views\SignIn\EnterpriseSignInPage.xaml.cs">
       <DependentUpon>EnterpriseSignInPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Start\UserSignInPage.xaml.cs">
+    <Compile Include="Views\SignIn\UserSignInPage.xaml.cs">
       <DependentUpon>UserSignInPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -222,11 +222,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Start\EnterpriseSignInPage.xaml">
+    <Page Include="Views\SignIn\EnterpriseSignInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Start\UserSignInPage.xaml">
+    <Page Include="Views\SignIn\UserSignInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

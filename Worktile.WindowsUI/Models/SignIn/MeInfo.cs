@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Worktile.WindowsUI.Models.Start
+namespace Worktile.WindowsUI.Models.SignIn
 {
     public class MeInfo
     {
