@@ -4,9 +4,9 @@ using System.Linq;
 using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.Models.General;
 
-namespace Worktile.WindowsUI.Models.Project
+namespace Worktile.WindowsUI.Models.Mission
 {
-    public class Project
+    public class MissionItem
     {
         [JsonProperty("_id")]
         public string Id { get; set; }

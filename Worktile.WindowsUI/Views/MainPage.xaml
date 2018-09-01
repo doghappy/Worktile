@@ -29,7 +29,7 @@
                         <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe618;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Tag="project" x:Uid="Main-Nav-Project">
+                <NavigationViewItem Tag="mission" x:Uid="Main-Nav-Project">
                     <NavigationViewItem.Icon>
                         <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe70d;"/>
                     </NavigationViewItem.Icon>

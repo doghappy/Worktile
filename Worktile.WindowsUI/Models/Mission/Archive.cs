@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Worktile.WindowsUI.Models.Project
+namespace Worktile.WindowsUI.Models.Mission
 {
     public class Archive
     {

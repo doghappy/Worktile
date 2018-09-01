@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.WindowsUI.Views.Project;
+using Worktile.WindowsUI.Views.Mission;
 
 namespace Worktile.WindowsUI.Views
 {
@@ -25,7 +25,7 @@ namespace Worktile.WindowsUI.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(typeof(ProjectPage));
+            ContentFrame.Navigate(typeof(Mission.HomePage));
             var item = NavView.MenuItems[1] as NavigationViewItem;
             item.IsSelected = true;
             NavView.SelectionChanged += NavView_SelectionChanged;
@@ -42,8 +42,8 @@ namespace Worktile.WindowsUI.Views
                 var item = args.SelectedItem as NavigationViewItem;
                 switch (item.Tag)
                 {
-                    case "project":
-                        ContentFrame.Navigate(typeof(ProjectPage));
+                    case "mission":
+                        ContentFrame.Navigate(typeof(Mission.HomePage));
                         break;
                 }
             }

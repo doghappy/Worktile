@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Worktile.WindowsUI.Models.Project
+namespace Worktile.WindowsUI.Models.Mission
 {
-    public class ProjectNavItem
+    public class MissionNavItem
     {
         [JsonProperty("nav_id")]
         public string Id { get; set; }
@@ -13,6 +13,6 @@ namespace Worktile.WindowsUI.Models.Project
 
         public string Name { get; set; }
 
-        public List<ProjectNavItem> Items { get; set; }
+        public List<MissionNavItem> Items { get; set; }
     }
 }

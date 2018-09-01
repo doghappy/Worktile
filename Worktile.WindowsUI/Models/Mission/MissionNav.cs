@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Worktile.WindowsUI.Models.Project
+namespace Worktile.WindowsUI.Models.Mission
 {
-    public class ProjectNav
+    public class MissionNav
     {
         [JsonProperty("favorites")]
         public List<string> Stick { get; set; }
-        public List<ProjectNavItem> Items { get; set; }
+        public List<MissionNavItem> Items { get; set; }
     }
 }

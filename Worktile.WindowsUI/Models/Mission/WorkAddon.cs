@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Worktile.WindowsUI.Models.General;
 
-namespace Worktile.WindowsUI.Models.Project
+namespace Worktile.WindowsUI.Models.Mission
 {
     public class WorkAddon
     {
