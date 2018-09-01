@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.WindowsUI.Common;
-using Worktile.WindowsUI.ViewModels.Start;
+using Worktile.WindowsUI.ViewModels.SignIn;
 using Worktile.WindowsUI.Views;
 
 namespace Worktile.WindowsUI

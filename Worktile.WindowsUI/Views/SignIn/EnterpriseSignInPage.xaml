@@ -12,7 +12,7 @@
     <Grid>
         <Grid>
             <Grid.Background>
-                <ImageBrush ImageSource="/Assets/Images/Start/signup-bg.png"
+                <ImageBrush ImageSource="/Assets/Images/SignIn/signup-bg.png"
                         Stretch="UniformToFill"/>
             </Grid.Background>
 
@@ -34,7 +34,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock x:Uid="Start-EnterpriseSignIn-SignInTextBlock"
+                <TextBlock x:Uid="SignIn-EnterpriseSignIn-SignInTextBlock"
                        FontSize="22"
                        Foreground="#4d5250"/>
                 <Rectangle Grid.Row="1" Height="1" Fill="#eaeaea" Margin="0 16"/>
@@ -43,7 +43,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Uid="Start-EnterpriseSignIn-DomainTextBox"
+                    <TextBox x:Uid="SignIn-EnterpriseSignIn-DomainTextBox"
                              Text="{x:Bind ViewModel.Domain, Mode=TwoWay}"/>
                     <TextBlock Grid.Column="1"
                                VerticalAlignment="Center"
@@ -53,13 +53,13 @@
                 </Grid>
                 <Button Grid.Row="3"
                         Margin="0 0 0 16"
-                        x:Uid="Start-EnterpriseSignIn-NextButton"
+                        x:Uid="SignIn-EnterpriseSignIn-NextButton"
                         Style="{ThemeResource PrimaryButton}"
                         Click="Button_Click"
                         HorizontalAlignment="Stretch"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="4">
-                    <TextBlock x:Uid="Start-EnterpriseSignIn-SignUpLabel" VerticalAlignment="Center"/>
-                    <HyperlinkButton x:Uid="Start-EnterpriseSignIn-SignUpButton" Click="HyperlinkButton_Click"/>
+                    <TextBlock x:Uid="SignIn-EnterpriseSignIn-SignUpLabel" VerticalAlignment="Center"/>
+                    <HyperlinkButton x:Uid="SignIn-EnterpriseSignIn-SignUpButton" Click="HyperlinkButton_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>

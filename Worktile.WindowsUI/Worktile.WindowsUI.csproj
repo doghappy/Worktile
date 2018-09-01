@@ -122,9 +122,11 @@
     <Compile Include="Models\SignIn\TeamLite.cs" />
     <Compile Include="Models\SignIn\UrlBox.cs" />
     <Compile Include="Models\WtfIcon.cs" />
+    <Compile Include="ViewModels\MainAreaViewModel.cs" />
     <Compile Include="ViewModels\Mission\HomeViewModel.cs" />
-    <Compile Include="ViewModels\Start\UserSignInViewModel.cs" />
-    <Compile Include="ViewModels\Start\EnterpriseSignInViewModel.cs" />
+    <Compile Include="ViewModels\Mission\MyMissionViewModel.cs" />
+    <Compile Include="ViewModels\SignIn\UserSignInViewModel.cs" />
+    <Compile Include="ViewModels\SignIn\EnterpriseSignInViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -154,8 +156,15 @@
     <None Include="Worktile.WindowsUI_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\Background\desktop-1.jpg" />
+    <Content Include="Assets\Images\Background\desktop-2.jpg" />
+    <Content Include="Assets\Images\Background\desktop-3.jpg" />
+    <Content Include="Assets\Images\Background\desktop-4.jpg" />
+    <Content Include="Assets\Images\Background\desktop-5.jpg" />
+    <Content Include="Assets\Images\Background\desktop-6.jpg" />
+    <Content Include="Assets\Images\Background\desktop-7.jpg" />
     <Content Include="Assets\Images\Logo\worktile logo-横版.png" />
-    <Content Include="Assets\Images\Start\signup-bg.png" />
+    <Content Include="Assets\Images\SignIn\signup-bg.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />

@@ -12,7 +12,7 @@
     <Grid>
         <Grid>
             <Grid.Background>
-                <ImageBrush ImageSource="/Assets/Images/Start/signup-bg.png" Stretch="UniformToFill"/>
+                <ImageBrush ImageSource="/Assets/Images/SignIn/signup-bg.png" Stretch="UniformToFill"/>
             </Grid.Background>
 
             <Grid.RowDefinitions>
@@ -36,29 +36,29 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontSize="22"
-                               x:Uid="Start-UserSignIn-SignInTextBlock"
+                               x:Uid="SignIn-UserSignIn-SignInTextBlock"
                                Foreground="#4d5250"/>
                     <TextBlock Foreground="{ThemeResource Danger}"
                                FontSize="22"
                                Text="{x:Bind ViewModel.TeamLite.Name, Mode=OneWay}"/>
                 </StackPanel>
                 <Rectangle Grid.Row="1" Height="1" Fill="#eaeaea" Margin="0 16"/>
-                <TextBox x:Uid="Start-UserSignIn-AccountTextBox"
+                <TextBox x:Uid="SignIn-UserSignIn-AccountTextBox"
                          Grid.Row="2"
                          Margin="0 0 0 16"
                          Text="{x:Bind ViewModel.Account, Mode=TwoWay}"/>
-                <PasswordBox x:Uid="Start-UserSignIn-PasswordBox"
+                <PasswordBox x:Uid="SignIn-UserSignIn-PasswordBox"
                              Grid.Row="3"
                              Margin="0 0 0 16"
                              Password="{x:Bind ViewModel.Password, Mode=TwoWay}"/>
                 <Button Grid.Row="4"
                         Margin="0 0 0 16"
-                        x:Uid="Start-UserSignIn-SignInButton"
+                        x:Uid="SignIn-UserSignIn-SignInButton"
                         Style="{ThemeResource PrimaryButton}"
                         Click="SignIn_Click"
                         HorizontalAlignment="Stretch"/>
                 <HyperlinkButton Grid.Row="5"
-                                 x:Uid="Start-UserSignIn-ForgotPasswordLink"
+                                 x:Uid="SignIn-UserSignIn-ForgotPasswordLink"
                                  Click="ForgotPassword_Click"
                                  HorizontalAlignment="Right"/>
             </Grid>

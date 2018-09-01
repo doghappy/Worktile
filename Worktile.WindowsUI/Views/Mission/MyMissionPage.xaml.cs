@@ -1,32 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.WindowsUI.Models.Mission;
+using Worktile.WindowsUI.ViewModels.Mission;
 
 namespace Worktile.WindowsUI.Views.Mission
 {
-    public sealed partial class MyMissionPage : Page
+    public sealed partial class MyMissionPage : Page, INotifyPropertyChanged
     {
         public MyMissionPage()
         {
             InitializeComponent();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private MyMissionViewModel viewModel;
+        public MyMissionViewModel ViewModel
+        {
+            get => viewModel;
+            set
+            {
+                viewModel = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewModel)));
+            }
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            //e.Parameter as WorkAddon;
+            var workAddon = e.Parameter as WorkAddon;
+            ViewModel = new MyMissionViewModel(workAddon);
         }
     }
 }

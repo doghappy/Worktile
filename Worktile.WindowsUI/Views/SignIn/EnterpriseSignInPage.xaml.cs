@@ -4,7 +4,7 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.WindowsUI.ViewModels.Start;
+using Worktile.WindowsUI.ViewModels.SignIn;
 
 namespace Worktile.WindowsUI.Views.SignIn
 {

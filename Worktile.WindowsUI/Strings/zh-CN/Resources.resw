@@ -147,34 +147,34 @@
   <data name="Project-Left-RecycleBinTextBlock.Text" xml:space="preserve">
     <value>回收站</value>
   </data>
-  <data name="Start-EnterpriseSignIn-DomainTextBox.PlaceholderText" xml:space="preserve">
+  <data name="SignIn-EnterpriseSignIn-DomainTextBox.PlaceholderText" xml:space="preserve">
     <value>请输入企业域名</value>
   </data>
-  <data name="Start-EnterpriseSignIn-NextButton.Content" xml:space="preserve">
+  <data name="SignIn-EnterpriseSignIn-NextButton.Content" xml:space="preserve">
     <value>下一步</value>
   </data>
-  <data name="Start-EnterpriseSignIn-SignInTextBlock.Text" xml:space="preserve">
+  <data name="SignIn-EnterpriseSignIn-SignInTextBlock.Text" xml:space="preserve">
     <value>登录</value>
   </data>
-  <data name="Start-EnterpriseSignIn-SignUpButton.Content" xml:space="preserve">
+  <data name="SignIn-EnterpriseSignIn-SignUpButton.Content" xml:space="preserve">
     <value>注册</value>
   </data>
-  <data name="Start-EnterpriseSignIn-SignUpLabel.Text" xml:space="preserve">
+  <data name="SignIn-EnterpriseSignIn-SignUpLabel.Text" xml:space="preserve">
     <value>还没有创建企业？</value>
   </data>
-  <data name="Start-UserSignIn-AccountTextBox.PlaceholderText" xml:space="preserve">
+  <data name="SignIn-UserSignIn-AccountTextBox.PlaceholderText" xml:space="preserve">
     <value>手机号/用户名/邮箱</value>
   </data>
-  <data name="Start-UserSignIn-ForgotPasswordLink.Content" xml:space="preserve">
+  <data name="SignIn-UserSignIn-ForgotPasswordLink.Content" xml:space="preserve">
     <value>忘记密码？</value>
   </data>
-  <data name="Start-UserSignIn-PasswordBox.PlaceholderText" xml:space="preserve">
+  <data name="SignIn-UserSignIn-PasswordBox.PlaceholderText" xml:space="preserve">
     <value>请输入密码</value>
   </data>
-  <data name="Start-UserSignIn-SignInButton.Content" xml:space="preserve">
+  <data name="SignIn-UserSignIn-SignInButton.Content" xml:space="preserve">
     <value>登录</value>
   </data>
-  <data name="Start-UserSignIn-SignInTextBlock.Text" xml:space="preserve">
+  <data name="SignIn-UserSignIn-SignInTextBlock.Text" xml:space="preserve">
     <value>登录</value>
   </data>
 </root>

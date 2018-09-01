@@ -10,7 +10,7 @@ using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.Models.Results;
 using Worktile.WindowsUI.Views.SignIn;
 
-namespace Worktile.WindowsUI.ViewModels.Start
+namespace Worktile.WindowsUI.ViewModels.SignIn
 {
     public class EnterpriseSignInViewModel : ViewModel, INotifyPropertyChanged
     {

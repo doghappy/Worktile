@@ -17,7 +17,7 @@ using Worktile.WindowsUI.Models.SignIn;
 using Worktile.WindowsUI.Views;
 using Worktile.WindowsUI.Views.SignIn;
 
-namespace Worktile.WindowsUI.ViewModels.Start
+namespace Worktile.WindowsUI.ViewModels.SignIn
 {
     public class UserSignInViewModel : ViewModel, INotifyPropertyChanged
     {
