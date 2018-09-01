@@ -28,7 +28,7 @@ namespace Worktile.WindowsUI.ViewModels.Project
             get
             {
                 var fe = Window.Current.Content as FrameworkElement;
-                return fe.GetChild<Frame>("ContentFrame");
+                return fe.GetChild<Frame>("MissionContentFrame");
             }
         }
 

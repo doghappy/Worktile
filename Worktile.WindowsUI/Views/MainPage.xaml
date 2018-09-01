@@ -7,8 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Loaded="Page_Loaded"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Loaded="Page_Loaded">
+
+    <Page.Background>
+        <ImageBrush ImageSource="{x:Bind BackgroundImage}" Stretch="UniformToFill"/>
+    </Page.Background>
 
     <Grid>
         <NavigationView x:Name="NavView" 

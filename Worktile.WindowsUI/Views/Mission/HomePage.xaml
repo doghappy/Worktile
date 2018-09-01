@@ -79,7 +79,8 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Background="#F2FDFDFD" Padding="0 0 10 0">
+        <!--<Grid Background="#F2FDFDFD" Padding="0 0 10 0">-->
+        <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}" Padding="0 0 10 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
@@ -179,7 +180,7 @@
             </ScrollViewer>
         </Grid>
 
-        <Frame x:Name="ContentFrame" Grid.Column="1">
+        <Frame x:Name="MissionContentFrame" Grid.Column="1">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>

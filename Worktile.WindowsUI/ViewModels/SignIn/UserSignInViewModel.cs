@@ -165,7 +165,7 @@ namespace Worktile.WindowsUI.ViewModels.SignIn
                 var baseResult = await ReadHttpResponseMessageAsync<BaseResult>(resMsg);
                 if (baseResult.Code == 200)
                 {
-                    await GetTeamInfoAsync();
+                    await GetTeamConfigAsync();
                     Configuration.IsAuthorized = true;
                     if (!isAuto)
                     {

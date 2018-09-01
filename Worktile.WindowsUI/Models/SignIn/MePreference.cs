@@ -22,12 +22,13 @@ namespace Worktile.WindowsUI.Models.SignIn
         [JsonProperty("emoji_size")]
         public int EmojiSize { get; set; }
 
-        public int Locale { get; set; }
+        public string Locale { get; set; }
 
-        public int Timezone { get; set; }
+        public string Timezone { get; set; }
 
         public string Theme { get; set; }
 
+        [JsonProperty("background_image")]
         public string BackgroundImage { get; set; }
 
         [JsonProperty("highlight_words")]

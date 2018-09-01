@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Worktile.WindowsUI.Models.SignIn
 {
@@ -32,6 +29,10 @@ namespace Worktile.WindowsUI.Models.SignIn
         public string TeamId { get; set; }
 
         [JsonProperty("created_at")]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
         public DateTime CreatedAt { get; set; }
+
+        [JsonProperty("preferences")]
+        public MePreference Preference { get; set; }
     }
 }
