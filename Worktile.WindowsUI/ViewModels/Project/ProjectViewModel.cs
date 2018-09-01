@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Worktile.WindowsUI.Common;
@@ -10,7 +12,7 @@ using Worktile.WindowsUI.Models.Results;
 
 namespace Worktile.WindowsUI.ViewModels.Project
 {
-    public class ProjectViewModel : ViewModel
+    public class ProjectViewModel : ViewModel, INotifyPropertyChanged
     {
         public ProjectViewModel()
         {
@@ -19,9 +21,42 @@ namespace Worktile.WindowsUI.ViewModels.Project
             StickProjects = new ObservableCollection<Models.Project.Project>();
         }
 
+        public new event PropertyChangedEventHandler PropertyChanged;
+
         public ObservableCollection<WorkAddon> WorkAddons { get; }
         public ObservableCollection<Models.Project.Project> StickProjects { get; }
         public ObservableCollection<Models.Project.Project> Projects { get; }
+
+        private WorkAddon selectedWork;
+        public WorkAddon SelectedWork
+        {
+            get => selectedWork;
+            set
+            {
+                if (selectedWork != value)
+                {
+                    selectedWork = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private Models.Project.Project selectedProject;
+        public Models.Project.Project SelectedProject
+        {
+            get => selectedProject;
+            set
+            {
+                selectedProject = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         private async Task GetWorkAddonsAsync()
         {

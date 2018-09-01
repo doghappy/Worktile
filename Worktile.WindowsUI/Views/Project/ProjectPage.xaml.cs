@@ -45,5 +45,10 @@ namespace Worktile.WindowsUI.Views.Project
             ViewModel = new ProjectViewModel();
             await ViewModel.InitializeAsync();
         }
+
+        private void Work_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

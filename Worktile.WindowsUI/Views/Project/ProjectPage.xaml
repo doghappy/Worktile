@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:project="using:Worktile.WindowsUI.Models.Project"
-    xmlns:cvt="using:Worktile.WindowsUI.Converters.Project"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -27,6 +26,50 @@
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             </Style>
+
+            <!--<Style TargetType="ListViewItem">
+                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="TabNavigation" Value="Local"/>
+                <Setter Property="IsHoldingEnabled" Value="True"/>
+                <Setter Property="Padding" Value="12,0,12,0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
+                <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <ListViewItemPresenter
+          ContentTransitions="{TemplateBinding ContentTransitions}"
+          SelectionCheckMarkVisualEnabled="True"
+          CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+          CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+          DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+          DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+          FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+          FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+          PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+          PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}"
+          PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
+          SelectedBackground="Transparent"
+          SelectedForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
+          SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
+          PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}"
+          SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
+          DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+          DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+          ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+          ContentMargin="{TemplateBinding Padding}"
+          CheckMode="Inline"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
         </ResourceDictionary>
     </Page.Resources>
 
@@ -51,9 +94,24 @@
 
             <ScrollViewer Grid.Row="1">
                 <StackPanel>
-                    <TextBlock x:Uid="Project-Left-DashboardTextBlock" Style="{ThemeResource ListViewHeader}"/>
+                    <ListView ItemsSource="{x:Bind ViewModel.WorkAddons}"
+                              SelectedItem="{x:Bind ViewModel.SelectedWork, Mode=TwoWay}"
+                              Margin="0 0 0 16">
+                        <ListView.Header>
+                            <TextBlock x:Uid="Project-Left-DashboardTextBlock" Style="{ThemeResource ListViewHeader}"/>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="project:WorkAddon">
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Icon}" Foreground="#48525c"/>
+                                    <TextBlock Text="{x:Bind Name}" Style="{ThemeResource ProjectItemLabel}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <!--<TextBlock x:Uid="Project-Left-DashboardTextBlock" Style="{ThemeResource ListViewHeader}"/>
                     <ItemsControl ItemsSource="{x:Bind ViewModel.WorkAddons}"
-                      Margin="0 0 0 16">
+                                  Margin="0 0 0 16">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="project:WorkAddon">
                                 <Button Style="{ThemeResource AdvancedButton}">
@@ -66,50 +124,47 @@
                                 </Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <TextBlock x:Uid="Project-Left-FavoriteTextBlock" Style="{ThemeResource ListViewHeader}"/>
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.StickProjects}"
-                      Margin="0 0 0 16">
-                        <ItemsControl.ItemTemplate>
+                    </ItemsControl>-->
+                    <ListView ItemsSource="{x:Bind ViewModel.StickProjects}"
+                              Margin="0 0 0 16">
+                        <ListView.Header>
+                            <TextBlock x:Uid="Project-Left-FavoriteTextBlock" Style="{ThemeResource ListViewHeader}"/>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
                             <DataTemplate x:DataType="project:Project">
-                                <Button Style="{ThemeResource AdvancedButton}">
-                                    <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                            <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe667;" Foreground="{x:Bind Color}"/>
-                                            <TextBlock Text="{x:Bind Name}" Style="{ThemeResource ProjectItemLabel}"/>
-                                        </StackPanel>
-                                    </ListViewItem>
-                                </Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe667;" Foreground="{x:Bind Color}"/>
+                                    <TextBlock Text="{x:Bind Name}" Style="{ThemeResource ProjectItemLabel}"/>
+                                </StackPanel>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <TextBlock x:Uid="Project-Left-ProjectTextBlock" Style="{ThemeResource ListViewHeader}"/>
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.Projects}"
-                      Margin="0 0 0 16">
-                        <ItemsControl.ItemTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <ListView ItemsSource="{x:Bind ViewModel.Projects}"
+                              Margin="0 0 0 16">
+                        <ListView.Header>
+                            <TextBlock x:Uid="Project-Left-ProjectTextBlock" Style="{ThemeResource ListViewHeader}"/>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
                             <DataTemplate x:DataType="project:Project">
-                                <Button Style="{ThemeResource AdvancedButton}">
-                                    <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                            <FontIcon Style="{ThemeResource WtfIcon}"
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon Style="{ThemeResource WtfIcon}"
                                               Glyph="{x:Bind Icon}"
                                               Foreground="{x:Bind Color}"/>
-                                            <TextBlock Text="{x:Bind Name}" Style="{ThemeResource ProjectItemLabel}"/>
-                                        </StackPanel>
-                                    </ListViewItem>
-                                </Button>
+                                    <TextBlock Text="{x:Bind Name}" Style="{ThemeResource ProjectItemLabel}"/>
+                                </StackPanel>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        </ListView.ItemTemplate>
+                    </ListView>
                     <TextBlock x:Uid="Project-Left-AdvancedTextBlock" Style="{ThemeResource ListViewHeader}"/>
-                    <Button Style="{ThemeResource AdvancedButton}">
+                    <!--配置中心-->
+                    <!--<Button Style="{ThemeResource AdvancedButton}">
                         <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                 <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe640;" Foreground="#aaa"/>
                                 <TextBlock x:Uid="Project-Left-ConfigurationCenterTextBlock" Style="{ThemeResource ProjectItemLabel}"/>
                             </StackPanel>
                         </ListViewItem>
-                    </Button>
+                    </Button>-->
                     <Button Style="{ThemeResource AdvancedButton}">
                         <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
