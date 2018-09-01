@@ -26,50 +26,6 @@
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             </Style>
-
-            <!--<Style TargetType="ListViewItem">
-                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
-                <Setter Property="TabNavigation" Value="Local"/>
-                <Setter Property="IsHoldingEnabled" Value="True"/>
-                <Setter Property="Padding" Value="12,0,12,0"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
-                <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ListViewItem">
-                            <ListViewItemPresenter
-          ContentTransitions="{TemplateBinding ContentTransitions}"
-          SelectionCheckMarkVisualEnabled="True"
-          CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
-          CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
-          DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
-          DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
-          FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
-          FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
-          PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
-          PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}"
-          PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
-          SelectedBackground="Transparent"
-          SelectedForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
-          SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
-          PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}"
-          SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
-          DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
-          DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
-          ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
-          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-          ContentMargin="{TemplateBinding Padding}"
-          CheckMode="Inline"/>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>-->
         </ResourceDictionary>
     </Page.Resources>
 
@@ -79,13 +35,12 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <!--<Grid Background="#F2FDFDFD" Padding="0 0 10 0">-->
-        <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}" Padding="0 0 10 0">
+        <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Margin="0 10 0 0">
+            <Grid Margin="0 10 10 0">
                 <HyperlinkButton HorizontalAlignment="Right" VerticalAlignment="Center">
                     <HyperlinkButton.Content>
                         <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xe600;"/>
@@ -97,6 +52,7 @@
                 <StackPanel>
                     <ListView ItemsSource="{x:Bind ViewModel.WorkAddons}"
                               SelectedItem="{x:Bind ViewModel.SelectedWork, Mode=TwoWay}"
+                              ScrollViewer.VerticalScrollMode="Disabled"
                               Margin="0 0 0 16">
                         <ListView.Header>
                             <TextBlock x:Uid="Project-Left-DashboardTextBlock" Style="{ThemeResource ListViewHeader}"/>
@@ -104,7 +60,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="mission:WorkAddon">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Icon}" Foreground="#48525c"/>
+                                    <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Icon}" Foreground="{ThemeResource Primary}"/>
                                     <TextBlock Text="{x:Bind Name}" Style="{ThemeResource ProjectItemLabel}"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -128,6 +84,7 @@
                     </ItemsControl>-->
                     <ListView ItemsSource="{x:Bind ViewModel.StickMissions}"
                               SelectedItem="{x:Bind ViewModel.SelectedStickProject, Mode=TwoWay}"
+                              ScrollViewer.VerticalScrollMode="Disabled"
                               Margin="0 0 0 16">
                         <ListView.Header>
                             <TextBlock x:Uid="Project-Left-FavoriteTextBlock" Style="{ThemeResource ListViewHeader}"/>
@@ -143,6 +100,7 @@
                     </ListView>
                     <ListView ItemsSource="{x:Bind ViewModel.Missions}"
                               SelectedItem="{x:Bind ViewModel.SelectedProject, Mode=TwoWay}"
+                              ScrollViewer.VerticalScrollMode="Disabled"
                               Margin="0 0 0 16">
                         <ListView.Header>
                             <TextBlock x:Uid="Project-Left-ProjectTextBlock" Style="{ThemeResource ListViewHeader}"/>
