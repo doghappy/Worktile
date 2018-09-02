@@ -60,7 +60,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="mission:WorkAddon">
                                 <StackPanel Orientation="Horizontal">
-                                    <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Icon}" Foreground="{ThemeResource Primary}"/>
+                                    <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Icon}" Foreground="{ThemeResource SystemAccentColor}"/>
                                     <TextBlock Text="{x:Bind Name}" Style="{ThemeResource ProjectItemLabel}"/>
                                 </StackPanel>
                             </DataTemplate>

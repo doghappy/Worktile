@@ -16,6 +16,7 @@
     <Grid>
         <NavigationView x:Name="NavView" 
                         IsBackButtonVisible="Visible"
+                        IsPaneOpen="False"
                         BackRequested="NavView_BackRequested"
                         Header="{Binding Path=Content.NavTitile, ElementName=ContentFrame}"
                         AlwaysShowHeader="False">

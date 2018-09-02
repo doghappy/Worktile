@@ -129,6 +129,12 @@
   <data name="Main-Nav-Project.Content" xml:space="preserve">
     <value>项目</value>
   </data>
+  <data name="MyMission-SubHeader-ActivityTask.Content" xml:space="preserve">
+    <value>活动任务</value>
+  </data>
+  <data name="MyMission-SubHeader-CompletedTask.Content" xml:space="preserve">
+    <value>完成任务</value>
+  </data>
   <data name="Project-Left-AdvancedTextBlock.Text" xml:space="preserve">
     <value>高级</value>
   </data>

@@ -101,6 +101,7 @@
     <Compile Include="Common\HashEncryptor.cs" />
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\WtfIconHelper.cs" />
+    <Compile Include="Converters\Mission\SubHeaderForegroundConverter.cs" />
     <Compile Include="Extensions\BoolConverter.cs" />
     <Compile Include="Models\ColorMapItem.cs" />
     <Compile Include="Models\General\Member.cs" />
@@ -251,7 +252,9 @@
       <Version>11.0.2</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Styles\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

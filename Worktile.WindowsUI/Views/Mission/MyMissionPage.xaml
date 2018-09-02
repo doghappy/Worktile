@@ -6,39 +6,72 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:general="using:Worktile.WindowsUI.Models.General"
+    xmlns:cvt="using:Worktile.WindowsUI.Converters.Mission"
     mc:Ignorable="d">
 
     <Page.Resources>
         <ResourceDictionary>
-            <AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop"
-                TintOpacity="0" TintColor="#FF000000" FallbackColor="#FF008000" />
+            <cvt:SubHeaderForegroundConverter x:Key="SubHeaderForegroundConverter"/>
         </ResourceDictionary>
     </Page.Resources>
-    
+
     <Grid>
-        <Pivot ItemsSource="{x:Bind ViewModel.WorkAddon.Features}">
-            <Pivot.Title>
-                <StackPanel Orientation="Horizontal">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Border BorderThickness="0 0 0 1" BorderBrush="#eee">
+            <Grid Height="50" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <FontIcon Style="{ThemeResource WtfIcon}"
+                              Margin="16 0 0 0"
                               Glyph="{x:Bind ViewModel.WorkAddon.Icon}"
-                              Foreground="{ThemeResource Primary}"/>
+                              Foreground="{ThemeResource SystemAccentColor}"/>
                     <TextBlock Text="{x:Bind ViewModel.WorkAddon.Name}"
                                Margin="10 0 0 0"
                                Foreground="#333"
                                FontSize="16"
                                FontWeight="SemiBold"/>
                 </StackPanel>
-            </Pivot.Title>
-            <Pivot.HeaderTemplate>
-                <DataTemplate x:DataType="general:KeyName">
-                    <TextBlock Text="{x:Bind Name}" />
-                </DataTemplate>
-            </Pivot.HeaderTemplate>
-            <Pivot.ItemTemplate>
-                <DataTemplate x:DataType="general:KeyName">
-                    <TextBlock Text="{x:Bind Name}" />
-                </DataTemplate>
-            </Pivot.ItemTemplate>
-        </Pivot>
+                <GridView Grid.Column="1"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Padding="0"
+                          SelectedItem="{x:Bind ViewModel.SelectedFeature, Mode=TwoWay}"
+                          ItemsSource="{x:Bind ViewModel.WorkAddon.Features}">
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem" BasedOn="{StaticResource GridViewItemRevealStyle}">
+                            <Setter Property="Margin" Value="0 0 4 0"/>
+                            <Setter Property="Padding" Value="16 0"/>
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="general:KeyName">
+                            <TextBlock Text="{x:Bind Name}"/>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    Background="White"
+                    Padding="16 0 0 0"
+                    x:Name="ToggleButtonContainer">
+            <Button x:Uid="MyMission-SubHeader-ActivityTask"
+                    Click="SubHeader_Click"
+                    Foreground="{x:Bind ViewModel.SubHeaderSelectedIndex, Mode=OneWay, Converter={StaticResource SubHeaderForegroundConverter}, ConverterParameter = 0}"
+                    Style="{ThemeResource TextBlockButtonStyle}"/>
+            <AppBarSeparator />
+            <Button x:Uid="MyMission-SubHeader-CompletedTask"
+                    Click="SubHeader_Click"
+                    Foreground="{x:Bind ViewModel.SubHeaderSelectedIndex, Mode=OneWay, Converter={StaticResource SubHeaderForegroundConverter}, ConverterParameter = 1}"
+                    Style="{ThemeResource TextBlockButtonStyle}"/>
+        </StackPanel>
     </Grid>
 </Page>

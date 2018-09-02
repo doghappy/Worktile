@@ -129,6 +129,12 @@
   <data name="Main-Nav-Project.Content" xml:space="preserve">
     <value>Project</value>
   </data>
+  <data name="MyMission-SubHeader-ActivityTask.Content" xml:space="preserve">
+    <value>Activity tasks</value>
+  </data>
+  <data name="MyMission-SubHeader-CompletedTask.Content" xml:space="preserve">
+    <value>Completed tasks</value>
+  </data>
   <data name="Project-Left-AdvancedTextBlock.Text" xml:space="preserve">
     <value>Advanced</value>
   </data>

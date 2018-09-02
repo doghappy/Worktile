@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
+using Worktile.WindowsUI.Common;
 using Worktile.WindowsUI.Models.Mission;
 using Worktile.WindowsUI.ViewModels.Mission;
 
@@ -31,6 +33,12 @@ namespace Worktile.WindowsUI.Views.Mission
             base.OnNavigatedTo(e);
             var workAddon = e.Parameter as WorkAddon;
             ViewModel = new MyMissionViewModel(workAddon);
+        }
+
+        private void SubHeader_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var buttons = ToggleButtonContainer.GetChildren<Button>();
+            ViewModel.SubHeaderSelectedIndex = buttons.IndexOf(sender as Button);
         }
     }
 }
