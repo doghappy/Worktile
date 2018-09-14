@@ -3,6 +3,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
+using Worktile.WindowsUI.Enums.Mission;
 
 namespace Worktile.WindowsUI.Converters.Mission
 {
@@ -10,9 +11,9 @@ namespace Worktile.WindowsUI.Converters.Mission
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            int index = int.Parse(value.ToString());
-            int param = int.Parse(parameter.ToString());
-            if (index == param)
+            var status = Enum.Parse<MissionActivityStatus>(value.ToString());
+            var param = Enum.Parse<MissionActivityStatus>(parameter.ToString());
+            if (status == param)
             {
                 var color = (Color)Application.Current.Resources["SystemAccentColor"];
                 return new SolidColorBrush(color);

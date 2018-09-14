@@ -66,22 +66,6 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <!--<TextBlock x:Uid="Project-Left-DashboardTextBlock" Style="{ThemeResource ListViewHeader}"/>
-                    <ItemsControl ItemsSource="{x:Bind ViewModel.WorkAddons}"
-                                  Margin="0 0 0 16">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="project:WorkAddon">
-                                <Button Style="{ThemeResource AdvancedButton}">
-                                    <ListViewItem HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                            <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Icon}" Foreground="#48525c"/>
-                                            <TextBlock Text="{x:Bind Name}" Style="{ThemeResource ProjectItemLabel}"/>
-                                        </StackPanel>
-                                    </ListViewItem>
-                                </Button>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>-->
                     <ListView ItemsSource="{x:Bind ViewModel.StickMissions}"
                               SelectedItem="{x:Bind ViewModel.SelectedStickProject, Mode=TwoWay}"
                               ScrollViewer.VerticalScrollMode="Disabled"

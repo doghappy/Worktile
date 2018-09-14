@@ -65,13 +65,21 @@
                     x:Name="ToggleButtonContainer">
             <Button x:Uid="MyMission-SubHeader-ActivityTask"
                     Click="SubHeader_Click"
-                    Foreground="{x:Bind ViewModel.SubHeaderSelectedIndex, Mode=OneWay, Converter={StaticResource SubHeaderForegroundConverter}, ConverterParameter = 0}"
+                    Foreground="{x:Bind ViewModel.MissionActivityStatus, Mode=OneWay, Converter={StaticResource SubHeaderForegroundConverter}, ConverterParameter = 0}"
                     Style="{ThemeResource TextBlockButtonStyle}"/>
             <AppBarSeparator />
             <Button x:Uid="MyMission-SubHeader-CompletedTask"
                     Click="SubHeader_Click"
-                    Foreground="{x:Bind ViewModel.SubHeaderSelectedIndex, Mode=OneWay, Converter={StaticResource SubHeaderForegroundConverter}, ConverterParameter = 1}"
+                    Foreground="{x:Bind ViewModel.MissionActivityStatus, Mode=OneWay, Converter={StaticResource SubHeaderForegroundConverter}, ConverterParameter = 1}"
                     Style="{ThemeResource TextBlockButtonStyle}"/>
         </StackPanel>
+
+        <Frame x:Name="MissionMainFrame" Grid.Column="2">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
     </Grid>
 </Page>

@@ -36,15 +36,15 @@ namespace Worktile.WindowsUI.ViewModels.Mission
             }
         }
 
-        private int subHeaderSelectedIndex;
-        public int SubHeaderSelectedIndex
+        private int missionActivityStatus;
+        public int MissionActivityStatus
         {
-            get => subHeaderSelectedIndex;
+            get => missionActivityStatus;
             set
             {
-                if (subHeaderSelectedIndex != value)
+                if (missionActivityStatus != value)
                 {
-                    subHeaderSelectedIndex = value;
+                    missionActivityStatus = value;
                     OnPropertyChanged();
                 }
             }

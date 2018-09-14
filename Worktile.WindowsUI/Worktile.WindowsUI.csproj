@@ -102,6 +102,7 @@
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\WtfIconHelper.cs" />
     <Compile Include="Converters\Mission\SubHeaderForegroundConverter.cs" />
+    <Compile Include="Enums\Mission\MissionActivityStatus.cs" />
     <Compile Include="Extensions\BoolConverter.cs" />
     <Compile Include="Models\ColorMapItem.cs" />
     <Compile Include="Models\General\Member.cs" />
