@@ -5,6 +5,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Worktile.WindowsUI.Common;
+using Worktile.WindowsUI.Enums.Mission;
 using Worktile.WindowsUI.Models.General;
 using Worktile.WindowsUI.Models.Mission;
 
@@ -32,27 +36,51 @@ namespace Worktile.WindowsUI.ViewModels.Mission
                 {
                     selectedFeature = value;
                     OnPropertyChanged();
+                    ChangeFrame();
                 }
             }
         }
 
-        private int missionActivityStatus;
-        public int MissionActivityStatus
+        private MissionActivityStatus activityStatus;
+        public MissionActivityStatus ActivityStatus
         {
-            get => missionActivityStatus;
+            get => activityStatus;
             set
             {
-                if (missionActivityStatus != value)
+                if (activityStatus != value)
                 {
-                    missionActivityStatus = value;
+                    activityStatus = value;
                     OnPropertyChanged();
+                    ChangeFrame();
                 }
+            }
+        }
+
+        private Frame Frame
+        {
+            get
+            {
+                var fe = Window.Current.Content as FrameworkElement;
+                return fe.GetChild<Frame>("MissionMainFrame");
             }
         }
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ChangeFrame()
+        {
+            int index = WorkAddon.Features.IndexOf(SelectedFeature);
+            if (index == 0 && ActivityStatus == MissionActivityStatus.Active)
+            {
+                //看板
+            }
+            else
+            {
+                //Table
+            }
         }
     }
 }

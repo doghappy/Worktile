@@ -1,6 +1,6 @@
 ﻿namespace Worktile.WindowsUI.Enums.Mission
 {
-    enum MissionActivityStatus
+    public enum MissionActivityStatus
     {
         Active,
         Completed
