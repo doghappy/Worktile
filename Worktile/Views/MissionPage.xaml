@@ -10,12 +10,102 @@
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBlock" x:Key="NavLabel">
+                <Setter Property="Margin" Value="4 0 0 0"/>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+
     <Grid>
-        <!--<controls:MasterDetailsView ItemsSource="{Binding Items}"
-                                    ItemTemplate="{StaticResource ListTemplate}"
-                                    DetailsTemplate="{StaticResource DetailsTemplate}"
-                                    NoSelectionContentTemplate="{StaticResource NoSelectionContentTemplate}"
-                                    CompactModeThresholdWidth="720">
-        </controls:MasterDetailsView>-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid Padding="{StaticResource TitleBarHeight}" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Padding="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="项目" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="SemiBold"/>
+
+                    <HyperlinkButton Grid.Column="1" HorizontalAlignment="Right">
+                        <HyperlinkButton.Content>
+                            <FontIcon Style="{ThemeResource WtfIcon}" FontSize="24" Glyph="&#xe600;"/>
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
+                </Grid>
+
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel>
+                        <ListView ItemsSource="{x:Bind WorkNavItems}"
+                                  SelectedItem="{x:Bind SelectedWorkNav, Mode=TwoWay}"
+                                  ScrollViewer.VerticalScrollMode="Disabled"
+                                  Margin="0 0 0 16">
+                            <ListView.Header>
+                                <TextBlock Margin="12 0 0 0" FontWeight="SemiBold" Text="工作"/>
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="local:NavItem">
+                                    <StackPanel Orientation="Horizontal">
+                                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Glyph}" Foreground="{ThemeResource SystemAccentColor}"/>
+                                        <TextBlock Text="{x:Bind Name}" Style="{StaticResource NavLabel}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <ListView ItemsSource="{x:Bind FavNavItems}"
+                                  SelectedItem="{x:Bind SelectedFavNav, Mode=TwoWay}"
+                                  ScrollViewer.VerticalScrollMode="Disabled"
+                                  Margin="0 0 0 16">
+                            <ListView.Header>
+                                <TextBlock Margin="12 0 0 0" FontWeight="SemiBold" Text="置顶"/>
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="local:NavItem">
+                                    <StackPanel Orientation="Horizontal">
+                                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Glyph}" Foreground="{x:Bind Color}"/>
+                                        <TextBlock Text="{x:Bind Name}" Style="{StaticResource NavLabel}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <ListView ItemsSource="{x:Bind ProjectNavItems}"
+                                  SelectedItem="{x:Bind SelectedProjectNav, Mode=TwoWay}"
+                                  ScrollViewer.VerticalScrollMode="Disabled">
+                            <ListView.Header>
+                                <TextBlock Margin="12 0 0 0" FontWeight="SemiBold" Text="项目"/>
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="local:NavItem">
+                                    <StackPanel Orientation="Horizontal">
+                                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Glyph}" Foreground="{x:Bind Color}"/>
+                                        <TextBlock Text="{x:Bind Name}" Style="{StaticResource NavLabel}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <TextBlock Text="right"/>
+            </Grid>
+
+        </Grid>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

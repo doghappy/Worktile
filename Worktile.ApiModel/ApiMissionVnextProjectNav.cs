@@ -31,7 +31,7 @@ namespace Worktile.ApiModel.ApiMissionVnextProjectNav
     public partial class ProjectNav
     {
         [JsonProperty("favorites")]
-        public List<object> Favorites { get; set; }
+        public List<string> Favorites { get; set; }
 
         [JsonProperty("items")]
         public List<ProjectNavItem> Items { get; set; }

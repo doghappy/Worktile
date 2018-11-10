@@ -45,7 +45,7 @@
                 </NavigationViewItem>
             </NavigationView.PaneFooter>
 
-            <Frame x:Name="ContentFrame">
+            <Frame x:Name="ContentFrame" Navigated="ContentFrame_Navigated">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition/>

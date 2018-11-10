@@ -1,39 +1,175 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextProjectNav;
+using Worktile.ApiModel.ApiMissionVnextWorkAddon;
+using Worktile.Services;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views
 {
-    public sealed partial class MissionPage : Page
+    public sealed partial class MissionPage : Page, INotifyPropertyChanged
     {
         public MissionPage()
         {
             InitializeComponent();
+            WorkNavItems = new ObservableCollection<NavItem>();
+            FavNavItems = new ObservableCollection<NavItem>();
+            ProjectNavItems = new ObservableCollection<NavItem>();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                _isActive = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+            }
+        }
+
+        public ObservableCollection<NavItem> WorkNavItems { get; }
+
+        private NavItem _selectedWorkNav;
+        public NavItem SelectedWorkNav
+        {
+            get => _selectedWorkNav;
+            set
+            {
+                if (SelectedWorkNav != value)
+                {
+                    _selectedFavNav = null;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedFavNav)));
+                    _selectedProjectNav = null;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedProjectNav)));
+                    _selectedWorkNav = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedWorkNav)));
+                }
+            }
+        }
+
+        public ObservableCollection<NavItem> FavNavItems { get; }
+
+        private NavItem _selectedFavNav;
+        public NavItem SelectedFavNav
+        {
+            get => _selectedFavNav;
+            set
+            {
+                if (SelectedFavNav != value)
+                {
+                    _selectedProjectNav = null;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedProjectNav)));
+                    _selectedWorkNav = null;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedWorkNav)));
+                    _selectedFavNav = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedFavNav)));
+                }
+            }
+        }
+
+        public ObservableCollection<NavItem> ProjectNavItems { get; }
+
+        private NavItem _selectedProjectNav;
+        public NavItem SelectedProjectNav
+        {
+            get => _selectedProjectNav;
+            set
+            {
+                if (SelectedProjectNav != value)
+                {
+                    _selectedFavNav = null;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedFavNav)));
+                    _selectedWorkNav = null;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedWorkNav)));
+                    _selectedProjectNav = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedProjectNav)));
+                }
+            }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            IsActive = true;
+            await RequestApiMissionVnextWorkAddon();
             await RequestApiMissionVnextProjectNav();
+            IsActive = false;
+        }
+
+        private async Task RequestApiMissionVnextWorkAddon()
+        {
+            var client = new WtHttpClient();
+            var data = await client.GetAsync<ApiMissionVnextWorkAddon>("/api/mission-vnext/work-addons");
+            foreach (var item in data.Data.Value)
+            {
+                WorkNavItems.Add(new NavItem
+                {
+                    Name = item.Name,
+                    Glyph = WtfIconHelper.GetGlyph(item.Icon)
+                });
+            }
         }
 
         private async Task RequestApiMissionVnextProjectNav()
         {
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMissionVnextProjectNav>("/api/mission-vnext/project-nav");
+            foreach (var item in data.Data.ProjectNav.Favorites)
+            {
+                var project = data.Data.Projects.Single(p => p.Id == item);
+                project.Color = ColorMap.GetNewColor(project.Color);
+                FavNavItems.Add(new NavItem
+                {
+                    Name = project.Name,
+                    Color = project.Color,
+                    Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
+                });
+            }
+
+            foreach (var item in data.Data.ProjectNav.Items)
+            {
+                if (item.NavType == 1)
+                {
+                    var project = data.Data.Projects.Single(p => p.Id == item.NavId);
+                    project.Color = ColorMap.GetNewColor(project.Color);
+                    ProjectNavItems.Add(new NavItem
+                    {
+                        Name = project.Name,
+                        Color = project.Color,
+                        Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
+                    });
+                }
+                else if (item.NavType == 2)
+                {
+                    foreach (var subItem in item.Items)
+                    {
+                        var project = data.Data.Projects.Single(p => p.Id == subItem.NavId);
+                        if (project != null)
+                        {
+                            project.Color = ColorMap.GetNewColor(project.Color);
+                            ProjectNavItems.Add(new NavItem
+                            {
+                                Name = project.Name,
+                                Color = project.Color,
+                                Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
+                            });
+                        }
+                    }
+                }
+            }
         }
+    }
+
+    public class NavItem
+    {
+        public string Name { get; set; }
+        public string Glyph { get; set; }
+        public string Color { get; set; }
     }
 }

@@ -101,11 +101,15 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ColorMapItem.cs" />
     <Compile Include="Models\WtApp.cs" />
+    <Compile Include="Models\WtfIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ColorMap.cs" />
     <Compile Include="Services\CommonData.cs" />
     <Compile Include="Services\HashEncryptor.cs" />
     <Compile Include="Services\UtilityTool.cs" />
+    <Compile Include="Services\WtfIconHelper.cs" />
     <Compile Include="Views\MissionPage.xaml.cs">
       <DependentUpon>MissionPage.xaml</DependentUpon>
     </Compile>

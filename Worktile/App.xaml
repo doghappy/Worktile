@@ -17,6 +17,9 @@
             <Style TargetType="FontIcon" x:Key="WtfIcon">
                 <Setter Property="FontFamily" Value="/Assets/Fonts/iconfont.ttf#wtf"/>
             </Style>
+
+
+            <Thickness x:Key="TitleBarHeight">0 32 0 0</Thickness>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

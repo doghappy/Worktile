@@ -138,5 +138,10 @@ namespace Worktile
                 }
             }
         }
+
+        private void ContentFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            Nav.IsBackEnabled = ContentFrame.CanGoBack;
+        }
     }
 }
