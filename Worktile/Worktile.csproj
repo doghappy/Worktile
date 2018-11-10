@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanReserveConverter.cs" />
+    <Compile Include="Converters\NumberVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\EnumVisibilityConverter.cs" />
     <Compile Include="MainPage.xaml.cs">

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Worktile.Converters"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -15,6 +16,7 @@
             <Style TargetType="TextBlock" x:Key="NavLabel">
                 <Setter Property="Margin" Value="4 0 0 0"/>
             </Style>
+            <converters:NumberVisibilityConverter x:Key="NumberVisibilityConverter"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -68,6 +70,7 @@
                         <ListView ItemsSource="{x:Bind FavNavItems}"
                                   SelectedItem="{x:Bind SelectedFavNav, Mode=TwoWay}"
                                   ScrollViewer.VerticalScrollMode="Disabled"
+                                  Visibility="{x:Bind FavNavItems.Count, Converter={StaticResource NumberVisibilityConverter}}"
                                   Margin="0 0 0 16">
                             <ListView.Header>
                                 <TextBlock Margin="12 0 0 0" FontWeight="SemiBold" Text="置顶"/>
