@@ -38,7 +38,7 @@ namespace Worktile.WindowsUI.Views.Mission
         private void SubHeader_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var buttons = ToggleButtonContainer.GetChildren<Button>();
-            ViewModel.MissionActivityStatus = buttons.IndexOf(sender as Button);
+            //ViewModel.MissionActivityStatus = buttons.IndexOf(sender as Button);
         }
     }
 }

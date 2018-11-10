@@ -1,0 +1,22 @@
+﻿<Application
+    x:Class="Worktile.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <SolidColorBrush x:Key="PrimaryBrush" Color="#22d7bb"/>
+            <SolidColorBrush x:Key="DangerBrush" Color="#ff5b57"/>
+
+            <AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop" TintOpacity="0" TintColor="#FF000000" FallbackColor="#FF008000" />
+
+            <Style TargetType="FontIcon" x:Key="WtfIcon">
+                <Setter Property="FontFamily" Value="/Assets/Fonts/iconfont.ttf#wtf"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
