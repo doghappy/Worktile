@@ -40,6 +40,11 @@ namespace Worktile.WtRequestClient
             HttpClient.DefaultRequestHeaders.Add(name, value);
         }
 
+        public static void SetBaseAddress(string uri)
+        {
+            HttpClient.BaseAddress = new Uri(uri);
+        }
+
         public static Cookie GetCookieByString(string value)
         {
             string[] arr = value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);

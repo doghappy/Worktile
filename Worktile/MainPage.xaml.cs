@@ -14,6 +14,7 @@ using Worktile.ApiModel.ApiTeam;
 using Worktile.ApiModel.ApiUserMe;
 using Worktile.Models;
 using Worktile.Services;
+using Worktile.Views;
 using Worktile.WtRequestClient;
 
 namespace Worktile
@@ -78,6 +79,7 @@ namespace Worktile
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
+            WtHttpClient.SetBaseAddress(CommonData.SubDomain);
             Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
             await RequestApiUserMeAsync();
             await RequestApiTeamAsync();
@@ -86,9 +88,8 @@ namespace Worktile
 
         private async Task RequestApiUserMeAsync()
         {
-            string uri = CommonData.SubDomain + "/api/user/me";
             var client = new WtHttpClient();
-            var me = await client.GetAsync<ApiUserMe>(uri);
+            var me = await client.GetAsync<ApiUserMe>("/api/user/me");
             CommonData.ApiUserMeConfig = me.Data.Config;
             CommonData.ApiUserMe = me.Data.Me;
             DisplayName = CommonData.ApiUserMe.DisplayName;
@@ -108,9 +109,8 @@ namespace Worktile
 
         private async Task RequestApiTeamAsync()
         {
-            string uri = CommonData.SubDomain + "/api/team";
             var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiTeam>(uri);
+            var data = await client.GetAsync<ApiTeam>("/api/team");
             CommonData.Team = data.Data;
             AppItems.Add(CommonData.Apps.SingleOrDefault(a => a.Name == "message"));
             CommonData.Team.Apps.ForEach(app =>
@@ -129,10 +129,11 @@ namespace Worktile
             }
             else
             {
-                var item = args.SelectedItem as NavigationViewItem;
-                switch (item.Tag)
+                var app = args.SelectedItem as WtApp;
+                switch (app.Name)
                 {
                     case "mission":
+                        ContentFrame.Navigate(typeof(MissionPage));
                         break;
                 }
             }
