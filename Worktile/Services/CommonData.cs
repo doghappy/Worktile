@@ -12,12 +12,8 @@ namespace Worktile.Services
             set => ApplicationData.Current.LocalSettings.Values[nameof(SubDomain)] = value;
         }
 
-        public static string TeamId { get; set; }
-        public static string TeamName { get; set; }
-        public static string TeamLogo { get; set; }
-
         public static ApiModel.ApiUserMe.Config ApiUserMeConfig { get; set; }
-        //public static ApiModel.ApiUserSignIn.Data Me { get; set; }
+        public static ApiModel.ApiUserMe.Me ApiUserMe { get; set; }
         public static ApiModel.ApiTeam.Data Team { get; set; }
 
         public static readonly List<WtApp> Apps = new List<WtApp>
@@ -26,16 +22,16 @@ namespace Worktile.Services
             {
                 Name = "message",
                 DisplayName = "消息",
-                Glyph = "\ue61e",
-                GlyphO = "\ue618",
+                Glyph = "\ue618",
+                GlyphO = "\ue61e",
                 Color = "#22d7bb"
             },
             new WtApp
             {
                 Name = "task",
                 DisplayName = "任务",
-                Glyph = "\ue61a",
-                GlyphO = "\ue614",
+                Glyph = "\ue614",
+                GlyphO = "\ue61a",
                 Color = "#22D7BB"
             },
             new WtApp
@@ -50,8 +46,8 @@ namespace Worktile.Services
             {
                 Name = "drive",
                 DisplayName = "网盘",
-                Glyph = "\ue61c",
-                GlyphO = "\ue616",
+                Glyph = "\ue616",
+                GlyphO = "\ue61c",
                 Color = "#66C060"
             },
             new WtApp
@@ -90,7 +86,7 @@ namespace Worktile.Services
             {
                 Name = "leave",
                 DisplayName = "考勤",
-                Glyph = "\ue610",
+                Glyph = "\ue607",
                 GlyphO = "\ue608",
                 Color = "#FFD234"
             },

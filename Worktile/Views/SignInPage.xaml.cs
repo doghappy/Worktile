@@ -139,6 +139,8 @@ namespace Worktile.Views
         }
         #endregion
 
+        string _teamId;
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GridState = GridState.Enterprise;
@@ -161,11 +163,9 @@ namespace Worktile.Views
                     await RequestApiUserMeAsync();
 
                     var lite = await GetTeamLiteAsync();
-                    CommonData.TeamId = lite.Data.Id;
                     TeamName = lite.Data.Name;
-                    CommonData.TeamName = TeamName;
+                    _teamId = lite.Data.Id;
                     Logo = new BitmapImage(new Uri(CommonData.ApiUserMeConfig.Box.LogoUrl + lite.Data.OutsideLogo));
-                    CommonData.TeamLogo = CommonData.ApiUserMeConfig.Box.LogoUrl + lite.Data.Logo;
                     GridState = GridState.Member;
                 }
             }
@@ -198,7 +198,7 @@ namespace Worktile.Views
                 locale = "zh-cn",
                 name = UserName,
                 password = HashEncryptor.ComputeMd5(Password),
-                team_id = CommonData.TeamId
+                team_id = _teamId
             };
             var client = new WtHttpClient();
             client.OnSuccessStatusCode += resMsg =>

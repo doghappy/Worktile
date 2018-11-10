@@ -26,11 +26,20 @@
                 <AutoSuggestBox QueryIcon="Find"/>
             </NavigationView.AutoSuggestBox>
 
+            <NavigationView.PaneHeader>
+                <Image Source="{x:Bind Logo, Mode=OneWay}" HorizontalAlignment="Left" Margin="8 0 0 0"/>
+            </NavigationView.PaneHeader>
+
             <NavigationView.PaneFooter>
-                <NavigationViewItem Icon="Contact" Content="Menu Item3" Tag="SamplePage3" />
+                <NavigationViewItem Tag="me" Content="{x:Bind DisplayName, Mode=OneWay}">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xE642;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.PaneFooter>
 
             <Frame x:Name="contentFrame"/>
         </NavigationView>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>
