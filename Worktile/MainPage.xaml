@@ -11,7 +11,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView x:Name="Nav" PaneDisplayMode="LeftCompact" MenuItemsSource="{x:Bind AppItems}">
+        <Grid.Background>
+            <ImageBrush ImageSource="{x:Bind BgImage, Mode=OneWay}" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <NavigationView x:Name="Nav"
+                        PaneDisplayMode="LeftCompact"
+                        MenuItemsSource="{x:Bind AppItems}"
+                        SelectionChanged="Nav_SelectionChanged">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:WtApp">
                     <NavigationViewItem Tag="{x:Bind Name}" Content="{x:Bind DisplayName}">
@@ -38,7 +45,13 @@
                 </NavigationViewItem>
             </NavigationView.PaneFooter>
 
-            <Frame x:Name="contentFrame"/>
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
         </NavigationView>
         <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>

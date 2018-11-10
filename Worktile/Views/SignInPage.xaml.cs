@@ -42,8 +42,8 @@ namespace Worktile.Views
 
         const string DOMAIN_SUFFIX = ".worktile.com";
 
-        private ImageSource _logo;
-        public ImageSource Logo
+        private BitmapImage _logo;
+        public BitmapImage Logo
         {
             get => _logo;
             set

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.ApiModel.ApiTeam;
@@ -50,14 +52,25 @@ namespace Worktile
             }
         }
 
-        private ImageSource _logo;
-        public ImageSource Logo
+        private BitmapImage _logo;
+        public BitmapImage Logo
         {
             get => _logo;
             set
             {
                 _logo = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Logo)));
+            }
+        }
+
+        private BitmapImage _bgImage;
+        public BitmapImage BgImage
+        {
+            get => _bgImage;
+            set
+            {
+                _bgImage = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BgImage)));
             }
         }
 
@@ -79,6 +92,18 @@ namespace Worktile
             CommonData.ApiUserMeConfig = me.Data.Config;
             CommonData.ApiUserMe = me.Data.Me;
             DisplayName = CommonData.ApiUserMe.DisplayName;
+
+            string bgImg = CommonData.ApiUserMe.Preferences.BackgroundImage;
+            if (bgImg.StartsWith("desktop-") && bgImg.EndsWith(".jpg"))
+            {
+                BgImage = new BitmapImage(new Uri("ms-appx:///Assets/Images/Background/" + bgImg));
+            }
+            else
+            {
+                string imgUriString = CommonData.ApiUserMeConfig.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
+                byte[] buffer = await client.GetByteArrayAsync(imgUriString);
+                BgImage = await UtilityTool.GetImageFromBytesAsync(buffer);
+            }
         }
 
         private async Task RequestApiTeamAsync()
@@ -94,6 +119,23 @@ namespace Worktile
                 AppItems.Add(item);
             });
             Logo = new BitmapImage(new Uri(CommonData.ApiUserMeConfig.Box.LogoUrl + CommonData.Team.Logo));
+        }
+
+        private void Nav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected)
+            {
+
+            }
+            else
+            {
+                var item = args.SelectedItem as NavigationViewItem;
+                switch (item.Tag)
+                {
+                    case "mission":
+                        break;
+                }
+            }
         }
     }
 }

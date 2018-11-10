@@ -10,13 +10,6 @@ namespace Worktile.WtRequestClient
 {
     public class WtHttpClient
     {
-        static CookieContainer _cookieContainer = new CookieContainer();
-
-        static HttpClientHandler _httpClientHandler = new HttpClientHandler
-        {
-            CookieContainer = _cookieContainer
-        };
-
         static HttpClient _httpClient;
         static HttpClient HttpClient
         {
@@ -24,8 +17,7 @@ namespace Worktile.WtRequestClient
             {
                 if (_httpClient == null)
                 {
-                    _httpClient = new HttpClient(_httpClientHandler);
-                    //_httpClient.DefaultRequestHeaders.Add("app-key", "6247004110ca41f0baa489f7111a4553");
+                    _httpClient = new HttpClient();
                 }
                 return _httpClient;
             }
@@ -42,8 +34,6 @@ namespace Worktile.WtRequestClient
         public event Action<HttpResponseMessage> OnNonSuccessStatusCode;
 
         public bool IsSuccessStatusCode { get; private set; }
-
-        public static CookieCollection CookieCollection => _cookieContainer.GetCookies(new Uri("https://worktile.com"));
 
         public static void AddDefaultRequestHeaders(string name, string value)
         {
@@ -74,6 +64,11 @@ namespace Worktile.WtRequestClient
                 + "Domain=" + cookie.Domain + separator
                 + "Path=" + cookie.Path + separator
                 + "Expires=" + cookie.Expires.ToString("r");
+        }
+
+        public async Task<byte[]> GetByteArrayAsync(string uri)
+        {
+            return await HttpClient.GetByteArrayAsync(uri);
         }
 
         public async Task<T> GetAsync<T>(string uri)
