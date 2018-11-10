@@ -113,6 +113,14 @@ namespace Worktile.Services
                 Glyph = "\ue613",
                 GlyphO = "\ue60a",
                 Color = "#4E8AF9"
+            },
+            new WtApp
+            {
+                Name = "mission",
+                DisplayName = "项目",
+                Glyph = "\ue70d",
+                GlyphO = "\ue70c",
+                Color = "#F76CAA"
             }
         };
     }

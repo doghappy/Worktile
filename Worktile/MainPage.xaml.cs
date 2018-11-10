@@ -90,11 +90,8 @@ namespace Worktile
             AppItems.Add(CommonData.Apps.SingleOrDefault(a => a.Name == "message"));
             CommonData.Team.Apps.ForEach(app =>
             {
-                var item = CommonData.Apps.SingleOrDefault(a => a.Name == app.Name);
-                if (item != null)
-                {
-                    AppItems.Add(item);
-                }
+                var item = CommonData.Apps.Single(a => a.Name == app.Name);
+                AppItems.Add(item);
             });
             Logo = new BitmapImage(new Uri(CommonData.ApiUserMeConfig.Box.LogoUrl + CommonData.Team.Logo));
         }
