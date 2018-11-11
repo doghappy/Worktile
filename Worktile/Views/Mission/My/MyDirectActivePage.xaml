@@ -15,13 +15,16 @@
             <ItemsControl ItemsSource="{x:Bind KanBanGroups}" Margin="8 16 8 16">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"></StackPanel>
+                        <StackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="kanban:KanBanGroup">
                         <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}" VerticalAlignment="Top" Margin="8 0" Width="300" Padding="12">
-                            <mission:MissionListViewHeader Header="{x:Bind Header}"/>
+                            <mission:MissionListViewHeader Header="{x:Bind Header}"
+                                                           NotStarted="{x:Bind NotStarted}"
+                                                           Processing="{x:Bind Processing}"
+                                                           Completed="{x:Bind Completed}"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

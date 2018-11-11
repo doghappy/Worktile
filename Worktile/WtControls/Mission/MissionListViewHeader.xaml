@@ -23,11 +23,11 @@
 
             <TextBlock Text="{x:Bind Header, Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"/>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" FontWeight="SemiBold">
-            <Run Text="0" Foreground="{StaticResource PrimaryBrush}"/>
+            <Run Text="{x:Bind Completed, Mode=OneWay}" Foreground="{StaticResource PrimaryBrush}"/>
             <Run Text="/" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-            <Run Text="5" Foreground="{StaticResource WarningBrush}"/>
+            <Run Text="{x:Bind Processing, Mode=OneWay}" Foreground="{StaticResource WarningBrush}"/>
             <Run Text="/" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-            <Run Text="16"/>
+            <Run Text="{x:Bind NotStarted, Mode=OneWay}"/>
             </TextBlock>
         </Grid>
 
@@ -36,8 +36,8 @@
             Maximum = 已完成+未完成+进行中
             进行中.Value += 已完成.Value
             -->
-            <ProgressBar Value="4" Maximum="5" Foreground="{StaticResource WarningBrush}"/>
-            <ProgressBar Value="2" Maximum="5" Foreground="{StaticResource PrimaryBrush}"/>
+            <ProgressBar Value="{x:Bind Processing}" Maximum="{x:Bind Maximum, Mode=OneWay}" Foreground="{StaticResource WarningBrush}"/>
+            <ProgressBar Value="{x:Bind Completed}" Maximum="{x:Bind Maximum, Mode=OneWay}" Foreground="{StaticResource PrimaryBrush}"/>
         </Grid>
     </Grid>
 </UserControl>

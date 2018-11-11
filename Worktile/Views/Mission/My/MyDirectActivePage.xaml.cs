@@ -69,6 +69,12 @@ namespace Worktile.Views.Mission.My
                     var task = data.Data.Value.Single(v => v.Id == taskId);
                     var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == task.TaskStateId);
                     var type = data.Data.References.TaskTypes.Single(t => t.Id == task.TaskTypeId);
+                    switch (state.Type)
+                    {
+                        case 1: kbGroup.NotStarted++; break;
+                        case 2: kbGroup.Processing++; break;
+                        case 3: kbGroup.Completed++; break;
+                    }
                     kbGroup.Items.Add(new KanBanItem
                     {
                         Title = task.Title,
