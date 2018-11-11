@@ -26,7 +26,7 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel x:Name="MissionHeader" Padding="12" Background="{ThemeResource SystemControlAltHighAcrylicElementBrush}">
+                            <StackPanel x:Name="MissionHeader" Padding="12" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
                                 <mission:MissionListViewHeader Header="{x:Bind Header}" NotStarted="{x:Bind NotStarted}" Processing="{x:Bind Processing}" Completed="{x:Bind Completed}"/>
                             </StackPanel>
 
@@ -34,7 +34,9 @@
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="Margin" Value="0 0 0 4"/>
-                                        <Setter Property="Background" Value="{ThemeResource CustomAcrylicBrush}"/>
+                                        <!--<Setter Property="Background" Value="{ThemeResource CustomAcrylicBrush}"/>-->
+                                        <!--<Setter Property="Background" Value="{ThemeResource SystemControlAltLowAcrylicWindowBrush}"/>-->
+                                        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                     </Style>
                                 </ListView.ItemContainerStyle>
