@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive;
 using Worktile.Models.KanBan;
 using Worktile.Services;
@@ -43,6 +32,8 @@ namespace Worktile.Views.Mission.My
             }
         }
 
+        private bool _isPageLoaed;
+
         public ObservableCollection<KanBanGroup> KanBanGroups { get; }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -50,6 +41,7 @@ namespace Worktile.Views.Mission.My
             IsActive = true;
             await RequestApiMissionVnextWorkMyDirectedActive();
             IsActive = false;
+            _isPageLoaed = true;
         }
 
         private async Task RequestApiMissionVnextWorkMyDirectedActive()
@@ -99,6 +91,31 @@ namespace Worktile.Views.Mission.My
                     });
                 }
                 KanBanGroups.Add(kbGroup);
+            }
+        }
+
+        private async void MyGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var sp = MyGrid.GetChild<StackPanel>("MissionHeader");
+            var lvs = MyGrid.GetChildren<ListView>("DataList");
+            if (sp != null && lvs.Any())
+            {
+                foreach (var item in lvs)
+                {
+                    item.MaxHeight = MyGrid.ActualHeight - 32 - sp.ActualHeight;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 200; i++)
+                {
+                    if (_isPageLoaed)
+                    {
+                        MyGrid_SizeChanged(null, null);
+                        return;
+                    }
+                    await Task.Delay(100);
+                }
             }
         }
     }

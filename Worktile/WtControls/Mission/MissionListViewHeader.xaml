@@ -23,11 +23,11 @@
 
             <TextBlock Text="{x:Bind Header, Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"/>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" FontWeight="SemiBold">
-            <Run Text="{x:Bind Completed, Mode=OneWay}" Foreground="{StaticResource PrimaryBrush}"/>
-            <Run Text="/" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-            <Run Text="{x:Bind Processing, Mode=OneWay}" Foreground="{StaticResource WarningBrush}"/>
-            <Run Text="/" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-            <Run Text="{x:Bind NotStarted, Mode=OneWay}"/>
+                <Run Text="{x:Bind Completed, Mode=OneWay}" Foreground="{StaticResource PrimaryBrush}"/>
+                <Run Text="/" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <Run Text="{x:Bind Processing, Mode=OneWay}" Foreground="{StaticResource WarningBrush}"/>
+                <Run Text="/" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <Run Text="{x:Bind NotStarted, Mode=OneWay}"/>
             </TextBlock>
         </Grid>
 
