@@ -103,21 +103,32 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\ColorMapItem.cs" />
+    <Compile Include="Models\KanBan\KanBanGroup.cs" />
+    <Compile Include="Models\KanBan\KanBanItem.cs" />
+    <Compile Include="Models\KanBan\KanBanItemAvatar.cs" />
+    <Compile Include="Models\KanBan\KanBanItemState.cs" />
+    <Compile Include="Models\KanBan\KanBanItemTaskType.cs" />
     <Compile Include="Models\WtApp.cs" />
-    <Compile Include="Models\WtfIcon.cs" />
+    <Compile Include="Models\WtIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ColorMap.cs" />
+    <Compile Include="Services\WtColorHelper.cs" />
     <Compile Include="Services\CommonData.cs" />
     <Compile Include="Services\HashEncryptor.cs" />
     <Compile Include="Services\UtilityTool.cs" />
-    <Compile Include="Services\WtfIconHelper.cs" />
+    <Compile Include="Services\WtIconHelper.cs" />
     <Compile Include="TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MissionPage.xaml.cs">
+    <Compile Include="Views\Mission\MissionPage.xaml.cs">
       <DependentUpon>MissionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Mission\MyDirectedPage.xaml.cs">
+    <Compile Include="Views\Mission\My\GenericPage.xaml.cs">
+      <DependentUpon>GenericPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Mission\My\MyDirectActivePage.xaml.cs">
+      <DependentUpon>MyDirectActivePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Mission\My\MyDirectedPage.xaml.cs">
       <DependentUpon>MyDirectedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SignInPage.xaml.cs">
@@ -209,11 +220,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MissionPage.xaml">
+    <Page Include="Views\Mission\MissionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Mission\MyDirectedPage.xaml">
+    <Page Include="Views\Mission\My\GenericPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Mission\My\MyDirectActivePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Mission\My\MyDirectedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

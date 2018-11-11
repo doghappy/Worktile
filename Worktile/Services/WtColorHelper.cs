@@ -4,9 +4,9 @@ using Worktile.Models;
 
 namespace Worktile.Services
 {
-    static class ColorMap
+    static class WtColorHelper
     {
-        static ColorMap()
+        static WtColorHelper()
         {
             Map = new List<ColorMapItem>
             {
@@ -41,6 +41,23 @@ namespace Worktile.Services
                 return color;
             }
             return item.NewColor;
+        }
+
+        public static string GetColorByClass(string cls)
+        {
+            string color = null;
+            switch (cls)
+            {
+                case "task": color = "#22d7bb"; break;
+                case "worksheet": color = "#9473fd"; break;
+                case "demand": color = "#66c060"; break;
+                case "bug": color = "#fa5a55"; break;
+                case "pc": color = "#2dbcff"; break;
+                case "ios": color = "#4e8af9"; break;
+                case "android": color = "#99d75a"; break;
+                case "man": color = "#2cccda"; break;
+            }
+            return color;
         }
     }
 }

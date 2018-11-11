@@ -44,17 +44,19 @@ namespace Worktile.WtControls.Mission
             {
                 _notStarted = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotStarted)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Maximum)));
             }
         }
 
         private int _processing;
         public int Processing
         {
-            get => _processing;
+            get => _processing + _completed;
             set
             {
                 _processing = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Processing)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Maximum)));
             }
         }
 
@@ -66,7 +68,10 @@ namespace Worktile.WtControls.Mission
             {
                 _completed = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Completed)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Maximum)));
             }
         }
+
+        public int Maximum => _completed + _processing + _notStarted;
     }
 }

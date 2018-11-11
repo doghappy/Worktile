@@ -9,9 +9,10 @@ using Worktile.ApiModel.ApiMissionVnextProjectNav;
 using Worktile.ApiModel.ApiMissionVnextWorkAddon;
 using Worktile.Services;
 using Worktile.Views.Mission;
+using Worktile.Views.Mission.My;
 using Worktile.WtRequestClient;
 
-namespace Worktile.Views
+namespace Worktile.Views.Mission
 {
     public sealed partial class MissionPage : Page, INotifyPropertyChanged
     {
@@ -125,7 +126,7 @@ namespace Worktile.Views
                 WorkNavItems.Add(new NavItem
                 {
                     Name = item.Name,
-                    Glyph = WtfIconHelper.GetGlyph(item.Icon)
+                    Glyph = WtIconHelper.GetGlyph(item.Icon)
                 });
             }
         }
@@ -137,7 +138,7 @@ namespace Worktile.Views
             foreach (var item in data.Data.ProjectNav.Favorites)
             {
                 var project = data.Data.Projects.Single(p => p.Id == item);
-                project.Color = ColorMap.GetNewColor(project.Color);
+                project.Color = WtColorHelper.GetNewColor(project.Color);
                 FavNavItems.Add(new NavItem
                 {
                     Name = project.Name,
@@ -151,7 +152,7 @@ namespace Worktile.Views
                 if (item.NavType == 1)
                 {
                     var project = data.Data.Projects.Single(p => p.Id == item.NavId);
-                    project.Color = ColorMap.GetNewColor(project.Color);
+                    project.Color = WtColorHelper.GetNewColor(project.Color);
                     ProjectNavItems.Add(new NavItem
                     {
                         Name = project.Name,
@@ -166,7 +167,7 @@ namespace Worktile.Views
                         var project = data.Data.Projects.Single(p => p.Id == subItem.NavId);
                         if (project != null)
                         {
-                            project.Color = ColorMap.GetNewColor(project.Color);
+                            project.Color = WtColorHelper.GetNewColor(project.Color);
                             ProjectNavItems.Add(new NavItem
                             {
                                 Name = project.Name,

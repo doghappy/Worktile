@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="ApiMissionVnextProjectNav.cs" />
     <Compile Include="ApiMissionVnextWorkAddon.cs" />
+    <Compile Include="ApiMissionVnextWorkMyDirectedActive.cs" />
     <Compile Include="ApiTeam.cs" />
     <Compile Include="ApiTeamDomainCheck.cs" />
     <Compile Include="ApiTeamLite.cs" />

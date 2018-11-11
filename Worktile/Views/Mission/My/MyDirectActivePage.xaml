@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="Worktile.Views.Mission.My.MyDirectActivePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Mission.My"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:kanban="using:Worktile.Models.KanBan"
+    xmlns:mission="using:Worktile.WtControls.Mission"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Grid x:Name="MyGrid" PointerPressed="Grid_PointerPressed" PointerMoved="Grid_PointerMoved" PointerExited="MyGrid_PointerExited">
+        <ScrollViewer x:Name="BigScrolViewer" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{x:Bind KanBanGroups}" Margin="8 16 8 16">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="kanban:KanBanGroup">
+                        <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}" VerticalAlignment="Top" Margin="8 0" Width="300" Padding="12">
+                            <mission:MissionListViewHeader Header="{x:Bind Header}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+    </Grid>
+</Page>

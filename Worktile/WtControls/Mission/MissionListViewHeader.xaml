@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="收件箱" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"/>
+            <TextBlock Text="{x:Bind Header, Mode=OneWay}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"/>
             <TextBlock Grid.Column="1" VerticalAlignment="Center" FontWeight="SemiBold">
             <Run Text="0" Foreground="{StaticResource PrimaryBrush}"/>
             <Run Text="/" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>

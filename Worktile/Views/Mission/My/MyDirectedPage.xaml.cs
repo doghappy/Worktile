@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextWorkAddon;
 using Worktile.Services;
 
-namespace Worktile.Views.Mission
+namespace Worktile.Views.Mission.My
 {
     public sealed partial class MyDirectedPage : Page, INotifyPropertyChanged
     {
@@ -46,6 +46,7 @@ namespace Worktile.Views.Mission
                 {
                     _selectedStatus = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedStatus)));
+                    FrameNavigate();
                 }
             }
         }
@@ -82,7 +83,24 @@ namespace Worktile.Views.Mission
                 {
                     _selectedNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
+                    FrameNavigate();
                 }
+            }
+        }
+
+        private void FrameNavigate()
+        {
+            if (SelectedNav == null || SelectedStatus == null)
+            {
+                return;
+            }
+            if (SelectedNav.Key == "directed" && Status.IndexOf(SelectedStatus) == 0)
+            {
+                ContentFrame.Navigate(typeof(MyDirectActivePage));
+            }
+            else
+            {
+                ContentFrame.Navigate(typeof(GenericPage));
             }
         }
 
@@ -90,7 +108,7 @@ namespace Worktile.Views.Mission
         {
             base.OnNavigatedTo(e);
             _navItem = e.Parameter as Value;
-            TopNavIcon = WtfIconHelper.GetGlyph(_navItem.Icon);
+            TopNavIcon = WtIconHelper.GetGlyph(_navItem.Icon);
             TopNavName = _navItem.Name;
             SelectedStatus = Status.First();
         }
