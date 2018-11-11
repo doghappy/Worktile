@@ -1,0 +1,67 @@
+﻿<UserControl
+    x:Class="Worktile.WtControls.Mission.MissionListViewItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.WtControls.Mission"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Background="#1AF969AA" CornerRadius="4" Padding="8 4">
+                <StackPanel Orientation="Horizontal">
+                    <!--
+                    颜色需要ColorMap转换
+                    type: 1未开始 2进行中 3已完成 决定图标
+                    -->
+                    <FontIcon Style="{StaticResource WtfIcon}" FontSize="12" Foreground="#F969AA" Glyph="&#xe6ad;"/>
+                    <TextBlock Text="测试删除状态666" FontSize="12" Margin="4 0 0 0" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                </StackPanel>
+
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="未开始">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Style="{StaticResource WtfIcon}" Foreground="{ThemeResource PrimaryBrush}" Glyph="&#xE6AD;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="进行中">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Style="{StaticResource WtfIcon}" Foreground="{ThemeResource DangerBrush}" Glyph="&#xE6AB;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="已完成">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Style="{StaticResource WtfIcon}" Foreground="{ThemeResource WarningBrush}" Glyph="&#xE6AC;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+            <PersonPicture Grid.Column="1" Height="30" DisplayName="HeroWong"/>
+        </Grid>
+
+        <TextBlock Grid.Row="1" Text="线程 0x5e9c 已退出，返回值为 0 (0x0)。" Margin="0 5"/>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Border CornerRadius="3" Background="{ThemeResource SystemControlForegroundBaseLowBrush}" Padding="6 2" VerticalAlignment="Center">
+                <TextBlock Text="任务编号：12334" FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+            </Border>
+            <!--ToolTipService = task_types.name-->
+            <FontIcon Margin="8 0 0 0" Style="{StaticResource WtfIcon}" Glyph="&#xE727;" FontSize="22" Foreground="{StaticResource PrimaryBrush}" ToolTipService.ToolTip="任务"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

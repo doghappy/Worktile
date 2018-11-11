@@ -111,6 +111,9 @@
     <Compile Include="Services\HashEncryptor.cs" />
     <Compile Include="Services\UtilityTool.cs" />
     <Compile Include="Services\WtfIconHelper.cs" />
+    <Compile Include="TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MissionPage.xaml.cs">
       <DependentUpon>MissionPage.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,9 @@
     </Compile>
     <Compile Include="WtControls\Mission\MissionListViewHeader.xaml.cs">
       <DependentUpon>MissionListViewHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WtControls\Mission\MissionListViewItem.xaml.cs">
+      <DependentUpon>MissionListViewItem.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="TestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MissionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WtControls\Mission\MissionListViewHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WtControls\Mission\MissionListViewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
