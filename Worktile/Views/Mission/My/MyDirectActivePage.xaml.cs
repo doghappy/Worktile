@@ -114,7 +114,7 @@ namespace Worktile.Views.Mission.My
                         MyGrid_SizeChanged(null, null);
                         return;
                     }
-                    await Task.Delay(100);
+                    await Task.Delay(400);
                 }
             }
         }
