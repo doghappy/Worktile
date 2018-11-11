@@ -18,6 +18,7 @@
         <NavigationView x:Name="Nav"
                         PaneDisplayMode="LeftCompact"
                         MenuItemsSource="{x:Bind AppItems}"
+                        BackRequested="Nav_BackRequested"
                         SelectionChanged="Nav_SelectionChanged">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:WtApp">

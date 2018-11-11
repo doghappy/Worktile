@@ -143,5 +143,13 @@ namespace Worktile
         {
             Nav.IsBackEnabled = ContentFrame.CanGoBack;
         }
+
+        private void Nav_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            if (ContentFrame.CanGoBack)
+            {
+                ContentFrame.GoBack();
+            }
+        }
     }
 }

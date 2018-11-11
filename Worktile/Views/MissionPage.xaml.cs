@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Worktile.ApiModel.ApiMissionVnextProjectNav;
 using Worktile.ApiModel.ApiMissionVnextWorkAddon;
 using Worktile.Services;
+using Worktile.Views.Mission;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views
@@ -50,6 +52,14 @@ namespace Worktile.Views
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedProjectNav)));
                     _selectedWorkNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedWorkNav)));
+                    if (value != null)
+                    {
+                        var item = _workAddons.Single(w => w.Name == value.Name);
+                        switch (item.Key)
+                        {
+                            case "my": ContentFrame.Navigate(typeof(MyDirectedPage), item); break;
+                        }
+                    }
                 }
             }
         }
@@ -94,11 +104,14 @@ namespace Worktile.Views
             }
         }
 
+        private List<ApiModel.ApiMissionVnextWorkAddon.Value> _workAddons;
+
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
             await RequestApiMissionVnextWorkAddon();
             await RequestApiMissionVnextProjectNav();
+            SelectedWorkNav = WorkNavItems.First();
             IsActive = false;
         }
 
@@ -106,6 +119,7 @@ namespace Worktile.Views
         {
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMissionVnextWorkAddon>("/api/mission-vnext/work-addons");
+            _workAddons = data.Data.Value;
             foreach (var item in data.Data.Value)
             {
                 WorkNavItems.Add(new NavItem
