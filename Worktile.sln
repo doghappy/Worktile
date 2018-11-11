@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worktile.ApiModel", "Workti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worktile.WtRequestClient", "Worktile.WtRequestClient\Worktile.WtRequestClient.csproj", "{64C1D453-F677-4225-9A30-A5B3C368EFF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worktile.WorktileControl", "Worktile.WorktileControl\Worktile.WorktileControl.csproj", "{D244253C-A1D3-4139-AB54-1D2BD01822C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,22 @@ Global
 		{64C1D453-F677-4225-9A30-A5B3C368EFF0}.Release|x64.Build.0 = Release|x64
 		{64C1D453-F677-4225-9A30-A5B3C368EFF0}.Release|x86.ActiveCfg = Release|x86
 		{64C1D453-F677-4225-9A30-A5B3C368EFF0}.Release|x86.Build.0 = Release|x86
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Debug|ARM.ActiveCfg = Debug|ARM
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Debug|ARM.Build.0 = Debug|ARM
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Debug|x64.ActiveCfg = Debug|x64
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Debug|x64.Build.0 = Debug|x64
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Debug|x86.ActiveCfg = Debug|x86
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Debug|x86.Build.0 = Debug|x86
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Release|ARM.ActiveCfg = Release|ARM
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Release|ARM.Build.0 = Release|ARM
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Release|x64.ActiveCfg = Release|x64
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Release|x64.Build.0 = Release|x64
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Release|x86.ActiveCfg = Release|x86
+		{D244253C-A1D3-4139-AB54-1D2BD01822C6}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,6 +10,7 @@
             </ResourceDictionary.MergedDictionaries>
             
             <SolidColorBrush x:Key="PrimaryBrush" Color="#22d7bb"/>
+            <SolidColorBrush x:Key="WarningBrush" Color="#ffc442"/>
             <SolidColorBrush x:Key="DangerBrush" Color="#ff5b57"/>
 
             <AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop" TintOpacity="0" TintColor="#FF000000" FallbackColor="#FF008000" />
