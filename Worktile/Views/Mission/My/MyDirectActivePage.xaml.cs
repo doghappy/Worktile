@@ -28,7 +28,6 @@ namespace Worktile.Views.Mission.My
         {
             InitializeComponent();
             KanBanGroups = new ObservableCollection<KanBanGroup>();
-            MyGrid.AddHandler(PointerReleasedEvent, new PointerEventHandler(Grid_PointerReleased), true);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -45,9 +44,6 @@ namespace Worktile.Views.Mission.My
         }
 
         public ObservableCollection<KanBanGroup> KanBanGroups { get; }
-
-        private bool _isPressed;
-        private double _x;
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -98,32 +94,6 @@ namespace Worktile.Views.Mission.My
                 }
                 KanBanGroups.Add(kbGroup);
             }
-
-        }
-
-        private void Grid_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            _isPressed = true;
-            _x = e.GetCurrentPoint(BigScrolViewer).Position.X;
-        }
-
-        private void Grid_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            _isPressed = false;
-        }
-
-        private void Grid_PointerMoved(object sender, PointerRoutedEventArgs e)
-        {
-            if (_isPressed)
-            {
-                double offset = BigScrolViewer.HorizontalOffset + (e.GetCurrentPoint(BigScrolViewer).Position.X - _x) / 4;
-                BigScrolViewer.ChangeView(offset, null, null);
-            }
-        }
-
-        private void MyGrid_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            _isPressed = false;
         }
     }
 }

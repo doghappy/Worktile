@@ -10,8 +10,8 @@
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
-    <Grid x:Name="MyGrid" PointerPressed="Grid_PointerPressed" PointerMoved="Grid_PointerMoved" PointerExited="MyGrid_PointerExited">
-        <ScrollViewer x:Name="BigScrolViewer" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
+    <Grid>
+        <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled">
             <ItemsControl ItemsSource="{x:Bind KanBanGroups}" Margin="8 16 8 16">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
