@@ -110,6 +110,7 @@
     <Compile Include="ApiMissionVnextTasksIdstates.cs" />
     <Compile Include="ApiMissionVnextWorkAddon.cs" />
     <Compile Include="ApiMissionVnextWorkMyDirectedActive.cs" />
+    <Compile Include="ApiMissionVnextWorkMyGeneric.cs" />
     <Compile Include="ApiTeam.cs" />
     <Compile Include="ApiTeamDomainCheck.cs" />
     <Compile Include="ApiTeamLite.cs" />

@@ -30,7 +30,7 @@
 
             <NavigationView.PaneFooter>
                 <StackPanel Margin="0 0 16 0">
-                    <ComboBox ItemsSource="{x:Bind Status}" SelectedItem="{x:Bind SelectedStatus, Mode=TwoWay}"/>
+                    <ComboBox ItemsSource="{x:Bind Status}" DisplayMemberPath="Text" SelectedItem="{x:Bind SelectedStatus, Mode=TwoWay}"/>
                 </StackPanel>
             </NavigationView.PaneFooter>
 

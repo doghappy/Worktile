@@ -25,7 +25,11 @@ namespace Worktile.Views.Mission.My
         {
             InitializeComponent();
             TopNavItems = new ObservableCollection<TopNavItem>();
-            Status = new List<string> { "活动任务", "完成任务" };
+            Status = new List<StatusItem>
+            {
+                new StatusItem { Text = "活动任务", Value = "active" },
+                new StatusItem { Text = "完成任务", Value = "completed" }
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -34,10 +38,10 @@ namespace Worktile.Views.Mission.My
 
         public ObservableCollection<TopNavItem> TopNavItems { get; }
 
-        public List<string> Status { get; }
+        public List<StatusItem> Status { get; }
 
-        private string _selectedStatus;
-        public string SelectedStatus
+        private StatusItem _selectedStatus;
+        public StatusItem SelectedStatus
         {
             get => _selectedStatus;
             set
@@ -100,7 +104,8 @@ namespace Worktile.Views.Mission.My
             }
             else
             {
-                ContentFrame.Navigate(typeof(GenericPage));
+                string uri = SelectedNav.Key + "/" + SelectedStatus.Value;
+                ContentFrame.Navigate(typeof(GenericPage), uri);
             }
         }
 
@@ -125,6 +130,12 @@ namespace Worktile.Views.Mission.My
             }
             SelectedNav = TopNavItems.First();
         }
+    }
+
+    public class StatusItem
+    {
+        public string Text { get; set; }
+        public string Value { get; set; }
     }
 
     public class TopNavItem

@@ -1,6 +1,6 @@
-﻿namespace Worktile.Models.KanBan
+﻿namespace Worktile.Models
 {
-    public class KanBanItemState
+    public class TaskState
     {
         public string Foreground { get; set; }
         public string Background => Foreground.Insert(1, "1A");

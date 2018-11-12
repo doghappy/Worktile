@@ -2,6 +2,7 @@
 using System.IO;
 using Windows.Storage;
 using Worktile.Models;
+using System.Linq;
 
 namespace Worktile.Services
 {
@@ -130,6 +131,20 @@ namespace Worktile.Services
             string ext = Path.GetExtension(avatar);
             string name = Path.GetFileNameWithoutExtension(avatar);
             return ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
+        }
+
+        public static Avatar GetAvatar(string uid, int avatarSize)
+        {
+            var member = Team.Members.FirstOrDefault(m => m.Uid == uid);
+            if (member == null)
+            {
+                return null;
+            }
+            return new Avatar
+            {
+                ProfilePicture = GetAvatarUrl(member.Avatar, avatarSize),
+                DisplayName = member.DisplayName
+            };
         }
     }
 }

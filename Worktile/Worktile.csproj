@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanReserveConverter.cs" />
+    <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\EnumVisibilityConverter.cs" />
@@ -105,9 +106,9 @@
     <Compile Include="Models\ColorMapItem.cs" />
     <Compile Include="Models\KanBan\KanBanGroup.cs" />
     <Compile Include="Models\KanBan\KanBanItem.cs" />
-    <Compile Include="Models\KanBan\KanBanItemAvatar.cs" />
-    <Compile Include="Models\KanBan\KanBanItemState.cs" />
-    <Compile Include="Models\KanBan\KanBanItemTaskType.cs" />
+    <Compile Include="Models\Avatar.cs" />
+    <Compile Include="Models\TaskState.cs" />
+    <Compile Include="Models\TaskType.cs" />
     <Compile Include="Models\WtApp.cs" />
     <Compile Include="Models\WtIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,6 +141,9 @@
     </Compile>
     <Compile Include="WtControls\Mission\MissionListViewItem.xaml.cs">
       <DependentUpon>MissionListViewItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WtControls\TaskStateButton.xaml.cs">
+      <DependentUpon>TaskStateButton.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WtControls\Mission\MissionListViewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WtControls\TaskStateButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

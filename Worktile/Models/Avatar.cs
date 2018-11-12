@@ -1,6 +1,6 @@
-﻿namespace Worktile.Models.KanBan
+﻿namespace Worktile.Models
 {
-    public class KanBanItemAvatar
+    public class Avatar
     {
         public string DisplayName { get; set; }
         public string ProfilePicture { get; set; }

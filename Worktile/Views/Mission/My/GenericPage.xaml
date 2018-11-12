@@ -6,31 +6,64 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:models="using:Worktile.Models"
+    xmlns:wtcontrols="using:Worktile.WtControls"
+    xmlns:converters="using:Worktile.Converters"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+    <Page.Resources>
+        <ResourceDictionary>
+            <converters:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
 
-            <CommandBar IsOpen="False" DefaultLabelPosition="Right" HorizontalAlignment="Left" Background="Transparent">
-                <AppBarButton Icon="Filter" Label="Filter by">
-                    <AppBarButton.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem x:Name="rankLow" Text="Rank &lt; 50" />
-                            <MenuFlyoutItem x:Name="rankHigh" Text="Rank &gt; 50" />
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem x:Name="heightLow" Text="Height &lt; 8000ft" />
-                            <MenuFlyoutItem x:Name="heightHigh" Text="Height &gt; 8000ft" />
-                        </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
-                <AppBarButton x:Name="groupButton" Icon="List" Label="Group by" />
-            </CommandBar>
-
-            <!--<controls:DataGrid></controls:DataGrid>-->
-        </Grid>
+    <Grid Margin="16">
+        <controls:DataGrid Grid.Row="1"
+                               IsReadOnly="True"
+                               SelectionMode="Single"
+                               AutoGenerateColumns="False"
+                               Background="{ThemeResource SystemControlAcrylicElementBrush}"
+                               VerticalAlignment="Top"
+                               ItemsSource="{x:Bind GridItems}">
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Header="#" Tag="RowId" Binding="{Binding RowId}"/>
+                <controls:DataGridTextColumn Header="编号" Tag="Identifier" Binding="{Binding Identifier}"/>
+                <controls:DataGridTemplateColumn Header="状态" Tag="State">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="local:GridItem">
+                            <wtcontrols:TaskStateButton TaskId="{x:Bind Id}" State="{x:Bind State}"/>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTextColumn Header="标题" MaxWidth="400" Tag="Title" Binding="{Binding Title}"/>
+                <controls:DataGridTemplateColumn Header="负责人" Tag="Assignee">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="local:GridItem">
+                            <StackPanel Orientation="Horizontal" Visibility="{x:Bind Assignee, Converter={StaticResource NullVisibilityConverter}}">
+                                <PersonPicture Height="30" DisplayName="{x:Bind Assignee.DisplayName}" ProfilePicture="{x:Bind Assignee.ProfilePicture}"/>
+                                <TextBlock Margin="12" VerticalAlignment="Center" Text="{x:Bind Assignee.DisplayName}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+                <controls:DataGridTextColumn Header="截止时间" Tag="EndDate" Binding="{Binding EndDate}"/>
+                <controls:DataGridTemplateColumn Header="任务类型" Tag="TaskType">
+                    <controls:DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate x:DataType="local:GridItem">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Margin="0 0 12 0"
+                                              Style="{StaticResource WtfIcon}"
+                                              Glyph="{x:Bind TaskType.Glyph}"
+                                              FontSize="22"
+                                              Foreground="{x:Bind TaskType.Color}"/>
+                                <TextBlock Text="{x:Bind TaskType.Name}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </controls:DataGridTemplateColumn.CellTemplate>
+                </controls:DataGridTemplateColumn>
+            </controls:DataGrid.Columns>
+        </controls:DataGrid>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

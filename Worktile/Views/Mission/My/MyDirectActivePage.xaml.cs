@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive;
+using Worktile.Models;
 using Worktile.Models.KanBan;
 using Worktile.Services;
 using Worktile.WtRequestClient;
@@ -73,18 +73,18 @@ namespace Worktile.Views.Mission.My
                         Id = task.Id,
                         Title = task.Title,
                         Identifier = task.Identifier,
-                        Avatar = new KanBanItemAvatar
+                        Avatar = new Avatar
                         {
                             ProfilePicture = CommonData.GetAvatarUrl(CommonData.ApiUserMe.Avatar, 40),
                             DisplayName = CommonData.ApiUserMe.DisplayName
                         },
-                        State = new KanBanItemState
+                        State = new Models.TaskState
                         {
                             Name = state.Name,
                             Foreground = WtColorHelper.GetNewColor(state.Color),
                             Glyph = WtIconHelper.GetGlyph(state.Type)
                         },
-                        TaskType = new KanBanItemTaskType
+                        TaskType = new Models.TaskType
                         {
                             Name = type.Name,
                             Color = WtColorHelper.GetColorByClass(type.Icon),
@@ -119,6 +119,11 @@ namespace Worktile.Views.Mission.My
                     await Task.Delay(400);
                 }
             }
+        }
+
+        private void ItemsControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            var nv = args.NewValue;
         }
     }
 }

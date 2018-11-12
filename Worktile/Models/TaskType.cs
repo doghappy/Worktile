@@ -1,6 +1,6 @@
-﻿namespace Worktile.Models.KanBan
+﻿namespace Worktile.Models
 {
-    public class KanBanItemTaskType
+    public class TaskType
     {
         public string Name { get; set; }
         public string Glyph { get; set; }
