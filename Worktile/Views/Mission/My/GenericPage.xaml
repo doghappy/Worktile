@@ -41,7 +41,7 @@
                     <controls:DataGridTemplateColumn.CellTemplate>
                         <DataTemplate x:DataType="local:GridItem">
                             <StackPanel Orientation="Horizontal" Visibility="{x:Bind Assignee, Converter={StaticResource NullVisibilityConverter}}">
-                                <PersonPicture Height="30" DisplayName="{x:Bind Assignee.DisplayName}" ProfilePicture="{x:Bind Assignee.ProfilePicture}"/>
+                                <PersonPicture Height="30" Initials="{x:Bind Assignee.Initials}" ProfilePicture="{x:Bind Assignee.ProfilePicture}"/>
                                 <TextBlock Margin="12" VerticalAlignment="Center" Text="{x:Bind Assignee.DisplayName}"/>
                             </StackPanel>
                         </DataTemplate>

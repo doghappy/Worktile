@@ -128,9 +128,16 @@ namespace Worktile.Services
 
         public static string GetAvatarUrl(string avatar, int size)
         {
-            string ext = Path.GetExtension(avatar);
-            string name = Path.GetFileNameWithoutExtension(avatar);
-            return ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
+            if (string.IsNullOrWhiteSpace(avatar) || avatar == "default.png")
+            {
+                return string.Empty;
+            }
+            else
+            {
+                string ext = Path.GetExtension(avatar);
+                string name = Path.GetFileNameWithoutExtension(avatar);
+                return ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
+            }
         }
 
         public static Avatar GetAvatar(string uid, int avatarSize)
