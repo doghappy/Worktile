@@ -104,7 +104,7 @@ namespace Worktile.Views.Mission.My
             {
                 foreach (var item in lvs)
                 {
-                    item.MaxHeight = MyGrid.ActualHeight - 32 - sp.ActualHeight;
+                    item.MaxHeight = MyGrid.ActualHeight - 24 - sp.ActualHeight;
                 }
             }
             else
@@ -113,17 +113,20 @@ namespace Worktile.Views.Mission.My
                 {
                     if (_isPageLoaed)
                     {
-                        MyGrid_SizeChanged(null, null);
-                        return;
+                        sp = MyGrid.GetChild<StackPanel>("MissionHeader");
+                        lvs = MyGrid.GetChildren<ListView>("DataList");
+                        if (sp != null && lvs.Any())
+                        {
+                            foreach (var item in lvs)
+                            {
+                                item.MaxHeight = MyGrid.ActualHeight - 24 - sp.ActualHeight;
+                            }
+                            return;
+                        }
                     }
-                    await Task.Delay(400);
+                    await Task.Delay(100);
                 }
             }
-        }
-
-        private void ItemsControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
-        {
-            var nv = args.NewValue;
         }
     }
 }
