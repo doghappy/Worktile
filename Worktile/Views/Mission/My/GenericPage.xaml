@@ -30,7 +30,7 @@
                 <AppBarButton x:Name="groupButton" Icon="List" Label="Group by" />
             </CommandBar>
 
-            <controls:DataGrid></controls:DataGrid>
+            <!--<controls:DataGrid></controls:DataGrid>-->
         </Grid>
     </Grid>
 </Page>

@@ -5,9 +5,9 @@
     xmlns:local="using:Worktile">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+            <!--<ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
-            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>-->
             
             <SolidColorBrush x:Key="PrimaryBrush" Color="#22d7bb"/>
             <SolidColorBrush x:Key="WarningBrush" Color="#ffc442"/>
