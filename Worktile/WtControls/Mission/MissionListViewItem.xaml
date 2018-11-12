@@ -5,9 +5,17 @@
     xmlns:local="using:Worktile.WtControls.Mission"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Worktile.Converters"
+    xmlns:kanban="using:Worktile.Models.KanBan"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,47 +29,68 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button Background="#1AF969AA" CornerRadius="4" Padding="8 4">
+            <Button Background="{x:Bind KanBanItem.State.Background, Mode=OneWay}"
+                    Click="Button_Click"
+                    CornerRadius="4"
+                    Padding="8 4">
                 <StackPanel Orientation="Horizontal">
-                    <!--
-                    颜色需要ColorMap转换
-                    type: 1未开始 2进行中 3已完成 决定图标
-                    -->
-                    <FontIcon Style="{StaticResource WtfIcon}" FontSize="12" Foreground="#F969AA" Glyph="&#xe6ad;"/>
-                    <TextBlock Text="测试删除状态666" FontSize="12" Margin="4 0 0 0" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                    <FontIcon Style="{StaticResource WtfIcon}"
+                              FontSize="12"
+                              Foreground="{x:Bind KanBanItem.State.Foreground, Mode=OneWay}"
+                              Glyph="{x:Bind KanBanItem.State.Glyph, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind KanBanItem.State.Name, Mode=OneWay}"
+                               FontSize="12" Margin="4 0 0 0"
+                               Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 </StackPanel>
 
                 <Button.Flyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem Text="未开始">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Style="{StaticResource WtfIcon}" Foreground="{ThemeResource PrimaryBrush}" Glyph="&#xE6AD;"/>
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="进行中">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Style="{StaticResource WtfIcon}" Foreground="{ThemeResource DangerBrush}" Glyph="&#xE6AB;"/>
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="已完成">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Style="{StaticResource WtfIcon}" Foreground="{ThemeResource WarningBrush}" Glyph="&#xE6AC;"/>
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
+                    <Flyout>
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="Padding" Value="0"/>
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+                        <Grid>
+                            <ListView ItemsSource="{x:Bind KanBanItem.AllStates, Mode=OneWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="kanban:KanBanItemState">
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon FontSize="12"
+                                                      Foreground="{x:Bind Foreground}"
+                                                      Style="{StaticResource WtfIcon}"
+                                                      Glyph="{x:Bind Glyph}"/>
+                                            <TextBlock FontSize="12" Margin="4 0 0 0" Text="{x:Bind Name}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <ProgressBar IsIndeterminate="{x:Bind IsActive, Mode=OneWay}"
+                                         Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"/>
+                        </Grid>
+                    </Flyout>
                 </Button.Flyout>
             </Button>
-            <PersonPicture Grid.Column="1" Height="30" DisplayName="HeroWong"/>
+            <PersonPicture Grid.Column="1"
+                           Height="30"
+                           DisplayName="{x:Bind KanBanItem.Avatar.DisplayName, Mode=OneWay}"
+                           ProfilePicture="{x:Bind KanBanItem.Avatar.ProfilePicture, Mode=OneWay}"/>
         </Grid>
 
-        <TextBlock Grid.Row="1" Text="线程 0x5e9c 已退出，返回值为 0 (0x0)。" Margin="0 5"/>
+        <TextBlock Grid.Row="1" Text="{x:Bind KanBanItem.Title, Mode=OneWay}" Margin="0 5"/>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Border CornerRadius="3" Background="{ThemeResource SystemControlForegroundBaseLowBrush}" Padding="6 2" VerticalAlignment="Center">
-                <TextBlock Text="任务编号：12334" FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <TextBlock FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+                    <Run Text="任务编号:"/>
+                    <Run Text="{x:Bind KanBanItem.Identifier, Mode=OneWay}"/>
+                </TextBlock>
             </Border>
-            <!--ToolTipService = task_types.name-->
-            <FontIcon Margin="8 0 0 0" Style="{StaticResource WtfIcon}" Glyph="&#xE727;" FontSize="22" Foreground="{StaticResource PrimaryBrush}" ToolTipService.ToolTip="任务"/>
+            <FontIcon Margin="8 0 0 0"
+                      Style="{StaticResource WtfIcon}"
+                      Glyph="{x:Bind KanBanItem.TaskType.Glyph, Mode=OneWay}"
+                      FontSize="22"
+                      Foreground="{x:Bind KanBanItem.TaskType.Color, Mode=OneWay}"
+                      ToolTipService.ToolTip="{x:Bind KanBanItem.TaskType.Name, Mode=OneWay}"/>
         </StackPanel>
     </Grid>
 </UserControl>

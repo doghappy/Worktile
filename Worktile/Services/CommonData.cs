@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Windows.Storage;
 using Worktile.Models;
 
@@ -123,5 +124,12 @@ namespace Worktile.Services
                 Color = "#F76CAA"
             }
         };
+
+        public static string GetAvatarUrl(string avatar, int size)
+        {
+            string ext = Path.GetExtension(avatar);
+            string name = Path.GetFileNameWithoutExtension(avatar);
+            return ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -69,11 +70,12 @@ namespace Worktile.Views.Mission.My
                     }
                     kbGroup.Items.Add(new KanBanItem
                     {
+                        Id = task.Id,
                         Title = task.Title,
                         Identifier = task.Identifier,
                         Avatar = new KanBanItemAvatar
                         {
-                            ProfilePicture = CommonData.ApiUserMeConfig.Box.AvatarUrl + CommonData.ApiUserMe.Avatar,
+                            ProfilePicture = CommonData.GetAvatarUrl(CommonData.ApiUserMe.Avatar, 40),
                             DisplayName = CommonData.ApiUserMe.DisplayName
                         },
                         State = new KanBanItemState

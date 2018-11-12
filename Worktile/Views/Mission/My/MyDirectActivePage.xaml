@@ -42,7 +42,7 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="kanban:KanBanItem">
-                                        <mission:MissionListViewItem Margin="0 10"/>
+                                        <mission:MissionListViewItem Margin="0 10" KanBanItem="{x:Bind}"/>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
