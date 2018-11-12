@@ -5,9 +5,32 @@
     xmlns:local="using:Worktile.Views.Mission.My"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
-        <TextBlock Text="Generic Page"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <CommandBar IsOpen="False" DefaultLabelPosition="Right" HorizontalAlignment="Left" Background="Transparent">
+                <AppBarButton Icon="Filter" Label="Filter by">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Name="rankLow" Text="Rank &lt; 50" />
+                            <MenuFlyoutItem x:Name="rankHigh" Text="Rank &gt; 50" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem x:Name="heightLow" Text="Height &lt; 8000ft" />
+                            <MenuFlyoutItem x:Name="heightHigh" Text="Height &gt; 8000ft" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+                <AppBarButton x:Name="groupButton" Icon="List" Label="Group by" />
+            </CommandBar>
+
+            <controls:DataGrid></controls:DataGrid>
+        </Grid>
     </Grid>
 </Page>

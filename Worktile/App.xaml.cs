@@ -122,17 +122,17 @@ namespace Worktile
 
         private void SetLaunchPage(Frame rootFrame, LaunchActivatedEventArgs e)
         {
-            string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
-            if (string.IsNullOrEmpty(cookie))
-            {
-                rootFrame.Navigate(typeof(SignInPage), e.Arguments);
-            }
-            else
-            {
-                WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
-            }
-            //rootFrame.Navigate(typeof(TestPage), e.Arguments);
+            //string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
+            //if (string.IsNullOrEmpty(cookie))
+            //{
+            //    rootFrame.Navigate(typeof(SignInPage), e.Arguments);
+            //}
+            //else
+            //{
+            //    WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
+            //    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+            //}
+            rootFrame.Navigate(typeof(Views.Mission.My.GenericPage), e.Arguments);
         }
     }
 }
