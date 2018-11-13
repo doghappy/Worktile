@@ -109,6 +109,7 @@
     <Compile Include="ApiMissionVnextProjectNav.cs" />
     <Compile Include="ApiMissionVnextTasksIdstates.cs" />
     <Compile Include="ApiMissionVnextWorkAddon.cs" />
+    <Compile Include="ApiMissionVnextWorkAnalyticInsightGroups.cs" />
     <Compile Include="ApiMissionVnextWorkMyDirectedActive.cs" />
     <Compile Include="ApiMissionVnextWorkMyGeneric.cs" />
     <Compile Include="ApiTeam.cs" />
