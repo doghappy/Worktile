@@ -6,10 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mission="using:Worktile.WtControls.Mission"
+    xmlns:wtcontrols="using:Worktile.WtControls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="32" Width="280" HorizontalAlignment="Left">
-        <PersonPicture Initials="陆庆洋" ProfilePicture=""/>
-    </StackPanel>
+    <Grid Padding="32" Width="280">
+        <wtcontrols:PaginationBar TotalPages="4"/>
+    </Grid>
 </Page>

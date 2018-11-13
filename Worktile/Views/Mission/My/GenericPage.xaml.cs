@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextWorkMyGeneric;
+using Worktile.Common;
 using Worktile.Models;
 using Worktile.Services;
 using Worktile.WtRequestClient;
@@ -17,12 +19,12 @@ namespace Worktile.Views.Mission.My
         public GenericPage()
         {
             InitializeComponent();
-            GridItems = new ObservableCollection<GridItem>();
+            GridItems = new IncrementalCollection<GridItem>(GetGridItemAsync);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<GridItem> GridItems { get; }
+        public IncrementalCollection<GridItem> GridItems { get; }
 
         private bool _isActive;
         public bool IsActive
@@ -35,7 +37,28 @@ namespace Worktile.Views.Mission.My
             }
         }
 
+        private List<int> _pages;
+        public List<int> Pages
+        {
+            get => _pages;
+            set
+            {
+                _pages = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pages)));
+            }
+        }
+
         private long _pageIndex;
+        //public int PageIndex
+        //{
+        //    get => _pageIndex;
+        //    set
+        //    {
+        //        _pageIndex = value;
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageIndex)));
+        //    }
+        //}
+
 
         private string _uri;
         public string Uri
@@ -58,23 +81,19 @@ namespace Worktile.Views.Mission.My
             Uri = "/api/mission-vnext/work/my/" + e.Parameter.ToString();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            await LoadDataAsync();
-        }
-
-        private async Task LoadDataAsync()
+        private async Task<IEnumerable<GridItem>> GetGridItemAsync()
         {
             IsActive = true;
+            var list = new List<GridItem>();
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMissionVnextWorkMyGeneric>(Uri);
-            int i = 0;
+            int i = GridItems.Count;
             foreach (var item in data.Data.Value)
             {
                 i++;
                 var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == item.TaskStateId);
                 var type = data.Data.References.TaskTypes.Single(t => t.Id == item.TaskTypeId);
-                GridItems.Add(new GridItem
+                list.Add(new GridItem
                 {
                     Id = item.Id,
                     RowId = i,
@@ -96,8 +115,10 @@ namespace Worktile.Views.Mission.My
                     }
                 });
             }
+            GridItems.HasMoreItems = data.Data.PageCount - 1 > _pageIndex;
             _pageIndex++;
             IsActive = false;
+            return list;
         }
     }
 

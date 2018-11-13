@@ -3,6 +3,8 @@ using System.IO;
 using Windows.Storage;
 using Worktile.Models;
 using System.Linq;
+using Windows.UI.Xaml.Media.Imaging;
+using System;
 
 namespace Worktile.Services
 {
@@ -126,17 +128,18 @@ namespace Worktile.Services
             }
         };
 
-        public static string GetAvatarUrl(string avatar, int size)
+        public static BitmapImage GetAvatarUrl(string avatar, int size)
         {
             if (string.IsNullOrWhiteSpace(avatar) || avatar == "default.png")
             {
-                return string.Empty;
+                return null;
             }
             else
             {
                 string ext = Path.GetExtension(avatar);
                 string name = Path.GetFileNameWithoutExtension(avatar);
-                return ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
+                string uri = ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
+                return new BitmapImage(new Uri(uri));
             }
         }
 

@@ -132,7 +132,7 @@ namespace Worktile
                 WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
-            //rootFrame.Navigate(typeof(Views.Mission.My.GenericPage), e.Arguments);
+            //rootFrame.Navigate(typeof(TestPage), e.Arguments);
         }
     }
 }

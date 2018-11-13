@@ -5,11 +5,9 @@
     xmlns:local="using:Worktile.Views.Mission.My"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:models="using:Worktile.Models"
     xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:converters="using:Worktile.Converters"
-    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -18,52 +16,72 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Margin="16">
-        <controls:DataGrid Grid.Row="1"
-                               IsReadOnly="True"
-                               SelectionMode="Single"
-                               AutoGenerateColumns="False"
-                               Background="{ThemeResource SystemControlAcrylicElementBrush}"
-                               VerticalAlignment="Top"
-                               ItemsSource="{x:Bind GridItems}">
-            <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Header="#" Tag="RowId" Binding="{Binding RowId}"/>
-                <controls:DataGridTextColumn Header="编号" Tag="Identifier" Binding="{Binding Identifier}"/>
-                <controls:DataGridTemplateColumn Header="状态" Tag="State">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate x:DataType="local:GridItem">
-                            <wtcontrols:TaskStateButton TaskId="{x:Bind Id}" State="{x:Bind State}"/>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
-                <controls:DataGridTextColumn Header="标题" MaxWidth="400" Tag="Title" Binding="{Binding Title}"/>
-                <controls:DataGridTemplateColumn Header="负责人" Tag="Assignee">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate x:DataType="local:GridItem">
-                            <StackPanel Orientation="Horizontal" Visibility="{x:Bind Assignee, Converter={StaticResource NullVisibilityConverter}}">
-                                <PersonPicture Height="30" Initials="{x:Bind Assignee.Initials}" ProfilePicture="{x:Bind Assignee.ProfilePicture}"/>
-                                <TextBlock Margin="12" VerticalAlignment="Center" Text="{x:Bind Assignee.DisplayName}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
-                <controls:DataGridTextColumn Header="截止时间" Tag="EndDate" Binding="{Binding EndDate}"/>
-                <controls:DataGridTemplateColumn Header="任务类型" Tag="TaskType">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate x:DataType="local:GridItem">
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon Margin="0 0 12 0"
-                                              Style="{StaticResource WtfIcon}"
-                                              Glyph="{x:Bind TaskType.Glyph}"
-                                              FontSize="22"
-                                              Foreground="{x:Bind TaskType.Color}"/>
-                                <TextBlock Text="{x:Bind TaskType.Name}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
-            </controls:DataGrid.Columns>
-        </controls:DataGrid>
+    <Grid>
+        <ListView Margin="12" ItemsSource="{x:Bind GridItems}">
+            <ListView.Header>
+                <Grid Padding="0 16" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Text="#"/>
+                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="1" Text="编号"/>
+                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="2" Text="状态"/>
+                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="3" Text="标题"/>
+                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="4" Text="负责人"/>
+                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="5" Text="截止时间"/>
+                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="6" Text="任务类型"/>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="16 8 0 8"/>
+                    <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                    <Setter Property="BorderThickness" Value="0 1 0 0"/>
+                    <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:GridItem">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Bind RowId}" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind Identifier}" VerticalAlignment="Center"/>
+                        <wtcontrols:TaskStateButton Grid.Column="2" TaskId="{x:Bind Id}" State="{x:Bind State}"/>
+                        <TextBlock Grid.Column="3" Text="{x:Bind Title}" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="4" Orientation="Horizontal" Visibility="{x:Bind Assignee, Converter={StaticResource NullVisibilityConverter}}">
+                            <PersonPicture Margin="12 0" Height="30" Initials="{x:Bind Assignee.Initials}" ProfilePicture="{x:Bind Assignee.ProfilePicture}"/>
+                            <TextBlock VerticalAlignment="Center" Text="{x:Bind Assignee.DisplayName}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="5" Text="{x:Bind EndDate}" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="6" Orientation="Horizontal">
+                            <FontIcon Margin="0 0 12 0"
+                                          Style="{StaticResource WtfIcon}"
+                                          Glyph="{x:Bind TaskType.Glyph}"
+                                          FontSize="22"
+                                          Foreground="{x:Bind TaskType.Color}"/>
+                            <TextBlock Text="{x:Bind TaskType.Name}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>
