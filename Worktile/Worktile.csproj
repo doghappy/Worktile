@@ -131,8 +131,8 @@
     <Compile Include="Views\Mission\My\MyDirectActivePage.xaml.cs">
       <DependentUpon>MyDirectActivePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Mission\My\MyDirectedPage.xaml.cs">
-      <DependentUpon>MyDirectedPage.xaml</DependentUpon>
+    <Compile Include="Views\Mission\My\IndexPage.xaml.cs">
+      <DependentUpon>IndexPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
@@ -238,7 +238,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Mission\My\MyDirectedPage.xaml">
+    <Page Include="Views\Mission\My\IndexPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -279,6 +279,9 @@
       <Project>{64c1d453-f677-4225-9a30-a5b3c368eff0}</Project>
       <Name>Worktile.WtRequestClient</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Mission\AnalyticInsight\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

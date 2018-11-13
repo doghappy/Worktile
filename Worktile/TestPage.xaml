@@ -11,6 +11,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Padding="32" Width="280">
-        <wtcontrols:PaginationBar TotalPages="4"/>
+        <!--<wtcontrols:PaginationBar TotalPages="4"/>-->
     </Grid>
 </Page>

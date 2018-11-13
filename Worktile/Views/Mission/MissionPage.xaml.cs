@@ -57,7 +57,7 @@ namespace Worktile.Views.Mission
                         var item = _workAddons.Single(w => w.Name == value.Name);
                         switch (item.Key)
                         {
-                            case "my": ContentFrame.Navigate(typeof(MyDirectedPage), item); break;
+                            case "my": ContentFrame.Navigate(typeof(IndexPage), item); break;
                         }
                     }
                 }
