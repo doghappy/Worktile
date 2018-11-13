@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Controls;
 using Worktile.ApiModel.ApiMissionVnextProjectNav;
 using Worktile.ApiModel.ApiMissionVnextWorkAddon;
 using Worktile.Services;
-using Worktile.Views.Mission.My;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission
@@ -57,7 +56,12 @@ namespace Worktile.Views.Mission
                         var item = _workAddons.Single(w => w.Name == value.Name);
                         switch (item.Key)
                         {
-                            case "my": ContentFrame.Navigate(typeof(IndexPage), item); break;
+                            case "my":
+                                ContentFrame.Navigate(typeof(My.IndexPage), item);
+                                break;
+                            case "analytic-insight":
+                                ContentFrame.Navigate(typeof(AnalyticInsight.IndexPage), item);
+                                break;
                         }
                     }
                 }
