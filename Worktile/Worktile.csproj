@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\IncrementalCollection.cs" />
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />
@@ -112,12 +113,12 @@
     <Compile Include="Models\WtApp.cs" />
     <Compile Include="Models\WtIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\UiExtension.cs" />
-    <Compile Include="Services\WtColorHelper.cs" />
-    <Compile Include="Services\CommonData.cs" />
-    <Compile Include="Services\HashEncryptor.cs" />
-    <Compile Include="Services\UtilityTool.cs" />
-    <Compile Include="Services\WtIconHelper.cs" />
+    <Compile Include="Common\UiExtension.cs" />
+    <Compile Include="Common\WtColorHelper.cs" />
+    <Compile Include="Common\CommonData.cs" />
+    <Compile Include="Common\HashEncryptor.cs" />
+    <Compile Include="Common\UtilityTool.cs" />
+    <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>

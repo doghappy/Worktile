@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextWorkMyGeneric;
 using Worktile.Models;
-using Worktile.Models.KanBan;
 using Worktile.Services;
 using Worktile.WtRequestClient;
 
@@ -45,19 +35,39 @@ namespace Worktile.Views.Mission.My
             }
         }
 
+        private long _pageIndex;
+
         private string _uri;
+        public string Uri
+        {
+            get
+            {
+                if (_pageIndex != 0)
+                {
+                    return _uri + "?pi=" + _pageIndex;
+                }
+                return _uri;
+            }
+            set => _uri = value;
+        }
+
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            _uri = "/api/mission-vnext/work/my/" + e.Parameter.ToString();
+            Uri = "/api/mission-vnext/work/my/" + e.Parameter.ToString();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            await LoadDataAsync();
+        }
+
+        private async Task LoadDataAsync()
+        {
             IsActive = true;
             var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkMyGeneric>(_uri);
+            var data = await client.GetAsync<ApiMissionVnextWorkMyGeneric>(Uri);
             int i = 0;
             foreach (var item in data.Data.Value)
             {
@@ -86,6 +96,7 @@ namespace Worktile.Views.Mission.My
                     }
                 });
             }
+            _pageIndex++;
             IsActive = false;
         }
     }
