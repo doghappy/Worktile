@@ -42,6 +42,11 @@ namespace Worktile.WtRequestClient
 
         public static void SetBaseAddress(string uri)
         {
+            if (HttpClient != null)
+            {
+                HttpClient.Dispose();
+                HttpClient = null;
+            }
             HttpClient.BaseAddress = new Uri(uri);
         }
 

@@ -74,8 +74,8 @@ namespace Worktile
                     // 当导航堆栈尚未还原时，导航到第一页，
                     // 并通过将所需信息作为导航参数传入来配置
                     // 参数
-                    //rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                    SetLaunchPage(rootFrame, e);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    //SetLaunchPage(rootFrame, e);
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
@@ -118,21 +118,6 @@ namespace Worktile
             viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
             viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
-        }
-
-        private void SetLaunchPage(Frame rootFrame, LaunchActivatedEventArgs e)
-        {
-            string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
-            if (string.IsNullOrEmpty(cookie))
-            {
-                rootFrame.Navigate(typeof(SignInPage), e.Arguments);
-            }
-            else
-            {
-                WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
-            }
-            //rootFrame.Navigate(typeof(TestPage), e.Arguments);
         }
     }
 }

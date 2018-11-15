@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -80,10 +81,19 @@ namespace Worktile
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
-            WtHttpClient.SetBaseAddress(CommonData.SubDomain);
-            Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
-            await RequestApiUserMeAsync();
-            await RequestApiTeamAsync();
+            string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
+            if (string.IsNullOrEmpty(cookie))
+            {
+                Frame.Navigate(typeof(SignInPage));
+            }
+            else
+            {
+                WtHttpClient.SetBaseAddress(CommonData.SubDomain);
+                WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
+                Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
+                await RequestApiUserMeAsync();
+                await RequestApiTeamAsync();
+            }
             IsActive = false;
         }
 
