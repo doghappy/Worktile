@@ -5,8 +5,15 @@
     xmlns:local="using:Worktile.Views.Mission.AnalyticInsight"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Worktile.Converters"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <converters:CountVisibilityConverter x:Key="CountVisibilityConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
         <NavigationView x:Name="Nav"
@@ -27,6 +34,14 @@
                     <TextBlock Text="{x:Bind TopNavName, Mode=OneWay}" VerticalAlignment="Center" Margin="4 0" FontWeight="SemiBold"/>
                 </StackPanel>
             </NavigationView.PaneHeader>
+
+            <NavigationView.PaneFooter>
+                <ComboBox ItemsSource="{x:Bind SelectedNav.SubItems, Mode=OneWay}"
+                          DisplayMemberPath="Name"
+                          Margin="0 0 16 0"
+                          Visibility="{x:Bind SelectedNav.SubItems, Mode=OneWay, Converter={StaticResource CountVisibilityConverter}}"
+                          SelectedItem="{x:Bind SelectedSubNav, Mode=TwoWay}"/>
+            </NavigationView.PaneFooter>
 
             <Frame x:Name="ContentFrame">
                 <Frame.ContentTransitions>

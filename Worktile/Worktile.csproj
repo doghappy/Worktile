@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Common\IncrementalCollection.cs" />
     <Compile Include="Converters\BooleanReserveConverter.cs" />
+    <Compile Include="Converters\CountVisibilityConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
@@ -121,6 +122,12 @@
     <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmptyPage.xaml.cs">
+      <DependentUpon>EmptyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Mission\AnalyticInsight\DetailPage.xaml.cs">
+      <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Mission\AnalyticInsight\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
@@ -226,6 +233,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EmptyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Mission\AnalyticInsight\DetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

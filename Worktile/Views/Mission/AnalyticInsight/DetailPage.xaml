@@ -1,0 +1,75 @@
+﻿<Page
+    x:Class="Worktile.Views.Mission.AnalyticInsight.DetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Mission.AnalyticInsight"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Grid>
+
+        <TextBlock Text="sdfsd"/>
+        <!--<Rectangle Height="38" VerticalAlignment="Top" Fill="{ThemeResource CustomAcrylicBrush}"/>
+        <Pivot ItemsSource="{x:Bind TopNavItems, Mode=OneWay}" Padding="0">
+            <Pivot.Resources>
+                <Style TargetType="PivotHeaderItem">
+                    <Setter Property="Height" Value="32"/>
+                    <Setter Property="FontSize" Value="14"/>
+                </Style>
+            </Pivot.Resources>
+            <Pivot.HeaderTemplate>
+                <DataTemplate x:DataType="local:TopNavItem">
+                    <TextBlock Text="{x:Bind Name}"/>
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <Pivot.ItemTemplate>
+                <DataTemplate x:DataType="local:TopNavItem">
+                    <Grid Background="Red"></Grid>
+                </DataTemplate>
+            </Pivot.ItemTemplate>
+        </Pivot>
+
+        <HyperlinkButton VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 4 12 0">
+            <HyperlinkButton.Content>
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontSize="14" Style="{StaticResource WtfIcon}" Glyph="&#xE63E;"/>
+                    <TextBlock FontSize="14" Text="报表" Margin="4 0 0 0"/>
+                </StackPanel>
+            </HyperlinkButton.Content>
+        </HyperlinkButton>-->
+
+        <!--<NavigationView x:Name="Nav"
+                        PaneDisplayMode="Top"
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="False"
+                        SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}"
+                        MenuItemsSource="{x:Bind TopNavItems}">
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate x:DataType="local:TopNavItem">
+                    <NavigationViewItem Content="{x:Bind Name}" Tag="{x:Bind Id}" />
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
+
+            <NavigationView.PaneFooter>
+                <HyperlinkButton Padding="0" Margin="0">
+                    <HyperlinkButton.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE63E;"/>
+                            <TextBlock Text="报表" Margin="4 0 0 0"/>
+                        </StackPanel>
+                    </HyperlinkButton.Content>
+                </HyperlinkButton>
+            </NavigationView.PaneFooter>
+
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>-->
+    </Grid>
+</Page>

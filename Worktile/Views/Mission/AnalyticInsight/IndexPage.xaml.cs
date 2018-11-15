@@ -68,7 +68,33 @@ namespace Worktile.Views.Mission.AnalyticInsight
                 {
                     _selectedNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
-                    //FrameNavigate();
+                    SelectedSubNav = value.SubItems.FirstOrDefault();
+                }
+            }
+        }
+
+        private TopNavItem _selectedSubNav;
+        public TopNavItem SelectedSubNav
+        {
+            get => _selectedSubNav;
+            set
+            {
+                if (SelectedSubNav != value)
+                {
+                    _selectedSubNav = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSubNav)));
+                    if (value == null)
+                    {
+                        ContentFrame.Navigate(typeof(EmptyPage), "请先设置报表");
+                    }
+                    else
+                    {
+                        ContentFrame.Navigate(typeof(DetailPage), new
+                        {
+                            Nav = SelectedNav,
+                            SubNav = SelectedSubNav
+                        });
+                    }
                 }
             }
         }
@@ -110,6 +136,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
                 TopNavItems.Add(tni);
             }
             SelectedNav = TopNavItems.First();
+            SelectedSubNav = SelectedNav.SubItems.First();
         }
     }
 
