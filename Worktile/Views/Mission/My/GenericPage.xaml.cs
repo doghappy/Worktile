@@ -104,7 +104,7 @@ namespace Worktile.Views.Mission.My
                     {
                         Foreground = WtColorHelper.GetNewColor(state.Color),
                         Glyph = WtIconHelper.GetGlyph(state.Type),
-                        Name = type.Name
+                        Name = state.Name
                     },
                     Assignee = CommonData.GetAvatar(item.Properties.Assignee.Value, 40),
                     TaskType = new Models.TaskType
