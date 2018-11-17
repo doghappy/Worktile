@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightIdSidContent;
@@ -12,9 +11,9 @@ using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.AnalyticInsight
 {
-    public sealed partial class DetailPage : Page, INotifyPropertyChanged
+    public sealed partial class ProjectProgressPage : Page, INotifyPropertyChanged
     {
-        public DetailPage()
+        public ProjectProgressPage()
         {
             InitializeComponent();
             ProjectItems = new IncrementalCollection<ProjectItem>(ProjectItemsAsync);

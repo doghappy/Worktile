@@ -127,8 +127,11 @@
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Mission\AnalyticInsight\DetailPage.xaml.cs">
-      <DependentUpon>DetailPage.xaml</DependentUpon>
+    <Compile Include="Views\Mission\AnalyticInsight\BasePage.xaml.cs">
+      <DependentUpon>BasePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Mission\AnalyticInsight\ProjectProgressPage.xaml.cs">
+      <DependentUpon>ProjectProgressPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Mission\AnalyticInsight\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
@@ -241,7 +244,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Mission\AnalyticInsight\DetailPage.xaml">
+    <Page Include="Views\Mission\AnalyticInsight\BasePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Mission\AnalyticInsight\ProjectProgressPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

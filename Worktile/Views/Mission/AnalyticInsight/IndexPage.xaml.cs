@@ -90,7 +90,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
                     }
                     else
                     {
-                        ContentFrame.Navigate(typeof(DetailPage), new
+                        ContentFrame.Navigate(typeof(ProjectProgressPage), new
                         {
                             Nav = SelectedNav,
                             SubNav = SelectedSubNav
