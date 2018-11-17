@@ -103,6 +103,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
                                 ContentFrame.Navigate(typeof(MemberProgressPage), param);
                                 break;
                             case "member-delay":
+                                ContentFrame.Navigate(typeof(MemberDelayPage), param);
                                 break;
                         }
                     }

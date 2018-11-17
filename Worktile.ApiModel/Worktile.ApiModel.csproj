@@ -110,6 +110,7 @@
     <Compile Include="ApiMissionVnextTasksIdstates.cs" />
     <Compile Include="ApiMissionVnextWorkAddon.cs" />
     <Compile Include="ApiMissionVnextWorkAnalyticInsightGroups.cs" />
+    <Compile Include="ApiMissionVnextWorkAnalyticInsightMemberDelay.cs" />
     <Compile Include="ApiMissionVnextWorkAnalyticInsightProjectDelay.cs" />
     <Compile Include="ApiMissionVnextWorkAnalyticInsightMemberProgress.cs" />
     <Compile Include="ApiMissionVnextWorkAnalyticInsightProjectProgress.cs" />

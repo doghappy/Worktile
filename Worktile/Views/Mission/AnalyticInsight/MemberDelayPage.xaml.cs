@@ -5,18 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightProjectDelay;
+using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightMemberDelay;
 using Worktile.Common;
+using Worktile.Models;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.AnalyticInsight
 {
-    public sealed partial class ProjectDelayPage : Page, INotifyPropertyChanged
+    public sealed partial class MemberDelayPage : Page, INotifyPropertyChanged
     {
-        public ProjectDelayPage()
+        public MemberDelayPage()
         {
             InitializeComponent();
-            ProjectItems = new IncrementalCollection<ProjectDelayItem>(ProjectItemsAsync);
+            MemberItems = new IncrementalCollection<MemberDelayItem>(MemberItemsAsync);
             IsActive = true;
         }
 
@@ -40,14 +41,14 @@ namespace Worktile.Views.Mission.AnalyticInsight
             }
         }
 
-        private int _projectCount;
-        public int ProjectCount
+        private int _itemCount;
+        public int ItemCount
         {
-            get => _projectCount;
+            get => _itemCount;
             set
             {
-                _projectCount = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProjectCount)));
+                _itemCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemCount)));
             }
         }
 
@@ -106,13 +107,13 @@ namespace Worktile.Views.Mission.AnalyticInsight
             }
         }
 
-        public IncrementalCollection<ProjectDelayItem> ProjectItems { get; }
+        public IncrementalCollection<MemberDelayItem> MemberItems { get; }
 
-        private async Task<IEnumerable<ProjectDelayItem>> ProjectItemsAsync()
+        private async Task<IEnumerable<MemberDelayItem>> MemberItemsAsync()
         {
             string uri = $"/api/mission-vnext/work/analytic-insight/{_navId}/{_subNavId}/content?fpids=&fuids=&from=&to=&pi={_pageIndex}&ps={PageSize}";
             var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkAnalyticInsightProjectDelay>(uri);
+            var data = await client.GetAsync<ApiMissionVnextWorkAnalyticInsightMemberDelay>(uri);
             if (!_totalPages.HasValue)
             {
                 _totalPages = Convert.ToInt32(Math.Ceiling(data.Data.Value.ItemCount * 1.0 / PageSize)) - 1;
@@ -120,27 +121,24 @@ namespace Worktile.Views.Mission.AnalyticInsight
             if (!_isInitialized)
             {
                 _isInitialized = true;
-                ProjectCount = data.Data.Value.ItemCount;
+                ItemCount = data.Data.Value.ItemCount;
                 FollowCount = data.Data.Value.Follow;
                 PendingCount = data.Data.Value.Pending;
                 ProgressCount = data.Data.Value.Progress;
                 DelayCount = data.Data.Value.DelayCount;
                 PointRate = data.Data.Value.Point;
             }
-            ProjectItems.HasMoreItems = _totalPages >= _pageIndex;
+            MemberItems.HasMoreItems = _totalPages >= _pageIndex;
             _pageIndex++;
             IsActive = false;
-            return data.Data.Value.Items.Select(i => new ProjectDelayItem
+            return data.Data.Value.Items.Select(i => new MemberDelayItem
             {
-                Id = i.ProjectId,
-                Name = i.Name,
                 Delay = i.DelayCount,
                 Pending = i.Pending,
                 Point = i.Point,
                 Progress = i.Progress,
                 Follow = i.Follow,
-                Glyph = i.Visibility == 1 ? "\ue70c" : "\ue667",
-                Color = WtColorHelper.GetNewColor(i.Color)
+                Avatar = CommonData.GetAvatar(i.Uid, 40)
             });
         }
 
@@ -153,16 +151,13 @@ namespace Worktile.Views.Mission.AnalyticInsight
         }
     }
 
-    public class ProjectDelayItem
+    public class MemberDelayItem
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
         public int Pending { get; set; }
         public int Follow { get; set; }
         public int Progress { get; set; }
         public int Delay { get; set; }
         public double Point { get; set; }
-        public string Glyph { get; set; }
-        public string Color { get; set; }
+        public Avatar Avatar { get; set; }
     }
 }
