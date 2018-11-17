@@ -104,6 +104,7 @@ namespace Worktile.Views.Mission
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedWorkNav)));
                     _selectedProjectNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedProjectNav)));
+
                 }
             }
         }
@@ -158,6 +159,7 @@ namespace Worktile.Views.Mission
                     project.Color = WtColorHelper.GetNewColor(project.Color);
                     ProjectNavItems.Add(new NavItem
                     {
+                        Id = project.Id,
                         Name = project.Name,
                         Color = project.Color,
                         Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
@@ -173,6 +175,7 @@ namespace Worktile.Views.Mission
                             project.Color = WtColorHelper.GetNewColor(project.Color);
                             ProjectNavItems.Add(new NavItem
                             {
+                                Id = project.Id,
                                 Name = project.Name,
                                 Color = project.Color,
                                 Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
@@ -186,6 +189,7 @@ namespace Worktile.Views.Mission
 
     public class NavItem
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Glyph { get; set; }
         public string Color { get; set; }
