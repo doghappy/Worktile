@@ -90,11 +90,16 @@ namespace Worktile.Views.Mission.AnalyticInsight
                     }
                     else
                     {
-                        ContentFrame.Navigate(typeof(ProjectProgressPage), new
+                        var param = new { NavId = SelectedNav.Id, SubNavId = SelectedSubNav.Id };
+                        switch (value.Key)
                         {
-                            Nav = SelectedNav,
-                            SubNav = SelectedSubNav
-                        });
+                            case "project-progress":
+                                ContentFrame.Navigate(typeof(ProjectProgressPage), param);
+                                break;
+                            case "project-delay":
+                                ContentFrame.Navigate(typeof(ProjectDelayPage), param);
+                                break;
+                        }
                     }
                 }
             }
@@ -133,7 +138,8 @@ namespace Worktile.Views.Mission.AnalyticInsight
                     tni.SubItems.Add(new TopNavItem
                     {
                         Id = ins.Id,
-                        Name = ins.Name
+                        Name = ins.Name,
+                        Key = ins.Key
                     });
                 }
                 TopNavItems.Add(tni);
@@ -147,6 +153,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Key { get; set; }
         public List<TopNavItem> SubItems { get; set; }
     }
 }

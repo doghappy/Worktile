@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Worktile.Views.Mission.AnalyticInsight.ProjectProgressPage"
+    x:Class="Worktile.Views.Mission.AnalyticInsight.ProjectDelayPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Worktile.Views.Mission.AnalyticInsight"
@@ -41,8 +41,8 @@
                     <TextBlock Text="{x:Bind ProjectCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" HorizontalAlignment="Center">
-                    <TextBlock Text="总任务" Style="{ThemeResource TextInfoBlock}"/>
-                    <TextBlock Text="{x:Bind TotalCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}"/>
+                    <TextBlock Text="待处理任务" Style="{ThemeResource TextInfoBlock}"/>
+                    <TextBlock Text="{x:Bind FollowCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" HorizontalAlignment="Center">
                     <TextBlock Text="未开始" Style="{ThemeResource TextInfoBlock}"/>
@@ -53,22 +53,22 @@
                     <TextBlock Text="{x:Bind ProgressCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}" Foreground="{StaticResource WarningBrush}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="4" HorizontalAlignment="Center">
-                    <TextBlock Text="已完成" Style="{ThemeResource TextInfoBlock}"/>
-                    <TextBlock Text="{x:Bind CompletedCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}" Foreground="{ThemeResource SystemAccentColor}"/>
+                    <TextBlock Text="延期任务" Style="{ThemeResource TextInfoBlock}"/>
+                    <TextBlock Text="{x:Bind DelayCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}" Foreground="{StaticResource DangerBrush}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="5" HorizontalAlignment="Stretch">
-                    <TextBlock Text="完成率" Style="{ThemeResource TextInfoBlock}"/>
+                    <TextBlock Text="延期率" Style="{ThemeResource TextInfoBlock}"/>
                     <Grid Height="34" Padding="12 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <ProgressBar Maximum="1" Value="{x:Bind PointRate, Mode=OneWay}"/>
+                        <ProgressBar Maximum="1" Value="{x:Bind PointRate, Mode=OneWay}" Foreground="{StaticResource DangerBrush}"/>
                         <TextBlock Grid.Column="1"
                                    Margin="16 0 0 0"
                                    Text="{x:Bind PointRate, Mode=OneWay, Converter={StaticResource PercentageConverter}, ConverterParameter='p0'}"
                                    Style="{ThemeResource TextNumberBlock}"
-                                   Foreground="{ThemeResource SystemAccentColor}"/>
+                                   Foreground="{StaticResource DangerBrush}"/>
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -87,11 +87,11 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="项目" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="总任务" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="待处理任务" HorizontalAlignment="Center"/>
                             <TextBlock Grid.Column="2" Text="未开始" HorizontalAlignment="Center"/>
                             <TextBlock Grid.Column="3" Text="进行中" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="4" Text="已完成" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="5" Text="完成率" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Text="延期任务" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="5" Text="延期率" HorizontalAlignment="Center"/>
                         </Grid>
                     </ListView.Header>
                     <ListView.ItemContainerStyle>
@@ -102,7 +102,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:ProjectProgressItem">
+                        <DataTemplate x:DataType="local:ProjectDelayItem">
                             <Grid Padding="0 12">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*"/>
@@ -117,16 +117,16 @@
                                     <FontIcon Style="{StaticResource WtfIcon}" Glyph="{x:Bind Glyph}" Foreground="{x:Bind Color}"/>
                                     <TextBlock Margin="4 0 0 0" Text="{x:Bind Name}" TextWrapping="Wrap"/>
                                 </controls:WrapPanel>
-                                <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="{x:Bind Total}"/>
+                                <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="{x:Bind Follow}"/>
                                 <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{x:Bind Peding}"/>
                                 <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{x:Bind Progress}" Foreground="{StaticResource WarningBrush}"/>
-                                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="{x:Bind Completed}" Foreground="{ThemeResource SystemAccentColor}"/>
+                                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="{x:Bind Delay}" Foreground="{StaticResource DangerBrush}"/>
                                 <Grid Grid.Column="5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="48"/>
                                     </Grid.ColumnDefinitions>
-                                    <ProgressBar Maximum="1" Value="{x:Bind Point}"/>
+                                    <ProgressBar Maximum="1" Value="{x:Bind Point}" Foreground="{StaticResource DangerBrush}"/>
                                     <TextBlock Grid.Column="1" Margin="12 0 0 0" Text="{x:Bind Point, Converter={StaticResource PercentageConverter}, ConverterParameter='p0'}"/>
                                 </Grid>
                             </Grid>

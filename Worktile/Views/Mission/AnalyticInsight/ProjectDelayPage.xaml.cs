@@ -5,18 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightProjectProgress;
+using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightProjectDelay;
 using Worktile.Common;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.AnalyticInsight
 {
-    public sealed partial class ProjectProgressPage : Page, INotifyPropertyChanged
+    public sealed partial class ProjectDelayPage : Page, INotifyPropertyChanged
     {
-        public ProjectProgressPage()
+        public ProjectDelayPage()
         {
             InitializeComponent();
-            ProjectItems = new IncrementalCollection<ProjectProgressItem>(ProjectItemsAsync);
+            ProjectItems = new IncrementalCollection<ProjectDelayItem>(ProjectItemsAsync);
             IsActive = true;
         }
 
@@ -51,14 +51,14 @@ namespace Worktile.Views.Mission.AnalyticInsight
             }
         }
 
-        private int _totalCount;
-        public int TotalCount
+        private int _followCount;
+        public int FollowCount
         {
-            get => _totalCount;
+            get => _followCount;
             set
             {
-                _totalCount = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalCount)));
+                _followCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FollowCount)));
             }
         }
 
@@ -84,14 +84,14 @@ namespace Worktile.Views.Mission.AnalyticInsight
             }
         }
 
-        private int _completedCount;
-        public int CompletedCount
+        private int _delayCount;
+        public int DelayCount
         {
-            get => _completedCount;
+            get => _delayCount;
             set
             {
-                _completedCount = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedCount)));
+                _delayCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DelayCount)));
             }
         }
 
@@ -106,39 +106,39 @@ namespace Worktile.Views.Mission.AnalyticInsight
             }
         }
 
-        public IncrementalCollection<ProjectProgressItem> ProjectItems { get; }
+        public IncrementalCollection<ProjectDelayItem> ProjectItems { get; }
 
-        private async Task<IEnumerable<ProjectProgressItem>> ProjectItemsAsync()
+        private async Task<IEnumerable<ProjectDelayItem>> ProjectItemsAsync()
         {
             string uri = $"/api/mission-vnext/work/analytic-insight/{_navId}/{_subNavId}/content?fpids=&fuids=&from=&to=&pi={_pageIndex}&ps={PageSize}";
             var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkAnalyticInsightProjectProgress>(uri);
+            var data = await client.GetAsync<ApiMissionVnextWorkAnalyticInsightProjectDelay>(uri);
             if (!_totalPages.HasValue)
             {
-                _totalPages = Convert.ToInt32(Math.Ceiling(data.Data.Value.Total * 1.0 / PageSize)) - 1;
+                _totalPages = Convert.ToInt32(Math.Ceiling(data.Data.Value.ItemCount * 1.0 / PageSize)) - 1;
             }
             if (!_isInitialized)
             {
                 _isInitialized = true;
                 ProjectCount = data.Data.Value.ItemCount;
-                TotalCount = data.Data.Value.Total;
+                FollowCount = data.Data.Value.Follow;
                 PendingCount = data.Data.Value.Pending;
                 ProgressCount = data.Data.Value.Progress;
-                CompletedCount = data.Data.Value.Completed;
+                DelayCount = data.Data.Value.DelayCount;
                 PointRate = data.Data.Value.Point;
             }
             ProjectItems.HasMoreItems = _totalPages >= _pageIndex;
             _pageIndex++;
             IsActive = false;
-            return data.Data.Value.Items.Select(i => new ProjectProgressItem
+            return data.Data.Value.Items.Select(i => new ProjectDelayItem
             {
                 Id = i.ProjectId,
                 Name = i.Name,
-                Completed = i.Completed,
+                Delay = i.DelayCount,
                 Peding = i.Pending,
                 Point = i.Point,
                 Progress = i.Progress,
-                Total = i.Total,
+                Follow = i.Follow,
                 Glyph = i.Visibility == 1 ? "\ue70c" : "\ue667",
                 Color = WtColorHelper.GetNewColor(i.Color)
             });
@@ -153,14 +153,14 @@ namespace Worktile.Views.Mission.AnalyticInsight
         }
     }
 
-    public class ProjectProgressItem
+    public class ProjectDelayItem
     {
         public string Id { get; set; }
         public string Name { get; set; }
         public int Peding { get; set; }
-        public int Total { get; set; }
+        public int Follow { get; set; }
         public int Progress { get; set; }
-        public int Completed { get; set; }
+        public int Delay { get; set; }
         public double Point { get; set; }
         public string Glyph { get; set; }
         public string Color { get; set; }
