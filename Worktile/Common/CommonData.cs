@@ -6,7 +6,7 @@ using System.Linq;
 using Windows.UI.Xaml.Media.Imaging;
 using System;
 
-namespace Worktile.Services
+namespace Worktile.Common
 {
     public static class CommonData
     {

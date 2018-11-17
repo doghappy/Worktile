@@ -51,5 +51,6 @@
                 </Frame.ContentTransitions>
             </Frame>
         </NavigationView>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

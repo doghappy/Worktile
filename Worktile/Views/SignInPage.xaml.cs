@@ -13,7 +13,7 @@ using Worktile.ApiModel.ApiTeamDomainCheck;
 using Worktile.ApiModel.ApiTeamLite;
 using Worktile.ApiModel.ApiUserMe;
 using Worktile.ApiModel.ApiUserSignIn;
-using Worktile.Services;
+using Worktile.Common;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views

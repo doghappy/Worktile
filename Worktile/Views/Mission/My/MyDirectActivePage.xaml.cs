@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 using Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive;
 using Worktile.Models;
 using Worktile.Models.KanBan;
-using Worktile.Services;
+using Worktile.Common;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.My

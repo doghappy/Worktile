@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using System.ComponentModel;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextWorkAddon;
-using Worktile.Services;
+using Worktile.Common;
 using System.Threading.Tasks;
 using Worktile.WtRequestClient;
 using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightGroups;
@@ -35,6 +25,17 @@ namespace Worktile.Views.Mission.AnalyticInsight
         private ApiModel.ApiMissionVnextWorkAddon.Value _navItem;
 
         public ObservableCollection<TopNavItem> TopNavItems { get; }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                _isActive = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+            }
+        }
 
         private string _topNavIcon;
         public string TopNavIcon
@@ -109,7 +110,9 @@ namespace Worktile.Views.Mission.AnalyticInsight
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            IsActive = true;
             await RequestApiMissionVnextWorkAnalyticInsightGroups();
+            IsActive = false;
         }
 
         private async Task RequestApiMissionVnextWorkAnalyticInsightGroups()

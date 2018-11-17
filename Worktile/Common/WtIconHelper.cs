@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Worktile.Models;
 
-namespace Worktile.Services
+namespace Worktile.Common
 {
     public static class WtIconHelper
     {

@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Worktile.Services
+namespace Worktile.Common
 {
     public static class HashEncryptor
     {

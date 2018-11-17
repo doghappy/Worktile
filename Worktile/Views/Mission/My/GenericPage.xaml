@@ -45,7 +45,7 @@
                     <Setter Property="Padding" Value="16 8 0 8"/>
                     <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
                     <Setter Property="BorderThickness" Value="0 1 0 0"/>
-                    <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                    <Setter Property="BorderBrush" Value="{ThemeResource CustomAcrylicBrush}"/>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>

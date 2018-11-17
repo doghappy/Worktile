@@ -5,71 +5,136 @@
     xmlns:local="using:Worktile.Views.Mission.AnalyticInsight"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Loaded="Page_Loaded"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Worktile.Converters"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="TextInfoBlock" BasedOn="{StaticResource SubtitleTextBlockStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="TextNumberBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <converters:PercentageConverter x:Key="PercentageConverter"/>
+    </Page.Resources>
+
     <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <TextBlock Text="sdfsd"/>
-        <!--<Rectangle Height="38" VerticalAlignment="Top" Fill="{ThemeResource CustomAcrylicBrush}"/>
-        <Pivot ItemsSource="{x:Bind TopNavItems, Mode=OneWay}" Padding="0">
-            <Pivot.Resources>
-                <Style TargetType="PivotHeaderItem">
-                    <Setter Property="Height" Value="32"/>
-                    <Setter Property="FontSize" Value="14"/>
-                </Style>
-            </Pivot.Resources>
-            <Pivot.HeaderTemplate>
-                <DataTemplate x:DataType="local:TopNavItem">
-                    <TextBlock Text="{x:Bind Name}"/>
-                </DataTemplate>
-            </Pivot.HeaderTemplate>
-            <Pivot.ItemTemplate>
-                <DataTemplate x:DataType="local:TopNavItem">
-                    <Grid Background="Red"></Grid>
-                </DataTemplate>
-            </Pivot.ItemTemplate>
-        </Pivot>
-
-        <HyperlinkButton VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 4 12 0">
-            <HyperlinkButton.Content>
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon FontSize="14" Style="{StaticResource WtfIcon}" Glyph="&#xE63E;"/>
-                    <TextBlock FontSize="14" Text="报表" Margin="4 0 0 0"/>
+            <Grid Margin="12" Padding="0 32" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="项目" Style="{ThemeResource TextInfoBlock}"/>
+                    <TextBlock Text="{x:Bind ProjectCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}"/>
                 </StackPanel>
-            </HyperlinkButton.Content>
-        </HyperlinkButton>-->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock Text="总任务" Style="{ThemeResource TextInfoBlock}"/>
+                    <TextBlock Text="{x:Bind TotalCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                    <TextBlock Text="未开始" Style="{ThemeResource TextInfoBlock}"/>
+                    <TextBlock Text="{x:Bind PendingCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" HorizontalAlignment="Center">
+                    <TextBlock Text="进行中" Style="{ThemeResource TextInfoBlock}"/>
+                    <TextBlock Text="{x:Bind ProgressCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}" Foreground="{StaticResource WarningBrush}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="4" HorizontalAlignment="Center">
+                    <TextBlock Text="已完成" Style="{ThemeResource TextInfoBlock}"/>
+                    <TextBlock Text="{x:Bind CompletedCount, Mode=OneWay}" Style="{ThemeResource TextNumberBlock}" Foreground="{ThemeResource SystemAccentColor}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="5" HorizontalAlignment="Stretch">
+                    <TextBlock Text="完成率" Style="{ThemeResource TextInfoBlock}"/>
+                    <Grid Height="34" Padding="12 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ProgressBar Maximum="1" Value="{x:Bind PointRate, Mode=OneWay}"/>
+                        <TextBlock Grid.Column="1"
+                                   Margin="16 0 0 0"
+                                   Text="{x:Bind PointRate, Mode=OneWay, Converter={StaticResource PercentageConverter}, ConverterParameter='p0'}"
+                                   Style="{ThemeResource TextNumberBlock}"
+                                   Foreground="{ThemeResource SystemAccentColor}"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
 
-        <!--<NavigationView x:Name="Nav"
-                        PaneDisplayMode="Top"
-                        IsBackButtonVisible="Collapsed"
-                        IsSettingsVisible="False"
-                        SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}"
-                        MenuItemsSource="{x:Bind TopNavItems}">
-            <NavigationView.MenuItemTemplate>
-                <DataTemplate x:DataType="local:TopNavItem">
-                    <NavigationViewItem Content="{x:Bind Name}" Tag="{x:Bind Id}" />
-                </DataTemplate>
-            </NavigationView.MenuItemTemplate>
+            <Grid Grid.Row="1" Margin="12 0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <ListView ItemsSource="{x:Bind ProjectItems}">
+                    <ListView.Header>
+                        <Grid Background="{ThemeResource SystemControlForegroundChromeMediumBrush}" Padding="0 12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
 
-            <NavigationView.PaneFooter>
-                <HyperlinkButton Padding="0" Margin="0">
-                    <HyperlinkButton.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE63E;"/>
-                            <TextBlock Text="报表" Margin="4 0 0 0"/>
-                        </StackPanel>
-                    </HyperlinkButton.Content>
-                </HyperlinkButton>
-            </NavigationView.PaneFooter>
+                            <TextBlock Text="项目" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="总任务" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="未开始" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Text="进行中" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Text="已完成" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="5" Text="完成率" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </ListView.Header>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="BorderThickness" Value="0 1 0 0"/>
+                            <Setter Property="BorderBrush" Value="{ThemeResource CustomAcrylicBrush}"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:ProjectItem">
+                            <Grid Padding="0 12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
 
-            <Frame x:Name="ContentFrame">
-                <Frame.ContentTransitions>
-                    <TransitionCollection>
-                        <NavigationThemeTransition/>
-                    </TransitionCollection>
-                </Frame.ContentTransitions>
-            </Frame>
-        </NavigationView>-->
+                                <controls:WrapPanel>
+                                    <FontIcon Style="{StaticResource WtfIcon}" Glyph="{x:Bind Glyph}" Foreground="{x:Bind Color}"/>
+                                    <TextBlock Margin="4 0 0 0" Text="{x:Bind Name}" TextWrapping="Wrap"/>
+                                </controls:WrapPanel>
+                                <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="{x:Bind Total}"/>
+                                <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{x:Bind Peding}"/>
+                                <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{x:Bind Progress}"/>
+                                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="{x:Bind Completed}"/>
+                                <Grid Grid.Column="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="48"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ProgressBar Maximum="1" Value="{x:Bind Point}"/>
+                                    <TextBlock Grid.Column="1" Margin="12 0 0 0" Text="{x:Bind Point, Converter={StaticResource PercentageConverter}, ConverterParameter='p0'}"/>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

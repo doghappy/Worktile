@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Worktile.ApiModel.ApiTeam;
 using Worktile.ApiModel.ApiUserMe;
 using Worktile.Models;
-using Worktile.Services;
+using Worktile.Common;
 using Worktile.Views;
 using Worktile.Views.Mission;
 using Worktile.WtRequestClient;

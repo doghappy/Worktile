@@ -2,7 +2,7 @@
 using System.Linq;
 using Worktile.Models;
 
-namespace Worktile.Services
+namespace Worktile.Common
 {
     static class WtColorHelper
     {

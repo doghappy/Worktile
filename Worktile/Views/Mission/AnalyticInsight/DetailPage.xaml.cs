@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightIdSidContent;
+using Worktile.Common;
+using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.AnalyticInsight
 {
@@ -23,12 +17,133 @@ namespace Worktile.Views.Mission.AnalyticInsight
         public DetailPage()
         {
             InitializeComponent();
+            ProjectItems = new IncrementalCollection<ProjectItem>(ProjectItemsAsync);
+            IsActive = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private TopNavItem _nav;
         private TopNavItem _subNav;
+        const int PageSize = 20;
+        private int? _totalPages;
+        private int _pageIndex;
+        private bool _isInitialized;
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                _isActive = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+            }
+        }
+
+        private int _projectCount;
+        public int ProjectCount
+        {
+            get => _projectCount;
+            set
+            {
+                _projectCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProjectCount)));
+            }
+        }
+
+        private int _totalCount;
+        public int TotalCount
+        {
+            get => _totalCount;
+            set
+            {
+                _totalCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalCount)));
+            }
+        }
+
+        private int _pendingCount;
+        public int PendingCount
+        {
+            get => _pendingCount;
+            set
+            {
+                _pendingCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PendingCount)));
+            }
+        }
+
+        private int _progressCount;
+        public int ProgressCount
+        {
+            get => _progressCount;
+            set
+            {
+                _progressCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProgressCount)));
+            }
+        }
+
+        private int _completedCount;
+        public int CompletedCount
+        {
+            get => _completedCount;
+            set
+            {
+                _completedCount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedCount)));
+            }
+        }
+
+        private double _pointRate;
+        public double PointRate
+        {
+            get => _pointRate;
+            set
+            {
+                _pointRate = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PointRate)));
+            }
+        }
+
+        public IncrementalCollection<ProjectItem> ProjectItems { get; }
+
+        private async Task<IEnumerable<ProjectItem>> ProjectItemsAsync()
+        {
+            string uri = $"/api/mission-vnext/work/analytic-insight/{_nav.Id}/{_subNav.Id}/content?fpids=&fuids=&from=&to=&pi={_pageIndex}&ps={PageSize}";
+            var client = new WtHttpClient();
+            var data = await client.GetAsync<ApiMissionVnextWorkAnalyticInsightIdSidContent>(uri);
+            if (!_totalPages.HasValue)
+            {
+                _totalPages = Convert.ToInt32(Math.Ceiling(data.Data.Value.Total * 1.0 / PageSize)) - 1;
+            }
+            if (!_isInitialized)
+            {
+                _isInitialized = true;
+                ProjectCount = data.Data.Value.ItemCount;
+                TotalCount = data.Data.Value.Total;
+                PendingCount = data.Data.Value.Pending;
+                ProgressCount = data.Data.Value.Progress;
+                CompletedCount = data.Data.Value.Completed;
+                PointRate = data.Data.Value.Point;
+            }
+            ProjectItems.HasMoreItems = _totalPages >= _pageIndex;
+            _pageIndex++;
+            IsActive = false;
+            return data.Data.Value.Items.Select(i => new ProjectItem
+            {
+                Id = i.ProjectId,
+                Name = i.Name,
+                Completed = i.Completed,
+                Peding = i.Pending,
+                Point = i.Point,
+                Progress = i.Progress,
+                Total = i.Total,
+                Glyph = i.Visibility == 1 ? "\ue70c" : "\ue667",
+                Color = WtColorHelper.GetNewColor(i.Color)
+            });
+        }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -37,40 +152,18 @@ namespace Worktile.Views.Mission.AnalyticInsight
             _nav = param.Nav as TopNavItem;
             _subNav = param.SubNav as TopNavItem;
         }
+    }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        public async Task RequestApiMissionVnextWorkAnalyticInsightIdSidContent()
-        {
-            //string uri = $"/api/mission-vnext/work/analytic-insight/{_nav.Id}/{_nav.s}/content?fpids=&fuids=&from=&to=&pi=0&ps=20";
-        }
-
-        //private ObservableCollection<TopNavItem> _topNavItems;
-        //public ObservableCollection<TopNavItem> TopNavItems
-        //{
-        //    get => _topNavItems;
-        //    set
-        //    {
-        //        _topNavItems = value;
-        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavItems)));
-        //    }
-        //}
-
-        //private TopNavItem _selectedNav;
-        //public TopNavItem SelectedNav
-        //{
-        //    get => _selectedNav;
-        //    set
-        //    {
-        //        if (SelectedNav != value)
-        //        {
-        //            _selectedNav = value;
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
-        //        }
-        //    }
-        //}
+    public class ProjectItem
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public int Peding { get; set; }
+        public int Total { get; set; }
+        public int Progress { get; set; }
+        public int Completed { get; set; }
+        public double Point { get; set; }
+        public string Glyph { get; set; }
+        public string Color { get; set; }
     }
 }

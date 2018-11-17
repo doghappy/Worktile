@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextWorkMyGeneric;
 using Worktile.Common;
 using Worktile.Models;
-using Worktile.Services;
+using Worktile.Common;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.My
