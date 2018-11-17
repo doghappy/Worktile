@@ -130,6 +130,9 @@
     <Compile Include="Views\Mission\AnalyticInsight\ProjectDelayPage.xaml.cs">
       <DependentUpon>ProjectDelayPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Mission\AnalyticInsight\MemberProgressPage.xaml.cs">
+      <DependentUpon>MemberProgressPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Mission\AnalyticInsight\ProjectProgressPage.xaml.cs">
       <DependentUpon>ProjectProgressPage.xaml</DependentUpon>
     </Compile>
@@ -245,6 +248,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Mission\AnalyticInsight\ProjectDelayPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Mission\AnalyticInsight\MemberProgressPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

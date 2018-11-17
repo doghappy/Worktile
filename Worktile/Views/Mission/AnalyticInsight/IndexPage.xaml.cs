@@ -99,6 +99,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
                             case "project-delay":
                                 ContentFrame.Navigate(typeof(ProjectDelayPage), param);
                                 break;
+                            case "member-progress":
+                                ContentFrame.Navigate(typeof(MemberProgressPage), param);
+                                break;
+                            case "member-delay":
+                                break;
                         }
                     }
                 }

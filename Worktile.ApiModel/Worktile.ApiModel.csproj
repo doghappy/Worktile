@@ -111,6 +111,7 @@
     <Compile Include="ApiMissionVnextWorkAddon.cs" />
     <Compile Include="ApiMissionVnextWorkAnalyticInsightGroups.cs" />
     <Compile Include="ApiMissionVnextWorkAnalyticInsightProjectDelay.cs" />
+    <Compile Include="ApiMissionVnextWorkAnalyticInsightMemberProgress.cs" />
     <Compile Include="ApiMissionVnextWorkAnalyticInsightProjectProgress.cs" />
     <Compile Include="ApiMissionVnextWorkMyDirectedActive.cs" />
     <Compile Include="ApiMissionVnextWorkMyGeneric.cs" />
