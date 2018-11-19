@@ -104,7 +104,7 @@ namespace Worktile.Views.Mission
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedWorkNav)));
                     _selectedProjectNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedProjectNav)));
-
+                    ContentFrame.Navigate(typeof(Project.IndexPage), value);
                 }
             }
         }

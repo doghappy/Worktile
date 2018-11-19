@@ -107,6 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiMissionVnextProjectNav.cs" />
+    <Compile Include="ApiMissionVnextProjectsDetail.cs" />
     <Compile Include="ApiMissionVnextTasksIdstates.cs" />
     <Compile Include="ApiMissionVnextWorkAddon.cs" />
     <Compile Include="ApiMissionVnextWorkAnalyticInsightGroups.cs" />

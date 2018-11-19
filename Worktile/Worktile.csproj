@@ -154,6 +154,9 @@
     <Compile Include="Views\Mission\My\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Mission\Project\IndexPage.xaml.cs">
+      <DependentUpon>IndexPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
@@ -283,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Mission\My\IndexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Mission\Project\IndexPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
