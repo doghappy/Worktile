@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
 {
-
     public partial class ApiMissionVnextKanbanContent
     {
         [JsonProperty("oid")]
@@ -25,6 +22,9 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
 
         [JsonProperty("references")]
         public References References { get; set; }
+
+        [JsonProperty("page_count")]
+        public object PageCount { get; set; }
     }
 
     public partial class References
@@ -72,10 +72,73 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
     public partial class Lookups
     {
         [JsonProperty("task_states")]
-        public List<PriorityElement> TaskStates { get; set; }
+        public List<TaskState> TaskStates { get; set; }
+
+        [JsonProperty("members")]
+        public List<Member> Members { get; set; }
 
         [JsonProperty("priorities")]
         public List<PriorityElement> Priorities { get; set; }
+
+        [JsonProperty("tags")]
+        public List<TagElement> Tags { get; set; }
+
+        [JsonProperty("task_iteration_sprint")]
+        public List<object> TaskIterationSprint { get; set; }
+
+        [JsonProperty("task_data_sources")]
+        public List<TaskDataSource> TaskDataSources { get; set; }
+    }
+
+    public partial class Member
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("team")]
+        public string Team { get; set; }
+
+        [JsonProperty("uid")]
+        public string Uid { get; set; }
+
+        [JsonProperty("preferences")]
+        public Preferences Preferences { get; set; }
+
+        [JsonProperty("status")]
+        public long Status { get; set; }
+
+        [JsonProperty("role")]
+        public long Role { get; set; }
+
+        [JsonProperty("mobile")]
+        public string Mobile { get; set; }
+
+        [JsonProperty("mobile_area")]
+        public string MobileArea { get; set; }
+
+        [JsonProperty("desc")]
+        public string Desc { get; set; }
+
+        [JsonProperty("short_code")]
+        public string ShortCode { get; set; }
+
+        [JsonProperty("display_name")]
+        public string DisplayName { get; set; }
+
+        [JsonProperty("avatar")]
+        public string Avatar { get; set; }
+
+        [JsonProperty("display_name_pinyin")]
+        public string DisplayNamePinyin { get; set; }
+    }
+
+    public partial class Preferences
+    {
+        [JsonProperty("locale")]
+        public string Locale { get; set; }
     }
 
     public partial class PriorityElement
@@ -89,11 +152,47 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
         [JsonProperty("color")]
         public string Color { get; set; }
 
-        [JsonProperty("icon", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("icon")]
         public string Icon { get; set; }
+    }
 
-        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Type { get; set; }
+    public partial class TagElement
+    {
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("mode_id")]
+        public string ModeId { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("color")]
+        public string Color { get; set; }
+    }
+
+    public partial class TaskDataSource
+    {
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("text")]
+        public string Text { get; set; }
+    }
+
+    public partial class TaskState
+    {
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("color")]
+        public string Color { get; set; }
+
+        [JsonProperty("type")]
+        public long Type { get; set; }
     }
 
     public partial class Property
@@ -148,6 +247,9 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
     {
         [JsonProperty("task_property_id")]
         public string TaskPropertyId { get; set; }
+
+        [JsonProperty("color", NullValueHandling = NullValueHandling.Ignore)]
+        public string Color { get; set; }
     }
 
     public partial class View
@@ -218,6 +320,12 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
 
     public partial class Properties
     {
+        [JsonProperty("assignee")]
+        public Assignee Assignee { get; set; }
+
+        [JsonProperty("due")]
+        public Due Due { get; set; }
+
         [JsonProperty("start")]
         public Start Start { get; set; }
 
@@ -226,6 +334,42 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
 
         [JsonProperty("priority")]
         public PropertiesPriority Priority { get; set; }
+
+        [JsonProperty("tag")]
+        public PropertiesTag Tag { get; set; }
+
+        [JsonProperty("workload")]
+        public Workload Workload { get; set; }
+
+        [JsonProperty("iteration")]
+        public Iteration Iteration { get; set; }
+
+        [JsonProperty("epic_source")]
+        public EpicSource EpicSource { get; set; }
+
+        [JsonProperty("uc_number")]
+        public UcNumber UcNumber { get; set; }
+
+        [JsonProperty("uc_test_date")]
+        public UcTestDate UcTestDate { get; set; }
+
+        [JsonProperty("ceshi")]
+        public Ceshi Ceshi { get; set; }
+    }
+
+    public partial class Assignee
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public string Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
     }
 
     public partial class Attachment
@@ -235,6 +379,84 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
 
         [JsonProperty("value")]
         public List<object> Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class Ceshi
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public CeshiValue Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class CeshiValue
+    {
+        [JsonProperty("begin")]
+        public BeginClass Begin { get; set; }
+
+        [JsonProperty("end")]
+        public BeginClass End { get; set; }
+    }
+
+    public partial class BeginClass
+    {
+        [JsonProperty("date")]
+        public long? Date { get; set; }
+
+        [JsonProperty("with_time")]
+        public long WithTime { get; set; }
+    }
+
+    public partial class Due
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public BeginClass Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class EpicSource
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public string Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class Iteration
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public object Value { get; set; }
 
         [JsonProperty("updated_by")]
         public string UpdatedBy { get; set; }
@@ -264,7 +486,7 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
         public string PropertyId { get; set; }
 
         [JsonProperty("value")]
-        public StartValue Value { get; set; }
+        public BeginClass Value { get; set; }
 
         [JsonProperty("updated_by")]
         public string UpdatedBy { get; set; }
@@ -273,13 +495,76 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
         public long UpdatedAt { get; set; }
     }
 
-    public partial class StartValue
+    public partial class PropertiesTag
     {
-        [JsonProperty("date")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime? Date { get; set; }
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
 
-        [JsonProperty("with_time")]
-        public long WithTime { get; set; }
+        [JsonProperty("value")]
+        public List<string> Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class UcNumber
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public string Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class UcTestDate
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public BeginClass Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class Workload
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public WorkloadValue Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class WorkloadValue
+    {
+        [JsonProperty("estimated")]
+        public Estimated Estimated { get; set; }
+
+        [JsonProperty("reported_total")]
+        public long ReportedTotal { get; set; }
+    }
+
+    public partial class Estimated
+    {
     }
 }

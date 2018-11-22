@@ -116,16 +116,12 @@ namespace Worktile.Views.Mission.Project
                 Id = task.Id,
                 Title = task.Title,
                 Identifier = task.Identifier,
-                Avatar = new Avatar
-                {
-                    ProfilePicture = CommonData.GetAvatarUrl(CommonData.ApiUserMe.Avatar, 40),
-                    DisplayName = CommonData.ApiUserMe.DisplayName
-                },
+                Avatar = CommonData.GetAvatar(task.Properties.Assignee.Value, 40),
                 State = new Models.TaskState
                 {
                     Name = state.Name,
                     Foreground = WtColorHelper.GetNewColor(state.Color),
-                    Glyph = WtIconHelper.GetGlyph(state.Type.Value)
+                    Glyph = WtIconHelper.GetGlyph(state.Type)
                 },
                 TaskType = new Models.TaskType
                 {

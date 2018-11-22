@@ -74,11 +74,7 @@ namespace Worktile.Views.Mission.My
                         Title = task.Title,
                         Identifier = task.Identifier,
                         ToDate = task.Properties.Due.Value.Date,
-                        Avatar = new Avatar
-                        {
-                            ProfilePicture = CommonData.GetAvatarUrl(CommonData.ApiUserMe.Avatar, 40),
-                            DisplayName = CommonData.ApiUserMe.DisplayName
-                        },
+                        Avatar = CommonData.GetAvatar(CommonData.ApiUserMe.Uid, 40),
                         State = new Models.TaskState
                         {
                             Name = state.Name,

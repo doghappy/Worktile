@@ -37,6 +37,7 @@
             </Grid.ColumnDefinitions>
             <wtcontrols:TaskStateButton TaskId="{x:Bind KanBanItem.Id, Mode=OneWay}" State="{x:Bind KanBanItem.State, Mode=OneWay}"/>
             <PersonPicture Grid.Column="1"
+                           Visibility="{x:Bind KanBanItem.Avatar, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
                            Height="30"
                            Initials="{x:Bind KanBanItem.Avatar.Initials, Mode=OneWay}"
                            ProfilePicture="{x:Bind KanBanItem.Avatar.ProfilePicture, Mode=OneWay}"/>
