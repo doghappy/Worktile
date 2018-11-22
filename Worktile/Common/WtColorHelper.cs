@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 using Worktile.Models;
 
 namespace Worktile.Common
@@ -59,5 +62,37 @@ namespace Worktile.Common
             }
             return color;
         }
+
+        public static SolidColorBrush GetSolidColorBrush(string hex)
+        {
+            if (hex[0] == '#')
+            {
+                hex = hex.Replace("#", string.Empty);
+            }
+            if (hex.Length == 6)
+            {
+                byte a = 1;
+                byte r = (byte)Convert.ToUInt32(hex.Substring(2, 2), 16);
+                byte g = (byte)Convert.ToUInt32(hex.Substring(4, 2), 16);
+                byte b = (byte)Convert.ToUInt32(hex.Substring(6, 2), 16);
+                return new SolidColorBrush(Color.FromArgb(a, r, g, b));
+            }
+            else if (hex.Length == 8)
+            {
+                byte a = (byte)Convert.ToUInt32(hex.Substring(0, 2), 16);
+                byte r = (byte)Convert.ToUInt32(hex.Substring(2, 2), 16);
+                byte g = (byte)Convert.ToUInt32(hex.Substring(4, 2), 16);
+                byte b = (byte)Convert.ToUInt32(hex.Substring(6, 2), 16);
+                return new SolidColorBrush(Color.FromArgb(26, r, g, b));
+            }
+            else
+            {
+                
+                throw new ArgumentException();
+            }
+        }
+
+        public static SolidColorBrush DangerColor => new SolidColorBrush(Color.FromArgb(255, 255, 91, 87));
+        public static SolidColorBrush DangerColor1A => new SolidColorBrush(Color.FromArgb(26, 255, 91, 87));
     }
 }

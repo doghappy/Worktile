@@ -69,7 +69,7 @@
                         <ListView ItemsSource="{x:Bind FavNavItems}"
                                   SelectedItem="{x:Bind SelectedFavNav, Mode=TwoWay}"
                                   ScrollViewer.VerticalScrollMode="Disabled"
-                                  Visibility="{x:Bind FavNavItems.Count, Converter={StaticResource NumberVisibilityConverter}}"
+                                  Visibility="{x:Bind FavNavItems.Count, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}}"
                                   Margin="0 0 0 16">
                             <ListView.Header>
                                 <TextBlock Margin="12 0 0 0" FontWeight="SemiBold" Text="置顶"/>

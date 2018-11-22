@@ -73,6 +73,7 @@ namespace Worktile.Views.Mission.My
                         Id = task.Id,
                         Title = task.Title,
                         Identifier = task.Identifier,
+                        ToDate = task.Properties.Due.Value.Date,
                         Avatar = new Avatar
                         {
                             ProfilePicture = CommonData.GetAvatarUrl(CommonData.ApiUserMe.Avatar, 40),

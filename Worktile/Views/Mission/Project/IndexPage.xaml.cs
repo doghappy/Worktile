@@ -2,18 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextProjectsDetail;
 using Worktile.WtRequestClient;
@@ -103,6 +95,14 @@ namespace Worktile.Views.Mission.Project
                 {
                     _selectedNavView = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNavView)));
+                    if (SelectedNav.TargetPage != null)
+                    {
+                        ContentFrame.Navigate(SelectedNav.TargetPage, new
+                        {
+                            AddonId = SelectedNav.Id,
+                            ViewId = value.Id
+                        });
+                    }
                 }
             }
         }
@@ -135,6 +135,8 @@ namespace Worktile.Views.Mission.Project
                 {
                     Id = item.Id,
                     Name = item.Name,
+                    Key = item.Key,
+                    TargetPage = GetPage(item.Key),
                     Views = item.Views.Select(v => new TopNavItemView
                     {
                         Id = v.Id,
@@ -145,12 +147,31 @@ namespace Worktile.Views.Mission.Project
             }
             SelectedNav = TopNavItems.First();
         }
+
+        private Type GetPage(string key)
+        {
+            Type page = null;
+            switch (key)
+            {
+                case "kanban": page = typeof(KanbanPage); break;
+                case "table": page = typeof(TablePage); break;
+                case "insight": page = typeof(InsightPage); break;
+                case "calendar": page = typeof(CalendarPage); break;
+                case "iteration": page = typeof(IterationPage); break;
+                case "list": page = typeof(ListPage); break;
+                case "timeline": page = typeof(TimelinePage); break;
+                case "workload": page = typeof(WorkloadPage); break;
+            }
+            return page;
+        }
     }
 
     public class TopNavItem
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Key { get; set; }
+        public Type TargetPage { get; set; }
         public List<TopNavItemView> Views { get; set; }
     }
 

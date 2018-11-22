@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
+namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
 {
 
-
-    public partial class ApiMissionVnextWorkMyDirectedActive
+    public partial class ApiMissionVnextKanbanContent
     {
         [JsonProperty("oid")]
         public string Oid { get; set; }
@@ -39,11 +38,11 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         [JsonProperty("task_types")]
         public List<TaskType> TaskTypes { get; set; }
 
+        [JsonProperty("view")]
+        public View View { get; set; }
+
         [JsonProperty("groups")]
         public List<Group> Groups { get; set; }
-
-        [JsonProperty("projects")]
-        public List<Project> Projects { get; set; }
     }
 
     public partial class Group
@@ -51,74 +50,35 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         [JsonProperty("_id")]
         public string Id { get; set; }
 
-        [JsonProperty("task_ids")]
-        public List<string> TaskIds { get; set; }
+        [JsonProperty("project_addon_id")]
+        public string ProjectAddonId { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("position")]
+        public long Position { get; set; }
+
+        [JsonProperty("is_archived")]
+        public long IsArchived { get; set; }
+
+        [JsonProperty("task_ids")]
+        public List<string> TaskIds { get; set; }
+
+        [JsonProperty("is_watched")]
+        public long IsWatched { get; set; }
     }
 
     public partial class Lookups
     {
         [JsonProperty("task_states")]
-        public List<TaskState> TaskStates { get; set; }
+        public List<PriorityElement> TaskStates { get; set; }
 
-        [JsonProperty("members")]
-        public List<Member> Members { get; set; }
+        [JsonProperty("priorities")]
+        public List<PriorityElement> Priorities { get; set; }
     }
 
-    public partial class Member
-    {
-        [JsonProperty("avatar")]
-        public string Avatar { get; set; }
-
-        [JsonProperty("desc")]
-        public string Desc { get; set; }
-
-        [JsonProperty("display_name")]
-        public string DisplayName { get; set; }
-
-        [JsonProperty("email")]
-        public string Email { get; set; }
-
-        [JsonProperty("mobile")]
-        public string Mobile { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("preferences")]
-        public Preferences Preferences { get; set; }
-
-        [JsonProperty("role")]
-        public long Role { get; set; }
-
-        [JsonProperty("short_code")]
-        public string ShortCode { get; set; }
-
-        [JsonProperty("status")]
-        public long Status { get; set; }
-
-        [JsonProperty("team")]
-        public string Team { get; set; }
-
-        [JsonProperty("uid")]
-        public string Uid { get; set; }
-
-        [JsonProperty("mobile_area")]
-        public string MobileArea { get; set; }
-
-        [JsonProperty("display_name_pinyin")]
-        public string DisplayNamePinyin { get; set; }
-    }
-
-    public partial class Preferences
-    {
-        [JsonProperty("locale")]
-        public string Locale { get; set; }
-    }
-
-    public partial class TaskState
+    public partial class PriorityElement
     {
         [JsonProperty("_id")]
         public string Id { get; set; }
@@ -129,26 +89,11 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         [JsonProperty("color")]
         public string Color { get; set; }
 
-        [JsonProperty("type")]
-        public long Type { get; set; }
-    }
+        [JsonProperty("icon", NullValueHandling = NullValueHandling.Ignore)]
+        public string Icon { get; set; }
 
-    public partial class Project
-    {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("icon")]
-        public object Icon { get; set; }
-
-        [JsonProperty("identifier")]
-        public string Identifier { get; set; }
-
-        [JsonProperty("task_identifier_prefix")]
-        public string TaskIdentifierPrefix { get; set; }
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public long? Type { get; set; }
     }
 
     public partial class Property
@@ -189,7 +134,7 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         [JsonProperty("icon")]
         public string Icon { get; set; }
 
-        [JsonProperty("color", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("color")]
         public string Color { get; set; }
 
         [JsonProperty("permission_prop_ids")]
@@ -205,13 +150,34 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         public string TaskPropertyId { get; set; }
     }
 
+    public partial class View
+    {
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("group_by")]
+        public string GroupBy { get; set; }
+
+        [JsonProperty("group_type")]
+        public long GroupType { get; set; }
+
+        [JsonProperty("sort_by")]
+        public object SortBy { get; set; }
+
+        [JsonProperty("sort_type")]
+        public long SortType { get; set; }
+
+        [JsonProperty("conditions")]
+        public List<object> Conditions { get; set; }
+    }
+
     public partial class ValueElement
     {
         [JsonProperty("properties")]
         public Properties Properties { get; set; }
 
         [JsonProperty("prop_permissions")]
-        public long PropPermissions { get; set; }
+        public string PropPermissions { get; set; }
 
         [JsonProperty("static_permissions")]
         public long StaticPermissions { get; set; }
@@ -246,59 +212,38 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         [JsonProperty("updated_by")]
         public string UpdatedBy { get; set; }
 
-        [JsonProperty("parent_id")]
-        public string ParentId { get; set; }
-
-        [JsonProperty("parent_ids")]
-        public List<string> ParentIds { get; set; }
-
-        [JsonProperty("parent", NullValueHandling = NullValueHandling.Ignore)]
-        public Parent Parent { get; set; }
-    }
-
-    public partial class Parent
-    {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
-
-        [JsonProperty("title")]
-        public string Title { get; set; }
-
-        [JsonProperty("relationship")]
-        public Relationship Relationship { get; set; }
-    }
-
-    public partial class Relationship
-    {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
-
-        [JsonProperty("color")]
-        public string Color { get; set; }
-
-        [JsonProperty("description")]
-        public string Description { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("inward")]
-        public string Inward { get; set; }
-
-        [JsonProperty("outward")]
-        public string Outward { get; set; }
+        [JsonProperty("parent_ids", NullValueHandling = NullValueHandling.Ignore)]
+        public List<object> ParentIds { get; set; }
     }
 
     public partial class Properties
     {
-        [JsonProperty("assignee")]
-        public Assignee Assignee { get; set; }
+        [JsonProperty("start")]
+        public Start Start { get; set; }
 
-        [JsonProperty("due")]
-        public Due Due { get; set; }
+        [JsonProperty("attachment")]
+        public Attachment Attachment { get; set; }
+
+        [JsonProperty("priority")]
+        public PropertiesPriority Priority { get; set; }
     }
 
-    public partial class Assignee
+    public partial class Attachment
+    {
+        [JsonProperty("property_id")]
+        public string PropertyId { get; set; }
+
+        [JsonProperty("value")]
+        public List<object> Value { get; set; }
+
+        [JsonProperty("updated_by")]
+        public string UpdatedBy { get; set; }
+
+        [JsonProperty("updated_at")]
+        public long UpdatedAt { get; set; }
+    }
+
+    public partial class PropertiesPriority
     {
         [JsonProperty("property_id")]
         public string PropertyId { get; set; }
@@ -313,13 +258,13 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         public long UpdatedAt { get; set; }
     }
 
-    public partial class Due
+    public partial class Start
     {
         [JsonProperty("property_id")]
         public string PropertyId { get; set; }
 
         [JsonProperty("value")]
-        public DueValue Value { get; set; }
+        public StartValue Value { get; set; }
 
         [JsonProperty("updated_by")]
         public string UpdatedBy { get; set; }
@@ -328,7 +273,7 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         public long UpdatedAt { get; set; }
     }
 
-    public partial class DueValue
+    public partial class StartValue
     {
         [JsonProperty("date")]
         [JsonConverter(typeof(UnixDateTimeConverter))]

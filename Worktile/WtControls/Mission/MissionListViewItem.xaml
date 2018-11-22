@@ -6,9 +6,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wtcontrols="using:Worktile.WtControls"
+    xmlns:converters="using:Worktile.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+        <!--<local:ExpireForegroundDangerConverter x:Key="ExpireForegroundDangerConverter"/>
+        <local:ExpireBackgroundDangerConverter x:Key="ExpireBackgroundDangerConverter"/>-->
+        <Style TargetType="Border" x:Key="PropertyBorder">
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Padding" Value="6 2"/>
+            <Setter Property="Margin" Value="0 8 0 0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -29,21 +42,31 @@
                            ProfilePicture="{x:Bind KanBanItem.Avatar.ProfilePicture, Mode=OneWay}"/>
         </Grid>
 
-        <TextBlock Grid.Row="1" Text="{x:Bind KanBanItem.Title, Mode=OneWay}" Margin="0 5"/>
+        <TextBlock Grid.Row="1" Text="{x:Bind KanBanItem.Title, Mode=OneWay}" TextWrapping="Wrap" Margin="0 8 0 0"/>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Border CornerRadius="3" Background="{ThemeResource SystemControlForegroundBaseLowBrush}" Padding="6 2" VerticalAlignment="Center">
-                <TextBlock FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+        <StackPanel Grid.Row="2">
+            <StackPanel Orientation="Horizontal">
+                <Border Style="{ThemeResource PropertyBorder}" Background="{ThemeResource SystemControlForegroundBaseLowBrush}">
+                    <TextBlock FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
                     <Run Text="任务编号:"/>
                     <Run Text="{x:Bind KanBanItem.Identifier, Mode=OneWay}"/>
+                    </TextBlock>
+                </Border>
+                <FontIcon Margin="8 0 0 -8"
+                          Style="{StaticResource WtfIcon}"
+                          Glyph="{x:Bind KanBanItem.TaskType.Glyph, Mode=OneWay}"
+                          FontSize="22"
+                          Foreground="{x:Bind KanBanItem.TaskType.Color, Mode=OneWay}"
+                          ToolTipService.ToolTip="{x:Bind KanBanItem.TaskType.Name, Mode=OneWay}"/>
+            </StackPanel>
+            <Border Style="{ThemeResource PropertyBorder}"
+                    Visibility="{x:Bind KanBanItem.ToDate, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
+                    Background="{x:Bind KanBanItem.ToDateBackground, Mode=OneWay}">
+                <TextBlock FontSize="12" Foreground="{x:Bind KanBanItem.ToDateForeground, Mode=OneWay}">
+                        <Run Text="截止时间:"/>
+                        <Run Text="{x:Bind KanBanItem.ToDate, Mode=OneWay}"/>
                 </TextBlock>
             </Border>
-            <FontIcon Margin="8 0 0 0"
-                      Style="{StaticResource WtfIcon}"
-                      Glyph="{x:Bind KanBanItem.TaskType.Glyph, Mode=OneWay}"
-                      FontSize="22"
-                      Foreground="{x:Bind KanBanItem.TaskType.Color, Mode=OneWay}"
-                      ToolTipService.ToolTip="{x:Bind KanBanItem.TaskType.Name, Mode=OneWay}"/>
         </StackPanel>
     </Grid>
 </UserControl>
