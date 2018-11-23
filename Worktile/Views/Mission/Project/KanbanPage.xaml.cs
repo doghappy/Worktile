@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextKanbanContent;
 using Worktile.Common;
 using Worktile.Models;
-using Worktile.Models.KanBan;
+using Worktile.Models.Kanban;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
@@ -28,7 +29,7 @@ namespace Worktile.Views.Mission.Project
         public KanbanPage()
         {
             InitializeComponent();
-            KanBanGroups = new ObservableCollection<KanBanGroup>();
+            KanBanGroups = new ObservableCollection<KanbanGroup>();
             _groupedIds = new List<string>();
         }
 
@@ -39,7 +40,7 @@ namespace Worktile.Views.Mission.Project
         private bool _isPageLoaed;
         private List<string> _groupedIds;
 
-        public ObservableCollection<KanBanGroup> KanBanGroups { get; }
+        public ObservableCollection<KanbanGroup> KanBanGroups { get; }
 
         private bool _isActive;
         public bool IsActive
@@ -76,7 +77,7 @@ namespace Worktile.Views.Mission.Project
 
             foreach (var item in data.Data.References.Groups)
             {
-                var kbGroup = new KanBanGroup
+                var kbGroup = new KanbanGroup
                 {
                     Header = item.Name
                 };
@@ -88,7 +89,7 @@ namespace Worktile.Views.Mission.Project
                 KanBanGroups.Add(kbGroup);
             }
 
-            var unGroup = new KanBanGroup
+            var unGroup = new KanbanGroup
             {
                 Header = "未分组"
             };
@@ -100,7 +101,7 @@ namespace Worktile.Views.Mission.Project
             KanBanGroups.Insert(0, unGroup);
         }
 
-        private void ReadKanbanItem(ApiMissionVnextKanbanContent data, KanBanGroup kbGroup, string taskId)
+        private void ReadKanbanItem(ApiMissionVnextKanbanContent data, KanbanGroup kbGroup, string taskId)
         {
             var task = data.Data.Value.Single(v => v.Id == taskId);
             var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == task.TaskStateId);
@@ -111,25 +112,61 @@ namespace Worktile.Views.Mission.Project
                 case 2: kbGroup.Processing++; break;
                 case 3: kbGroup.Completed++; break;
             }
-            kbGroup.Items.Add(new KanBanItem
+            //kbGroup.Items.Add(new KanBanItem
+            //{
+            //    Id = task.Id,
+            //    Title = task.Title,
+            //    Identifier = task.Identifier,
+            //    Avatar = CommonData.GetAvatar(task.Properties.Assignee.Value, 40),
+            //    Priority = GetPriorityBrush(task.Properties.Priority, data),
+            //    ShowSettings = GetShowSettings(type.ShowSettings, data),
+            //    State = new Models.TaskState
+            //    {
+            //        Name = state.Name,
+            //        Foreground = WtColorHelper.GetNewColor(state.Color),
+            //        Glyph = WtIconHelper.GetGlyph(state.Type)
+            //    },
+            //    TaskType = new Models.TaskType
+            //    {
+            //        Name = type.Name,
+            //        Color = WtColorHelper.GetColorByClass(type.Icon),
+            //        Glyph = WtIconHelper.GetGlyph("wtf-type-" + type.Icon),
+            //    }
+            //});
+        }
+
+        //private List<Models.ShowSetting> GetShowSettings(List<ApiModel.ApiMissionVnextKanbanContent.ShowSetting> showSettings, ApiMissionVnextKanbanContent data)
+        //{
+        //    var list = new List<Models.ShowSetting>();
+        //    foreach (var item in showSettings)
+        //    {
+        //        var prop = data.Data.References.Properties.Single(p => p.Id == item.TaskPropertyId);
+        //        list.Add(new Models.ShowSetting
+        //        {
+        //            Id = item.TaskPropertyId,
+        //            Foreground = item.Color,
+        //            From = prop.From,
+        //            Key = prop.Key,
+        //            Name = prop.Name,
+        //            PropertyKey = prop.PropertyKey,
+        //            RawKey = prop.RawKey,
+        //            Type = prop.Type
+        //        });
+        //    }
+        //    return list;
+        //}
+
+        private SolidColorBrush GetPriorityBrush(PropertiesPriority priority, ApiMissionVnextKanbanContent data)
+        {
+            if (string.IsNullOrEmpty(priority.Value))
             {
-                Id = task.Id,
-                Title = task.Title,
-                Identifier = task.Identifier,
-                Avatar = CommonData.GetAvatar(task.Properties.Assignee.Value, 40),
-                State = new Models.TaskState
-                {
-                    Name = state.Name,
-                    Foreground = WtColorHelper.GetNewColor(state.Color),
-                    Glyph = WtIconHelper.GetGlyph(state.Type)
-                },
-                TaskType = new Models.TaskType
-                {
-                    Name = type.Name,
-                    Color = WtColorHelper.GetColorByClass(type.Icon),
-                    Glyph = WtIconHelper.GetGlyph("wtf-type-" + type.Icon),
-                }
-            });
+                return null;
+            }
+            else
+            {
+                var item = data.Data.References.Lookups.Priorities.Single(p => p.Id == priority.Value);
+                return WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color));
+            }
         }
 
         private async void MyGrid_SizeChanged(object sender, SizeChangedEventArgs e)

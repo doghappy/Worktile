@@ -5,22 +5,26 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive;
-using Worktile.Models;
-using Worktile.Models.KanBan;
+using Worktile.Models.Kanban;
 using Worktile.Common;
 using Worktile.WtRequestClient;
+using System.Collections.Generic;
+using Windows.UI.Xaml.Media;
+using System;
 
 namespace Worktile.Views.Mission.My
 {
-    public sealed partial class MyDirectActivePage : Page, INotifyPropertyChanged
+    public sealed partial class MyDirectActivePage : KanbanAbstractPage, INotifyPropertyChanged
     {
         public MyDirectActivePage()
         {
             InitializeComponent();
-            KanBanGroups = new ObservableCollection<KanBanGroup>();
+            KanbanGroups = new ObservableCollection<KanbanGroup>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        protected override Grid MyGrid => MyGridPanel;
 
         private bool _isActive;
         public bool IsActive
@@ -33,19 +37,17 @@ namespace Worktile.Views.Mission.My
             }
         }
 
-        private bool _isPageLoaed;
-
-        public ObservableCollection<KanBanGroup> KanBanGroups { get; }
+        public ObservableCollection<KanbanGroup> KanbanGroups { get; }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
-            await RequestApiMissionVnextWorkMyDirectedActive();
+            await RequestIndexDataAsync();
             IsActive = false;
-            _isPageLoaed = true;
+            IsPageLoaded = true;
         }
 
-        private async Task RequestApiMissionVnextWorkMyDirectedActive()
+        private async Task RequestIndexDataAsync()
         {
             string uri = "/api/mission-vnext/work/my/directed/active";
             var client = new WtHttpClient();
@@ -53,7 +55,7 @@ namespace Worktile.Views.Mission.My
 
             foreach (var item in data.Data.References.Groups)
             {
-                var kbGroup = new KanBanGroup
+                var kbGroup = new KanbanGroup
                 {
                     Header = item.Name
                 };
@@ -62,18 +64,30 @@ namespace Worktile.Views.Mission.My
                     var task = data.Data.Value.Single(v => v.Id == taskId);
                     var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == task.TaskStateId);
                     var type = data.Data.References.TaskTypes.Single(t => t.Id == task.TaskTypeId);
-                    switch (state.Type)
+
+                    ReadForProgressBar(kbGroup, (int)state.Type);
+
+                    var props = new List<KanbanItemProperty>
                     {
-                        case 1: kbGroup.NotStarted++; break;
-                        case 2: kbGroup.Processing++; break;
-                        case 3: kbGroup.Completed++; break;
+                        new KanbanItemProperty
+                        {
+                            Text = "任务编号：" + task.Identifier,
+                            Foreground = Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush,
+                            Background = Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush
+                        }
+                    };
+
+                    var dueProperty = GetDueProperty(task.Properties.Due.Value.Date);
+                    if (dueProperty != null)
+                    {
+                        props.Add(dueProperty);
                     }
-                    kbGroup.Items.Add(new KanBanItem
+
+                    kbGroup.Items.Add(new KanbanItem
                     {
                         Id = task.Id,
                         Title = task.Title,
-                        Identifier = task.Identifier,
-                        ToDate = task.Properties.Due.Value.Date,
+                        Properties = props,
                         Avatar = CommonData.GetAvatar(CommonData.ApiUserMe.Uid, 40),
                         State = new Models.TaskState
                         {
@@ -89,40 +103,7 @@ namespace Worktile.Views.Mission.My
                         }
                     });
                 }
-                KanBanGroups.Add(kbGroup);
-            }
-        }
-
-        private async void MyGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var sp = MyGrid.GetChild<StackPanel>("MissionHeader");
-            var lvs = MyGrid.GetChildren<ListView>("DataList");
-            if (sp != null && lvs.Any())
-            {
-                foreach (var item in lvs)
-                {
-                    item.MaxHeight = MyGrid.ActualHeight - 24 - sp.ActualHeight;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 200; i++)
-                {
-                    if (_isPageLoaed)
-                    {
-                        sp = MyGrid.GetChild<StackPanel>("MissionHeader");
-                        lvs = MyGrid.GetChildren<ListView>("DataList");
-                        if (sp != null && lvs.Any())
-                        {
-                            foreach (var item in lvs)
-                            {
-                                item.MaxHeight = MyGrid.ActualHeight - 24 - sp.ActualHeight;
-                            }
-                            return;
-                        }
-                    }
-                    await Task.Delay(100);
-                }
+                KanbanGroups.Add(kbGroup);
             }
         }
     }

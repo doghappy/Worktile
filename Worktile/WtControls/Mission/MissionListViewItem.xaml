@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:converters="using:Worktile.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:kanban="using:Worktile.Models.Kanban"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -18,56 +20,100 @@
         <Style TargetType="Border" x:Key="PropertyBorder">
             <Setter Property="CornerRadius" Value="3"/>
             <Setter Property="Padding" Value="6 2"/>
-            <Setter Property="Margin" Value="0 8 0 0"/>
+            <Setter Property="Margin" Value="0 8 16 0"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
     </UserControl.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <wtcontrols:TaskStateButton TaskId="{x:Bind KanBanItem.Id, Mode=OneWay}" State="{x:Bind KanBanItem.State, Mode=OneWay}"/>
-            <PersonPicture Grid.Column="1"
-                           Visibility="{x:Bind KanBanItem.Avatar, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
-                           Height="30"
-                           Initials="{x:Bind KanBanItem.Avatar.Initials, Mode=OneWay}"
-                           ProfilePicture="{x:Bind KanBanItem.Avatar.ProfilePicture, Mode=OneWay}"/>
-        </Grid>
+        <Rectangle Width="2"
+                   Margin="0 0 12 0"
+                   Fill="{x:Bind KanbanItem.Priority, Mode=OneWay}"
+                   Visibility="{x:Bind KanbanItem.Priority, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"/>
 
-        <TextBlock Grid.Row="1" Text="{x:Bind KanBanItem.Title, Mode=OneWay}" TextWrapping="Wrap" Margin="0 8 0 0"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="2">
-            <StackPanel Orientation="Horizontal">
-                <Border Style="{ThemeResource PropertyBorder}" Background="{ThemeResource SystemControlForegroundBaseLowBrush}">
-                    <TextBlock FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <wtcontrols:TaskStateButton TaskId="{x:Bind KanbanItem.Id, Mode=OneWay}" State="{x:Bind KanbanItem.State, Mode=OneWay}"/>
+
+                <FontIcon Grid.Column="1"
+                          Margin="8 0"
+                          Style="{StaticResource WtfIcon}"
+                          Glyph="{x:Bind KanbanItem.TaskType.Glyph, Mode=OneWay}"
+                          FontSize="22"
+                          Foreground="{x:Bind KanbanItem.TaskType.Color, Mode=OneWay}"
+                          ToolTipService.ToolTip="{x:Bind KanbanItem.TaskType.Name, Mode=OneWay}"/>
+                
+                <PersonPicture Grid.Column="2"
+                               Visibility="{x:Bind KanbanItem.Avatar, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
+                               Height="30"
+                               Initials="{x:Bind KanbanItem.Avatar.Initials, Mode=OneWay}"
+                               ProfilePicture="{x:Bind KanbanItem.Avatar.ProfilePicture, Mode=OneWay}"/>
+            </Grid>
+
+            <TextBlock Grid.Row="1" Text="{x:Bind KanbanItem.Title, Mode=OneWay}" TextWrapping="Wrap" Margin="0 8 0 0"/>
+
+            <ItemsControl Grid.Row="2" ItemsSource="{x:Bind KanbanItem.Properties, Mode=OneWay}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <controls:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="kanban:KanbanItemProperty">
+                        <Border Style="{ThemeResource PropertyBorder}" Background="{x:Bind Background}">
+                            <TextBlock FontSize="12" Foreground="{x:Bind Foreground}" Text="{x:Bind Text, Mode=OneWay}"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!--<Border Style="{ThemeResource PropertyBorder}" Background="{ThemeResource SystemControlForegroundBaseLowBrush}">
+                <TextBlock FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+                        <Run Text="任务编号:"/>
+                        <Run Text="{x:Bind KanbanItem.Identifier, Mode=OneWay}"/>
+                </TextBlock>
+            </Border>-->
+            <!--<StackPanel Grid.Row="2">
+                <StackPanel Orientation="Horizontal">
+                    <Border Style="{ThemeResource PropertyBorder}" Background="{ThemeResource SystemControlForegroundBaseLowBrush}">
+                        <TextBlock FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
                     <Run Text="任务编号:"/>
-                    <Run Text="{x:Bind KanBanItem.Identifier, Mode=OneWay}"/>
+                    <Run Text="{x:Bind KanbanItem.Identifier, Mode=OneWay}"/>
+                        </TextBlock>
+                    </Border>
+                    <FontIcon Margin="8 0 0 -8"
+                          Style="{StaticResource WtfIcon}"
+                          Glyph="{x:Bind KanbanItem.TaskType.Glyph, Mode=OneWay}"
+                          FontSize="22"
+                          Foreground="{x:Bind KanbanItem.TaskType.Color, Mode=OneWay}"
+                          ToolTipService.ToolTip="{x:Bind KanbanItem.TaskType.Name, Mode=OneWay}"/>
+                </StackPanel>
+                <Border Style="{ThemeResource PropertyBorder}"
+                    Visibility="{x:Bind KanbanItem.ToDate, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
+                    Background="{x:Bind KanbanItem.ToDateBackground, Mode=OneWay}">
+                    <TextBlock FontSize="12" Foreground="{x:Bind KanbanItem.ToDateForeground, Mode=OneWay}">
+                        <Run Text="截止时间:"/>
+                        <Run Text="{x:Bind KanbanItem.ToDate, Mode=OneWay}"/>
                     </TextBlock>
                 </Border>
-                <FontIcon Margin="8 0 0 -8"
-                          Style="{StaticResource WtfIcon}"
-                          Glyph="{x:Bind KanBanItem.TaskType.Glyph, Mode=OneWay}"
-                          FontSize="22"
-                          Foreground="{x:Bind KanBanItem.TaskType.Color, Mode=OneWay}"
-                          ToolTipService.ToolTip="{x:Bind KanBanItem.TaskType.Name, Mode=OneWay}"/>
-            </StackPanel>
-            <Border Style="{ThemeResource PropertyBorder}"
-                    Visibility="{x:Bind KanBanItem.ToDate, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
-                    Background="{x:Bind KanBanItem.ToDateBackground, Mode=OneWay}">
-                <TextBlock FontSize="12" Foreground="{x:Bind KanBanItem.ToDateForeground, Mode=OneWay}">
-                        <Run Text="截止时间:"/>
-                        <Run Text="{x:Bind KanBanItem.ToDate, Mode=OneWay}"/>
-                </TextBlock>
-            </Border>
-        </StackPanel>
+            </StackPanel>-->
+        </Grid>
     </Grid>
 </UserControl>

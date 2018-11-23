@@ -10,7 +10,22 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Padding="32" Width="280">
+    <Grid Padding="32">
         <!--<wtcontrols:PaginationBar TotalPages="4"/>-->
+        <StackPanel Orientation="Horizontal" Height="200" Width="400">
+            <Rectangle Width="40" Height="40" Fill="Red" VerticalAlignment="Top"/>
+            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
+            <Rectangle Width="80" Height="80" Fill="Yellow" VerticalAlignment="Top"/>
+            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
+            <Rectangle Width="40" Height="40" Fill="Red" VerticalAlignment="Top"/>
+            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
+            <Rectangle Width="80" Height="80" Fill="Yellow" VerticalAlignment="Top"/>
+            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
+            <Rectangle Width="40" Height="40" Fill="Red" VerticalAlignment="Top"/>
+            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
+            <Rectangle Width="80" Height="80" Fill="Yellow" VerticalAlignment="Top"/>
+            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
+            <Rectangle Width="40" Height="40" Fill="Red" VerticalAlignment="Top"/>
+        </StackPanel>
     </Grid>
 </Page>

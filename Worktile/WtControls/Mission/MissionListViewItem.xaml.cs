@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Worktile.Common;
-using Worktile.Models.KanBan;
+using Worktile.Models.Kanban;
 
 namespace Worktile.WtControls.Mission
 {
@@ -17,14 +17,14 @@ namespace Worktile.WtControls.Mission
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private KanBanItem _kanBanItem;
-        public KanBanItem KanBanItem
+        private KanbanItem _kanbanItem;
+        public KanbanItem KanbanItem
         {
-            get => _kanBanItem;
+            get => _kanbanItem;
             set
             {
-                _kanBanItem = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(KanBanItem)));
+                _kanbanItem = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(KanbanItem)));
             }
         }
     }
