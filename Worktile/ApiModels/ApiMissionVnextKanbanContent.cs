@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Worktile.Enums;
+using Worktile.Models.Mission.WtTask;
 
 namespace Worktile.ApiModels.ApiMissionVnextKanbanContent
 {
@@ -32,7 +33,7 @@ namespace Worktile.ApiModels.ApiMissionVnextKanbanContent
     public partial class References
     {
         [JsonProperty("properties")]
-        public List<Property> Properties { get; set; }
+        public List<WtTaskProperty> Properties { get; set; }
 
         [JsonProperty("lookups")]
         public Lookups Lookups { get; set; }
@@ -197,32 +198,32 @@ namespace Worktile.ApiModels.ApiMissionVnextKanbanContent
         public int Type { get; set; }
     }
 
-    public partial class Property
-    {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
+    //public partial class Property
+    //{
+    //    [JsonProperty("_id")]
+    //    public string Id { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+    //    [JsonProperty("name")]
+    //    public string Name { get; set; }
 
-        [JsonProperty("raw_key")]
-        public string RawKey { get; set; }
+    //    [JsonProperty("raw_key")]
+    //    public string RawKey { get; set; }
 
-        [JsonProperty("property_key")]
-        public string PropertyKey { get; set; }
+    //    [JsonProperty("property_key")]
+    //    public string PropertyKey { get; set; }
 
-        [JsonProperty("key")]
-        public string Key { get; set; }
+    //    [JsonProperty("key")]
+    //    public string Key { get; set; }
 
-        [JsonProperty("type")]
-        public PropertyType Type { get; set; }
+    //    [JsonProperty("type")]
+    //    public WtTaskPropertyType Type { get; set; }
 
-        [JsonProperty("from")]
-        public long From { get; set; }
+    //    [JsonProperty("from")]
+    //    public long From { get; set; }
 
-        [JsonProperty("lookup", NullValueHandling = NullValueHandling.Ignore)]
-        public string Lookup { get; set; }
-    }
+    //    [JsonProperty("lookup", NullValueHandling = NullValueHandling.Ignore)]
+    //    public string Lookup { get; set; }
+    //}
 
     public partial class TaskType
     {

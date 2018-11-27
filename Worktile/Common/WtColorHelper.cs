@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Worktile.Models;
 
@@ -86,12 +87,26 @@ namespace Worktile.Common
             }
             else
             {
-                
+
                 throw new ArgumentException();
             }
         }
 
         public static SolidColorBrush DangerColor => new SolidColorBrush(Color.FromArgb(255, 255, 91, 87));
         public static SolidColorBrush DangerColor1A => new SolidColorBrush(Color.FromArgb(26, 255, 91, 87));
+
+        public static SolidColorBrush GetForegroundWithExpire(DateTime date)
+        {
+            return date <= DateTime.Now
+                ? DangerColor
+                : Application.Current.Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush;
+        }
+
+        public static SolidColorBrush GetBackgroundWithExpire(DateTime date)
+        {
+            return date <= DateTime.Now
+                ? DangerColor1A
+                : Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
+        }
     }
 }

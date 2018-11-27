@@ -13,6 +13,7 @@ using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Models.Kanban;
+using Worktile.Models.Mission.WtTask;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
@@ -147,11 +148,11 @@ namespace Worktile.Views.Mission.Project
                 var property = data.Data.References.Properties.Single(p => p.Id == item.TaskPropertyId);
                 if (!_notInStackProperties.Contains(property.RawKey))
                 {
+                    string rawValue = GetPropertyValue(task, property);
                     var kbp = new KanbanItemProperty
                     {
                         Name = property.Name,
-                        //如果有Lookup需要去找Lookup的值？
-                        Value = ParsePropertyValue(property, GetPropertyValue(task, property))
+                        Value = ParsePropertyValue(property, data, item, rawValue)
                     };
                     if (kbp.Value != null)
                     {
@@ -175,76 +176,88 @@ namespace Worktile.Views.Mission.Project
 
         private SolidColorBrush GetPriorityBrush(dynamic priority, ApiMissionVnextKanbanContent data)
         {
-            string value = priority.value;
-            if (string.IsNullOrEmpty(value))
+            if (priority == null)
             {
                 return null;
             }
             else
             {
-                var item = data.Data.References.Lookups.Priorities.Single(p => p.Id == value);
-                return WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color));
-            }
-        }
-
-        private string GetPropertyValue(ValueElement task, Property property)
-        {
-            if (string.IsNullOrEmpty(property.Lookup))
-            {
-                string[] keys = property.Key.Split('.');
-
-                JToken obj = JObject.FromObject(task);
-                foreach (var k in keys)
-                {
-                    obj = obj[k];
-                }
-                if (obj == null)
+                string value = priority.value;
+                if (string.IsNullOrEmpty(value))
                 {
                     return null;
                 }
                 else
                 {
-                    if (obj.Type == JTokenType.Object)
-                    {
-                        var sub = obj as JObject;
-                        if (sub.ContainsKey("date"))
-                        {
-                            obj = obj["date"];
-                        }
-                        else
-                        {
-                            return null;
-                        }
-                    }
-                    return obj.Value<string>();
+                    var item = data.Data.References.Lookups.Priorities.Single(p => p.Id == value);
+                    return WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color));
                 }
-            }
-            else
-            {
-
             }
         }
 
-        private string ParsePropertyValue(Property property, string value)
+        private string GetPropertyValue(ValueElement task, WtTaskProperty property)
+        {
+            string[] keys = property.Key.Split('.');
+
+            JToken obj = JObject.FromObject(task);
+            foreach (var k in keys)
+            {
+                obj = obj[k];
+            }
+            if (obj == null)
+            {
+                return null;
+            }
+            else
+            {
+                if (obj.Type == JTokenType.Object)
+                {
+                    var sub = obj as JObject;
+                    if (sub.ContainsKey("date"))
+                    {
+                        obj = obj["date"];
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                return obj.Value<string>();
+            }
+        }
+
+        private string ParsePropertyValue(WtTaskProperty property, ApiMissionVnextKanbanContent data, ShowSetting setting, string value)
         {
             if (!string.IsNullOrEmpty(value))
             {
-                if (property.Type == PropertyType.DateTime)
+                if (property.Type == WtTaskPropertyType.DateTime)
                 {
-                    return WtDateTimeHelper.GetDateTime(value).ToWtKanbanDate();
+                    DateTime dateTime = WtDateTimeHelper.GetDateTime(value);
+                    value = WtDateTimeHelper.GetDateTime(value).ToWtKanbanDate();
+                    if (property.RawKey == "due" && dateTime <= DateTime.Now)
+                        setting.Color = "#ff5b57";
+                    else
+                        setting.Color = null;
                 }
                 else
                 {
                     switch (property.RawKey)
                     {
                         case "created_by":
-                            var avatar = CommonData.GetAvatar(value, 40);
-                            return avatar?.DisplayName;
+                            value = CommonData.GetAvatar(value, 40)?.DisplayName;
+                            break;
                         case "identifier":
-                            return _taskIdentifierPrefix + value;
-                        default:
-                            return value;
+                            value = _taskIdentifierPrefix + value;
+                            break;
                     }
+                }
+                if (property.Lookup != null
+                    && !string.IsNullOrEmpty(value)
+                    && property.From == WtTaskPropertyFrom.Custom)
+                {
+                    JToken obj = JObject.FromObject(data.Data.References.Lookups);
+                    JArray arr = obj[property.Lookup] as JArray;
+                    return arr.First(a => a["_id"].Value<string>() == value)["text"].Value<string>();
                 }
             }
             return value;

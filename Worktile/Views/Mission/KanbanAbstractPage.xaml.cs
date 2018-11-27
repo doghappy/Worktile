@@ -33,22 +33,13 @@ namespace Worktile.Views.Mission
         {
             if (dueDate.HasValue)
             {
-                var prop = new KanbanItemProperty
+                return new KanbanItemProperty
                 {
-                    Name = "截止时间"
+                    Name = "截止时间",
+                    Value = dueDate.Value.ToWtKanbanDate(),
+                    Foreground = WtColorHelper.GetForegroundWithExpire(dueDate.Value),
+                    Background = WtColorHelper.GetBackgroundWithExpire(dueDate.Value)
                 };
-                prop.Value = dueDate.Value.ToWtKanbanDate();
-                if (dueDate.Value <= DateTime.Now)
-                {
-                    prop.Foreground = WtColorHelper.DangerColor;
-                    prop.Background = WtColorHelper.DangerColor1A;
-                }
-                else
-                {
-                    prop.Foreground = Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush;
-                    prop.Background = Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
-                }
-                return prop;
             }
             return null;
         }

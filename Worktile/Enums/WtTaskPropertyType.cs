@@ -1,6 +1,6 @@
 ﻿namespace Worktile.Enums
 {
-    public enum PropertyType
+    public enum WtTaskPropertyType
     {
         Text = 1,
         MultiText,
