@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using System.Threading.Tasks;
 using Worktile.WtRequestClient;
-using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightGroups;
+using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightGroups;
 using System.Collections.ObjectModel;
 
 namespace Worktile.Views.Mission.AnalyticInsight
@@ -22,7 +22,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ApiModel.ApiMissionVnextWorkAddon.Value _navItem;
+        private ApiModels.ApiMissionVnextWorkAddon.Value _navItem;
 
         public ObservableCollection<TopNavItem> TopNavItems { get; }
 
@@ -114,7 +114,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            _navItem = e.Parameter as ApiModel.ApiMissionVnextWorkAddon.Value;
+            _navItem = e.Parameter as ApiModels.ApiMissionVnextWorkAddon.Value;
             TopNavIcon = WtIconHelper.GetGlyph(_navItem.Icon);
             TopNavName = _navItem.Name;
         }

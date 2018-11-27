@@ -5,7 +5,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextWorkAddon;
+using Worktile.ApiModels.ApiMissionVnextWorkAddon;
 using Worktile.Common;
 
 namespace Worktile.Views.Mission.My

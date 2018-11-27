@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightGroups
+namespace Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightGroups
 {
 
     public partial class ApiMissionVnextWorkAnalyticInsightGroups

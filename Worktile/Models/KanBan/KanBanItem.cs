@@ -9,6 +9,7 @@ namespace Worktile.Models.Kanban
         public Avatar Avatar { get; set; }
         public TaskState State { get; set; }
         public string Title { get; set; }
+        public int AttachmentCount { get; set; }
         public SolidColorBrush Priority { get; set; }
         public TaskType TaskType { get; set; }
         public List<KanbanItemProperty> Properties { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Worktile.ApiModel.ApiTeamDomainCheck
+namespace Worktile.ApiModels.ApiTeamDomainCheck
 {
     public partial class ApiTeamDomainCheck
     {

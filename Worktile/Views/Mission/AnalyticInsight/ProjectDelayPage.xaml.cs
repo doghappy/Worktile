@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightProjectDelay;
+using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightProjectDelay;
 using Worktile.Common;
 using Worktile.WtRequestClient;
 

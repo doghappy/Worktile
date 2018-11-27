@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Worktile.ApiModel.ApiMissionVnextTasksIdstates
+namespace Worktile.ApiModels.ApiMissionVnextTasksIdstates
 {
     public partial class ApiMissionVnextTasksIdstates
     {

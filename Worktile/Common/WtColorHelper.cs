@@ -71,11 +71,10 @@ namespace Worktile.Common
             }
             if (hex.Length == 6)
             {
-                byte a = 1;
-                byte r = (byte)Convert.ToUInt32(hex.Substring(2, 2), 16);
-                byte g = (byte)Convert.ToUInt32(hex.Substring(4, 2), 16);
-                byte b = (byte)Convert.ToUInt32(hex.Substring(6, 2), 16);
-                return new SolidColorBrush(Color.FromArgb(a, r, g, b));
+                byte r = (byte)Convert.ToUInt32(hex.Substring(0, 2), 16);
+                byte g = (byte)Convert.ToUInt32(hex.Substring(2, 2), 16);
+                byte b = (byte)Convert.ToUInt32(hex.Substring(4, 2), 16);
+                return new SolidColorBrush(Color.FromArgb(255, r, g, b));
             }
             else if (hex.Length == 8)
             {

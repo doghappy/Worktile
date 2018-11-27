@@ -15,8 +15,7 @@
 
     <UserControl.Resources>
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
-        <!--<local:ExpireForegroundDangerConverter x:Key="ExpireForegroundDangerConverter"/>
-        <local:ExpireBackgroundDangerConverter x:Key="ExpireBackgroundDangerConverter"/>-->
+        <converters:NumberVisibilityConverter x:Key="NumberVisibilityConverter"/>
         <Style TargetType="Border" x:Key="PropertyBorder">
             <Setter Property="CornerRadius" Value="3"/>
             <Setter Property="Padding" Value="6 2"/>
@@ -48,18 +47,30 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <wtcontrols:TaskStateButton TaskId="{x:Bind KanbanItem.Id, Mode=OneWay}" State="{x:Bind KanbanItem.State, Mode=OneWay}"/>
 
-                <FontIcon Grid.Column="1"
-                          Margin="8 0"
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{x:Bind KanbanItem.AttachmentCount, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}}">
+                    <FontIcon Style="{StaticResource WtfIcon}"
+                              Glyph="&#xE66F;" FontSize="14"
+                              Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    <TextBlock Text="{x:Bind KanbanItem.AttachmentCount, Mode=OneWay}"
+                               FontSize="14"
+                               VerticalAlignment="Center"
+                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                </StackPanel>
+                
+                <FontIcon Grid.Column="2"
+                          Margin="8 0 0 0"
                           Style="{StaticResource WtfIcon}"
                           Glyph="{x:Bind KanbanItem.TaskType.Glyph, Mode=OneWay}"
                           FontSize="22"
                           Foreground="{x:Bind KanbanItem.TaskType.Color, Mode=OneWay}"
                           ToolTipService.ToolTip="{x:Bind KanbanItem.TaskType.Name, Mode=OneWay}"/>
-                
-                <PersonPicture Grid.Column="2"
+
+                <PersonPicture Grid.Column="3"
+                               Margin="8 0 0 0"
                                Visibility="{x:Bind KanbanItem.Avatar, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
                                Height="30"
                                Initials="{x:Bind KanbanItem.Avatar.Initials, Mode=OneWay}"
@@ -78,7 +89,11 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="kanban:KanbanItemProperty">
                         <Border Style="{ThemeResource PropertyBorder}" Background="{x:Bind Background}">
-                            <TextBlock FontSize="12" Foreground="{x:Bind Foreground}" Text="{x:Bind Text, Mode=OneWay}"/>
+                            <TextBlock FontSize="12" Foreground="{x:Bind Foreground}">
+                                <Run Text="{x:Bind Name, Mode=OneWay}"/>
+                                <Run Text=":"/>
+                                <Run Text="{x:Bind Value, Mode=OneWay}"/>
+                            </TextBlock>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

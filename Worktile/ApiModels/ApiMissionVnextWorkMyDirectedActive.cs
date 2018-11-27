@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
+namespace Worktile.ApiModels.ApiMissionVnextWorkMyDirectedActive
 {
 
 
@@ -130,7 +130,7 @@ namespace Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive
         public string Color { get; set; }
 
         [JsonProperty("type")]
-        public long Type { get; set; }
+        public int Type { get; set; }
     }
 
     public partial class Project

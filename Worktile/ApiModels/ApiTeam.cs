@@ -4,7 +4,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Worktile.ApiModel.ApiTeam
+namespace Worktile.ApiModels.ApiTeam
 {
 
     public partial class ApiTeam

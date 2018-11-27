@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextWorkMyGeneric;
+using Worktile.ApiModels.ApiMissionVnextWorkMyGeneric;
 using Worktile.Common;
 using Worktile.Models;
 using Worktile.WtRequestClient;

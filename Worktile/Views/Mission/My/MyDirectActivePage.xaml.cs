@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive;
+using Worktile.ApiModels.ApiMissionVnextWorkMyDirectedActive;
 using Worktile.Models.Kanban;
 using Worktile.Common;
 using Worktile.WtRequestClient;
@@ -65,13 +65,14 @@ namespace Worktile.Views.Mission.My
                     var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == task.TaskStateId);
                     var type = data.Data.References.TaskTypes.Single(t => t.Id == task.TaskTypeId);
 
-                    ReadForProgressBar(kbGroup, (int)state.Type);
+                    ReadForProgressBar(kbGroup, state.Type);
 
                     var props = new List<KanbanItemProperty>
                     {
                         new KanbanItemProperty
                         {
-                            Text = "任务编号：" + task.Identifier,
+                            Name = "任务编号",
+                            Value = task.Identifier,
                             Foreground = Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush,
                             Background = Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush
                         }

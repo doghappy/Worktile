@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Worktile.ApiModel.ApiMissionVnextWorkMyGeneric
+namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
 {
     public partial class ApiMissionVnextWorkMyGeneric
     {

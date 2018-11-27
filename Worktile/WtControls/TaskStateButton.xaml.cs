@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
-using Worktile.ApiModel.ApiMissionVnextTasksIdstates;
-using Worktile.ApiModel.ApiMissionVnextWorkMyDirectedActive;
+using Worktile.ApiModels.ApiMissionVnextTasksIdstates;
+using Worktile.ApiModels.ApiMissionVnextWorkMyDirectedActive;
 using Worktile.Common;
 using Worktile.WtRequestClient;
 

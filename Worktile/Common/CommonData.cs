@@ -16,9 +16,9 @@ namespace Worktile.Common
             set => ApplicationData.Current.LocalSettings.Values[nameof(SubDomain)] = value;
         }
 
-        public static ApiModel.ApiUserMe.Config ApiUserMeConfig { get; set; }
-        public static ApiModel.ApiUserMe.Me ApiUserMe { get; set; }
-        public static ApiModel.ApiTeam.Data Team { get; set; }
+        public static ApiModels.ApiUserMe.Config ApiUserMeConfig { get; set; }
+        public static ApiModels.ApiUserMe.Me ApiUserMe { get; set; }
+        public static ApiModels.ApiTeam.Data Team { get; set; }
 
         public static readonly List<WtApp> Apps = new List<WtApp>
         {

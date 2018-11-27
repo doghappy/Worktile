@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using Worktile.ApiModel.ApiTeam;
+using Worktile.ApiModels.ApiTeam;
 
-namespace Worktile.ApiModel.ApiUserSignIn
+namespace Worktile.ApiModels.ApiUserSignIn
 {
     public partial class ApiUserSignIn
     {

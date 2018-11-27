@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Worktile.ApiModel.ApiTeamLite
+namespace Worktile.ApiModels.ApiTeamLite
 {
     public partial class ApiTeamLite
     {

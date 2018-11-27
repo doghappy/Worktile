@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Worktile.ApiModel.ApiMissionVnextProjectNav;
-using Worktile.ApiModel.ApiMissionVnextWorkAddon;
+using Worktile.ApiModels.ApiMissionVnextProjectNav;
+using Worktile.ApiModels.ApiMissionVnextWorkAddon;
 using Worktile.Common;
 using Worktile.WtRequestClient;
 
@@ -109,7 +109,7 @@ namespace Worktile.Views.Mission
             }
         }
 
-        private List<ApiModel.ApiMissionVnextWorkAddon.Value> _workAddons;
+        private List<ApiModels.ApiMissionVnextWorkAddon.Value> _workAddons;
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {

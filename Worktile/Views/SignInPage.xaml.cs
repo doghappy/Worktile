@@ -9,10 +9,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Worktile.ApiModel.ApiTeamDomainCheck;
-using Worktile.ApiModel.ApiTeamLite;
-using Worktile.ApiModel.ApiUserMe;
-using Worktile.ApiModel.ApiUserSignIn;
+using Worktile.ApiModels.ApiTeamDomainCheck;
+using Worktile.ApiModels.ApiTeamLite;
+using Worktile.ApiModels.ApiUserMe;
+using Worktile.ApiModels.ApiUserSignIn;
 using Worktile.Common;
 using Worktile.WtRequestClient;
 

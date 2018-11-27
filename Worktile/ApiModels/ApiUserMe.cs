@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Worktile.ApiModel.ApiUserMe
+namespace Worktile.ApiModels.ApiUserMe
 {
     public partial class ApiUserMe
     {

@@ -1,44 +1,42 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextKanbanContent;
+using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
-using Worktile.Models;
+using Worktile.Enums;
 using Worktile.Models.Kanban;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
 {
-    public sealed partial class KanbanPage : Page, INotifyPropertyChanged
+    public sealed partial class KanbanPage : KanbanAbstractPage, INotifyPropertyChanged
     {
         public KanbanPage()
         {
             InitializeComponent();
             KanBanGroups = new ObservableCollection<KanbanGroup>();
             _groupedIds = new List<string>();
+            _notInStackProperties = new[] { "tag", "task_state_id", "title", "task_type_id", "updated_at", "created_at", "attachment", "assignee", "priority" };
         }
+
+        readonly string[] _notInStackProperties;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string _addonId;
         private string _viewId;
-        private bool _isPageLoaed;
+        private string _taskIdentifierPrefix;
         private List<string> _groupedIds;
+
+        protected override Grid MyGrid => MyGridPanel;
 
         public ObservableCollection<KanbanGroup> KanBanGroups { get; }
 
@@ -59,6 +57,7 @@ namespace Worktile.Views.Mission.Project
             dynamic parameters = e.Parameter;
             _addonId = parameters.AddonId;
             _viewId = parameters.ViewId;
+            _taskIdentifierPrefix = parameters.TaskIdentifierPrefix;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -66,7 +65,7 @@ namespace Worktile.Views.Mission.Project
             IsActive = true;
             await RequestContentAsync();
             IsActive = false;
-            _isPageLoaed = true;
+            IsPageLoaded = true;
         }
 
         private async Task RequestContentAsync()
@@ -106,100 +105,149 @@ namespace Worktile.Views.Mission.Project
             var task = data.Data.Value.Single(v => v.Id == taskId);
             var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == task.TaskStateId);
             var type = data.Data.References.TaskTypes.Single(t => t.Id == task.TaskTypeId);
-            switch (state.Type)
+
+            ReadForProgressBar(kbGroup, state.Type);
+
+            dynamic props = task.Properties.ToObject<object>();
+            var attachmentValues = task.Properties["attachment"]["value"] as JArray;
+
+            var item = new KanbanItem
             {
-                case 1: kbGroup.NotStarted++; break;
-                case 2: kbGroup.Processing++; break;
-                case 3: kbGroup.Completed++; break;
+                Id = task.Id,
+                Title = task.Title,
+                AttachmentCount = attachmentValues.Count,
+                Priority = GetPriorityBrush(props.priority, data),
+                Properties = GetProperties(type.ShowSettings, data, task),
+                State = new Models.TaskState
+                {
+                    Name = state.Name,
+                    Foreground = WtColorHelper.GetNewColor(state.Color),
+                    Glyph = WtIconHelper.GetGlyph(state.Type)
+                },
+                TaskType = new Models.TaskType
+                {
+                    Name = type.Name,
+                    Color = WtColorHelper.GetColorByClass(type.Icon),
+                    Glyph = WtIconHelper.GetGlyph("wtf-type-" + type.Icon),
+                }
+            };
+
+            if (props.assignee != null && props.assignee.value != null)
+            {
+                item.Avatar = CommonData.GetAvatar((string)props.assignee.value, 40);
             }
-            //kbGroup.Items.Add(new KanBanItem
-            //{
-            //    Id = task.Id,
-            //    Title = task.Title,
-            //    Identifier = task.Identifier,
-            //    Avatar = CommonData.GetAvatar(task.Properties.Assignee.Value, 40),
-            //    Priority = GetPriorityBrush(task.Properties.Priority, data),
-            //    ShowSettings = GetShowSettings(type.ShowSettings, data),
-            //    State = new Models.TaskState
-            //    {
-            //        Name = state.Name,
-            //        Foreground = WtColorHelper.GetNewColor(state.Color),
-            //        Glyph = WtIconHelper.GetGlyph(state.Type)
-            //    },
-            //    TaskType = new Models.TaskType
-            //    {
-            //        Name = type.Name,
-            //        Color = WtColorHelper.GetColorByClass(type.Icon),
-            //        Glyph = WtIconHelper.GetGlyph("wtf-type-" + type.Icon),
-            //    }
-            //});
+            kbGroup.Items.Add(item);
         }
 
-        //private List<Models.ShowSetting> GetShowSettings(List<ApiModel.ApiMissionVnextKanbanContent.ShowSetting> showSettings, ApiMissionVnextKanbanContent data)
-        //{
-        //    var list = new List<Models.ShowSetting>();
-        //    foreach (var item in showSettings)
-        //    {
-        //        var prop = data.Data.References.Properties.Single(p => p.Id == item.TaskPropertyId);
-        //        list.Add(new Models.ShowSetting
-        //        {
-        //            Id = item.TaskPropertyId,
-        //            Foreground = item.Color,
-        //            From = prop.From,
-        //            Key = prop.Key,
-        //            Name = prop.Name,
-        //            PropertyKey = prop.PropertyKey,
-        //            RawKey = prop.RawKey,
-        //            Type = prop.Type
-        //        });
-        //    }
-        //    return list;
-        //}
-
-        private SolidColorBrush GetPriorityBrush(PropertiesPriority priority, ApiMissionVnextKanbanContent data)
+        private List<KanbanItemProperty> GetProperties(List<ShowSetting> showSettings, ApiMissionVnextKanbanContent data, ValueElement task)
         {
-            if (string.IsNullOrEmpty(priority.Value))
+            var list = new List<KanbanItemProperty>();
+            foreach (var item in showSettings)
+            {
+                var property = data.Data.References.Properties.Single(p => p.Id == item.TaskPropertyId);
+                if (!_notInStackProperties.Contains(property.RawKey))
+                {
+                    var kbp = new KanbanItemProperty
+                    {
+                        Name = property.Name,
+                        //如果有Lookup需要去找Lookup的值？
+                        Value = ParsePropertyValue(property, GetPropertyValue(task, property))
+                    };
+                    if (kbp.Value != null)
+                    {
+                        if (string.IsNullOrEmpty(item.Color))
+                        {
+                            kbp.Foreground = Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush;
+                            kbp.Background = Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
+                        }
+                        else
+                        {
+                            string color = WtColorHelper.GetNewColor(item.Color);
+                            kbp.Foreground = WtColorHelper.GetSolidColorBrush(color);
+                            kbp.Background = WtColorHelper.GetSolidColorBrush(color.Insert(1, "1A"));
+                        }
+                        list.Add(kbp);
+                    }
+                }
+            }
+            return list;
+        }
+
+        private SolidColorBrush GetPriorityBrush(dynamic priority, ApiMissionVnextKanbanContent data)
+        {
+            string value = priority.value;
+            if (string.IsNullOrEmpty(value))
             {
                 return null;
             }
             else
             {
-                var item = data.Data.References.Lookups.Priorities.Single(p => p.Id == priority.Value);
+                var item = data.Data.References.Lookups.Priorities.Single(p => p.Id == value);
                 return WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color));
             }
         }
 
-        private async void MyGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private string GetPropertyValue(ValueElement task, Property property)
         {
-            var sp = MyGrid.GetChild<StackPanel>("MissionHeader");
-            var lvs = MyGrid.GetChildren<ListView>("DataList");
-            if (sp != null && lvs.Any())
+            if (string.IsNullOrEmpty(property.Lookup))
             {
-                foreach (var item in lvs)
+                string[] keys = property.Key.Split('.');
+
+                JToken obj = JObject.FromObject(task);
+                foreach (var k in keys)
                 {
-                    item.MaxHeight = MyGrid.ActualHeight - 24 - sp.ActualHeight;
+                    obj = obj[k];
+                }
+                if (obj == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    if (obj.Type == JTokenType.Object)
+                    {
+                        var sub = obj as JObject;
+                        if (sub.ContainsKey("date"))
+                        {
+                            obj = obj["date"];
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    return obj.Value<string>();
                 }
             }
             else
             {
-                for (int i = 0; i < 200; i++)
+
+            }
+        }
+
+        private string ParsePropertyValue(Property property, string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                if (property.Type == PropertyType.DateTime)
                 {
-                    if (_isPageLoaed)
+                    return WtDateTimeHelper.GetDateTime(value).ToWtKanbanDate();
+                }
+                else
+                {
+                    switch (property.RawKey)
                     {
-                        sp = MyGrid.GetChild<StackPanel>("MissionHeader");
-                        lvs = MyGrid.GetChildren<ListView>("DataList");
-                        if (sp != null && lvs.Any())
-                        {
-                            foreach (var item in lvs)
-                            {
-                                item.MaxHeight = MyGrid.ActualHeight - 24 - sp.ActualHeight;
-                            }
-                            return;
-                        }
+                        case "created_by":
+                            var avatar = CommonData.GetAvatar(value, 40);
+                            return avatar?.DisplayName;
+                        case "identifier":
+                            return _taskIdentifierPrefix + value;
+                        default:
+                            return value;
                     }
-                    await Task.Delay(100);
                 }
             }
+            return value;
         }
     }
 }

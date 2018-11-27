@@ -35,16 +35,9 @@ namespace Worktile.Views.Mission
             {
                 var prop = new KanbanItemProperty
                 {
-                    Text = "截止时间："
+                    Name = "截止时间"
                 };
-                if (dueDate.Value == new DateTime(dueDate.Value.Year, dueDate.Value.Month, dueDate.Value.Day))
-                {
-                    prop.Text += dueDate.Value.ToShortDateString();
-                }
-                else
-                {
-                    prop.Text += dueDate.Value.ToLocalTime();
-                }
+                prop.Value = dueDate.Value.ToWtKanbanDate();
                 if (dueDate.Value <= DateTime.Now)
                 {
                     prop.Foreground = WtColorHelper.DangerColor;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Worktile.ApiModel.ApiMissionVnextWorkAddon
+namespace Worktile.ApiModels.ApiMissionVnextWorkAddon
 {
 
 

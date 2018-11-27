@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextWorkAnalyticInsightProjectProgress;
+using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightProjectProgress;
 using Worktile.Common;
 using Worktile.WtRequestClient;
 

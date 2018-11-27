@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Worktile.Enums;
 
-namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
+namespace Worktile.ApiModels.ApiMissionVnextKanbanContent
 {
     public partial class ApiMissionVnextKanbanContent
     {
@@ -192,7 +194,7 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
         public string Color { get; set; }
 
         [JsonProperty("type")]
-        public long Type { get; set; }
+        public int Type { get; set; }
     }
 
     public partial class Property
@@ -213,7 +215,7 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
         public string Key { get; set; }
 
         [JsonProperty("type")]
-        public long Type { get; set; }
+        public PropertyType Type { get; set; }
 
         [JsonProperty("from")]
         public long From { get; set; }
@@ -276,7 +278,7 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
     public partial class ValueElement
     {
         [JsonProperty("properties")]
-        public Properties Properties { get; set; }
+        public JContainer Properties { get; set; }
 
         [JsonProperty("prop_permissions")]
         public string PropPermissions { get; set; }
@@ -318,153 +320,6 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
         public List<object> ParentIds { get; set; }
     }
 
-    public partial class Properties
-    {
-        [JsonProperty("assignee")]
-        public Assignee Assignee { get; set; }
-
-        [JsonProperty("due")]
-        public Due Due { get; set; }
-
-        [JsonProperty("start")]
-        public Start Start { get; set; }
-
-        [JsonProperty("attachment")]
-        public Attachment Attachment { get; set; }
-
-        [JsonProperty("priority")]
-        public PropertiesPriority Priority { get; set; }
-
-        [JsonProperty("tag")]
-        public PropertiesTag Tag { get; set; }
-
-        [JsonProperty("workload")]
-        public Workload Workload { get; set; }
-
-        [JsonProperty("iteration")]
-        public Iteration Iteration { get; set; }
-
-        [JsonProperty("epic_source")]
-        public EpicSource EpicSource { get; set; }
-
-        [JsonProperty("uc_number")]
-        public UcNumber UcNumber { get; set; }
-
-        [JsonProperty("uc_test_date")]
-        public UcTestDate UcTestDate { get; set; }
-
-        [JsonProperty("ceshi")]
-        public Ceshi Ceshi { get; set; }
-    }
-
-    public partial class Assignee
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public string Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class Attachment
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public List<object> Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class Ceshi
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public CeshiValue Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class CeshiValue
-    {
-        [JsonProperty("begin")]
-        public BeginClass Begin { get; set; }
-
-        [JsonProperty("end")]
-        public BeginClass End { get; set; }
-    }
-
-    public partial class BeginClass
-    {
-        [JsonProperty("date")]
-        public long? Date { get; set; }
-
-        [JsonProperty("with_time")]
-        public long WithTime { get; set; }
-    }
-
-    public partial class Due
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public BeginClass Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class EpicSource
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public string Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class Iteration
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public object Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
     public partial class PropertiesPriority
     {
         [JsonProperty("property_id")]
@@ -478,93 +333,5 @@ namespace Worktile.ApiModel.ApiMissionVnextKanbanContent
 
         [JsonProperty("updated_at")]
         public long UpdatedAt { get; set; }
-    }
-
-    public partial class Start
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public BeginClass Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class PropertiesTag
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public List<string> Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class UcNumber
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public string Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class UcTestDate
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public BeginClass Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class Workload
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public WorkloadValue Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class WorkloadValue
-    {
-        [JsonProperty("estimated")]
-        public Estimated Estimated { get; set; }
-
-        [JsonProperty("reported_total")]
-        public long ReportedTotal { get; set; }
-    }
-
-    public partial class Estimated
-    {
     }
 }

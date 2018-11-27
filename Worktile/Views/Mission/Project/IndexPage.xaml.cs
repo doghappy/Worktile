@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextProjectsDetail;
+using Worktile.ApiModels.ApiMissionVnextProjectsDetail;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
@@ -23,6 +23,7 @@ namespace Worktile.Views.Mission.Project
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string _navId;
+        private string _taskIdentifierPrefix;
 
         public ObservableCollection<TopNavItem> TopNavItems { get; }
 
@@ -100,7 +101,8 @@ namespace Worktile.Views.Mission.Project
                         ContentFrame.Navigate(SelectedNav.TargetPage, new
                         {
                             AddonId = SelectedNav.Id,
-                            ViewId = value.Id
+                            ViewId = value.Id,
+                            TaskIdentifierPrefix = _taskIdentifierPrefix
                         });
                     }
                 }
@@ -129,6 +131,7 @@ namespace Worktile.Views.Mission.Project
             string uri = $"/api/mission-vnext/projects/{_navId}?members=true&addons=true";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMissionVnextProjectsDetail>(uri);
+            _taskIdentifierPrefix = data.Data.Value.TaskIdentifierPrefix;
             foreach (var item in data.Data.References.Addons)
             {
                 TopNavItems.Add(new TopNavItem
