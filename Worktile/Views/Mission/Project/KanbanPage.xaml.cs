@@ -110,13 +110,12 @@ namespace Worktile.Views.Mission.Project
             ReadForProgressBar(kbGroup, state.Type);
 
             dynamic props = task.Properties.ToObject<object>();
-            var attachmentValues = task.Properties["attachment"]["value"] as JArray;
 
             var item = new KanbanItem
             {
                 Id = task.Id,
                 Title = task.Title,
-                AttachmentCount = attachmentValues.Count,
+                AttachmentCount = GetAttachmentCount(task),
                 Priority = GetPriorityBrush(props.priority, data),
                 Properties = GetProperties(type.ShowSettings, data, task),
                 State = new Models.TaskState
@@ -193,6 +192,16 @@ namespace Worktile.Views.Mission.Project
                     return WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color));
                 }
             }
+        }
+
+        private int GetAttachmentCount(ValueElement task)
+        {
+            if (task.Properties.ContainsKey("attachment"))
+            {
+                var attachmentValues = task.Properties["attachment"]["value"] as JArray;
+                return attachmentValues.Count;
+            }
+            return 0;
         }
 
         private string GetPropertyValue(ValueElement task, WtTaskProperty property)

@@ -279,7 +279,7 @@ namespace Worktile.ApiModels.ApiMissionVnextKanbanContent
     public partial class ValueElement
     {
         [JsonProperty("properties")]
-        public JContainer Properties { get; set; }
+        public JObject Properties { get; set; }
 
         [JsonProperty("prop_permissions")]
         public string PropPermissions { get; set; }
