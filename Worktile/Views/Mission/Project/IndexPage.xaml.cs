@@ -96,7 +96,7 @@ namespace Worktile.Views.Mission.Project
                 {
                     _selectedNavView = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNavView)));
-                    if (SelectedNav.TargetPage != null)
+                    if (SelectedNav.TargetPage != null && value != null)
                     {
                         ContentFrame.Navigate(SelectedNav.TargetPage, new
                         {
