@@ -18,7 +18,7 @@ using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
 {
-    public sealed partial class KanbanPage : Page, INotifyPropertyChanged
+    public sealed partial class KanbanPage : AbstractPage, INotifyPropertyChanged
     {
         public KanbanPage()
         {
@@ -32,9 +32,6 @@ namespace Worktile.Views.Mission.Project
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _addonId;
-        private string _viewId;
-        private string _taskIdentifierPrefix;
         private bool _isPageLoaded;
         private List<string> _groupedIds;
 
@@ -51,15 +48,6 @@ namespace Worktile.Views.Mission.Project
             }
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            dynamic parameters = e.Parameter;
-            _addonId = parameters.AddonId;
-            _viewId = parameters.ViewId;
-            _taskIdentifierPrefix = parameters.TaskIdentifierPrefix;
-        }
-
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
@@ -70,7 +58,7 @@ namespace Worktile.Views.Mission.Project
 
         private async Task RequestContentAsync()
         {
-            string uri = $"/api/mission-vnext/kanban/{_addonId}/views/{_viewId}/content";
+            string uri = $"/api/mission-vnext/kanban/{AddonId}/views/{ViewId}/content";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMissionVnextKanbanContent>(uri);
 
@@ -270,7 +258,7 @@ namespace Worktile.Views.Mission.Project
                             value = CommonData.GetAvatar(value, 40)?.DisplayName;
                             break;
                         case "identifier":
-                            value = _taskIdentifierPrefix + value;
+                            value = TaskIdentifierPrefix + value;
                             break;
                     }
                 }

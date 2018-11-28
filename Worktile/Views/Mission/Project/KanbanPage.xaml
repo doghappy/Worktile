@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:AbstractPage
     xmlns:abstract="using:Worktile.Views.Mission"
     x:Class="Worktile.Views.Mission.Project.KanbanPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -52,4 +52,4 @@
         </ScrollViewer>
         <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
-</Page>
+</local:AbstractPage>
