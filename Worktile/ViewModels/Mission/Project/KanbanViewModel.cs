@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
+using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
@@ -15,7 +15,7 @@ using Worktile.WtRequestClient;
 
 namespace Worktile.ViewModels.Mission.Project
 {
-    public class KanbanViewModel : BindableBase
+    public class KanbanViewModel : ViewModel
     {
         public KanbanViewModel()
         {
@@ -30,15 +30,10 @@ namespace Worktile.ViewModels.Mission.Project
         public string AddonId { get; set; }
         public string ViewId { get; set; }
         public string TaskIdentifierPrefix { get; set; }
+        public SolidColorBrush PropertyDefaultForeground { get; set; }
+        public SolidColorBrush PropertyDefaultBackground { get; set; }
 
         public ObservableCollection<KanbanGroup> KanBanGroups { get; }
-
-        private bool _isActive;
-        public bool IsActive
-        {
-            get => _isActive;
-            set => SetProperty(ref _isActive, value);
-        }
 
         public async Task RequestContentAsync()
         {
@@ -125,7 +120,7 @@ namespace Worktile.ViewModels.Mission.Project
                         var kbp = new KanbanItemProperty
                         {
                             Value = tag.Name,
-                            Foreground = Application.Current.Resources["SystemControlForegroundBaseHighBrush"] as SolidColorBrush,
+                            Foreground = new SolidColorBrush(Colors.White),
                             Background = WtColorHelper.GetNewBrush(tag.Color)
                         };
                         list.Add(kbp);
@@ -143,8 +138,8 @@ namespace Worktile.ViewModels.Mission.Project
                     {
                         if (string.IsNullOrEmpty(item.Color))
                         {
-                            kbp.Foreground = Application.Current.Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush;
-                            kbp.Background = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
+                            kbp.Foreground = PropertyDefaultForeground;
+                            kbp.Background = PropertyDefaultBackground;
                         }
                         else
                         {

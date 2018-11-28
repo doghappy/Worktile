@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.ViewModels.Mission.Project;
@@ -12,7 +13,11 @@ namespace Worktile.Views.Mission.Project
         public KanbanPage()
         {
             InitializeComponent();
-            ViewModel = new KanbanViewModel();
+            ViewModel = new KanbanViewModel
+            {
+                PropertyDefaultForeground = Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush,
+                PropertyDefaultBackground = Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush
+            };
         }
 
         public KanbanViewModel ViewModel { get; }
