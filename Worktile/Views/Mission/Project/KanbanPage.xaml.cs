@@ -6,9 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
 using Worktile.Enums;
@@ -32,7 +30,6 @@ namespace Worktile.Views.Mission.Project
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private bool _isPageLoaded;
         private List<string> _groupedIds;
 
         public ObservableCollection<KanbanGroup> KanBanGroups { get; }
@@ -53,7 +50,6 @@ namespace Worktile.Views.Mission.Project
             IsActive = true;
             await RequestContentAsync();
             IsActive = false;
-            _isPageLoaded = true;
         }
 
         private async Task RequestContentAsync()
@@ -276,7 +272,7 @@ namespace Worktile.Views.Mission.Project
 
         private async void MyGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            await KanbanPageHelper.KanbanGridAdaptiveAsync(MyGrid, _isPageLoaded);
+            await KanbanPageHelper.KanbanGridAdaptiveAsync(MyGrid);
         }
     }
 }

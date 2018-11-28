@@ -44,7 +44,6 @@ namespace Worktile.Views.Mission.My
             IsActive = true;
             await RequestIndexDataAsync();
             IsActive = false;
-            _isPageLoaded = true;
         }
 
         private async Task RequestIndexDataAsync()
@@ -125,7 +124,7 @@ namespace Worktile.Views.Mission.My
 
         private async void MyGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            await KanbanPageHelper.KanbanGridAdaptiveAsync(MyGrid, _isPageLoaded);
+            await KanbanPageHelper.KanbanGridAdaptiveAsync(MyGrid);
         }
     }
 }

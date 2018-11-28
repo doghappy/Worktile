@@ -7,7 +7,7 @@ namespace Worktile.Common
 {
     public static class KanbanPageHelper
     {
-        public static async Task KanbanGridAdaptiveAsync(Grid grid, bool isPageLoaded)
+        public static async Task KanbanGridAdaptiveAsync(Grid grid)
         {
             var sp = grid.GetChild<StackPanel>("MissionHeader");
             var lvs = grid.GetChildren<ListView>("DataList");
@@ -22,18 +22,15 @@ namespace Worktile.Common
             {
                 for (int i = 0; i < 200; i++)
                 {
-                    if (isPageLoaded)
+                    sp = grid.GetChild<StackPanel>("MissionHeader");
+                    lvs = grid.GetChildren<ListView>("DataList");
+                    if (sp != null && lvs.Any())
                     {
-                        sp = grid.GetChild<StackPanel>("MissionHeader");
-                        lvs = grid.GetChildren<ListView>("DataList");
-                        if (sp != null && lvs.Any())
+                        foreach (var item in lvs)
                         {
-                            foreach (var item in lvs)
-                            {
-                                item.MaxHeight = grid.ActualHeight - 24 - sp.ActualHeight;
-                            }
-                            return;
+                            item.MaxHeight = grid.ActualHeight - 24 - sp.ActualHeight;
                         }
+                        return;
                     }
                     await Task.Delay(100);
                 }
