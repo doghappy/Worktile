@@ -89,46 +89,11 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="kanban:KanbanItemProperty">
                         <Border Style="{ThemeResource PropertyBorder}" Background="{x:Bind Background}">
-                            <TextBlock FontSize="12" Foreground="{x:Bind Foreground}">
-                                <Run Text="{x:Bind Name, Mode=OneWay}"/>
-                                <Run Text=":"/>
-                                <Run Text="{x:Bind Value, Mode=OneWay}"/>
-                            </TextBlock>
+                            <TextBlock FontSize="12" Text="{x:Bind}" Foreground="{x:Bind Foreground}"/>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-
-            <!--<Border Style="{ThemeResource PropertyBorder}" Background="{ThemeResource SystemControlForegroundBaseLowBrush}">
-                <TextBlock FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
-                        <Run Text="任务编号:"/>
-                        <Run Text="{x:Bind KanbanItem.Identifier, Mode=OneWay}"/>
-                </TextBlock>
-            </Border>-->
-            <!--<StackPanel Grid.Row="2">
-                <StackPanel Orientation="Horizontal">
-                    <Border Style="{ThemeResource PropertyBorder}" Background="{ThemeResource SystemControlForegroundBaseLowBrush}">
-                        <TextBlock FontSize="12" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
-                    <Run Text="任务编号:"/>
-                    <Run Text="{x:Bind KanbanItem.Identifier, Mode=OneWay}"/>
-                        </TextBlock>
-                    </Border>
-                    <FontIcon Margin="8 0 0 -8"
-                          Style="{StaticResource WtfIcon}"
-                          Glyph="{x:Bind KanbanItem.TaskType.Glyph, Mode=OneWay}"
-                          FontSize="22"
-                          Foreground="{x:Bind KanbanItem.TaskType.Color, Mode=OneWay}"
-                          ToolTipService.ToolTip="{x:Bind KanbanItem.TaskType.Name, Mode=OneWay}"/>
-                </StackPanel>
-                <Border Style="{ThemeResource PropertyBorder}"
-                    Visibility="{x:Bind KanbanItem.ToDate, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
-                    Background="{x:Bind KanbanItem.ToDateBackground, Mode=OneWay}">
-                    <TextBlock FontSize="12" Foreground="{x:Bind KanbanItem.ToDateForeground, Mode=OneWay}">
-                        <Run Text="截止时间:"/>
-                        <Run Text="{x:Bind KanbanItem.ToDate, Mode=OneWay}"/>
-                    </TextBlock>
-                </Border>
-            </StackPanel>-->
         </Grid>
     </Grid>
 </UserControl>

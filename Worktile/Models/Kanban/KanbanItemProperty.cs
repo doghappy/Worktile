@@ -8,5 +8,17 @@ namespace Worktile.Models.Kanban
         public string Value { get; set; }
         public SolidColorBrush Foreground { get; set; }
         public SolidColorBrush Background { get; set; }
+
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                return Value;
+            }
+            else
+            {
+                return Name + ": " + Value;
+            }
+        }
     }
 }

@@ -47,6 +47,12 @@ namespace Worktile.Common
             return item.NewColor;
         }
 
+        public static SolidColorBrush GetNewBrush(string color)
+        {
+            color = GetNewColor(color);
+            return GetSolidColorBrush(color);
+        }
+
         public static string GetColorByClass(string cls)
         {
             string color = null;

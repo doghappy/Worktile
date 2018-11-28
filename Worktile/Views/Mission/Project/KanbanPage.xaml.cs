@@ -145,7 +145,22 @@ namespace Worktile.Views.Mission.Project
             foreach (var item in showSettings)
             {
                 var property = data.Data.References.Properties.Single(p => p.Id == item.TaskPropertyId);
-                if (!_notInStackProperties.Contains(property.RawKey))
+                if (property.RawKey == "tag")
+                {
+                    var arr = task.Properties["tag"]["value"] as JArray;
+                    foreach (var tagId in arr)
+                    {
+                        var tag = data.Data.References.Lookups.Tags.Single(t => t.Id == tagId.Value<string>());
+                        var kbp = new KanbanItemProperty
+                        {
+                            Value = tag.Name,
+                            Foreground = Resources["SystemControlForegroundBaseHighBrush"] as SolidColorBrush,
+                            Background = WtColorHelper.GetNewBrush(tag.Color)
+                        };
+                        list.Add(kbp);
+                    }
+                }
+                else if (!_notInStackProperties.Contains(property.RawKey))
                 {
                     string rawValue = GetPropertyValue(task, property);
                     var kbp = new KanbanItemProperty
