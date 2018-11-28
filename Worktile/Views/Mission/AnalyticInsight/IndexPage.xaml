@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:Worktile.Converters"
+    xmlns:analyticinsight="using:Worktile.Models.Mission.AnalyticInsight"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
@@ -21,17 +22,17 @@
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="False"
                         SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}"
-                        MenuItemsSource="{x:Bind TopNavItems}">
+                        MenuItemsSource="{x:Bind ViewModel.TopNavItems}">
             <NavigationView.MenuItemTemplate>
-                <DataTemplate x:DataType="local:TopNavItem">
+                <DataTemplate x:DataType="analyticinsight:TopNavItem">
                     <NavigationViewItem Content="{x:Bind Name}" Tag="{x:Bind Id}" />
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
 
             <NavigationView.PaneHeader>
                 <StackPanel Orientation="Horizontal" Padding="12 0 0 0">
-                    <FontIcon Style="{StaticResource WtfIcon}" Foreground="{ThemeResource SystemAccentColor}" Glyph="{x:Bind TopNavIcon, Mode=OneWay}"/>
-                    <TextBlock Text="{x:Bind TopNavName, Mode=OneWay}" VerticalAlignment="Center" Margin="4 0" FontWeight="SemiBold"/>
+                    <FontIcon Style="{StaticResource WtfIcon}" Foreground="{ThemeResource SystemAccentColor}" Glyph="{x:Bind ViewModel.TopNavIcon, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind ViewModel.TopNavName, Mode=OneWay}" VerticalAlignment="Center" Margin="4 0" FontWeight="SemiBold"/>
                 </StackPanel>
             </NavigationView.PaneHeader>
 
@@ -51,6 +52,6 @@
                 </Frame.ContentTransitions>
             </Frame>
         </NavigationView>
-        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

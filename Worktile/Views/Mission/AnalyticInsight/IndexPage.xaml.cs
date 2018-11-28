@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using System.ComponentModel;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
-using System.Threading.Tasks;
-using Worktile.WtRequestClient;
-using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightGroups;
-using System.Collections.ObjectModel;
+using Worktile.ViewModels.Mission.AnalyticInsight;
+using Worktile.Models.Mission.AnalyticInsight;
 
 namespace Worktile.Views.Mission.AnalyticInsight
 {
@@ -17,47 +14,12 @@ namespace Worktile.Views.Mission.AnalyticInsight
         public IndexPage()
         {
             InitializeComponent();
-            TopNavItems = new ObservableCollection<TopNavItem>();
+            ViewModel = new IndexViewModel();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ApiModels.ApiMissionVnextWorkAddon.Value _navItem;
-
-        public ObservableCollection<TopNavItem> TopNavItems { get; }
-
-        private bool _isActive;
-        public bool IsActive
-        {
-            get => _isActive;
-            set
-            {
-                _isActive = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
-            }
-        }
-
-        private string _topNavIcon;
-        public string TopNavIcon
-        {
-            get => _topNavIcon;
-            set
-            {
-                _topNavIcon = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavIcon)));
-            }
-        }
-
-        private string _topNavName;
-        public string TopNavName
-        {
-            get => _topNavName;
-            set
-            {
-                _topNavName = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavName)));
-            }
-        }
+        public IndexViewModel ViewModel { get; }
 
         private TopNavItem _selectedNav;
         public TopNavItem SelectedNav
@@ -114,52 +76,18 @@ namespace Worktile.Views.Mission.AnalyticInsight
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            _navItem = e.Parameter as ApiModels.ApiMissionVnextWorkAddon.Value;
-            TopNavIcon = WtIconHelper.GetGlyph(_navItem.Icon);
-            TopNavName = _navItem.Name;
+            var navItem = e.Parameter as ApiModels.ApiMissionVnextWorkAddon.Value;
+            ViewModel.TopNavIcon = WtIconHelper.GetGlyph(navItem.Icon);
+            ViewModel.TopNavName = navItem.Name;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            IsActive = true;
-            await RequestApiMissionVnextWorkAnalyticInsightGroups();
-            IsActive = false;
-        }
-
-        private async Task RequestApiMissionVnextWorkAnalyticInsightGroups()
-        {
-            string uri = "/api/mission-vnext/work/analytic-insight/groups";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkAnalyticInsightGroups>(uri);
-            foreach (var item in data.Data.Value)
-            {
-                var tni = new TopNavItem
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    SubItems = new List<TopNavItem>()
-                };
-                foreach (var ins in item.Insights)
-                {
-                    tni.SubItems.Add(new TopNavItem
-                    {
-                        Id = ins.Id,
-                        Name = ins.Name,
-                        Key = ins.Key
-                    });
-                }
-                TopNavItems.Add(tni);
-            }
-            SelectedNav = TopNavItems.First();
+            ViewModel.IsActive = true;
+            await ViewModel.RequestApiDataAsync();
+            SelectedNav = ViewModel.TopNavItems.First();
             SelectedSubNav = SelectedNav.SubItems.First();
+            ViewModel.IsActive = false;
         }
-    }
-
-    public class TopNavItem
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Key { get; set; }
-        public List<TopNavItem> SubItems { get; set; }
     }
 }
