@@ -152,6 +152,7 @@
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BindableBase.cs" />
+    <Compile Include="ViewModels\Mission\Project\KanbanViewModel.cs" />
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
@@ -181,9 +182,6 @@
     </Compile>
     <Compile Include="Views\Mission\My\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Mission\Project\AbstractPage.xaml.cs">
-      <DependentUpon>AbstractPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Mission\Project\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
@@ -344,10 +342,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Mission\My\IndexPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Mission\Project\AbstractPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
