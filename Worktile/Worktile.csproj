@@ -115,6 +115,7 @@
     <Compile Include="Common\CommonData.cs" />
     <Compile Include="Common\HashEncryptor.cs" />
     <Compile Include="Common\IncrementalCollection.cs" />
+    <Compile Include="Common\KanbanPageHelper.cs" />
     <Compile Include="Common\WtDateTimeHelper.cs" />
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\UtilityTool.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BindableBase.cs" />
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
@@ -168,9 +170,6 @@
     <Compile Include="Views\Mission\AnalyticInsight\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Mission\KanbanAbstractPage.xaml.cs">
-      <DependentUpon>KanbanAbstractPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Mission\MissionPage.xaml.cs">
       <DependentUpon>MissionPage.xaml</DependentUpon>
     </Compile>
@@ -182,6 +181,9 @@
     </Compile>
     <Compile Include="Views\Mission\My\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Mission\Project\AbstractPage.xaml.cs">
+      <DependentUpon>AbstractPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Mission\Project\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
@@ -329,10 +331,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Mission\KanbanAbstractPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Mission\MissionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -346,6 +344,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Mission\My\IndexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Mission\Project\AbstractPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,7 +14,7 @@ using System;
 
 namespace Worktile.Views.Mission.My
 {
-    public sealed partial class MyDirectActivePage : KanbanAbstractPage, INotifyPropertyChanged
+    public sealed partial class MyDirectActivePage : Page, INotifyPropertyChanged
     {
         public MyDirectActivePage()
         {
@@ -24,7 +24,7 @@ namespace Worktile.Views.Mission.My
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected override Grid MyGrid => MyGridPanel;
+        private bool _isPageLoaded;
 
         private bool _isActive;
         public bool IsActive
@@ -44,7 +44,7 @@ namespace Worktile.Views.Mission.My
             IsActive = true;
             await RequestIndexDataAsync();
             IsActive = false;
-            IsPageLoaded = true;
+            _isPageLoaded = true;
         }
 
         private async Task RequestIndexDataAsync()
@@ -65,7 +65,7 @@ namespace Worktile.Views.Mission.My
                     var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == task.TaskStateId);
                     var type = data.Data.References.TaskTypes.Single(t => t.Id == task.TaskTypeId);
 
-                    ReadForProgressBar(kbGroup, state.Type);
+                    KanbanPageHelper.ReadForProgressBar(kbGroup, state.Type);
 
                     var props = new List<KanbanItemProperty>
                     {
@@ -106,6 +106,26 @@ namespace Worktile.Views.Mission.My
                 }
                 KanbanGroups.Add(kbGroup);
             }
+        }
+
+        private KanbanItemProperty GetDueProperty(DateTime? dueDate)
+        {
+            if (dueDate.HasValue)
+            {
+                return new KanbanItemProperty
+                {
+                    Name = "截止时间",
+                    Value = dueDate.Value.ToWtKanbanDate(),
+                    Foreground = WtColorHelper.GetForegroundWithExpire(dueDate.Value),
+                    Background = WtColorHelper.GetBackgroundWithExpire(dueDate.Value)
+                };
+            }
+            return null;
+        }
+
+        private async void MyGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            await KanbanPageHelper.KanbanGridAdaptiveAsync(MyGrid, _isPageLoaded);
         }
     }
 }

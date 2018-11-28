@@ -18,7 +18,7 @@ using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
 {
-    public sealed partial class KanbanPage : KanbanAbstractPage, INotifyPropertyChanged
+    public sealed partial class KanbanPage : Page, INotifyPropertyChanged
     {
         public KanbanPage()
         {
@@ -35,9 +35,8 @@ namespace Worktile.Views.Mission.Project
         private string _addonId;
         private string _viewId;
         private string _taskIdentifierPrefix;
+        private bool _isPageLoaded;
         private List<string> _groupedIds;
-
-        protected override Grid MyGrid => MyGridPanel;
 
         public ObservableCollection<KanbanGroup> KanBanGroups { get; }
 
@@ -66,7 +65,7 @@ namespace Worktile.Views.Mission.Project
             IsActive = true;
             await RequestContentAsync();
             IsActive = false;
-            IsPageLoaded = true;
+            _isPageLoaded = true;
         }
 
         private async Task RequestContentAsync()
@@ -107,7 +106,7 @@ namespace Worktile.Views.Mission.Project
             var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == task.TaskStateId);
             var type = data.Data.References.TaskTypes.Single(t => t.Id == task.TaskTypeId);
 
-            ReadForProgressBar(kbGroup, state.Type);
+            KanbanPageHelper.ReadForProgressBar(kbGroup, state.Type);
 
             dynamic props = task.Properties.ToObject<object>();
 
@@ -285,6 +284,11 @@ namespace Worktile.Views.Mission.Project
                 }
             }
             return value;
+        }
+
+        private async void MyGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            await KanbanPageHelper.KanbanGridAdaptiveAsync(MyGrid, _isPageLoaded);
         }
     }
 }
