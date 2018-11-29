@@ -140,6 +140,7 @@
     <Compile Include="Models\Kanban\KanbanGroup.cs" />
     <Compile Include="Models\Kanban\KanbanItem.cs" />
     <Compile Include="Models\Kanban\KanbanItemProperty.cs" />
+    <Compile Include="Models\Mission\AnalyticInsight\TopNavItem.cs" />
     <Compile Include="Models\Mission\WtTask\WtTaskProperty.cs" />
     <Compile Include="Models\TaskState.cs" />
     <Compile Include="Models\TaskType.cs" />
@@ -180,9 +181,6 @@
     </Compile>
     <Compile Include="Views\Mission\My\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Mission\Project\AbstractPage.xaml.cs">
-      <DependentUpon>AbstractPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Mission\Project\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
@@ -343,10 +341,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Mission\My\IndexPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Mission\Project\AbstractPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
