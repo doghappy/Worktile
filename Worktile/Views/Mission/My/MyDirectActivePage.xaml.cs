@@ -32,8 +32,11 @@ namespace Worktile.Views.Mission.My
             get => _isActive;
             set
             {
-                _isActive = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
             }
         }
 

@@ -22,6 +22,7 @@ namespace Worktile.Views.Mission.My
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private long _pageIndex;
 
         public IncrementalCollection<GridItem> GridItems { get; }
 
@@ -31,8 +32,11 @@ namespace Worktile.Views.Mission.My
             get => _isActive;
             set
             {
-                _isActive = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
             }
         }
 
@@ -42,22 +46,13 @@ namespace Worktile.Views.Mission.My
             get => _pages;
             set
             {
-                _pages = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pages)));
+                if (_pages != value)
+                {
+                    _pages = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pages)));
+                }
             }
         }
-
-        private long _pageIndex;
-        //public int PageIndex
-        //{
-        //    get => _pageIndex;
-        //    set
-        //    {
-        //        _pageIndex = value;
-        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PageIndex)));
-        //    }
-        //}
-
 
         private string _uri;
         public string Uri

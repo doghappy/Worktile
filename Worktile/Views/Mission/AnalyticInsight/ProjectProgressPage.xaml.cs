@@ -35,8 +35,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _isActive;
             set
             {
-                _isActive = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
             }
         }
 
@@ -46,8 +49,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _projectCount;
             set
             {
-                _projectCount = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProjectCount)));
+                if (_projectCount != value)
+                {
+                    _projectCount = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProjectCount)));
+                }
             }
         }
 
@@ -57,8 +63,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _totalCount;
             set
             {
-                _totalCount = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalCount)));
+                if (_totalCount != value)
+                {
+                    _totalCount = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalCount)));
+                }
             }
         }
 
@@ -68,8 +77,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _pendingCount;
             set
             {
-                _pendingCount = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PendingCount)));
+                if (_pendingCount != value)
+                {
+                    _pendingCount = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PendingCount)));
+                }
             }
         }
 
@@ -79,8 +91,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _progressCount;
             set
             {
-                _progressCount = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProgressCount)));
+                if (_progressCount != value)
+                {
+                    _progressCount = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ProgressCount)));
+                }
             }
         }
 
@@ -90,8 +105,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _completedCount;
             set
             {
-                _completedCount = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedCount)));
+                if (_completedCount != value)
+                {
+                    _completedCount = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedCount)));
+                }
             }
         }
 
@@ -101,8 +119,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _pointRate;
             set
             {
-                _pointRate = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PointRate)));
+                if (_pointRate != value)
+                {
+                    _pointRate = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PointRate)));
+                }
             }
         }
 

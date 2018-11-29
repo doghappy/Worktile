@@ -32,8 +32,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _isActive;
             set
             {
-                _isActive = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
             }
         }
 
@@ -43,8 +46,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _topNavIcon;
             set
             {
-                _topNavIcon = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavIcon)));
+                if (_topNavIcon != value)
+                {
+                    _topNavIcon = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavIcon)));
+                }
             }
         }
 
@@ -54,8 +60,11 @@ namespace Worktile.Views.Mission.AnalyticInsight
             get => _topNavName;
             set
             {
-                _topNavName = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavName)));
+                if (_topNavName != value)
+                {
+                    _topNavName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavName)));
+                }
             }
         }
 

@@ -52,8 +52,11 @@ namespace Worktile.Views.Mission.My
             get => _topNavIcon;
             set
             {
-                _topNavIcon = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavIcon)));
+                if (_topNavIcon != value)
+                {
+                    _topNavIcon = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavIcon)));
+                }
             }
         }
 
@@ -63,8 +66,11 @@ namespace Worktile.Views.Mission.My
             get => _topNavName;
             set
             {
-                _topNavName = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavName)));
+                if (_topNavName != value)
+                {
+                    _topNavName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopNavName)));
+                }
             }
         }
 

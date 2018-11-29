@@ -35,8 +35,11 @@ namespace Worktile.Views
             get => _gridState;
             set
             {
-                _gridState = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GridState)));
+                if (_gridState != value)
+                {
+                    _gridState = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GridState)));
+                }
             }
         }
 
@@ -48,8 +51,11 @@ namespace Worktile.Views
             get => _logo;
             set
             {
-                _logo = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Logo)));
+                if (_logo != value)
+                {
+                    _logo = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Logo)));
+                }
             }
         }
 
@@ -59,8 +65,11 @@ namespace Worktile.Views
             get => _isActive;
             set
             {
-                _isActive = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
             }
         }
 
@@ -87,8 +96,11 @@ namespace Worktile.Views
             get => _domainEnable;
             set
             {
-                _domainEnable = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DomainDisable)));
+                if (_domainEnable != value)
+                {
+                    _domainEnable = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DomainDisable)));
+                }
             }
         }
         #endregion
@@ -111,8 +123,11 @@ namespace Worktile.Views
             get => _userName;
             set
             {
-                _userName = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UserName)));
+                if (_userName != value)
+                {
+                    _userName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UserName)));
+                }
             }
         }
 
@@ -122,8 +137,11 @@ namespace Worktile.Views
             get => _password;
             set
             {
-                _password = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
+                if (_password != value)
+                {
+                    _password = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
+                }
             }
         }
 
@@ -133,8 +151,11 @@ namespace Worktile.Views
             get => _passwordIsError;
             set
             {
-                _passwordIsError = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PasswordIsError)));
+                if (_passwordIsError != value)
+                {
+                    _passwordIsError = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PasswordIsError)));
+                }
             }
         }
         #endregion
