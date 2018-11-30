@@ -67,44 +67,6 @@ namespace Worktile.ViewModels.Mission.Project
             KanBanGroups.Insert(0, unGroup);
         }
 
-        private void ReadKanbanItem(ApiMissionVnextKanbanContent data, KanbanGroup kbGroup, string taskId)
-        {
-            var task = data.Data.Value.Single(v => v.Id == taskId);
-            var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == task.TaskStateId);
-            var type = data.Data.References.TaskTypes.Single(t => t.Id == task.TaskTypeId);
-
-            KanbanPageHelper.ReadForProgressBar(kbGroup, state.Type);
-
-            dynamic props = task.Properties.ToObject<object>();
-
-            var item = new KanbanItem
-            {
-                Id = task.Id,
-                Title = task.Title,
-                AttachmentCount = GetAttachmentCount(task),
-                Priority = GetPriorityBrush(props.priority, data),
-                Properties = GetProperties(type.ShowSettings, data, task),
-                State = new Models.TaskState
-                {
-                    Name = state.Name,
-                    Foreground = WtColorHelper.GetNewColor(state.Color),
-                    Glyph = WtIconHelper.GetGlyph(state.Type)
-                },
-                TaskType = new Models.TaskType
-                {
-                    Name = type.Name,
-                    Color = WtColorHelper.GetColorByClass(type.Icon),
-                    Glyph = WtIconHelper.GetGlyph("wtf-type-" + type.Icon),
-                }
-            };
-
-            if (props.assignee != null && props.assignee.value != null)
-            {
-                item.Avatar = CommonData.GetAvatar((string)props.assignee.value, 40);
-            }
-            kbGroup.Items.Add(item);
-        }
-
         private List<KanbanItemProperty> GetProperties(List<ShowSetting> showSettings, ApiMissionVnextKanbanContent data, ValueElement task)
         {
             var list = new List<KanbanItemProperty>();

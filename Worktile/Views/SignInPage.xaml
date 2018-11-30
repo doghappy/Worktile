@@ -29,7 +29,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Image Source="{x:Bind ViewModel.Logo, Mode=OneWay}"
+            <Image Source="{x:Bind Logo, Mode=OneWay}"
                    Height="70"
                    Margin="0,60,0,60"/>
             <Grid Grid.Row="1"
@@ -37,7 +37,7 @@
                   VerticalAlignment="Top"
                   HorizontalAlignment="Center"
                   Background="{ThemeResource CustomAcrylicBrush}"
-                  Visibility="{x:Bind ViewModel.GridState, Mode=OneWay, Converter={StaticResource EnumVisibilityConverter}, ConverterParameter='Enterprise'}">
+                  Visibility="{x:Bind GridState, Mode=OneWay, Converter={StaticResource EnumVisibilityConverter}, ConverterParameter='Enterprise'}">
 
                 <animations:Implicit.ShowAnimations>
                     <animations:TranslationAnimation Duration="0:0:1" To="0, 0, 0"></animations:TranslationAnimation>
@@ -59,17 +59,17 @@
                     <TextBox Header="输入你要登录的企业域名"
                              PlaceholderText="企业域名"
                              TabIndex="0"
-                             Text="{x:Bind ViewModel.Domain, Mode=TwoWay}"
-                             IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
+                             Text="{x:Bind Domain, Mode=TwoWay}"
+                             IsEnabled="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
                              Margin="0 0 0 16"/>
                     <TextBlock Text="你输入的企业域名不存在。"
                                Foreground="{StaticResource DangerBrush}"
-                               Visibility="{x:Bind ViewModel.DomainDisable, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"
+                               Visibility="{x:Bind DomainDisable, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"
                                Margin="0 0 0 16"/>
                     <Button x:Name="NextStep"
                             Click="NextStep_Click"
                             Content="下一步"
-                            IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
+                            IsEnabled="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
                             HorizontalAlignment="Stretch"
                             Background="{StaticResource PrimaryBrush}"
                             Foreground="White"/>
@@ -81,11 +81,11 @@
                   VerticalAlignment="Top"
                   HorizontalAlignment="Center"
                   Background="{ThemeResource CustomAcrylicBrush}"
-                  Visibility="{x:Bind ViewModel.GridState, Mode=OneWay, Converter={StaticResource EnumVisibilityConverter}, ConverterParameter='Member'}">
+                  Visibility="{x:Bind GridState, Mode=OneWay, Converter={StaticResource EnumVisibilityConverter}, ConverterParameter='Member'}">
                 <StackPanel Width="400">
                     <StackPanel Orientation="Horizontal" Margin="0 0 0 16">
                         <TextBlock Text="登录" Style="{ThemeResource TitleTextBlockStyle}"/>
-                        <TextBlock Text="{x:Bind ViewModel.TeamName, Mode=OneWay}"
+                        <TextBlock Text="{x:Bind TeamName, Mode=OneWay}"
                                Margin="8 0 0 0"
                                Foreground="{StaticResource DangerBrush}"
                                Style="{ThemeResource TitleTextBlockStyle}"/>
@@ -93,24 +93,24 @@
                     <TextBox x:Name="TextBoxUserName"
                              Header="输入您的账号"
                              PlaceholderText="手机号/用户名/邮箱"
-                             Text="{x:Bind ViewModel.UserName, Mode=TwoWay}"
-                             IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
+                             Text="{x:Bind UserName, Mode=TwoWay}"
+                             IsEnabled="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
                              Margin="0 0 0 16"/>
                     <PasswordBox Header="输入您的密码"
                                  PlaceholderText="输入您的密码"
-                                 IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
-                                 Password="{x:Bind ViewModel.Password, Mode=TwoWay}"
+                                 IsEnabled="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
+                                 Password="{x:Bind Password, Mode=TwoWay}"
                                  Margin="0 0 0 16"/>
                     <TextBlock Text="用户名或密码错误。"
                                Foreground="{StaticResource DangerBrush}"
-                               Visibility="{x:Bind ViewModel.PasswordIsError, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"
+                               Visibility="{x:Bind PasswordIsError, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"
                                Margin="0 0 0 16"/>
                     <Button x:Name="SignIn"
                             Click="SignIn_Click"
                             Content="登录"
                             HorizontalAlignment="Stretch"
                             Background="{StaticResource PrimaryBrush}"
-                            IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
+                            IsEnabled="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}"
                             Foreground="White"/>
                     <HyperlinkButton x:Name="ForgotPassword"
                                      Content="忘记了密码？"
@@ -133,6 +133,6 @@
             </Grid>
 
         </Grid>
-        <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

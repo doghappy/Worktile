@@ -13,7 +13,7 @@
 
     <Grid x:Name="MyGrid" SizeChanged="MyGrid_SizeChanged">
         <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
-            <ItemsControl ItemsSource="{x:Bind ViewModel.KanBanGroups}" Margin="12 12 0 12">
+            <ItemsControl ItemsSource="{x:Bind KanBanGroups}" Margin="12 12 0 12">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
@@ -50,6 +50,6 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>
