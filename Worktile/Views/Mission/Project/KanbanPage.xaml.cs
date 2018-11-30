@@ -31,8 +31,10 @@ namespace Worktile.Views.Mission.Project
         readonly string[] _notInStackProperties;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         private List<string> _groupedIds;
+        private string _addonId;
+        private string _viewId;
+        private string _taskIdentifierPrefix;
 
         public ObservableCollection<KanbanGroup> KanBanGroups { get; }
 
@@ -53,7 +55,10 @@ namespace Worktile.Views.Mission.Project
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
+            dynamic parameters = e.Parameter;
+            _addonId = parameters.AddonId;
+            _viewId = parameters.ViewId;
+            _taskIdentifierPrefix = parameters.TaskIdentifierPrefix;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
