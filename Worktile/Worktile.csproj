@@ -95,6 +95,7 @@
     <Compile Include="ApiModels\ApiMissionVnextKanbanContent.cs" />
     <Compile Include="ApiModels\ApiMissionVnextProjectNav.cs" />
     <Compile Include="ApiModels\ApiMissionVnextProjectsDetail.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextTableContent.cs" />
     <Compile Include="ApiModels\ApiMissionVnextTasksIdstates.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkAddon.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightGroups.cs" />

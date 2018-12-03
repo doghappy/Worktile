@@ -11,21 +11,37 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Padding="32">
-        <!--<wtcontrols:PaginationBar TotalPages="4"/>-->
-        <StackPanel Orientation="Horizontal" Height="200" Width="400">
-            <Rectangle Width="40" Height="40" Fill="Red" VerticalAlignment="Top"/>
-            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
-            <Rectangle Width="80" Height="80" Fill="Yellow" VerticalAlignment="Top"/>
-            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
-            <Rectangle Width="40" Height="40" Fill="Red" VerticalAlignment="Top"/>
-            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
-            <Rectangle Width="80" Height="80" Fill="Yellow" VerticalAlignment="Top"/>
-            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
-            <Rectangle Width="40" Height="40" Fill="Red" VerticalAlignment="Top"/>
-            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
-            <Rectangle Width="80" Height="80" Fill="Yellow" VerticalAlignment="Top"/>
-            <Rectangle Width="60" Height="60" Fill="Blue" VerticalAlignment="Top"/>
-            <Rectangle Width="40" Height="40" Fill="Red" VerticalAlignment="Top"/>
-        </StackPanel>
+        <Button Content="Edit Options" BorderThickness="1 0 0 0" BorderBrush="{StaticResource CustomAcrylicBrush}">
+            <Button.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="升序" Foreground="{ThemeResource SystemAccentColor}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE110;"/>
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="降序">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE1FD;"/>
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="以此分组">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE713;"/>
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="隐藏本列">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE716;"/>
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="快速筛选">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE715;"/>
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </Button.Flyout>
+        </Button>
+
     </Grid>
 </Page>

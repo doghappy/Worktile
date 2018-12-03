@@ -19,9 +19,9 @@
 
     <Grid>
         <Button Background="{x:Bind State.Background, Mode=OneWay}"
-                    Click="Button_Click"
-                    CornerRadius="4"
-                    Padding="8 4">
+                Click="Button_Click"
+                CornerRadius="4"
+                Padding="8 4">
             <StackPanel Orientation="Horizontal">
                 <FontIcon Style="{StaticResource WtfIcon}"
                               FontSize="12"
@@ -45,9 +45,9 @@
                                 <DataTemplate x:DataType="mdoels:TaskState">
                                     <StackPanel Orientation="Horizontal">
                                         <FontIcon FontSize="12"
-                                                      Foreground="{x:Bind Foreground}"
-                                                      Style="{StaticResource WtfIcon}"
-                                                      Glyph="{x:Bind Glyph}"/>
+                                                  Foreground="{x:Bind Foreground}"
+                                                  Style="{StaticResource WtfIcon}"
+                                                  Glyph="{x:Bind Glyph}"/>
                                         <TextBlock FontSize="12" Margin="4 0 0 0" Text="{x:Bind Name}"/>
                                     </StackPanel>
                                 </DataTemplate>

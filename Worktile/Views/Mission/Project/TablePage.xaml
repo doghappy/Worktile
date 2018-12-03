@@ -5,10 +5,33 @@
     xmlns:local="using:Worktile.Views.Mission.Project"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
 
     <Grid>
-        <TextBlock Text="table"/>
+        <Grid>
+            <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="12" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
+                    <Button Style="{ThemeResource TextBlockButtonStyle}" Foreground="{ThemeResource ButtonForegroundThemeBrush}" Width="80">
+                        <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe640;"/>
+                    </Button>
+                    <ItemsControl ItemsSource="{x:Bind HeaderItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:HeaderItem">
+                                <StackPanel Padding="16 8" BorderThickness="1 0 0 0" BorderBrush="{ThemeResource AppBarSeparatorForeground}">
+                                    <Button Style="{ThemeResource TextBlockButtonStyle}" Foreground="{ThemeResource ButtonForegroundThemeBrush}" Content="{x:Bind Text}" Width="{x:Bind Width}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

@@ -75,7 +75,7 @@ namespace Worktile
                     // 并通过将所需信息作为导航参数传入来配置
                     // 参数
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                    //SetLaunchPage(rootFrame, e);
+                    //rootFrame.Navigate(typeof(TestPage), e.Arguments);
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
