@@ -11,6 +11,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Padding="32">
+        <TextBlock>
+            <Run/>
+        </TextBlock>
         <Button Content="Edit Options" BorderThickness="1 0 0 0" BorderBrush="{StaticResource CustomAcrylicBrush}">
             <Button.Flyout>
                 <MenuFlyout>

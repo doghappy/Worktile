@@ -113,5 +113,39 @@ namespace Worktile.WtRequestClient
                 return default(T);
             }
         }
+
+        public async Task<T> PutAsync<T>(string uri)
+        {
+            var resMsg = await HttpClient.PutAsync(uri, null);
+            if (resMsg.IsSuccessStatusCode)
+            {
+                IsSuccessStatusCode = true;
+                OnSuccessStatusCode?.Invoke(resMsg);
+                return await resMsg.ReadAsModelAsync<T>();
+            }
+            else
+            {
+                OnNonSuccessStatusCode?.Invoke(resMsg);
+                return default(T);
+            }
+        }
+
+        public async Task<T> PutAsync<T>(string uri, object data)
+        {
+            string json = JsonConvert.SerializeObject(data);
+            var content = new StringContent(json, Encoding.UTF8, ApplicationJson);
+            var resMsg = await HttpClient.PutAsync(uri, content);
+            if (resMsg.IsSuccessStatusCode)
+            {
+                IsSuccessStatusCode = true;
+                OnSuccessStatusCode?.Invoke(resMsg);
+                return await resMsg.ReadAsModelAsync<T>();
+            }
+            else
+            {
+                OnNonSuccessStatusCode?.Invoke(resMsg);
+                return default(T);
+            }
+        }
     }
 }

@@ -6,8 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Navigation;
+using Worktile.ApiModel.ApiProjectJoin;
 using Worktile.ApiModels.ApiMissionVnextProjectsDetail;
+using Worktile.Common;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
@@ -131,24 +134,68 @@ namespace Worktile.Views.Mission.Project
             string uri = $"/api/mission-vnext/projects/{_navId}?members=true&addons=true";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMissionVnextProjectsDetail>(uri);
-            _taskIdentifierPrefix = data.Data.Value.TaskIdentifierPrefix;
-            foreach (var item in data.Data.References.Addons)
+            if (data.Code == 200)
             {
-                TopNavItems.Add(new TopNavItem
+                _taskIdentifierPrefix = data.Data.Value.TaskIdentifierPrefix;
+                foreach (var item in data.Data.References.Addons)
                 {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Key = item.Key,
-                    TargetPage = GetPage(item.Key),
-                    Views = item.Views.Select(v => new TopNavItemView
+                    TopNavItems.Add(new TopNavItem
                     {
-                        Id = v.Id,
-                        Name = v.Name
-                    })
-                    .ToList()
-                });
+                        Id = item.Id,
+                        Name = item.Name,
+                        Key = item.Key,
+                        TargetPage = GetPage(item.Key),
+                        Views = item.Views.Select(v => new TopNavItemView
+                        {
+                            Id = v.Id,
+                            Name = v.Name
+                        })
+                        .ToList()
+                    });
+                }
+                SelectedNav = TopNavItems.First();
             }
-            SelectedNav = TopNavItems.First();
+            else if (data.Code == 60001)
+            {
+                var textBlock = new TextBlock();
+                textBlock.Inlines.Add(new Run
+                {
+                    Text = "您还没加入公开项目"
+                });
+                textBlock.Inlines.Add(new Run
+                {
+                    Text = TopNavName,
+                    Foreground = WtColorHelper.DangerColor
+                });
+                textBlock.Inlines.Add(new Run
+                {
+                    Text = "，是否确认加入此公开项目？"
+                });
+                var dialog = new ContentDialog
+                {
+                    Title = "加入公开项目",
+                    Content = textBlock,
+                    PrimaryButtonText = "确认",
+                    SecondaryButtonText = "取消",
+                    DefaultButton = ContentDialogButton.Primary
+                };
+                var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    await JoinAsync();
+                }
+            }
+        }
+
+        private async Task JoinAsync()
+        {
+            string uri = $"/api/mission-vnext/projects/{_navId}/join";
+            var client = new WtHttpClient();
+            var data = await client.PutAsync<ApiProjectJoin>(uri);
+            if (data.Data.Value)
+            {
+                Page_Loaded(null, null);
+            }
         }
 
         private Type GetPage(string key)

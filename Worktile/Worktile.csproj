@@ -110,6 +110,7 @@
     <Compile Include="ApiModels\ApiTeamLite.cs" />
     <Compile Include="ApiModels\ApiUserMe.cs" />
     <Compile Include="ApiModels\ApiUserSignIn.cs" />
+    <Compile Include="ApiModels\ProjectJoin.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
