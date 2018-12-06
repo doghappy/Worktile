@@ -6,7 +6,7 @@ namespace Worktile.Models.Kanban
     public class KanbanItem
     {
         public string Id { get; set; }
-        public Avatar Avatar { get; set; }
+        public Avatar Due { get; set; }
         public TaskState State { get; set; }
         public string Title { get; set; }
         public int AttachmentCount { get; set; }

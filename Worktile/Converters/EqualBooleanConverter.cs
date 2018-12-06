@@ -1,18 +1,17 @@
 ﻿using System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace Worktile.Converters
 {
-    public class EnumVisibilityConverter : IValueConverter
+    public class EqualBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value?.ToString() == parameter.ToString())
             {
-                return Visibility.Visible;
+                return true;
             }
-            return Visibility.Collapsed;
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

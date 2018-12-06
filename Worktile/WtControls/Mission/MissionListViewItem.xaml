@@ -16,12 +16,6 @@
     <UserControl.Resources>
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
         <converters:NumberVisibilityConverter x:Key="NumberVisibilityConverter"/>
-        <Style TargetType="Border" x:Key="PropertyBorder">
-            <Setter Property="CornerRadius" Value="3"/>
-            <Setter Property="Padding" Value="6 2"/>
-            <Setter Property="Margin" Value="0 8 16 0"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -71,10 +65,10 @@
 
                 <PersonPicture Grid.Column="3"
                                Margin="8 0 0 0"
-                               Visibility="{x:Bind KanbanItem.Avatar, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
+                               Visibility="{x:Bind KanbanItem.Due, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}}"
                                Height="30"
-                               Initials="{x:Bind KanbanItem.Avatar.Initials, Mode=OneWay}"
-                               ProfilePicture="{x:Bind KanbanItem.Avatar.ProfilePicture, Mode=OneWay}"/>
+                               Initials="{x:Bind KanbanItem.Due.Initials, Mode=OneWay}"
+                               ProfilePicture="{x:Bind KanbanItem.Due.ProfilePicture, Mode=OneWay}"/>
             </Grid>
 
             <TextBlock Grid.Row="1" Text="{x:Bind KanbanItem.Title, Mode=OneWay}" TextWrapping="Wrap" Margin="0 8 0 0"/>

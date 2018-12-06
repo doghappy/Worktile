@@ -87,7 +87,7 @@ namespace Worktile.ApiModels.ApiMissionVnextKanbanContent
         public List<TagElement> Tags { get; set; }
 
         [JsonProperty("task_iteration_sprint")]
-        public List<object> TaskIterationSprint { get; set; }
+        public List<IterationElement> TaskIterationSprint { get; set; }
 
         [JsonProperty("task_data_sources")]
         public List<TaskDataSource> TaskDataSources { get; set; }
@@ -174,6 +174,21 @@ namespace Worktile.ApiModels.ApiMissionVnextKanbanContent
         public string Color { get; set; }
     }
 
+    public partial class IterationElement
+    {
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("project_id")]
+        public string ProjectId { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("status")]
+        public int Status { get; set; }
+    }
+
     public partial class TaskDataSource
     {
         [JsonProperty("_id")]
@@ -197,33 +212,6 @@ namespace Worktile.ApiModels.ApiMissionVnextKanbanContent
         [JsonProperty("type")]
         public int Type { get; set; }
     }
-
-    //public partial class Property
-    //{
-    //    [JsonProperty("_id")]
-    //    public string Id { get; set; }
-
-    //    [JsonProperty("name")]
-    //    public string Name { get; set; }
-
-    //    [JsonProperty("raw_key")]
-    //    public string RawKey { get; set; }
-
-    //    [JsonProperty("property_key")]
-    //    public string PropertyKey { get; set; }
-
-    //    [JsonProperty("key")]
-    //    public string Key { get; set; }
-
-    //    [JsonProperty("type")]
-    //    public WtTaskPropertyType Type { get; set; }
-
-    //    [JsonProperty("from")]
-    //    public long From { get; set; }
-
-    //    [JsonProperty("lookup", NullValueHandling = NullValueHandling.Ignore)]
-    //    public string Lookup { get; set; }
-    //}
 
     public partial class TaskType
     {

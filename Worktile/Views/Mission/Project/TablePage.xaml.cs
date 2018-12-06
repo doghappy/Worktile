@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextTableContent;
-using Worktile.Common;
+using Worktile.Domain.Mission.Table;
 using Worktile.Enums;
-using Worktile.Models.Mission.WtTask;
+using Worktile.Models.Mission.Table;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
@@ -28,7 +19,7 @@ namespace Worktile.Views.Mission.Project
         public TablePage()
         {
             InitializeComponent();
-            HeaderItems = new ObservableCollection<HeaderItem>();
+            TableHeader = new ObservableCollection<HeaderCell>();
         }
 
         private string _addonId;
@@ -37,7 +28,21 @@ namespace Worktile.Views.Mission.Project
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<HeaderItem> HeaderItems { get; }
+        ObservableCollection<HeaderCell> TableHeader { get; }
+
+        List<List<Cell>> _rows;
+        List<List<Cell>> Rows
+        {
+            get => _rows;
+            set
+            {
+                if (_rows != value)
+                {
+                    _rows = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rows)));
+                }
+            }
+        }
 
         private bool _isActive;
         public bool IsActive
@@ -76,6 +81,9 @@ namespace Worktile.Views.Mission.Project
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMissionVnextTableContent>(uri);
             ReadHeaderItems(data);
+
+            var reader = new PropertiesReader();
+            Rows = reader.Read(_taskIdentifierPrefix, data, TableHeader);
         }
 
         private void ReadHeaderItems(ApiMissionVnextTableContent data)
@@ -83,9 +91,13 @@ namespace Worktile.Views.Mission.Project
             foreach (var item in data.Data.References.Columns)
             {
                 var property = data.Data.References.Properties.Single(p => p.Id == item);
-                var headerItem = new HeaderItem
+                var headerItem = new HeaderCell
                 {
-                    Text = property.Name
+                    Text = property.Name,
+                    Key = property.Key,
+                    RowKey = property.RawKey,
+                    Lookup = property.Lookup,
+                    Type = property.Type
                 };
                 switch (property.Type)
                 {
@@ -116,14 +128,8 @@ namespace Worktile.Views.Mission.Project
                         headerItem.Width = 400;
                         break;
                 }
-                HeaderItems.Add(headerItem);
+                TableHeader.Add(headerItem);
             }
         }
-    }
-
-    public class HeaderItem
-    {
-        public string Text { get; set; }
-        public double Width { get; set; }
     }
 }

@@ -23,5 +23,11 @@ namespace Worktile.Common
                 return date.ToString("G");
             }
         }
+
+        public static string ToWtKanbanDate(string timestamp)
+        {
+            DateTime dateTime = GetDateTime(timestamp);
+            return dateTime.ToWtKanbanDate();
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace Worktile.ApiModel.ApiMissionVnextTableContent
         public List<TagElement> Tags { get; set; }
 
         [JsonProperty("task_iteration_sprint")]
-        public List<object> TaskIterationSprint { get; set; }
+        public List<IterationElement> TaskIterationSprint { get; set; }
 
         [JsonProperty("task_data_sources")]
         public List<TaskDataSource> TaskDataSources { get; set; }
@@ -147,6 +147,21 @@ namespace Worktile.ApiModel.ApiMissionVnextTableContent
 
         [JsonProperty("color")]
         public string Color { get; set; }
+    }
+
+    public partial class IterationElement
+    {
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("project_id")]
+        public string ProjectId { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("status")]
+        public int Status { get; set; }
     }
 
     public partial class TaskDataSource

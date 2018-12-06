@@ -5,30 +5,153 @@
     xmlns:local="using:Worktile.Views.Mission.Project"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:table="using:Worktile.Models.Mission.Table"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:wtcontrols="using:Worktile.WtControls"
+    xmlns:models="using:Worktile.Models"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <cvt:EnumVisibilityConverter x:Key="EnumVisibilityConverter"/>
+        <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+        <cvt:IsNotNullConverter x:Key="IsNotNullConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid>
             <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="12" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
-                    <Button Style="{ThemeResource TextBlockButtonStyle}" Foreground="{ThemeResource ButtonForegroundThemeBrush}" Width="80">
-                        <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe640;"/>
-                    </Button>
-                    <ItemsControl ItemsSource="{x:Bind HeaderItems}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="local:HeaderItem">
-                                <StackPanel Padding="16 8" BorderThickness="1 0 0 0" BorderBrush="{ThemeResource AppBarSeparatorForeground}">
-                                    <Button Style="{ThemeResource TextBlockButtonStyle}" Foreground="{ThemeResource ButtonForegroundThemeBrush}" Content="{x:Bind Text}" Width="{x:Bind Width}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="12" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
+                        <Button Style="{ThemeResource TextBlockButtonStyle}" Foreground="{ThemeResource ButtonForegroundThemeBrush}" Width="80">
+                            <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe640;"/>
+                        </Button>
+                        <ItemsControl ItemsSource="{x:Bind TableHeader}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="table:HeaderCell">
+                                    <StackPanel Padding="16 8" Width="{x:Bind Width}" BorderThickness="1 0 0 0" BorderBrush="{ThemeResource CustomAcrylicBrush}">
+                                        <Button Style="{ThemeResource TextBlockButtonStyle}" Foreground="{ThemeResource ButtonForegroundThemeBrush}" Content="{x:Bind Text}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <StackPanel Margin="12 0 12 12" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
+                        <ListView ItemsSource="{x:Bind Rows, Mode=OneWay}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Padding" Value="-1 0 0 0"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{ThemeResource CustomAcrylicBrush}"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="table:Cell">
+                                                <StackPanel Width="{x:Bind Width}" VerticalAlignment="Stretch" Padding="16 8" BorderThickness="1 0 0 0" BorderBrush="{ThemeResource CustomAcrylicBrush}">
+                                                    <TextBlock x:Name="Text"
+                                                               Text="{x:Bind Text}"
+                                                               x:Load="{x:Bind RenderParam, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='DefaultReader'}"/>
+                                                    <wtcontrols:TaskStateButton x:Name="TaskState"
+                                                                                State="{x:Bind TaskState}"
+                                                                                TaskId="{x:Bind TaskId}"
+                                                                                x:Load="{x:Bind TaskState, Converter={StaticResource IsNotNullConverter}}"/>
+                                                    <StackPanel Orientation="Horizontal"
+                                                                x:Name="Avatar"
+                                                                x:Load="{x:Bind Avatar, Converter={StaticResource IsNotNullConverter}}">
+                                                        <PersonPicture Initials="{x:Bind Avatar.Initials}" Width="32" ProfilePicture="{x:Bind Avatar.ProfilePicture}"/>
+                                                        <TextBlock Text="{x:Bind Avatar.DisplayName}" Margin="12 0 0 0" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                    <Border x:Name="Identifier"
+                                                            Style="{ThemeResource PropertyBorder}"
+                                                            Background="#1a22d7bb"
+                                                            x:Load="{x:Bind RenderParam, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Identifier'}">
+                                                        <TextBlock FontSize="12" Text="{x:Bind Text}" Foreground="#22d7bb"/>
+                                                    </Border>
+                                                    <StackPanel x:Name="TaskType"
+                                                                Orientation="Horizontal"
+                                                                VerticalAlignment="Top"
+                                                                x:Load="{x:Bind TaskType, Converter={StaticResource IsNotNullConverter}}">
+                                                        <FontIcon Style="{StaticResource WtfIcon}"
+                                                                  Foreground="{x:Bind TaskType.Color}"
+                                                                  Glyph="{x:Bind TaskType.Glyph}"/>
+                                                        <TextBlock Margin="12 0 0 0" Text="{x:Bind TaskType.Name}"/>
+                                                    </StackPanel>
+                                                    <StackPanel x:Name="Priority"
+                                                                Orientation="Horizontal"
+                                                                x:Load="{x:Bind RenderParam, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='PriorityReader'}">
+                                                        <FontIcon Style="{StaticResource WtfIcon}" Glyph="{x:Bind Glyph}" Foreground="{x:Bind Foreground}"/>
+                                                        <TextBlock Text="{x:Bind Text}" Margin="4 0 0 0"/>
+                                                    </StackPanel>
+                                                    <ItemsControl x:Name="Members"
+                                                                  ItemsSource="{x:Bind Avatars}"
+                                                                  x:Load="{x:Bind Avatars, Converter={StaticResource IsNotNullConverter}}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate x:DataType="models:Avatar">
+                                                                <PersonPicture Initials="{x:Bind Initials}"
+                                                                               ProfilePicture="{x:Bind ProfilePicture}"
+                                                                               Width="22"
+                                                                               Margin="4 0 0 0"/>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                    <ItemsControl x:Name="Tags"
+                                                                  ItemsSource="{x:Bind Tags}"
+                                                                  x:Load="{x:Bind Tags, Converter={StaticResource IsNotNullConverter}}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate x:DataType="table:TagCell">
+                                                                <Border x:Name="Tags"
+                                                                        Style="{ThemeResource PropertyBorder}"
+                                                                        Margin="4 0"
+                                                                        Background="{x:Bind Background}">
+                                                                    <TextBlock FontSize="12" Text="{x:Bind Text}" Foreground="{x:Bind Foreground}"/>
+                                                                </Border>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                    <StackPanel x:Name="Workload"
+                                                                Orientation="Horizontal"
+                                                                x:Load="{x:Bind RenderParam, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='WorkloadReader'}">
+                                                        <TextBlock Text="预估："/>
+                                                        <TextBlock Text="{x:Bind Expected}" FontWeight="Bold"/>
+                                                        <TextBlock Text="实际：" Margin="16 0 0 0"/>
+                                                        <TextBlock Text="{x:Bind Actual}" FontWeight="Bold"/>
+                                                    </StackPanel>
+                                                    <!--<TextBlock x:Name="Default"
+                                                               Text="{x:Bind Text}"
+                                                               x:Load="{x:Bind RenderParam, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Default'}"/>-->
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

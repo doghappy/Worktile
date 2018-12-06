@@ -91,7 +91,7 @@ namespace Worktile.Views.Mission.My
                         Id = task.Id,
                         Title = task.Title,
                         Properties = props,
-                        Avatar = CommonData.GetAvatar(CommonData.ApiUserMe.Uid, 40),
+                        Due = CommonData.GetAvatar(CommonData.ApiUserMe.Uid, 40),
                         State = new Models.TaskState
                         {
                             Name = state.Name,

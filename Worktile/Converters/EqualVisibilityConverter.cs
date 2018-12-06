@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 
 namespace Worktile.Converters
 {
-    public class EnumVisibilityConverter : IValueConverter
+    public class EqualVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
