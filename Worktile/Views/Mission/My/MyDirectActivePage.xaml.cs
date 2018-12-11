@@ -24,8 +24,6 @@ namespace Worktile.Views.Mission.My
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private bool _isPageLoaded;
-
         private bool _isActive;
         public bool IsActive
         {
@@ -75,8 +73,8 @@ namespace Worktile.Views.Mission.My
                         {
                             Name = "任务编号",
                             Value = task.Identifier,
-                            Foreground = Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush,
-                            Background = Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush
+                            Foreground = WtColorHelper.GetSolidColorBrush("#aaaaaa"),
+                            Background = WtColorHelper.GetSolidColorBrush("#33aaaaaa")
                         }
                     };
 

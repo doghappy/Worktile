@@ -1,6 +1,4 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
-using Worktile.ApiModels.ApiMissionVnextKanbanContent;
+﻿using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
 using Worktile.Models.Kanban;
 using Worktile.Models.Mission.WtTask;
@@ -15,14 +13,14 @@ namespace Worktile.Domain.Mission.Kanban
         {
             if (color == null)
             {
-                kbp.Foreground = Application.Current.Resources["SystemControlForegroundBaseMediumBrush"] as SolidColorBrush;
-                kbp.Background = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
+                kbp.Foreground = WtColorHelper.GetSolidColorBrush("#aaaaaa");
+                kbp.Background = WtColorHelper.GetSolidColorBrush("#33aaaaaa");
             }
             else
             {
                 string newColor = WtColorHelper.GetNewColor(color);
                 kbp.Foreground = WtColorHelper.GetSolidColorBrush(newColor);
-                kbp.Background = WtColorHelper.GetSolidColorBrush(newColor.Insert(1, "1A"));
+                kbp.Background = WtColorHelper.GetSolidColorBrush(newColor.Insert(1, "33"));
             }
         }
     }
