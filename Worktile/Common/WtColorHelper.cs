@@ -98,7 +98,7 @@ namespace Worktile.Common
         }
 
         public static SolidColorBrush DangerColor => new SolidColorBrush(Color.FromArgb(255, 255, 91, 87));
-        public static SolidColorBrush DangerColor1A => new SolidColorBrush(Color.FromArgb(20, 255, 91, 87));
+        public static SolidColorBrush DangerColor1A => new SolidColorBrush(Color.FromArgb(26, 255, 91, 87));
 
         public static SolidColorBrush GetForegroundWithExpire(DateTime date)
         {
@@ -111,7 +111,7 @@ namespace Worktile.Common
         {
             return date <= DateTime.Now
                 ? DangerColor1A
-                : GetSolidColorBrush("#33aaaaaa");
+                : GetSolidColorBrush("#1aaaaaaa");
         }
     }
 }

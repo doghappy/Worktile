@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
@@ -24,7 +25,7 @@ namespace Worktile.Domain.Mission.Kanban
                     var kbp = new KanbanItemProperty
                     {
                         Value = tag.Name,
-                        Foreground = Application.Current.Resources["SystemControlForegroundBaseHighBrush"] as SolidColorBrush,
+                        Foreground = new SolidColorBrush(Colors.White),
                         Background = WtColorHelper.GetNewBrush(tag.Color)
                     };
                     kanban.Properties.Add(kbp);

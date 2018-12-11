@@ -24,12 +24,12 @@
                 Padding="8 4">
             <StackPanel Orientation="Horizontal">
                 <FontIcon Style="{StaticResource WtfIcon}"
-                              FontSize="12"
-                              Foreground="{x:Bind State.Foreground, Mode=OneWay}"
-                              Glyph="{x:Bind State.Glyph, Mode=OneWay}"/>
-                <TextBlock Text="{x:Bind State.Name, Mode=OneWay}"
-                               FontSize="12" Margin="4 0 0 0"
-                               Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+                          FontSize="14"
+                          Foreground="{x:Bind State.Foreground, Mode=OneWay}"
+                          Glyph="{x:Bind State.Glyph, Mode=OneWay}"/>
+                <TextBlock Text="{x:Bind State.Name, Mode=OneWay, FallbackValue='未开始'}"
+                           FontSize="12" Margin="4 0 0 0"
+                           Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             </StackPanel>
 
             <Button.Flyout>
@@ -44,7 +44,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="mdoels:TaskState">
                                     <StackPanel Orientation="Horizontal">
-                                        <FontIcon FontSize="12"
+                                        <FontIcon FontSize="14"
                                                   Foreground="{x:Bind Foreground}"
                                                   Style="{StaticResource WtfIcon}"
                                                   Glyph="{x:Bind Glyph}"/>

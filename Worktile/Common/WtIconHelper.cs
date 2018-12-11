@@ -333,9 +333,9 @@ namespace Worktile.Common
             string glyph = null;
             switch (taskType)
             {
-                case 1: glyph = "\ue6f5"; break;
-                case 2: glyph = "\ue6f7"; break;
-                case 3: glyph = "\ue6f6"; break;
+                case 1: glyph = "\ue6ad"; break;
+                case 2: glyph = "\ue6ab"; break;
+                case 3: glyph = "\ue6ac"; break;
             }
             return glyph;
         }

@@ -9,7 +9,6 @@ using Worktile.Models.Kanban;
 using Worktile.Common;
 using Worktile.WtRequestClient;
 using System.Collections.Generic;
-using Windows.UI.Xaml.Media;
 using System;
 
 namespace Worktile.Views.Mission.My
@@ -74,7 +73,7 @@ namespace Worktile.Views.Mission.My
                             Name = "任务编号",
                             Value = task.Identifier,
                             Foreground = WtColorHelper.GetSolidColorBrush("#aaaaaa"),
-                            Background = WtColorHelper.GetSolidColorBrush("#33aaaaaa")
+                            Background = WtColorHelper.GetSolidColorBrush("#1aaaaaaa")
                         }
                     };
 
