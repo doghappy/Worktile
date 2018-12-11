@@ -86,6 +86,14 @@ namespace Worktile.Views.Mission.Project
             Rows = reader.Read(_taskIdentifierPrefix, data, TableHeader);
         }
 
+        /*
+         * 表格视图性能需要优化，由于表格视图显示的列是动态的。
+         * 渲染后，由于ListViewItem过于复杂，导致Item被点击时，
+         * 动画不够流畅，同时也吃掉了很多内存。
+         * 
+         * 暂时没有想到好的解决方案，选择妥协。只显示固定的属性。
+         */
+
         private void ReadHeaderItems(ApiMissionVnextTableContent data)
         {
             foreach (var item in data.Data.References.Columns)
