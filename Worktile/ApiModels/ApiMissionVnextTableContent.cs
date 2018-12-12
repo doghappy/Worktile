@@ -26,7 +26,7 @@ namespace Worktile.ApiModel.ApiMissionVnextTableContent
         public References References { get; set; }
 
         [JsonProperty("page_count")]
-        public object PageCount { get; set; }
+        public int? PageCount { get; set; }
     }
 
     public partial class References

@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextTableContent;
-using Worktile.Domain.Mission.Table;
-using Worktile.Enums;
-using Worktile.Models.Mission.Table;
+using Worktile.Common;
+using Worktile.Views.Mission.My;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
@@ -19,30 +16,17 @@ namespace Worktile.Views.Mission.Project
         public TablePage()
         {
             InitializeComponent();
-            TableHeader = new ObservableCollection<HeaderCell>();
+            GridItems = new IncrementalCollection<GridItem>(GetGridItemAsync);
         }
 
         private string _addonId;
         private string _viewId;
         private string _taskIdentifierPrefix;
+        private int _pageIndex;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        ObservableCollection<HeaderCell> TableHeader { get; }
-
-        List<List<Cell>> _rows;
-        List<List<Cell>> Rows
-        {
-            get => _rows;
-            set
-            {
-                if (_rows != value)
-                {
-                    _rows = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rows)));
-                }
-            }
-        }
+        IncrementalCollection<GridItem> GridItems { get; }
 
         private bool _isActive;
         public bool IsActive
@@ -58,6 +42,20 @@ namespace Worktile.Views.Mission.Project
             }
         }
 
+        string _uri;
+        string Uri
+        {
+            get
+            {
+                if (_pageIndex != 0)
+                {
+                    return _uri + "?pi=" + _pageIndex;
+                }
+                return _uri;
+            }
+            set => _uri = value;
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -65,25 +63,7 @@ namespace Worktile.Views.Mission.Project
             _addonId = parameters.AddonId;
             _viewId = parameters.ViewId;
             _taskIdentifierPrefix = parameters.TaskIdentifierPrefix;
-        }
-
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            IsActive = true;
-            await RequestDataAsync();
-            IsActive = false;
-        }
-
-        private async Task RequestDataAsync()
-        {
-            //string uri = $"/api/mission-vnext/table/{_addonId}/views/{_viewId}/content?pi=0&ps=20";
-            string uri = $"/api/mission-vnext/table/{_addonId}/views/{_viewId}/content";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextTableContent>(uri);
-            ReadHeaderItems(data);
-
-            var reader = new PropertiesReader();
-            Rows = reader.Read(_taskIdentifierPrefix, data, TableHeader);
+            Uri = $"/api/mission-vnext/table/{_addonId}/views/{_viewId}/content";
         }
 
         /*
@@ -94,50 +74,59 @@ namespace Worktile.Views.Mission.Project
          * 暂时没有想到好的解决方案，选择妥协。只显示固定的属性。
          */
 
-        private void ReadHeaderItems(ApiMissionVnextTableContent data)
+        private async Task<IEnumerable<GridItem>> GetGridItemAsync()
         {
-            foreach (var item in data.Data.References.Columns)
+            IsActive = true;
+            var list = new List<GridItem>();
+            var client = new WtHttpClient();
+            var data = await client.GetAsync<ApiMissionVnextTableContent>(Uri);
+            int i = GridItems.Count;
+            foreach (var item in data.Data.Value)
             {
-                var property = data.Data.References.Properties.Single(p => p.Id == item);
-                var headerItem = new HeaderCell
+                i++;
+                var state = data.Data.References.Lookups.TaskStates.Single(t => t.Id == item.TaskStateId);
+                var type = data.Data.References.TaskTypes.Single(t => t.Id == item.TaskTypeId);
+               
+                var gridItem = new GridItem
                 {
-                    Text = property.Name,
-                    Key = property.Key,
-                    RowKey = property.RawKey,
-                    Lookup = property.Lookup,
-                    Type = property.Type
+                    Id = item.Id,
+                    RowId = i,
+                    Title = item.Title,
+                    Identifier = item.Identifier,
+                    State = new Models.TaskState
+                    {
+                        Foreground = WtColorHelper.GetNewColor(state.Color),
+                        Glyph = WtIconHelper.GetGlyph(state.Type),
+                        Name = state.Name
+                    },
+                    TaskType = new Models.TaskType
+                    {
+                        Color = WtColorHelper.GetColorByClass(type.Icon),
+                        Glyph = WtIconHelper.GetGlyph("wtf-type-" + type.Icon),
+                        Name = type.Name
+                    }
                 };
-                switch (property.Type)
+
+                if (item.Properties.ContainsKey("assignee"))
                 {
-                    case WtTaskPropertyType.Number:
-                        headerItem.Width = 100;
-                        break;
-                    case WtTaskPropertyType.Text:
-                    case WtTaskPropertyType.DropDown:
-                    case WtTaskPropertyType.Member:
-                    case WtTaskPropertyType.Iteration:
-                    case WtTaskPropertyType.Priority:
-                    case WtTaskPropertyType.TaskType:
-                    case WtTaskPropertyType.File:
-                        headerItem.Width = 160;
-                        break;
-                    case WtTaskPropertyType.State:
-                        headerItem.Width = 180;
-                        break;
-                    case WtTaskPropertyType.DateTime:
-                    case WtTaskPropertyType.DateSpan:
-                    case WtTaskPropertyType.MultiMember:
-                    case WtTaskPropertyType.Workload:
-                    case WtTaskPropertyType.Tag:
-                    case WtTaskPropertyType.MultiSelect:
-                        headerItem.Width = 200;
-                        break;
-                    case WtTaskPropertyType.MultiText:
-                        headerItem.Width = 400;
-                        break;
+                    string assineeUid = item.Properties["assignee"].Value<string>("value");
+                    gridItem.Assignee = CommonData.GetAvatar(assineeUid, 40);
                 }
-                TableHeader.Add(headerItem);
+
+                if (item.Properties.ContainsKey("due"))
+                {
+                    string timestamp = item.Properties["due"]["value"].Value<string>("date");
+                    if (timestamp != null)
+                    {
+                        gridItem.EndDate = WtDateTimeHelper.ToWtKanbanDate(timestamp);
+                    }
+                }
+                list.Add(gridItem);
             }
+            GridItems.HasMoreItems = (data.Data.PageCount ?? 0) - 1 > _pageIndex;
+            _pageIndex++;
+            IsActive = false;
+            return list;
         }
     }
 }

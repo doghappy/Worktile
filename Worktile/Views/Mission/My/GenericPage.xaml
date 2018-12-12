@@ -5,9 +5,9 @@
     xmlns:local="using:Worktile.Views.Mission.My"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Worktile.Models"
     xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:converters="using:Worktile.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -16,28 +16,30 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid>
-        <ListView Margin="12" ItemsSource="{x:Bind GridItems}">
+    <Grid Padding="12">
+        <ListView ItemsSource="{x:Bind GridItems}">
             <ListView.Header>
-                <Grid Padding="0 16" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="4*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
+                <controls:ScrollHeader Mode="Sticky">
+                    <Grid Padding="0 16" Background="{ThemeResource SystemControlAcrylicElementMediumHighBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Text="#"/>
-                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="1" Text="编号"/>
-                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="2" Text="状态"/>
-                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="3" Text="标题"/>
-                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="4" Text="负责人"/>
-                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="5" Text="截止时间"/>
-                    <TextBlock FontWeight="SemiBold" HorizontalAlignment="Center" Grid.Column="6" Text="任务类型"/>
-                </Grid>
+                        <TextBlock FontWeight="SemiBold" Padding="16 0 0 0" Text="#"/>
+                        <TextBlock FontWeight="SemiBold" Padding="16 0 0 0" Grid.Column="1" Text="编号"/>
+                        <TextBlock FontWeight="SemiBold" Padding="16 0 0 0" Grid.Column="2" Text="状态"/>
+                        <TextBlock FontWeight="SemiBold" Padding="16 0 0 0" Grid.Column="3" Text="标题"/>
+                        <TextBlock FontWeight="SemiBold" Padding="16 0 0 0" Grid.Column="4" Text="负责人"/>
+                        <TextBlock FontWeight="SemiBold" Padding="16 0 0 0" Grid.Column="5" Text="截止时间"/>
+                        <TextBlock FontWeight="SemiBold" Padding="16 0 0 0" Grid.Column="6" Text="任务类型"/>
+                    </Grid>
+                </controls:ScrollHeader>
             </ListView.Header>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
