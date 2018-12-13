@@ -84,6 +84,7 @@ namespace Worktile.Views.Mission
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedWorkNav)));
                     _selectedFavNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedFavNav)));
+                    ContentFrame.Navigate(typeof(Project.IndexPage), value);
                 }
             }
         }
@@ -145,6 +146,7 @@ namespace Worktile.Views.Mission
                 project.Color = WtColorHelper.GetNewColor(project.Color);
                 FavNavItems.Add(new NavItem
                 {
+                    Id = project.Id,
                     Name = project.Name,
                     Color = project.Color,
                     Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
