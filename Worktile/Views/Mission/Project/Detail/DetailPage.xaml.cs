@@ -83,6 +83,7 @@ namespace Worktile.Views.Mission.Project.Detail
                 {
                     _selectedNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
+                    ContentNavigate();
                 }
             }
         }
@@ -249,7 +250,6 @@ namespace Worktile.Views.Mission.Project.Detail
             {
                 Text = "任务信息",
                 Glyph = "\ue63c",
-                SourcePageType = typeof(InfoPage)
             });
             foreach (var item in _task.Value.Relations)
             {
@@ -263,13 +263,11 @@ namespace Worktile.Views.Mission.Project.Detail
             {
                 Text = "工时",
                 Glyph = "\ue6fc",
-                SourcePageType = typeof(Workload)
             });
             NavItems.Add(new DetailNavItem
             {
                 Text = "附件",
                 Glyph = "\ue630",
-                SourcePageType = typeof(IterationPage)
             });
             SelectedNav = NavItems.First();
         }
@@ -278,13 +276,21 @@ namespace Worktile.Views.Mission.Project.Detail
         {
             await StateList.OpenAsync();
         }
+
+        private void ContentNavigate()
+        {
+            switch (SelectedNav.Text)
+            {
+                case "任务信息":
+                    ContentFrame.Navigate(typeof(InfoPage), _task);
+                    break;
+            }
+        }
     }
 
     public class DetailNavItem
     {
         public string Text { get; set; }
         public string Glyph { get; set; }
-        public Type SourcePageType { get; set; }
-        public object Parameter { get; set; }
     }
 }

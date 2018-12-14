@@ -359,7 +359,7 @@ namespace Worktile.Common
             {
                 case 1: glyph = "\ue66b"; break;
                 case 2: glyph = "\ue70e"; break;
-                case 3: glyph = "\ue6fa"; break;
+                case 3: glyph = "\ue700"; break;
             }
             return glyph;
         }
