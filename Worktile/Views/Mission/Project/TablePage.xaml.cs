@@ -96,7 +96,7 @@ namespace Worktile.Views.Mission.Project
                     State = new Models.TaskState
                     {
                         Foreground = WtColorHelper.GetNewColor(state.Color),
-                        Glyph = WtIconHelper.GetGlyph(state.Type),
+                        BoldGlyph = WtIconHelper.GetBoldGlyph(state.Type),
                         Name = state.Name
                     },
                     TaskType = new Models.TaskType

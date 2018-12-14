@@ -96,6 +96,7 @@
     <Compile Include="ApiModels\ApiMissionVnextProjectNav.cs" />
     <Compile Include="ApiModels\ApiMissionVnextProjectsDetail.cs" />
     <Compile Include="ApiModels\ApiMissionVnextTableContent.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextTask.cs" />
     <Compile Include="ApiModels\ApiMissionVnextTasksIdstates.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkAddon.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightGroups.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Common\IncrementalCollection.cs" />
     <Compile Include="Common\KanbanPageHelper.cs" />
     <Compile Include="Common\TaskHelper.cs" />
+    <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\WtDateTimeHelper.cs" />
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\UtilityTool.cs" />
@@ -208,6 +210,12 @@
     <Compile Include="Views\Mission\Project\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Mission\Project\Detail\DetailPage.xaml.cs">
+      <DependentUpon>DetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Mission\Project\Detail\InfoPage.xaml.cs">
+      <DependentUpon>InfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Mission\Project\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
     </Compile>
@@ -237,6 +245,9 @@
     </Compile>
     <Compile Include="Views\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WtControls\Flyout\TaskStateList.xaml.cs">
+      <DependentUpon>TaskStateList.xaml</DependentUpon>
     </Compile>
     <Compile Include="WtControls\Mission\MissionListViewHeader.xaml.cs">
       <DependentUpon>MissionListViewHeader.xaml</DependentUpon>
@@ -371,6 +382,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Mission\Project\Detail\DetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Mission\Project\Detail\InfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Mission\Project\IndexPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -408,6 +427,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SignInPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WtControls\Flyout\TaskStateList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

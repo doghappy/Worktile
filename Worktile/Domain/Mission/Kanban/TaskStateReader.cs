@@ -13,7 +13,7 @@ namespace Worktile.Domain.Mission.Kanban
             {
                 Name = state.Name,
                 Foreground = WtColorHelper.GetNewColor(state.Color),
-                Glyph = WtIconHelper.GetGlyph(state.Type)
+                BoldGlyph = WtIconHelper.GetBoldGlyph(state.Type)
             };
         }
     }

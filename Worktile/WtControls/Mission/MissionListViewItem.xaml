@@ -82,7 +82,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="kanban:KanbanItemProperty">
-                        <Border Style="{ThemeResource PropertyBorder}" Background="{x:Bind Background}">
+                        <Border Style="{ThemeResource BorderRadius}" Margin="0 8 16 0" Background="{x:Bind Background}">
                             <TextBlock FontSize="12" Text="{x:Bind}" Foreground="{x:Bind Foreground}"/>
                         </Border>
                     </DataTemplate>

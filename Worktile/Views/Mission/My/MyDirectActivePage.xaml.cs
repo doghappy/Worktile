@@ -93,7 +93,7 @@ namespace Worktile.Views.Mission.My
                         {
                             Name = state.Name,
                             Foreground = WtColorHelper.GetNewColor(state.Color),
-                            Glyph = WtIconHelper.GetGlyph(state.Type)
+                            BoldGlyph = WtIconHelper.GetBoldGlyph(state.Type)
                         },
                         TaskType = new Models.TaskType
                         {

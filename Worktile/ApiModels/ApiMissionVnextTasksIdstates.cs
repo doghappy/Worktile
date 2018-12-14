@@ -57,7 +57,7 @@ namespace Worktile.ApiModels.ApiMissionVnextTasksIdstates
         public string GroupId { get; set; }
 
         [JsonProperty("type")]
-        public long Type { get; set; }
+        public int Type { get; set; }
 
         [JsonProperty("privilege")]
         public long Privilege { get; set; }

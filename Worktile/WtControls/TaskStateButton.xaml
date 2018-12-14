@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mdoels="using:Worktile.Models"
     xmlns:converters="using:Worktile.Converters"
+    xmlns:flyout="using:Worktile.WtControls.Flyout"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -19,43 +20,28 @@
 
     <Grid>
         <Button Background="{x:Bind State.Background, Mode=OneWay}"
-                Click="Button_Click"
                 CornerRadius="4"
                 Padding="8 4">
             <StackPanel Orientation="Horizontal">
                 <FontIcon Style="{StaticResource WtfIcon}"
                           FontSize="14"
                           Foreground="{x:Bind State.Foreground, Mode=OneWay}"
-                          Glyph="{x:Bind State.Glyph, Mode=OneWay}"/>
+                          Glyph="{x:Bind State.BoldGlyph, Mode=OneWay}"/>
                 <TextBlock Text="{x:Bind State.Name, Mode=OneWay, FallbackValue='未开始'}"
                            FontSize="12" Margin="4 0 0 0"
                            Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
             </StackPanel>
 
             <Button.Flyout>
-                <Flyout>
+                <Flyout Opened="Flyout_Opened">
                     <Flyout.FlyoutPresenterStyle>
                         <Style TargetType="FlyoutPresenter">
                             <Setter Property="Padding" Value="0"/>
                         </Style>
                     </Flyout.FlyoutPresenterStyle>
-                    <Grid>
-                        <ListView ItemsSource="{x:Bind AllStates, Mode=OneWay}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="mdoels:TaskState">
-                                    <StackPanel Orientation="Horizontal">
-                                        <FontIcon FontSize="14"
-                                                  Foreground="{x:Bind Foreground}"
-                                                  Style="{StaticResource WtfIcon}"
-                                                  Glyph="{x:Bind Glyph}"/>
-                                        <TextBlock FontSize="12" Margin="4 0 0 0" Text="{x:Bind Name}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                        <ProgressBar IsIndeterminate="{x:Bind IsActive, Mode=OneWay}"
-                                     Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"/>
-                    </Grid>
+                    <flyout:TaskStateList x:Name="StateList"
+                                          TaskId="{x:Bind TaskId, Mode=OneWay}"
+                                          State="{x:Bind State, Mode=TwoWay}"/>
                 </Flyout>
             </Button.Flyout>
         </Button>

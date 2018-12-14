@@ -97,7 +97,7 @@ namespace Worktile.Views.Mission.My
                     State = new Models.TaskState
                     {
                         Foreground = WtColorHelper.GetNewColor(state.Color),
-                        Glyph = WtIconHelper.GetGlyph(state.Type),
+                        BoldGlyph = WtIconHelper.GetBoldGlyph(state.Type),
                         Name = state.Name
                     },
                     Assignee = CommonData.GetAvatar(item.Properties.Assignee.Value, 40),

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 
-namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
+namespace Worktile.ApiModel.ApiMissionVnextTask
 {
-    public partial class ApiMissionVnextWorkMyGeneric
+
+    public partial class ApiMissionVnextTask
     {
         [JsonProperty("oid")]
         public string Oid { get; set; }
@@ -20,22 +20,10 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
     public partial class Data
     {
         [JsonProperty("value")]
-        public List<ValueElement> Value { get; set; }
+        public DataValue Value { get; set; }
 
         [JsonProperty("references")]
         public References References { get; set; }
-
-        [JsonProperty("count")]
-        public long Count { get; set; }
-
-        [JsonProperty("page_index")]
-        public long PageIndex { get; set; }
-
-        [JsonProperty("page_size")]
-        public long PageSize { get; set; }
-
-        [JsonProperty("page_count")]
-        public long PageCount { get; set; }
     }
 
     public partial class References
@@ -49,11 +37,11 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
         [JsonProperty("task_types")]
         public List<TaskType> TaskTypes { get; set; }
 
-        [JsonProperty("columns")]
-        public List<string> Columns { get; set; }
+        [JsonProperty("project")]
+        public Project Project { get; set; }
 
-        [JsonProperty("projects")]
-        public List<Project> Projects { get; set; }
+        [JsonProperty("securities")]
+        public List<object> Securities { get; set; }
     }
 
     public partial class Lookups
@@ -63,15 +51,54 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
 
         [JsonProperty("members")]
         public List<Member> Members { get; set; }
+
+        [JsonProperty("priorities")]
+        public List<PriorityElement> Priorities { get; set; }
+
+        [JsonProperty("task_iteration_sprint")]
+        public List<object> TaskIterationSprint { get; set; }
+
+        [JsonProperty("task_data_sources")]
+        public List<object> TaskDataSources { get; set; }
+
+        [JsonProperty("tags")]
+        public List<object> Tags { get; set; }
+
+        [JsonProperty("attachments")]
+        public List<object> Attachments { get; set; }
     }
 
     public partial class Member
     {
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        [JsonProperty("avatar")]
+        public string Avatar { get; set; }
+
+        [JsonProperty("desc")]
+        public string Desc { get; set; }
+
+        [JsonProperty("display_name")]
+        public string DisplayName { get; set; }
 
         [JsonProperty("email")]
         public string Email { get; set; }
+
+        [JsonProperty("mobile")]
+        public string Mobile { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("preferences")]
+        public Preferences Preferences { get; set; }
+
+        [JsonProperty("role")]
+        public long Role { get; set; }
+
+        [JsonProperty("short_code")]
+        public string ShortCode { get; set; }
+
+        [JsonProperty("status")]
+        public long Status { get; set; }
 
         [JsonProperty("team")]
         public string Team { get; set; }
@@ -79,32 +106,8 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
         [JsonProperty("uid")]
         public string Uid { get; set; }
 
-        [JsonProperty("preferences")]
-        public Preferences Preferences { get; set; }
-
-        [JsonProperty("status")]
-        public long Status { get; set; }
-
-        [JsonProperty("role")]
-        public long Role { get; set; }
-
-        [JsonProperty("mobile")]
-        public string Mobile { get; set; }
-
-        [JsonProperty("mobile_area", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("mobile_area")]
         public string MobileArea { get; set; }
-
-        [JsonProperty("desc")]
-        public string Desc { get; set; }
-
-        [JsonProperty("short_code")]
-        public string ShortCode { get; set; }
-
-        [JsonProperty("display_name")]
-        public string DisplayName { get; set; }
-
-        [JsonProperty("avatar")]
-        public string Avatar { get; set; }
 
         [JsonProperty("display_name_pinyin")]
         public string DisplayNamePinyin { get; set; }
@@ -112,8 +115,23 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
 
     public partial class Preferences
     {
-        [JsonProperty("locale", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("locale")]
         public string Locale { get; set; }
+    }
+
+    public partial class PriorityElement
+    {
+        [JsonProperty("_id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("color")]
+        public string Color { get; set; }
+
+        [JsonProperty("icon")]
+        public string Icon { get; set; }
     }
 
     public partial class TaskState
@@ -141,6 +159,12 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
 
         [JsonProperty("icon")]
         public object Icon { get; set; }
+
+        [JsonProperty("color")]
+        public string Color { get; set; }
+
+        [JsonProperty("visibility")]
+        public long Visibility { get; set; }
 
         [JsonProperty("identifier")]
         public string Identifier { get; set; }
@@ -172,8 +196,44 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
         [JsonProperty("from")]
         public long From { get; set; }
 
+        [JsonProperty("attribute")]
+        public Attribute Attribute { get; set; }
+
         [JsonProperty("lookup", NullValueHandling = NullValueHandling.Ignore)]
         public string Lookup { get; set; }
+    }
+
+    public partial class Attribute
+    {
+        [JsonProperty("default_value")]
+        public object DefaultValue { get; set; }
+
+        [JsonProperty("placeholder")]
+        public string Placeholder { get; set; }
+
+        [JsonProperty("position")]
+        public List<long> Position { get; set; }
+
+        [JsonProperty("priority_mode_id", NullValueHandling = NullValueHandling.Ignore)]
+        public string PriorityModeId { get; set; }
+
+        [JsonProperty("is_reference", NullValueHandling = NullValueHandling.Ignore)]
+        public long? IsReference { get; set; }
+
+        [JsonProperty("items", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Item> Items { get; set; }
+
+        [JsonProperty("data_source_id")]
+        public object DataSourceId { get; set; }
+    }
+
+    public partial class Item
+    {
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        [JsonProperty("_id")]
+        public string Id { get; set; }
     }
 
     public partial class TaskType
@@ -187,17 +247,17 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
         [JsonProperty("icon")]
         public string Icon { get; set; }
 
-        [JsonProperty("color", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("color")]
         public string Color { get; set; }
 
         [JsonProperty("permission_prop_ids")]
-        public List<string> PermissionPropIds { get; set; }
+        public List<object> PermissionPropIds { get; set; }
     }
 
-    public partial class ValueElement
+    public partial class DataValue
     {
         [JsonProperty("properties")]
-        public Properties Properties { get; set; }
+        public JObject Properties { get; set; }
 
         [JsonProperty("prop_permissions")]
         public string PropPermissions { get; set; }
@@ -229,32 +289,65 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
         [JsonProperty("created_by")]
         public string CreatedBy { get; set; }
 
+        [JsonProperty("completed_at")]
+        public object CompletedAt { get; set; }
+
         [JsonProperty("updated_at")]
         public long UpdatedAt { get; set; }
 
         [JsonProperty("updated_by")]
         public string UpdatedBy { get; set; }
 
-        [JsonProperty("parent_id")]
-        public string ParentId { get; set; }
+        [JsonProperty("is_archived")]
+        public long IsArchived { get; set; }
 
-        [JsonProperty("parent_ids")]
-        public List<string> ParentIds { get; set; }
+        [JsonProperty("comments")]
+        public List<object> Comments { get; set; }
 
-        [JsonProperty("parent", NullValueHandling = NullValueHandling.Ignore)]
-        public Parent Parent { get; set; }
+        [JsonProperty("comment_count")]
+        public long CommentCount { get; set; }
+
+        [JsonProperty("likes")]
+        public List<object> Likes { get; set; }
+
+        [JsonProperty("like_count")]
+        public long LikeCount { get; set; }
+
+        [JsonProperty("security_ids")]
+        public List<object> SecurityIds { get; set; }
+
+        [JsonProperty("is_deleted")]
+        public long IsDeleted { get; set; }
+
+        [JsonProperty("relations")]
+        public List<Relation> Relations { get; set; }
     }
 
-    public partial class Parent
+    public partial class Relation
     {
         [JsonProperty("_id")]
         public string Id { get; set; }
 
-        [JsonProperty("title")]
-        public string Title { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
-        [JsonProperty("relationship")]
-        public Relationship Relationship { get; set; }
+        [JsonProperty("type")]
+        public int Type { get; set; }
+
+        [JsonProperty("allow_add")]
+        public long AllowAdd { get; set; }
+
+        [JsonProperty("allow_select")]
+        public long AllowSelect { get; set; }
+
+        [JsonProperty("relationships")]
+        public List<Relationship> Relationships { get; set; }
+
+        [JsonProperty("position")]
+        public long Position { get; set; }
+
+        [JsonProperty("task_count")]
+        public long TaskCount { get; set; }
     }
 
     public partial class Relationship
@@ -276,54 +369,5 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
 
         [JsonProperty("outward")]
         public string Outward { get; set; }
-    }
-
-    public partial class Properties
-    {
-        [JsonProperty("assignee")]
-        public Assignee Assignee { get; set; }
-
-        [JsonProperty("due")]
-        public Due Due { get; set; }
-    }
-
-    public partial class Assignee
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public string Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class Due
-    {
-        [JsonProperty("property_id")]
-        public string PropertyId { get; set; }
-
-        [JsonProperty("value")]
-        public DueValue Value { get; set; }
-
-        [JsonProperty("updated_by")]
-        public string UpdatedBy { get; set; }
-
-        [JsonProperty("updated_at")]
-        public long UpdatedAt { get; set; }
-    }
-
-    public partial class DueValue
-    {
-        [JsonProperty("date")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime? Date { get; set; }
-
-        [JsonProperty("with_time")]
-        public long WithTime { get; set; }
     }
 }

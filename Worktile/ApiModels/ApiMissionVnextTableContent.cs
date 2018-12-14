@@ -185,7 +185,7 @@ namespace Worktile.ApiModel.ApiMissionVnextTableContent
         public string Color { get; set; }
 
         [JsonProperty("type")]
-        public long Type { get; set; }
+        public int Type { get; set; }
     }
 
     public partial class TaskType

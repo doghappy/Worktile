@@ -328,7 +328,7 @@ namespace Worktile.Common
             return Icons.Single(i => i.Class == @class).Glyph;
         }
 
-        public static string GetGlyph(long taskType)
+        public static string GetBoldGlyph(int taskType)
         {
             string glyph = null;
             switch (taskType)
@@ -336,6 +336,30 @@ namespace Worktile.Common
                 case 1: glyph = "\ue6ad"; break;
                 case 2: glyph = "\ue6ab"; break;
                 case 3: glyph = "\ue6ac"; break;
+            }
+            return glyph;
+        }
+
+        public static string GetLightGlyph(int taskType)
+        {
+            string glyph = null;
+            switch (taskType)
+            {
+                case 1: glyph = "\ue6f5"; break;
+                case 2: glyph = "\ue6f7"; break;
+                case 3: glyph = "\ue6f6"; break;
+            }
+            return glyph;
+        }
+
+        public static string GetGlyphByRelationType(int type)
+        {
+            string glyph = null;
+            switch (type)
+            {
+                case 1: glyph = "\ue66b"; break;
+                case 2: glyph = "\ue70e"; break;
+                case 3: glyph = "\ue6fa"; break;
             }
             return glyph;
         }

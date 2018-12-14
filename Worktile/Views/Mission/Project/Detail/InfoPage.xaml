@@ -1,17 +1,14 @@
 ﻿<Page
-    x:Class="Worktile.TestPage"
+    x:Class="Worktile.Views.Mission.Project.Detail.InfoPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Worktile"
+    xmlns:local="using:Worktile.Views.Mission.Project.Detail"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:mission="using:Worktile.WtControls.Mission"
-    xmlns:wtcontrols="using:Worktile.WtControls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="32">
-        <Button Content="System Dialog" Click="SystemDialog_Click"/>
-        <Button Content="New View Dialog" Click="NewView_Click"/>
-    </StackPanel>
+    <Grid>
+        
+    </Grid>
 </Page>

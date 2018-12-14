@@ -1,11 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Windows.UI.Xaml.Controls;
-using Worktile.ApiModels.ApiMissionVnextTasksIdstates;
-using Worktile.ApiModels.ApiMissionVnextWorkMyDirectedActive;
-using Worktile.Common;
-using Worktile.WtRequestClient;
 
 namespace Worktile.WtControls
 {
@@ -63,20 +58,9 @@ namespace Worktile.WtControls
             }
         }
 
-        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Flyout_Opened(object sender, object e)
         {
-            IsActive = true;
-            string uri = $"/api/mission-vnext/tasks/{TaskId}/states";
-            var clicent = new WtHttpClient();
-            var data = await clicent.GetAsync<ApiMissionVnextTasksIdstates>(uri);
-            AllStates = data.Data.Value.Select(i => new Models.TaskState
-            {
-                Foreground = WtColorHelper.GetNewColor(i.Color),
-                Name = i.Name,
-                Glyph = WtIconHelper.GetGlyph(i.Type)
-            })
-            .ToList();
-            IsActive = false;
+            await StateList.OpenAsync();
         }
     }
 }
