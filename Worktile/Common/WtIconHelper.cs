@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Worktile.Enums;
 using Worktile.Models;
 
 namespace Worktile.Common
@@ -326,6 +327,16 @@ namespace Worktile.Common
         public static string GetGlyph(string @class)
         {
             return Icons.Single(i => i.Class == @class).Glyph;
+        }
+
+        public static string GetGlyph(Visibility visibility)
+        {
+            switch (visibility)
+            {
+                case Visibility.Public: return "\ue70c";
+                case Visibility.Private: return "\ue667";
+            }
+            return null;
         }
 
         public static string GetBoldGlyph(int taskType)

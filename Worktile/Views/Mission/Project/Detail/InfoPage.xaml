@@ -5,10 +5,51 @@
     xmlns:local="using:Worktile.Views.Mission.Project.Detail"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:cvt="using:Worktile.Converters"
+    Loaded="Page_Loaded"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        
+    <Page.Resources>
+        <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+        <Style x:Key="PropertyHeader" TargetType="TextBlock">
+            <!--<Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseLowBrush}"/>-->
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+            <Setter Property="Margin" Value="0 0 0 8"/>
+        </Style>
+        <Style x:Key="PropertyStackPanel" TargetType="StackPanel">
+            <Setter Property="Width" Value="260"/>
+            <Setter Property="Padding" Value="0 0 16 16"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Padding="12">
+        <ItemsControl ItemsSource="{x:Bind Properties}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:PropertyItem">
+                    <StackPanel Style="{StaticResource PropertyStackPanel}">
+                        <TextBlock Style="{ThemeResource PropertyHeader}">
+                            <Run Text="{x:Bind Header}"/>
+                            <Run Text=":"/>
+                        </TextBlock>
+                        <StackPanel x:Name="ReadonlyStackPanel"
+                                    Orientation="Horizontal"
+                                    x:Load="{x:Bind IsReadonly}">
+                            <FontIcon Style="{StaticResource WtfIcon}" Foreground="{x:Bind Color}" Glyph="{x:Bind Glyph}"/>
+                            <TextBlock Margin="4 0 0 0" Text="{x:Bind Value}"/>
+                        </StackPanel>
+                        <TextBox x:Name="TextBoxValue"
+                                 Text="{x:Bind Value, Mode=OneWay}"
+                                 x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='TextBox'}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Page>

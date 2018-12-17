@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Worktile.Enums;
 
 namespace Worktile.ApiModel.ApiMissionVnextTask
 {
@@ -164,7 +165,7 @@ namespace Worktile.ApiModel.ApiMissionVnextTask
         public string Color { get; set; }
 
         [JsonProperty("visibility")]
-        public long Visibility { get; set; }
+        public Visibility Visibility { get; set; }
 
         [JsonProperty("identifier")]
         public string Identifier { get; set; }
@@ -191,7 +192,7 @@ namespace Worktile.ApiModel.ApiMissionVnextTask
         public string Key { get; set; }
 
         [JsonProperty("type")]
-        public long Type { get; set; }
+        public WtTaskPropertyType Type { get; set; }
 
         [JsonProperty("from")]
         public long From { get; set; }

@@ -149,7 +149,7 @@ namespace Worktile.Views.Mission
                     Id = project.Id,
                     Name = project.Name,
                     Color = project.Color,
-                    Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
+                    Glyph = WtIconHelper.GetGlyph(project.Visibility)
                 });
             }
 
@@ -164,7 +164,7 @@ namespace Worktile.Views.Mission
                         Id = project.Id,
                         Name = project.Name,
                         Color = project.Color,
-                        Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
+                        Glyph =  WtIconHelper.GetGlyph(project.Visibility)
                     });
                 }
                 else if (item.NavType == 2)
@@ -180,7 +180,7 @@ namespace Worktile.Views.Mission
                                 Id = project.Id,
                                 Name = project.Name,
                                 Color = project.Color,
-                                Glyph = project.Visibility == 1 ? "\ue70c" : "\ue667"
+                                Glyph = WtIconHelper.GetGlyph(project.Visibility)
                             });
                         }
                     }

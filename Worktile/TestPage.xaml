@@ -13,5 +13,6 @@
     <StackPanel Padding="32">
         <Button Content="System Dialog" Click="SystemDialog_Click"/>
         <Button Content="New View Dialog" Click="NewView_Click"/>
+        <TextBlock Text="steest" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
     </StackPanel>
 </Page>

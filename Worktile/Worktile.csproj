@@ -165,6 +165,7 @@
     <Compile Include="Models\Mission\AnalyticInsight\TopNavItem.cs" />
     <Compile Include="Models\Mission\WorkloadEstimate.cs" />
     <Compile Include="Models\Mission\WorkloadValue.cs" />
+    <Compile Include="Models\Mission\WtMetaProperty.cs" />
     <Compile Include="Models\WtDate.cs" />
     <Compile Include="Models\Mission\WtTask\WtTaskProperty.cs" />
     <Compile Include="Models\TaskState.cs" />

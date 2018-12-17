@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Worktile.Enums;
 
 namespace Worktile.ApiModels.ApiMissionVnextProjectNav
 {
@@ -82,7 +83,7 @@ namespace Worktile.ApiModels.ApiMissionVnextProjectNav
         public string Color { get; set; }
 
         [JsonProperty("visibility")]
-        public long Visibility { get; set; }
+        public Visibility Visibility { get; set; }
 
         [JsonProperty("created_by")]
         public string CreatedBy { get; set; }

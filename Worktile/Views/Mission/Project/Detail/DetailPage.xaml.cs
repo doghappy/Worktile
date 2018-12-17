@@ -22,28 +22,10 @@ namespace Worktile.Views.Mission.Project.Detail
             _titleGroupVisibility = Visibility.Visible;
             _titleTextBoxVisibility = Visibility.Collapsed;
             NavItems = new ObservableCollection<DetailNavItem>();
-            _ignorePropertyKeys = new[] {
-                "identifier",
-                "title",
-                "task_state_id",
-                "task_type_id",
-                "created_by",
-                "created_at",
-                "updated_at",
-                "updated_at",
-                "assignee",
-                "start",
-                "due",
-                "attachment",
-                "child",
-                "workload",
-                "relation"
-            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private Data _task;
-        readonly string[] _ignorePropertyKeys;
 
         private string _taskId;
         public string TaskId
