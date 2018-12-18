@@ -47,6 +47,29 @@
                         <TextBox x:Name="TextBoxValue"
                                  Text="{x:Bind Value, Mode=OneWay}"
                                  x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='TextBox'}"/>
+                        <ComboBox x:Name="Priority"
+                                  SelectedItem="{x:Bind SelectedValue, Mode=OneWay}"
+                                  HorizontalAlignment="Stretch"
+                                  x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Priority'}"
+                                  ItemsSource="{x:Bind DataSource}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:DropdownItem">
+                                    <StackPanel Orientation="Horizontal">
+                                        <FontIcon Style="{StaticResource WtfIcon}"
+                                                  Glyph="{x:Bind Glyph}"
+                                                  FontSize="14"
+                                                  Foreground="{x:Bind Color}"/>
+                                        <TextBlock Margin="4 0 0 0" Text="{x:Bind Text}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox x:Name="ComboBoxValue"
+                                  SelectedItem="{x:Bind SelectedValue, Mode=OneWay}"
+                                  HorizontalAlignment="Stretch"
+                                  x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='ComboBox'}"
+                                  ItemsSource="{x:Bind DataSource}"
+                                  DisplayMemberPath="Text" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

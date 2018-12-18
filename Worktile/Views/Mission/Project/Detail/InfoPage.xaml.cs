@@ -3,12 +3,15 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,38 +21,24 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextTask;
 using Worktile.Common;
+using Worktile.Domain.Mission.Info;
 using Worktile.Enums;
 using Worktile.Models.Mission;
+using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project.Detail
 {
-    public sealed partial class InfoPage : Page
+    public sealed partial class InfoPage : Page, INotifyPropertyChanged
     {
         public InfoPage()
         {
             InitializeComponent();
             Properties = new ObservableCollection<PropertyItem>();
-            _ignorePropertyKeys = new[] {
-                "identifier",
-                "title",
-                "task_state_id",
-                "task_type_id",
-                "created_by",
-                "created_at",
-                "updated_at",
-                "updated_at",
-                "assignee",
-                "start",
-                "due",
-                "attachment",
-                "child",
-                "workload",
-                "relation"
-            };
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private Data _task;
-        readonly string[] _ignorePropertyKeys;
 
         ObservableCollection<PropertyItem> Properties { get; }
 
@@ -59,7 +48,7 @@ namespace Worktile.Views.Mission.Project.Detail
             _task = e.Parameter as Data;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Properties.Add(new PropertyItem
             {
@@ -81,45 +70,63 @@ namespace Worktile.Views.Mission.Project.Detail
                 Color = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetColorByClass(taskType.Icon))
             });
 
-            foreach (var prop in _task.References.Properties)
+            var reader = new PropertiesReader();
+            var props = reader.Read(_task);
+            foreach (var item in props)
             {
-                if (!_ignorePropertyKeys.Contains(prop.RawKey))
+                Properties.Add(item);
+            }
+            await LoadOptionsAsync();
+        }
+
+        private async Task LoadOptionsAsync()
+        {
+            var reader = new PropertiesReader();
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                async () => await reader.LoadOptionsAsync(_task.Value.Id, Properties));
+        }
+    }
+
+    class PropertyItem : INotifyPropertyChanged
+    {
+        public PropertyItem()
+        {
+            DataSource = new ObservableCollection<DropdownItem>();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Header { get; set; }
+
+        /// <summary>
+        /// 当数据类型是下拉框时，此值表示PropertyId，可用来获取Options。
+        /// </summary>
+        public string Value { get; set; }
+        public string Glyph { get; set; }
+        public SolidColorBrush Color { get; set; }
+        public bool IsReadonly { get; set; }
+        public ObservableCollection<DropdownItem> DataSource { get; set; }
+        public string Control { get; set; }
+
+        private DropdownItem _selectedValue;
+        public DropdownItem SelectedValue
+        {
+            get => _selectedValue;
+            set
+            {
+                if (_selectedValue != value)
                 {
-                    var item = new PropertyItem
-                    {
-                        Header = prop.Name,
-                        //Type = prop.Type
-                    };
-                    JObject jObj = JObject.FromObject(_task.Value);
-                    switch (prop.Type)
-                    {
-                        case WtTaskPropertyType.Number:
-                            {
-                                item.Value = TaskHelper.GetPropertyValue<string>(jObj, prop.Key);
-                                item.Control = nameof(TextBox);
-                            }
-                            break;
-                    }
-                    Properties.Add(item);
+                    _selectedValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedValue)));
                 }
             }
         }
     }
 
-    class PropertyItem
-    {
-        public string Header { get; set; }
-        public string Value { get; set; }
-        public string Glyph { get; set; }
-        public SolidColorBrush Color { get; set; }
-        public bool IsReadonly { get; set; }
-        //public WtTaskPropertyType Type { get; set; }
-        public List<DropdownItem> DataSource { get; set; }
-        public string Control { get; set; }
-    }
-
     class DropdownItem
     {
+        public string Glyph { get; set; }
+        public SolidColorBrush Color { get; set; }
         public string Text { get; set; }
         public string Value { get; set; }
     }
