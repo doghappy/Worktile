@@ -1,0 +1,41 @@
+﻿<UserControl
+    x:Class="Worktile.WtControls.MultipleComboBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.WtControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:tethys="using:Worktile.Tethys"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Button Background="Transparent">
+            <controls:WrapPanel>
+                <tethys:Label Content="test"
+                              Margin="4"
+                              VerticalAlignment="Center"
+                              Background="{StaticResource PrimaryBrush1A}"
+                              Foreground="{StaticResource PrimaryBrush}"/>
+                <tethys:Label Content="test"
+                              Margin="4"
+                              VerticalAlignment="Center"
+                              Background="{StaticResource PrimaryBrush1A}"
+                              Foreground="{StaticResource PrimaryBrush}"/>
+            </controls:WrapPanel>
+
+            <Button.Flyout>
+                <Flyout Opened="Flyout_Opened">
+                    <Flyout.FlyoutPresenterStyle>
+                        <Style TargetType="FlyoutPresenter">
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </Flyout.FlyoutPresenterStyle>
+                    <ListView SelectionMode="Multiple" ItemTemplate="{x:Bind ListItemTemplate}" SelectionChanged="ListView_SelectionChanged"/>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+    </Grid>
+</UserControl>

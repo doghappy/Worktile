@@ -5,27 +5,17 @@
     xmlns:local="using:Worktile">
     <Application.Resources>
         <ResourceDictionary>
-            <!--<ResourceDictionary.MergedDictionaries>
-                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
-            </ResourceDictionary.MergedDictionaries>-->
-            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Styles/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
             <SolidColorBrush x:Key="PrimaryBrush" Color="#22d7bb"/>
             <SolidColorBrush x:Key="WarningBrush" Color="#ffc442"/>
             <SolidColorBrush x:Key="DangerBrush" Color="#ff5b57"/>
 
             <AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop" TintOpacity="0" TintColor="#FF000000" FallbackColor="#FF008000" />
 
-            <Style TargetType="FontIcon" x:Key="WtfIcon">
-                <Setter Property="FontFamily" Value="/Assets/Fonts/iconfont.ttf#wtf"/>
-            </Style>
-
             <Thickness x:Key="TitleBarHeight">0 32 0 0</Thickness>
-
-            <Style TargetType="Border" x:Key="BorderRadius">
-                <Setter Property="CornerRadius" Value="3"/>
-                <Setter Property="Padding" Value="6 2"/>
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

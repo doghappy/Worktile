@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:flyout="using:Worktile.WtControls.Flyout"
+    xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
@@ -25,9 +26,10 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Border Style="{ThemeResource BorderRadius}" VerticalAlignment="Center" Background="#1a22d7bb">
-                    <TextBlock Text="sdfsd" Foreground="#22d7bb"/>
-                </Border>
+                <tethys:Label Content="test"
+                              VerticalAlignment="Center"
+                              Background="{StaticResource PrimaryBrush1A}"
+                              Foreground="{StaticResource PrimaryBrush}"/>
 
                 <CommandBar Grid.Column="1"
                             Background="Transparent"

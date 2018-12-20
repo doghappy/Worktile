@@ -253,6 +253,7 @@
     <Compile Include="Views\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WtControls\CustomControl1.cs" />
     <Compile Include="WtControls\Flyout\TaskStateList.xaml.cs">
       <DependentUpon>TaskStateList.xaml</DependentUpon>
     </Compile>
@@ -262,6 +263,9 @@
     <Compile Include="WtControls\Mission\MissionListViewItem.xaml.cs">
       <DependentUpon>MissionListViewItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WtControls\MultipleComboBox.xaml.cs">
+      <DependentUpon>MultipleComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WtControls\TaskStateButton.xaml.cs">
       <DependentUpon>TaskStateButton.xaml</DependentUpon>
     </Compile>
@@ -270,7 +274,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="Assets\Fonts\iconfont.ttf" />
+    <Content Include="DogHappyWallpaper.html" />
     <None Include="Worktile_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -344,6 +348,10 @@
     <Page Include="TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WtControls\CustomControl1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\EmptyPage.xaml">
       <SubType>Designer</SubType>
@@ -449,6 +457,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WtControls\MultipleComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WtControls\TaskStateButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -466,6 +478,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Worktile.Tethys\Worktile.Tethys.csproj">
+      <Project>{603175b4-99dc-4390-99f3-0f868d0c30e2}</Project>
+      <Name>Worktile.Tethys</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Worktile.WtRequestClient\Worktile.WtRequestClient.csproj">
       <Project>{64c1d453-f677-4225-9a30-a5b3c368eff0}</Project>
       <Name>Worktile.WtRequestClient</Name>
