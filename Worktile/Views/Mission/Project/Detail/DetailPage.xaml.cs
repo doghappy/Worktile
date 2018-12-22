@@ -156,15 +156,18 @@ namespace Worktile.Views.Mission.Project.Detail
         private void TaskTitle_LostFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox;
-            if (!string.IsNullOrWhiteSpace(textBox.Text) && TaskTitle != textBox.Text)
+            if (!string.IsNullOrWhiteSpace(textBox.Text))
             {
                 TitleGroupVisibility = Visibility.Visible;
                 TitleTextBoxVisibility = Visibility.Collapsed;
 
-                //请求修改
+                if (TaskTitle != textBox.Text)
+                {
+                    //请求修改
 
-                //修改成功后更新值
-                TaskTitle = textBox.Text;
+                    //修改成功后更新值
+                    TaskTitle = textBox.Text;
+                }
             }
         }
         #endregion

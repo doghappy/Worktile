@@ -48,6 +48,20 @@ namespace Worktile.Tethys.Sample.Views
                             SourcePageType = typeof(DataDisplay.LabelPage)
                         }
                     }
+                },
+                new NavItem
+                {
+                    Name = "Input",
+                    Glyph = "\uE0A2",
+                    Children = new List<NavItem>
+                    {
+                        new NavItem
+                        {
+                            Name = "EditableTextBlock",
+                            Glyph = "\ue104",
+                            SourcePageType = typeof(Input.EditableTextBlockPage)
+                        }
+                    }
                 }
             };
         }
