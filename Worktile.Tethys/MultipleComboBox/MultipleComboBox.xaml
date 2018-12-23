@@ -7,9 +7,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MultipleComboBox">
                     <Border
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
                         <TextBlock Text="MultipleComboBox"/>
                     </Border>
                 </ControlTemplate>

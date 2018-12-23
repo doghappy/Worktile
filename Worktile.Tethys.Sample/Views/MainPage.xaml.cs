@@ -57,9 +57,9 @@ namespace Worktile.Tethys.Sample.Views
                     {
                         new NavItem
                         {
-                            Name = "EditableTextBlock",
-                            Glyph = "\ue104",
-                            SourcePageType = typeof(Input.EditableTextBlockPage)
+                            Name = "MultipleComboBox",
+                            Glyph = "\ue179",
+                            SourcePageType = typeof(Input.MultipleComboBoxPage)
                         }
                     }
                 }
