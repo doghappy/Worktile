@@ -57,6 +57,7 @@ namespace Worktile.Domain.Mission.Info
                         case WtTaskPropertyType.Priority:
                             reader = new PriorityReader();
                             break;
+                        case WtTaskPropertyType.DropDown:
                         case WtTaskPropertyType.Iteration:
                             reader = new ComboBoxReader();
                             break;

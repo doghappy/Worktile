@@ -14,9 +14,10 @@ namespace Worktile.Domain.Mission.Info
         {
             JObject task = JObject.FromObject(data.Value);
             string value = TaskHelper.GetPropertyValue<string>(task, property.Key);
+            item.Control = nameof(ComboBox);
+            item.PropertyId = TaskHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
             if (value != null)
             {
-                item.Control = nameof(ComboBox);
                 var lookup = JObject.FromObject(data.References.Lookups);
                 if (property.Lookup != null)
                 {
@@ -32,7 +33,6 @@ namespace Worktile.Domain.Mission.Info
                         Value = jObj.Value<string>("_id"),
                         Text = text
                     };
-                    item.PropertyId = TaskHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
                 }
             }
         }
@@ -41,13 +41,21 @@ namespace Worktile.Domain.Mission.Info
         {
             foreach (var prop in allProps)
             {
+                string text = null;
+                if (prop.ContainsKey("name"))
+                    text = prop.Value<string>("name");
+                else if (prop.ContainsKey("text"))
+                    text = prop.Value<string>("text");
                 item.DataSource.Add(new DropdownItem
                 {
-                    Text = prop.Value<string>("name"),
+                    Text = text,
                     Value = prop.Value<string>("_id")
                 });
             }
-            item.SelectedValue = item.DataSource.Single(p => p.Value == item.SelectedValue.Value);
+            if (item.SelectedValue != null)
+            {
+                item.SelectedValue = item.DataSource.Single(p => p.Value == item.SelectedValue.Value);
+            }
         }
     }
 }

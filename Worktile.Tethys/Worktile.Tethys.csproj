@@ -122,7 +122,6 @@
   <ItemGroup>
     <Compile Include="IconTextBlock\IconTextBlock.cs" />
     <Compile Include="Label\Label.cs" />
-    <Compile Include="MultipleComboBox\MultipleComboBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Worktile.Tethys.rd.xml" />
   </ItemGroup>
@@ -140,10 +139,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Label\Label.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MultipleComboBox\MultipleComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

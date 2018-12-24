@@ -3,7 +3,6 @@
     xmlns:local="using:Worktile.Tethys">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///Worktile.Tethys/MultipleComboBox/MultipleComboBox.xaml"/>
         <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Label/Label.xaml"/>
         <ResourceDictionary Source="ms-appx:///Worktile.Tethys/IconTextBlock/IconTextBlock.xaml"/>
     </ResourceDictionary.MergedDictionaries>
