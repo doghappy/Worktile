@@ -6,10 +6,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
+    xmlns:models="using:Worktile.Tethys.Sample.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel>
-        <tethys:MultipleComboBox/>
+        <tethys:MultipleComboBox ItemsSource="{x:Bind Persons}">
+            <tethys:MultipleComboBox.SelectedItemTemplate>
+                <DataTemplate x:DataType="models:Person">
+                    <tethys:Label Content="{x:Bind Name}" Margin="4"/>
+                </DataTemplate>
+            </tethys:MultipleComboBox.SelectedItemTemplate>
+            <tethys:MultipleComboBox.ItemTemplate>
+                <DataTemplate x:DataType="models:Person">
+                    <TextBlock Text="{x:Bind Name}"/>
+                </DataTemplate>
+            </tethys:MultipleComboBox.ItemTemplate>
+        </tethys:MultipleComboBox>
     </StackPanel>
 </Page>

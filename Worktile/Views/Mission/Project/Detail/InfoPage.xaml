@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:wtcontrols="using:Worktile.WtControls"
+    xmlns:tethys="using:Worktile.Tethys"
     Loaded="Page_Loaded"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -70,6 +72,29 @@
                                   x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='ComboBox'}"
                                   ItemsSource="{x:Bind DataSource}"
                                   DisplayMemberPath="Text" />
+                        <wtcontrols:MultipleComboBox x:Name="CheckBoxValue"
+                                                     x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='CheckBox'}"
+                                                     ItemsSource="{x:Bind DataSource}"
+                                                     InitSelectedItems="{x:Bind SelectedValues, Mode=OneWay}"
+                                                     EmptyText="请选择">
+                            <wtcontrols:MultipleComboBox.Resources>
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                            </wtcontrols:MultipleComboBox.Resources>
+                            <wtcontrols:MultipleComboBox.SelectedItemTemplate>
+                                <DataTemplate x:DataType="local:DropdownItem">
+                                    <tethys:Label Content="{x:Bind Text}"
+                                                  Margin="2"
+                                                  VerticalAlignment="Center"
+                                                  Background="#eee"
+                                                  Foreground="#aaa"/>
+                                </DataTemplate>
+                            </wtcontrols:MultipleComboBox.SelectedItemTemplate>
+                            <wtcontrols:MultipleComboBox.ListItemTemplate>
+                                <DataTemplate x:DataType="local:DropdownItem">
+                                    <TextBlock Text="{x:Bind Text}"/>
+                                </DataTemplate>
+                            </wtcontrols:MultipleComboBox.ListItemTemplate>
+                        </wtcontrols:MultipleComboBox>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

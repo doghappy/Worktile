@@ -12,19 +12,24 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
+using Worktile.Tethys.Sample.Models;
 
 namespace Worktile.Tethys.Sample.Views.Input
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
     public sealed partial class MultipleComboBoxPage : Page
     {
         public MultipleComboBoxPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            Persons = new List<Person>
+            {
+                new Person { Id = 1, Name = "Bob" },
+                new Person { Id = 2, Name = "Mary" },
+                new Person { Id = 2, Name = "Mary" },
+                new Person { Id = 2, Name = "HeroWong" }
+            };
         }
+
+        List<Person> Persons { get; }
     }
 }

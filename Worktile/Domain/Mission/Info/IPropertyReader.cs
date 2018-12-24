@@ -7,7 +7,7 @@ namespace Worktile.Domain.Mission.Info
 {
     interface IPropertyReader
     {
-        void Read(Property property, PropertyItem item, JObject task, Data data);
+        void Read(Property property, PropertyItem item, Data data);
         void LoadOptions(PropertyItem item, List<JObject> allProps);
     }
 }

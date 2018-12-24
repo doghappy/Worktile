@@ -9,8 +9,9 @@ namespace Worktile.Domain.Mission.Info
 {
     class PriorityReader : IPropertyReader
     {
-        public void Read(Property property, PropertyItem item, JObject task, Data data)
+        public void Read(Property property, PropertyItem item, Data data)
         {
+            JObject task = JObject.FromObject(data.Value);
             string value = TaskHelper.GetPropertyValue<string>(task, property.Key);
             if (value != null)
             {
@@ -27,7 +28,7 @@ namespace Worktile.Domain.Mission.Info
                         Value = jObj.Value<string>("_id"),
                         Color = WtColorHelper.GetNewBrush(jObj.Value<string>("color"))
                     };
-                    item.Value = TaskHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
+                    item.PropertyId = TaskHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
                 }
             }
         }

@@ -9,8 +9,9 @@ namespace Worktile.Domain.Mission.Info
 {
     class TextBoxReader : IPropertyReader
     {
-        public void Read(Property property, PropertyItem item, JObject task, Data data)
+        public void Read(Property property, PropertyItem item, Data data)
         {
+            JObject task = JObject.FromObject(data.Value);
             item.Value = TaskHelper.GetPropertyValue<string>(task, property.Key);
             item.Control = nameof(TextBox);
         }

@@ -28,15 +28,13 @@ using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project.Detail
 {
-    public sealed partial class InfoPage : Page, INotifyPropertyChanged
+    public sealed partial class InfoPage : Page
     {
         public InfoPage()
         {
             InitializeComponent();
             Properties = new ObservableCollection<PropertyItem>();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private Data _task;
 
@@ -92,6 +90,7 @@ namespace Worktile.Views.Mission.Project.Detail
         public PropertyItem()
         {
             DataSource = new ObservableCollection<DropdownItem>();
+            SelectedIds = new List<string>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -99,13 +98,14 @@ namespace Worktile.Views.Mission.Project.Detail
         public string Header { get; set; }
 
         /// <summary>
-        /// 当数据类型是下拉框时，此值表示PropertyId，可用来获取Options。
+        /// 用来获取Options
         /// </summary>
+        public string PropertyId { get; set; }
         public string Value { get; set; }
         public string Glyph { get; set; }
         public SolidColorBrush Color { get; set; }
         public bool IsReadonly { get; set; }
-        public ObservableCollection<DropdownItem> DataSource { get; set; }
+        public ObservableCollection<DropdownItem> DataSource { get; }
         public string Control { get; set; }
 
         private DropdownItem _selectedValue;
@@ -118,6 +118,22 @@ namespace Worktile.Views.Mission.Project.Detail
                 {
                     _selectedValue = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedValue)));
+                }
+            }
+        }
+
+        public List<string> SelectedIds { get; }
+
+        private List<DropdownItem> _selectedValues;
+        public List<DropdownItem> SelectedValues
+        {
+            get => _selectedValues;
+            set
+            {
+                if (_selectedValues != value)
+                {
+                    _selectedValues = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedValues)));
                 }
             }
         }

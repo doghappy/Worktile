@@ -23,7 +23,16 @@ namespace Worktile
         public TestPage()
         {
             InitializeComponent();
+            Persons = new List<Person>
+            {
+                new Person { Id = 1, Name = "Bob" },
+                new Person { Id = 2, Name = "Mary" },
+                new Person { Id = 2, Name = "Mary" },
+                new Person { Id = 2, Name = "HeroWong" }
+            };
         }
+
+        List<Person> Persons { get; }
 
         private async void SystemDialog_Click(object sender, RoutedEventArgs e)
         {
@@ -49,5 +58,10 @@ namespace Worktile
             });
             bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
         }
+    }
+    class Person
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

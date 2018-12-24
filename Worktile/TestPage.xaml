@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mission="using:Worktile.WtControls.Mission"
     xmlns:wtcontrols="using:Worktile.WtControls"
+    xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -14,5 +15,24 @@
         <Button Content="System Dialog" Click="SystemDialog_Click"/>
         <Button Content="New View Dialog" Click="NewView_Click"/>
         <TextBlock Text="steest" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+        <wtcontrols:MultipleComboBox ItemsSource="{x:Bind Persons}" EmptyText="请选择">
+            <wtcontrols:MultipleComboBox.Resources>
+                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+            </wtcontrols:MultipleComboBox.Resources>
+            <wtcontrols:MultipleComboBox.SelectedItemTemplate>
+                <DataTemplate x:DataType="local:Person">
+                    <tethys:Label Content="{x:Bind Name}"
+                              Margin="4"
+                              VerticalAlignment="Center"
+                              Background="{StaticResource PrimaryBrush1A}"
+                              Foreground="{StaticResource PrimaryBrush}"/>
+                </DataTemplate>
+            </wtcontrols:MultipleComboBox.SelectedItemTemplate>
+            <wtcontrols:MultipleComboBox.ListItemTemplate>
+                <DataTemplate x:DataType="local:Person">
+                    <TextBlock Text="{x:Bind Name}"/>
+                </DataTemplate>
+            </wtcontrols:MultipleComboBox.ListItemTemplate>
+        </wtcontrols:MultipleComboBox>
     </StackPanel>
 </Page>

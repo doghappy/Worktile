@@ -32,7 +32,7 @@ namespace Worktile.Domain.Mission.Info
                 "workload",
                 "relation"
             };
-            _hasOptionControls = new[] { "Priority", "ComboBox" };
+            _hasOptionControls = new[] { "Priority", "ComboBox", "CheckBox" };
         }
 
         readonly string[] _ignorePropertyKeys;
@@ -48,7 +48,6 @@ namespace Worktile.Domain.Mission.Info
                     {
                         Header = prop.Name,
                     };
-                    JObject jObj = JObject.FromObject(task.Value);
                     IPropertyReader reader = null;
                     switch (prop.Type)
                     {
@@ -61,10 +60,13 @@ namespace Worktile.Domain.Mission.Info
                         case WtTaskPropertyType.Iteration:
                             reader = new ComboBoxReader();
                             break;
+                        case WtTaskPropertyType.MultiSelect:
+                            reader = new CheckBoxReader();
+                            break;
                     }
                     if (reader != null)
                     {
-                        reader.Read(prop, item, jObj, task);
+                        reader.Read(prop, item, task);
                         yield return item;
                     }
                 }
@@ -78,7 +80,7 @@ namespace Worktile.Domain.Mission.Info
             {
                 if (_hasOptionControls.Contains(property.Control))
                 {
-                    string uri = $"api/mission-vnext/tasks/{taskId}/properties/{property.Value}/options";
+                    string uri = $"api/mission-vnext/tasks/{taskId}/properties/{property.PropertyId}/options";
                     var data = await client.GetAsync<ApiMissionVnexTaskProperties>(uri);
                     var dataSource = new List<DropdownItem>();
                     IPropertyReader reader = null;
@@ -89,6 +91,9 @@ namespace Worktile.Domain.Mission.Info
                             break;
                         case "ComboBox":
                             reader = new ComboBoxReader();
+                            break;
+                        case "CheckBox":
+                            reader = new CheckBoxReader();
                             break;
                     }
                     if (reader != null)
