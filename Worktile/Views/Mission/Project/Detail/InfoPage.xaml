@@ -21,83 +21,168 @@
             <Setter Property="Margin" Value="0 0 0 8"/>
         </Style>
         <Style x:Key="PropertyStackPanel" TargetType="StackPanel">
-            <Setter Property="Width" Value="260"/>
+            <Setter Property="MinWidth" Value="280"/>
             <Setter Property="Padding" Value="0 0 16 16"/>
         </Style>
     </Page.Resources>
 
-    <Grid Padding="12">
-        <ItemsControl ItemsSource="{x:Bind Properties}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <controls:WrapPanel/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:PropertyItem">
-                    <StackPanel Style="{StaticResource PropertyStackPanel}">
-                        <TextBlock Style="{ThemeResource PropertyHeader}">
+    <Grid>
+        <ScrollViewer>
+            <ItemsControl Margin="12 12 12 0" ItemsSource="{x:Bind Properties}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <controls:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:PropertyItem">
+                        <StackPanel Style="{StaticResource PropertyStackPanel}" MinHeight="100">
+
+                            <TextBlock Style="{ThemeResource PropertyHeader}">
                             <Run Text="{x:Bind Header}"/>
                             <Run Text=":"/>
-                        </TextBlock>
-                        <StackPanel x:Name="ReadonlyStackPanel"
-                                    Orientation="Horizontal"
-                                    x:Load="{x:Bind IsReadonly}">
-                            <FontIcon Style="{StaticResource WtfIcon}" Foreground="{x:Bind Color}" Glyph="{x:Bind Glyph}"/>
-                            <TextBlock Margin="4 0 0 0" Text="{x:Bind Value}"/>
-                        </StackPanel>
-                        <TextBox x:Name="TextBoxValue"
-                                 Text="{x:Bind Value, Mode=OneWay}"
-                                 x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='TextBox'}"/>
-                        <ComboBox x:Name="Priority"
-                                  SelectedItem="{x:Bind SelectedValue, Mode=OneWay}"
-                                  HorizontalAlignment="Stretch"
-                                  x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Priority'}"
-                                  ItemsSource="{x:Bind DataSource}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:DropdownItem">
-                                    <StackPanel Orientation="Horizontal">
-                                        <FontIcon Style="{StaticResource WtfIcon}"
+                            </TextBlock>
+
+                            <StackPanel x:Name="ReadonlyStackPanel"
+                                        Orientation="Horizontal"
+                                        Width="280"
+                                        x:Load="{x:Bind IsReadonly}">
+                                <FontIcon Style="{StaticResource WtfIcon}" Foreground="{x:Bind Color}" Glyph="{x:Bind Glyph}"/>
+                                <TextBlock Margin="4 0 0 0" Text="{x:Bind Value}"/>
+                            </StackPanel>
+
+                            <TextBox x:Name="TextBoxValue"
+                                     Text="{x:Bind Value, Mode=OneWay}"
+                                     Width="280"
+                                     x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='TextBox'}"/>
+
+                            <ComboBox x:Name="Priority"
+                                      SelectedItem="{x:Bind SelectedValue, Mode=OneWay}"
+                                      HorizontalAlignment="Stretch"
+                                      Width="280"
+                                      x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Priority'}"
+                                      ItemsSource="{x:Bind DataSource}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="local:DropdownItem">
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon Style="{StaticResource WtfIcon}"
                                                   Glyph="{x:Bind Glyph}"
                                                   FontSize="14"
                                                   Foreground="{x:Bind Color}"/>
-                                        <TextBlock Margin="4 0 0 0" Text="{x:Bind Text}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ComboBox x:Name="ComboBoxValue"
-                                  SelectedItem="{x:Bind SelectedValue, Mode=OneWay}"
-                                  HorizontalAlignment="Stretch"
-                                  x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='ComboBox'}"
-                                  ItemsSource="{x:Bind DataSource}"
-                                  DisplayMemberPath="Text" />
-                        <wtcontrols:MultipleComboBox x:Name="CheckBoxValue"
-                                                     x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='CheckBox'}"
-                                                     ItemsSource="{x:Bind DataSource}"
-                                                     InitSelectedItems="{x:Bind SelectedValues, Mode=OneWay}"
-                                                     EmptyText="请选择">
-                            <wtcontrols:MultipleComboBox.Resources>
-                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
-                            </wtcontrols:MultipleComboBox.Resources>
-                            <wtcontrols:MultipleComboBox.SelectedItemTemplate>
-                                <DataTemplate x:DataType="local:DropdownItem">
-                                    <tethys:Label Content="{x:Bind Text}"
+                                            <TextBlock Margin="4 0 0 0" Text="{x:Bind Text}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <ComboBox x:Name="ComboBoxValue"
+                                      SelectedItem="{x:Bind SelectedValue, Mode=OneWay}"
+                                      Width="280"
+                                      HorizontalAlignment="Stretch"
+                                      x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='ComboBox'}"
+                                      ItemsSource="{x:Bind DataSource}"
+                                      DisplayMemberPath="Text" />
+
+                            <wtcontrols:MultipleComboBox x:Name="CheckBoxValue"
+                                                         Width="280"
+                                                         x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='CheckBox'}"
+                                                         ItemsSource="{x:Bind DataSource}"
+                                                         InitSelectedItems="{x:Bind SelectedValues, Mode=OneWay}"
+                                                         EmptyText="请选择">
+                                <wtcontrols:MultipleComboBox.Resources>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                </wtcontrols:MultipleComboBox.Resources>
+                                <wtcontrols:MultipleComboBox.SelectedItemTemplate>
+                                    <DataTemplate x:DataType="local:DropdownItem">
+                                        <tethys:Label Content="{x:Bind Text}"
+                                                      Margin="2"
+                                                      VerticalAlignment="Center"
+                                                      Background="#eee"
+                                                      Foreground="#aaa"/>
+                                    </DataTemplate>
+                                </wtcontrols:MultipleComboBox.SelectedItemTemplate>
+                                <wtcontrols:MultipleComboBox.ListItemTemplate>
+                                    <DataTemplate x:DataType="local:DropdownItem">
+                                        <TextBlock Text="{x:Bind Text}"/>
+                                    </DataTemplate>
+                                </wtcontrols:MultipleComboBox.ListItemTemplate>
+                            </wtcontrols:MultipleComboBox>
+
+                            <wtcontrols:MultipleComboBox x:Name="TagValue"
+                                                         Width="280"
+                                                         x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Tag'}"
+                                                         ItemsSource="{x:Bind DataSource}"
+                                                         InitSelectedItems="{x:Bind SelectedValues, Mode=OneWay}"
+                                                         IsMultiSelectCheckBoxEnabled="False"
+                                                         EmptyText="添加标签">
+                                <wtcontrols:MultipleComboBox.Resources>
+                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                </wtcontrols:MultipleComboBox.Resources>
+                                <wtcontrols:MultipleComboBox.SelectedItemTemplate>
+                                    <DataTemplate x:DataType="local:DropdownItem">
+                                        <tethys:Label Content="{x:Bind Text}"
                                                   Margin="2"
                                                   VerticalAlignment="Center"
-                                                  Background="#eee"
-                                                  Foreground="#aaa"/>
-                                </DataTemplate>
-                            </wtcontrols:MultipleComboBox.SelectedItemTemplate>
-                            <wtcontrols:MultipleComboBox.ListItemTemplate>
-                                <DataTemplate x:DataType="local:DropdownItem">
-                                    <TextBlock Text="{x:Bind Text}"/>
-                                </DataTemplate>
-                            </wtcontrols:MultipleComboBox.ListItemTemplate>
-                        </wtcontrols:MultipleComboBox>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                                                  Background="{x:Bind Color}"
+                                                  Foreground="White"/>
+                                    </DataTemplate>
+                                </wtcontrols:MultipleComboBox.SelectedItemTemplate>
+                                <wtcontrols:MultipleComboBox.ListItemTemplate>
+                                    <DataTemplate x:DataType="local:DropdownItem">
+                                        <StackPanel Orientation="Horizontal">
+                                            <tethys:Label FontSize="{ThemeResource ControlContentThemeFontSize}">
+                                                <tethys:IconTextBlock Content="{x:Bind Text}">
+                                                    <tethys:IconTextBlock.Icon>
+                                                        <FontIcon Glyph="&#xE672;" Style="{StaticResource WtfIcon}" Foreground="{x:Bind Color}" />
+                                                    </tethys:IconTextBlock.Icon>
+                                                </tethys:IconTextBlock>
+                                            </tethys:Label>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </wtcontrols:MultipleComboBox.ListItemTemplate>
+                            </wtcontrols:MultipleComboBox>
+
+                            <StackPanel x:Name="DateTimeValue"
+                                        x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='DateTime'}">
+                                <CalendarDatePicker Date="{x:Bind Date}" Width="280"/>
+                                <TimePicker Margin="0 8 0 0" Time="{x:Bind TimeSpan}" Width="280"/>
+                            </StackPanel>
+
+                            <StackPanel x:Name="DateSpanValue"
+                                        Width="280"
+                                        x:Load="{x:Bind Control, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='DateSpan'}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Margin" Value="0 0 8 0"/>
+                                        </Style>
+                                        <Style TargetType="CalendarDatePicker">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </Grid.Resources>
+
+                                    <TextBlock Text="开始时间"/>
+                                    <CalendarDatePicker Grid.Column="1" Date="{x:Bind Begin}" Margin="0 0 0 4"/>
+                                    
+                                    <TextBlock Grid.Row="1" Text="结束时间"/>
+                                    <CalendarDatePicker Grid.Row="1" HorizontalAlignment="Stretch" Grid.Column="1" Date="{x:Bind End}"/>
+                                </Grid>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Page>

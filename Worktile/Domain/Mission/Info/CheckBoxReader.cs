@@ -3,21 +3,25 @@ using Worktile.Views.Mission.Project.Detail;
 using Worktile.ApiModel.ApiMissionVnextTask;
 using Worktile.Common;
 using System.Collections.Generic;
+using Windows.UI.Core;
+using System;
+using System.Threading.Tasks;
 
 namespace Worktile.Domain.Mission.Info
 {
     class CheckBoxReader : IPropertyReader
     {
+        public virtual string Control => "CheckBox";
+
         public void Read(Property property, PropertyItem item, Data data)
         {
-            item.Control = "CheckBox";
             JObject task = JObject.FromObject(data.Value);
             string[] values = TaskHelper.GetPropertyValue<string[]>(task, property.Key);
             item.SelectedIds.AddRange(values);
             item.PropertyId = TaskHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
         }
 
-        public void LoadOptions(PropertyItem item, List<JObject> allProps)
+        public async virtual Task LoadOptionsAsync(PropertyItem item, List<JObject> allProps, CoreDispatcher dispatcher)
         {
             var selectedValues = new List<DropdownItem>();
             foreach (var prop in allProps)
@@ -28,13 +32,16 @@ namespace Worktile.Domain.Mission.Info
                     Text = prop.Value<string>("text"),
                     Value = id
                 };
-                item.DataSource.Add(dropdownItem);
-                if (item.SelectedIds.Contains(id))
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    selectedValues.Add(dropdownItem);
-                }
+                    item.DataSource.Add(dropdownItem);
+                    if (item.SelectedIds.Contains(id))
+                    {
+                        selectedValues.Add(dropdownItem);
+                    }
+                });
             }
-            item.SelectedValues = selectedValues;
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => item.SelectedValues = selectedValues);
         }
     }
 }

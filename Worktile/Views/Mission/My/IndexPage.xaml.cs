@@ -5,8 +5,11 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Worktile.ApiModel.ApiMissionVnextWorkAddonsKeyGroups;
 using Worktile.ApiModels.ApiMissionVnextWorkAddon;
 using Worktile.Common;
+using Worktile.WtRequestClient;
+using Value = Worktile.ApiModels.ApiMissionVnextWorkAddon.Value;
 
 namespace Worktile.Views.Mission.My
 {
@@ -115,13 +118,16 @@ namespace Worktile.Views.Mission.My
             SelectedStatus = Status.First();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (var item in _navItem.Features)
+            string uri = $"/api/mission-vnext/work-addons/{_navItem.Key}/groups";
+            var client = new WtHttpClient();
+            var data = await client.GetAsync<ApiMissionVnextWorkAddonsKeyGroups>(uri);
+            foreach (var item in data.Data.Value)
             {
                 TopNavItems.Add(new TopNavItem
                 {
-                    Key = item.Key,
+                    Key = item.Id,
                     Name = item.Name
                 });
             }

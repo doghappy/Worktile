@@ -1,30 +1,16 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextTask;
 using Worktile.Common;
 using Worktile.Domain.Mission.Info;
-using Worktile.Enums;
-using Worktile.Models.Mission;
-using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project.Detail
 {
@@ -46,7 +32,7 @@ namespace Worktile.Views.Mission.Project.Detail
             _task = e.Parameter as Data;
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Properties.Add(new PropertyItem
             {
@@ -74,14 +60,8 @@ namespace Worktile.Views.Mission.Project.Detail
             {
                 Properties.Add(item);
             }
-            await LoadOptionsAsync();
-        }
 
-        private async Task LoadOptionsAsync()
-        {
-            var reader = new PropertiesReader();
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                async () => await reader.LoadOptionsAsync(_task.Value.Id, Properties));
+            reader.LoadOptions(_task.Value.Id, Properties, Dispatcher);
         }
     }
 
@@ -107,6 +87,10 @@ namespace Worktile.Views.Mission.Project.Detail
         public bool IsReadonly { get; set; }
         public ObservableCollection<DropdownItem> DataSource { get; }
         public string Control { get; set; }
+        public DateTime? Date { get; set; }
+        public TimeSpan TimeSpan { get; set; }
+        public DateTime? Begin { get; set; }
+        public DateTime? End { get; set; }
 
         private DropdownItem _selectedValue;
         public DropdownItem SelectedValue

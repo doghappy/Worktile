@@ -127,34 +127,5 @@ namespace Worktile.Common
                 Color = "#F76CAA"
             }
         };
-
-        public static BitmapImage GetAvatarUrl(string avatar, int size)
-        {
-            if (string.IsNullOrWhiteSpace(avatar) || avatar == "default.png")
-            {
-                return null;
-            }
-            else
-            {
-                string ext = Path.GetExtension(avatar);
-                string name = Path.GetFileNameWithoutExtension(avatar);
-                string uri = ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
-                return new BitmapImage(new Uri(uri));
-            }
-        }
-
-        public static Avatar GetAvatar(string uid, int avatarSize)
-        {
-            var member = Team.Members.FirstOrDefault(m => m.Uid == uid);
-            if (member == null)
-            {
-                return null;
-            }
-            return new Avatar
-            {
-                ProfilePicture = GetAvatarUrl(member.Avatar, avatarSize),
-                DisplayName = member.DisplayName
-            };
-        }
     }
 }

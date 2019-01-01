@@ -9,6 +9,7 @@
     xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32">
@@ -34,5 +35,28 @@
                 </DataTemplate>
             </wtcontrols:MultipleComboBox.ListItemTemplate>
         </wtcontrols:MultipleComboBox>
+        <DatePicker/>
+        <StackPanel Orientation="Horizontal">
+            <CalendarDatePicker/>
+            <TimePicker Margin="4 0 0 0"/>
+        </StackPanel>
+        <PersonPicture Initials="&#xE652;" FontFamily="ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf">
+            <PersonPicture.Resources>
+                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
+                <!--<FontFamily x:Key="SymbolThemeFontFamily">ms-appx:///Worktile/Assets/Fonts/lc-iconfont.ttf#lcfont</FontFamily>-->
+            </PersonPicture.Resources>
+        </PersonPicture>
+        <TextBlock x:Name="Tb"/>
+        <PersonPicture x:Name="Ta" Initials="&#xE652;">
+            <PersonPicture.Resources>
+                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Red"/>
+                <!--<FontFamily x:Key="SymbolThemeFontFamily">ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont</FontFamily>-->
+            </PersonPicture.Resources>
+        </PersonPicture>
+
+        <Border Padding="8 0" Background="{StaticResource DangerBrush}" CornerRadius="8" HorizontalAlignment="Left">
+            <TextBlock Text="555" FontSize="12" Foreground="White"/>
+        </Border>
+      
     </StackPanel>
 </Page>

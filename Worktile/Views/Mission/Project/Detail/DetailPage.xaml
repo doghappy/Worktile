@@ -78,7 +78,7 @@
                 </CommandBar>
             </Grid>
 
-            <Grid Grid.Row="1" Padding="40 25">
+            <Grid Grid.Row="1" Margin="40 25 40 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

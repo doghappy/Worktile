@@ -159,7 +159,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
                 Point = i.Point,
                 Progress = i.Progress,
                 Total = i.Total,
-                Avatar = CommonData.GetAvatar(i.Uid, 40)
+                Avatar = AvatarHelper.GetAvatar(i.Uid, 40)
             });
         }
 

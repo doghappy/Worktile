@@ -3,8 +3,6 @@ using Newtonsoft.Json;
 
 namespace Worktile.ApiModels.ApiMissionVnextWorkAddon
 {
-
-
     public partial class ApiMissionVnextWorkAddon
     {
         [JsonProperty("oid")]
@@ -28,9 +26,6 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkAddon
         [JsonProperty("_id")]
         public string Id { get; set; }
 
-        [JsonProperty("features")]
-        public List<Feature> Features { get; set; }
-
         [JsonProperty("addon_id")]
         public string AddonId { get; set; }
 
@@ -42,14 +37,5 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkAddon
 
         [JsonProperty("icon")]
         public string Icon { get; set; }
-    }
-
-    public partial class Feature
-    {
-        [JsonProperty("key")]
-        public string Key { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
     }
 }

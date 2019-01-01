@@ -11,6 +11,6 @@ namespace Worktile.Models
         public DateTime? Date { get; set; }
 
         [JsonProperty("with_time")]
-        public int WithTime { get; set; }
+        public bool WithTime { get; set; }
     }
 }

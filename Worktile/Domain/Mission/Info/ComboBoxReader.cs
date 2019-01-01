@@ -1,20 +1,23 @@
 ﻿using Newtonsoft.Json.Linq;
 using Worktile.Views.Mission.Project.Detail;
 using Worktile.ApiModel.ApiMissionVnextTask;
-using Windows.UI.Xaml.Controls;
 using Worktile.Common;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI.Core;
+using System.Threading.Tasks;
+using System;
 
 namespace Worktile.Domain.Mission.Info
 {
     class ComboBoxReader : IPropertyReader
     {
+        public string Control => "ComboBox";
+
         public void Read(Property property, PropertyItem item, Data data)
         {
             JObject task = JObject.FromObject(data.Value);
             string value = TaskHelper.GetPropertyValue<string>(task, property.Key);
-            item.Control = nameof(ComboBox);
             item.PropertyId = TaskHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
             if (value != null)
             {
@@ -37,7 +40,7 @@ namespace Worktile.Domain.Mission.Info
             }
         }
 
-        public void LoadOptions(PropertyItem item, List<JObject> allProps)
+        public async Task LoadOptionsAsync(PropertyItem item, List<JObject> allProps, CoreDispatcher dispatcher)
         {
             foreach (var prop in allProps)
             {
@@ -46,15 +49,19 @@ namespace Worktile.Domain.Mission.Info
                     text = prop.Value<string>("name");
                 else if (prop.ContainsKey("text"))
                     text = prop.Value<string>("text");
-                item.DataSource.Add(new DropdownItem
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    Text = text,
-                    Value = prop.Value<string>("_id")
+                    item.DataSource.Add(new DropdownItem
+                    {
+                        Text = text,
+                        Value = prop.Value<string>("_id")
+                    });
                 });
             }
             if (item.SelectedValue != null)
             {
-                item.SelectedValue = item.DataSource.Single(p => p.Value == item.SelectedValue.Value);
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                    () => item.SelectedValue = item.DataSource.Single(p => p.Value == item.SelectedValue.Value));
             }
         }
     }

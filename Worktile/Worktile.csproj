@@ -100,6 +100,7 @@
     <Compile Include="ApiModels\ApiMissionVnextTask.cs" />
     <Compile Include="ApiModels\ApiMissionVnextTasksIdstates.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkAddon.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkAddonsKeyGroups.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightGroups.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightMemberDelay.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightMemberProgress.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="ApiModels\ApiMissionVnextWorkMyDirectedActive.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkMyGeneric.cs" />
     <Compile Include="ApiModels\ApiTeam.cs" />
+    <Compile Include="ApiModels\ApiTeamChats.cs" />
     <Compile Include="ApiModels\ApiTeamDomainCheck.cs" />
     <Compile Include="ApiModels\ApiTeamLite.cs" />
     <Compile Include="ApiModels\ApiUserMe.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\AvatarHelper.cs" />
     <Compile Include="Common\CommonData.cs" />
     <Compile Include="Common\HashEncryptor.cs" />
     <Compile Include="Common\IncrementalCollection.cs" />
@@ -139,11 +142,14 @@
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />
     <Compile Include="Converters\PercentageConverter.cs" />
+    <Compile Include="Domain\Mission\Info\DateSpanReader.cs" />
+    <Compile Include="Domain\Mission\Info\TagReader.cs" />
     <Compile Include="Domain\Mission\Info\CheckBoxReader.cs" />
     <Compile Include="Domain\Mission\Info\PriorityReader.cs" />
     <Compile Include="Domain\Mission\Info\IPropertyReader.cs" />
     <Compile Include="Domain\Mission\Info\PropertiesReader.cs" />
     <Compile Include="Domain\Mission\Info\ComboBoxReader.cs" />
+    <Compile Include="Domain\Mission\Info\DateTimeReader.cs" />
     <Compile Include="Domain\Mission\Info\TextBoxReader.cs" />
     <Compile Include="Domain\Mission\Kanban\DateSpanReader.cs" />
     <Compile Include="Domain\Mission\Kanban\DefaultReader.cs" />
@@ -157,6 +163,14 @@
     <Compile Include="Domain\Mission\Kanban\AttachmentReader.cs" />
     <Compile Include="Domain\Mission\Kanban\PropertyReader.cs" />
     <Compile Include="Domain\Mission\Kanban\KanbanDataReader.cs" />
+    <Compile Include="Models\IM\Message\Message.cs" />
+    <Compile Include="Models\IM\Message\MessageBody.cs" />
+    <Compile Include="Models\IM\Message\MessageInlineAttachment.cs" />
+    <Compile Include="Models\IM\Message\MessageField.cs" />
+    <Compile Include="Models\IM\Message\MessageFrom.cs" />
+    <Compile Include="Models\IM\Message\MessageTo.cs" />
+    <Compile Include="Enums\IM\MessageType.cs" />
+    <Compile Include="Models\BeginEnd.cs" />
     <Compile Include="Models\DateSpan.cs" />
     <Compile Include="Enums\WtTaskPropertyFrom.cs" />
     <Compile Include="Enums\WtTaskPropertyType.cs" />
@@ -166,6 +180,8 @@
     </Compile>
     <Compile Include="Models\Avatar.cs" />
     <Compile Include="Models\ColorMapItem.cs" />
+    <Compile Include="Models\IM\ChatNav.cs" />
+    <Compile Include="Enums\IM\ChatType.cs" />
     <Compile Include="Models\Kanban\KanbanGroup.cs" />
     <Compile Include="Models\Kanban\KanbanItem.cs" />
     <Compile Include="Models\Kanban\KanbanItemProperty.cs" />
@@ -187,6 +203,15 @@
     </Compile>
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IM\ChannelChatPage.xaml.cs">
+      <DependentUpon>ChannelChatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IM\IMPage.xaml.cs">
+      <DependentUpon>IMPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IM\SessionChatPage.xaml.cs">
+      <DependentUpon>SessionChatPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Mission\AnalyticInsight\MemberDelayPage.xaml.cs">
       <DependentUpon>MemberDelayPage.xaml</DependentUpon>
@@ -257,6 +282,12 @@
     <Compile Include="WtControls\Flyout\TaskStateList.xaml.cs">
       <DependentUpon>TaskStateList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WtControls\IM\MessageItem.xaml.cs">
+      <DependentUpon>MessageItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WtControls\IM\TextMessage.xaml.cs">
+      <DependentUpon>TextMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WtControls\Mission\MissionListViewHeader.xaml.cs">
       <DependentUpon>MissionListViewHeader.xaml</DependentUpon>
     </Compile>
@@ -269,11 +300,15 @@
     <Compile Include="WtControls\TaskStateButton.xaml.cs">
       <DependentUpon>TaskStateButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WtControls\WtAvatar.xaml.cs">
+      <DependentUpon>WtAvatar.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\Fonts\lc-iconfont.ttf" />
     <None Include="Worktile_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +384,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EmptyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IM\ChannelChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IM\IMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IM\SessionChatPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -444,6 +491,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WtControls\IM\MessageItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WtControls\IM\TextMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WtControls\Mission\MissionListViewHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -457,6 +512,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WtControls\TaskStateButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WtControls\WtAvatar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

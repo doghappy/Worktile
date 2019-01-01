@@ -5,11 +5,12 @@
 
     <Thickness x:Key="IconTextBlockMargin">4 0 0 0</Thickness>
     <Style TargetType="local:IconTextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:IconTextBlock">
                     <StackPanel Orientation="Horizontal">
-                        <ContentPresenter Content="{TemplateBinding Icon}" />
+                        <ContentPresenter Content="{TemplateBinding Icon}" Foreground="{TemplateBinding Foreground}" />
                         <ContentPresenter Margin="{StaticResource IconTextBlockMargin}"
                                           Content="{TemplateBinding Content}" />
                     </StackPanel>

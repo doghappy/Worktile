@@ -3,12 +3,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels.ApiMissionVnextProjectNav;
 using Worktile.ApiModels.ApiMissionVnextWorkAddon;
 using Worktile.Common;
 using Worktile.WtRequestClient;
+using System;
 
 namespace Worktile.Views.Mission
 {
@@ -115,10 +117,13 @@ namespace Worktile.Views.Mission
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
-            await RequestApiMissionVnextWorkAddon();
-            await RequestApiMissionVnextProjectNav();
-            SelectedWorkNav = WorkNavItems.First();
-            IsActive = false;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await RequestApiMissionVnextWorkAddon();
+                await RequestApiMissionVnextProjectNav();
+                SelectedWorkNav = WorkNavItems.First();
+                IsActive = false;
+            });
         }
 
         private async Task RequestApiMissionVnextWorkAddon()
@@ -164,7 +169,7 @@ namespace Worktile.Views.Mission
                         Id = project.Id,
                         Name = project.Name,
                         Color = project.Color,
-                        Glyph =  WtIconHelper.GetGlyph(project.Visibility)
+                        Glyph = WtIconHelper.GetGlyph(project.Visibility)
                     });
                 }
                 else if (item.NavType == 2)

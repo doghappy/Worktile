@@ -69,7 +69,7 @@ namespace Worktile.Common
             return color;
         }
 
-        public static SolidColorBrush GetSolidColorBrush(string hex)
+        public static Color GetColor(string hex)
         {
             if (hex[0] == '#')
             {
@@ -80,7 +80,7 @@ namespace Worktile.Common
                 byte r = (byte)Convert.ToUInt32(hex.Substring(0, 2), 16);
                 byte g = (byte)Convert.ToUInt32(hex.Substring(2, 2), 16);
                 byte b = (byte)Convert.ToUInt32(hex.Substring(4, 2), 16);
-                return new SolidColorBrush(Color.FromArgb(255, r, g, b));
+                return Color.FromArgb(255, r, g, b);
             }
             else if (hex.Length == 8)
             {
@@ -88,13 +88,17 @@ namespace Worktile.Common
                 byte r = (byte)Convert.ToUInt32(hex.Substring(2, 2), 16);
                 byte g = (byte)Convert.ToUInt32(hex.Substring(4, 2), 16);
                 byte b = (byte)Convert.ToUInt32(hex.Substring(6, 2), 16);
-                return new SolidColorBrush(Color.FromArgb(26, r, g, b));
+                return Color.FromArgb(26, r, g, b);
             }
             else
             {
-
                 throw new ArgumentException();
             }
+        }
+
+        public static SolidColorBrush GetSolidColorBrush(string hex)
+        {
+            return new SolidColorBrush(GetColor(hex));
         }
 
         public static SolidColorBrush DangerColor => new SolidColorBrush(Color.FromArgb(255, 255, 91, 87));

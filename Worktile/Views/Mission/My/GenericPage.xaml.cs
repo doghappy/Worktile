@@ -100,7 +100,7 @@ namespace Worktile.Views.Mission.My
                         BoldGlyph = WtIconHelper.GetBoldGlyph(state.Type),
                         Name = state.Name
                     },
-                    Assignee = CommonData.GetAvatar(item.Properties.Assignee.Value, 40),
+                    Assignee = AvatarHelper.GetAvatar(item.Properties.Assignee.Value, 40),
                     TaskType = new Models.TaskType
                     {
                         Color = WtColorHelper.GetColorByClass(type.Icon),

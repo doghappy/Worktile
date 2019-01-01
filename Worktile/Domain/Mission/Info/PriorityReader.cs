@@ -4,18 +4,22 @@ using Worktile.ApiModel.ApiMissionVnextTask;
 using Worktile.Common;
 using System.Linq;
 using System.Collections.Generic;
+using Windows.UI.Core;
+using System.Threading.Tasks;
+using System;
 
 namespace Worktile.Domain.Mission.Info
 {
     class PriorityReader : IPropertyReader
     {
+        public string Control => "Priority";
+
         public void Read(Property property, PropertyItem item, Data data)
         {
             JObject task = JObject.FromObject(data.Value);
             string value = TaskHelper.GetPropertyValue<string>(task, property.Key);
             if (value != null)
             {
-                item.Control = "Priority";
                 var lookup = JObject.FromObject(data.References.Lookups);
                 if (property.Lookup != null)
                 {
@@ -33,19 +37,21 @@ namespace Worktile.Domain.Mission.Info
             }
         }
 
-        public void LoadOptions(PropertyItem item, List<JObject> allProps)
+        public async Task LoadOptionsAsync(PropertyItem item, List<JObject> allProps, CoreDispatcher dispatcher)
         {
             foreach (var prop in allProps)
             {
-                item.DataSource.Add(new DropdownItem
-                {
-                    Color = WtColorHelper.GetNewBrush(prop.Value<string>("color")),
-                    Glyph = WtIconHelper.GetGlyph("wtf-level-" + prop.Value<string>("icon")),
-                    Text = prop.Value<string>("name"),
-                    Value = prop.Value<string>("_id")
-                });
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                    () => item.DataSource.Add(new DropdownItem
+                    {
+                        Color = WtColorHelper.GetNewBrush(prop.Value<string>("color")),
+                        Glyph = WtIconHelper.GetGlyph("wtf-level-" + prop.Value<string>("icon")),
+                        Text = prop.Value<string>("name"),
+                        Value = prop.Value<string>("_id")
+                    }));
             }
-            item.SelectedValue = item.DataSource.Single(p => p.Value == item.SelectedValue.Value);
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                () => item.SelectedValue = item.DataSource.Single(p => p.Value == item.SelectedValue.Value));
         }
     }
 }

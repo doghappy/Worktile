@@ -58,15 +58,6 @@ namespace Worktile.WtControls
         public static readonly DependencyProperty ItemSourceProperty =
             DependencyProperty.Register("ItemsSource", typeof(object), typeof(MultipleComboBox), new PropertyMetadata(null));
 
-        //public object SelectedItems
-        //{
-        //    get { return GetValue(SelectedItemsProperty); }
-        //    set { SetValue(SelectedItemsProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty SelectedItemsProperty =
-        //    DependencyProperty.Register("SelectedItems", typeof(object), typeof(MultipleComboBox), new PropertyMetadata(null));
-
         public bool IsMultiSelectCheckBoxEnabled
         {
             get { return (bool)GetValue(IsMultiSelectCheckBoxEnabledProperty); }
@@ -133,6 +124,7 @@ namespace Worktile.WtControls
                     {
                         SelectedVisibility = Visibility.Visible;
                         EmptyTextVisibility = Visibility.Collapsed;
+
                     }
                 }
             }

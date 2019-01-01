@@ -18,6 +18,8 @@ using Worktile.Common;
 using Worktile.Views;
 using Worktile.Views.Mission;
 using Worktile.WtRequestClient;
+using Worktile.Views.IM;
+using Windows.UI.Xaml.Navigation;
 
 namespace Worktile
 {
@@ -32,6 +34,21 @@ namespace Worktile
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<WtApp> AppItems { get; }
+
+        //private WtApp _selectedApp;
+        //public WtApp SelectedApp
+        //{
+        //    get => _selectedApp;
+        //    set
+        //    {
+        //        if (_selectedApp != value)
+        //        {
+        //            _selectedApp = value;
+        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedApp)));
+        //            ContentFrameNavigate(value.Name);
+        //        }
+        //    }
+        //}
 
         private bool _isActive;
         public bool IsActive
@@ -129,6 +146,7 @@ namespace Worktile
                 var item = CommonData.Apps.Single(a => a.Name == app.Name);
                 AppItems.Add(item);
             });
+            //SelectedApp = AppItems.First();
             Logo = new BitmapImage(new Uri(CommonData.ApiUserMeConfig.Box.LogoUrl + CommonData.Team.Logo));
         }
 
@@ -141,18 +159,44 @@ namespace Worktile
             else
             {
                 var app = args.SelectedItem as WtApp;
-                switch (app.Name)
-                {
-                    case "mission":
-                        ContentFrame.Navigate(typeof(MissionPage));
-                        break;
-                }
+                ContentFrameNavigate(app.Name);
             }
         }
 
-        private void ContentFrame_Navigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        private void ContentFrameNavigate(string app)
+        {
+            switch (app)
+            {
+                case "message":
+                    ContentFrame.Navigate(typeof(IMPage));
+                    break;
+                case "mission":
+                    ContentFrame.Navigate(typeof(MissionPage));
+                    break;
+            }
+        }
+
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
             Nav.IsBackEnabled = ContentFrame.CanGoBack;
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                int index = -1;
+                switch (e.SourcePageType)
+                {
+                    case Type t when e.SourcePageType == typeof(IMPage):
+                        index = 0;
+                        break;
+                    case Type t when e.SourcePageType == typeof(MissionPage):
+                        index = 2;
+                        break;
+                }
+                if (index != -1)
+                {
+                    var item = Nav.MenuItems[index] as NavigationViewItem;
+                    item.IsSelected = true;
+                }
+            }
         }
 
         private void Nav_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)

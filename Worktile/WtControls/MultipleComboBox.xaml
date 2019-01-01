@@ -7,6 +7,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
+    x:Name="MulComboBox"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
@@ -15,7 +16,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Button Background="Transparent">
+        <Button Background="Transparent" Width="{Binding Width, ElementName=MulComboBox}" HorizontalContentAlignment="Stretch">
             <Grid>
                 <ItemsControl ItemTemplate="{x:Bind SelectedItemTemplate}"
                               ItemsSource="{x:Bind _selectedItems}"

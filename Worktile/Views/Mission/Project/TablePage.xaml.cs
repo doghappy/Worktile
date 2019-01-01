@@ -110,7 +110,7 @@ namespace Worktile.Views.Mission.Project
                 if (item.Properties.ContainsKey("assignee"))
                 {
                     string assineeUid = item.Properties["assignee"].Value<string>("value");
-                    gridItem.Assignee = CommonData.GetAvatar(assineeUid, 40);
+                    gridItem.Assignee = AvatarHelper.GetAvatar(assineeUid, 40);
                 }
 
                 if (item.Properties.ContainsKey("due"))

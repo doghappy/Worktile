@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Worktile.Views.Mission.Project.Detail;
-using Newtonsoft.Json.Linq;
 using Worktile.Enums;
 using Worktile.WtRequestClient;
 using System.Threading.Tasks;
 using Worktile.ApiModels.ApiMissionVnexTaskProperties;
 using Data = Worktile.ApiModel.ApiMissionVnextTask.Data;
+using Windows.UI.Core;
 
 namespace Worktile.Domain.Mission.Info
 {
@@ -30,9 +30,10 @@ namespace Worktile.Domain.Mission.Info
                 "attachment",
                 "child",
                 "workload",
-                "relation"
+                "relation",
+                "completed_at"
             };
-            _hasOptionControls = new[] { "Priority", "ComboBox", "CheckBox" };
+            _hasOptionControls = new[] { "Priority", "ComboBox", "CheckBox", "Tag" };
         }
 
         readonly string[] _ignorePropertyKeys;
@@ -51,6 +52,7 @@ namespace Worktile.Domain.Mission.Info
                     IPropertyReader reader = null;
                     switch (prop.Type)
                     {
+                        case WtTaskPropertyType.Text:
                         case WtTaskPropertyType.Number:
                             reader = new TextBoxReader();
                             break;
@@ -64,45 +66,56 @@ namespace Worktile.Domain.Mission.Info
                         case WtTaskPropertyType.MultiSelect:
                             reader = new CheckBoxReader();
                             break;
+                        case WtTaskPropertyType.Tag:
+                            reader = new TagReader();
+                            break;
+                        case WtTaskPropertyType.DateTime:
+                            reader = new DateTimeReader();
+                            break;
+                        case WtTaskPropertyType.DateSpan:
+                            reader = new DateSpanReader();
+                            break;
                     }
                     if (reader != null)
                     {
                         reader.Read(prop, item, task);
+                        item.Control = reader.Control;
                         yield return item;
                     }
                 }
             }
         }
 
-        public async Task LoadOptionsAsync(string taskId, IEnumerable<PropertyItem> properties)
+        public void LoadOptions(string taskId, IEnumerable<PropertyItem> properties, CoreDispatcher dispatcher)
         {
             var client = new WtHttpClient();
-            foreach (var property in properties)
+            var hasOptionsProps = properties.Where(p => _hasOptionControls.Contains(p.Control));
+            Parallel.ForEach(hasOptionsProps, async property =>
             {
-                if (_hasOptionControls.Contains(property.Control))
+                string uri = $"api/mission-vnext/tasks/{taskId}/properties/{property.PropertyId}/options";
+                var data = await client.GetAsync<ApiMissionVnexTaskProperties>(uri);
+                var dataSource = new List<DropdownItem>();
+                IPropertyReader reader = null;
+                switch (property.Control)
                 {
-                    string uri = $"api/mission-vnext/tasks/{taskId}/properties/{property.PropertyId}/options";
-                    var data = await client.GetAsync<ApiMissionVnexTaskProperties>(uri);
-                    var dataSource = new List<DropdownItem>();
-                    IPropertyReader reader = null;
-                    switch (property.Control)
-                    {
-                        case "Priority":
-                            reader = new PriorityReader();
-                            break;
-                        case "ComboBox":
-                            reader = new ComboBoxReader();
-                            break;
-                        case "CheckBox":
-                            reader = new CheckBoxReader();
-                            break;
-                    }
-                    if (reader != null)
-                    {
-                        reader.LoadOptions(property, data.Data.Value);
-                    }
+                    case "Priority":
+                        reader = new PriorityReader();
+                        break;
+                    case "ComboBox":
+                        reader = new ComboBoxReader();
+                        break;
+                    case "CheckBox":
+                        reader = new CheckBoxReader();
+                        break;
+                    case "Tag":
+                        reader = new TagReader();
+                        break;
                 }
-            }
+                if (reader != null)
+                {
+                   await reader.LoadOptionsAsync(property, data.Data.Value, dispatcher);
+                }
+            });
         }
     }
 }

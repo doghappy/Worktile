@@ -21,7 +21,7 @@ namespace Worktile.Domain.Mission.Kanban
             string uid = TaskHelper.GetPropertyValue<string>(jObj, property.Key);
             if (!string.IsNullOrEmpty(uid))
             {
-                var avatar = CommonData.GetAvatar(uid, 40);
+                var avatar = AvatarHelper.GetAvatar(uid, 40);
                 if (property.RawKey == "assignee")
                 {
                     kanban.Due = avatar;
