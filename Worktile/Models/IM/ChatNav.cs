@@ -19,5 +19,6 @@ namespace Worktile.Models.IM
         public int UnRead { get; set; }
         public string NamePinyin { get; set; }
         public string Name { get; set; }
+        public bool IsBot { get; set; }
     }
 }

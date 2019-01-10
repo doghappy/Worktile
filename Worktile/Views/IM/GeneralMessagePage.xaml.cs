@@ -18,9 +18,9 @@ using Worktile.Models.IM;
 
 namespace Worktile.Views.IM
 {
-    public sealed partial class SessionChatPage : Page, INotifyPropertyChanged
+    public sealed partial class GeneralMessagePage : Page, INotifyPropertyChanged
     {
-        public SessionChatPage()
+        public GeneralMessagePage()
         {
             InitializeComponent();
             NavItems = new ObservableCollection<NavItem>

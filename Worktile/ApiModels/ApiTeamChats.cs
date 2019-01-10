@@ -308,7 +308,7 @@ namespace Worktile.ApiModel.ApiTeamChats
         public string Team { get; set; }
 
         [JsonProperty("is_bot")]
-        public int IsBot { get; set; }
+        public bool IsBot { get; set; }
 
         [JsonProperty("latest_message_id", NullValueHandling = NullValueHandling.Ignore)]
         public string LatestMessageId { get; set; }

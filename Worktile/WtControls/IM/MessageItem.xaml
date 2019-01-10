@@ -12,14 +12,33 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <wtcontrols:WtAvatar/>
+        <wtcontrols:WtAvatar AvatarSize="38"
+                             Margin="8"
+                             DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                             AvatarBackground="{x:Bind AvatarBackground, Mode=OneWay}"
+                             ProfilePicture="{x:Bind ProfilePicture, Mode=OneWay}"
+                             Initials="{x:Bind Initials, Mode=OneWay}"
+                             ChatType="{x:Bind ChatType, Mode=OneWay}"/>
+
+        <StackPanel Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Margin="0 4">
+                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" FontSize="12"/>
+                <TextBlock Text="15:35"
+                           Margin="12 0 0 0"
+                           FontSize="12"
+                           Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+            </StackPanel>
+            <TextBlock Text="日程提醒" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+        </StackPanel>
+
+        <local:CalendarMessage Grid.Row="1" Grid.Column="1"/>
     </Grid>
 </UserControl>

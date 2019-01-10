@@ -8,6 +8,7 @@
     xmlns:mission="using:Worktile.WtControls.Mission"
     xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:tethys="using:Worktile.Tethys"
+    xmlns:im="using:Worktile.WtControls.IM"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -57,6 +58,10 @@
         <Border Padding="8 0" Background="{StaticResource DangerBrush}" CornerRadius="8" HorizontalAlignment="Left">
             <TextBlock Text="555" FontSize="12" Foreground="White"/>
         </Border>
-      
+        <im:MessageItem DisplayName="FromDisplayName"
+                        AvatarBackground="Blue"
+                        Initials="Te"
+                        ChatType="Session"
+                        Margin="0 0 0 16"/>
     </StackPanel>
 </Page>

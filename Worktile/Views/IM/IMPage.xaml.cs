@@ -60,10 +60,10 @@ namespace Worktile.Views.IM
                 {
                     _selectedChatNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChatNav)));
-                    if (value.Type == ChatType.Channel)
-                        ContentFrame.Navigate(typeof(ChannelChatPage), value);
+                    if (value.IsBot)
+                        ContentFrame.Navigate(typeof(ChannelMessagePage), value);
                     else
-                        ContentFrame.Navigate(typeof(SessionChatPage), value);
+                        ContentFrame.Navigate(typeof(GeneralMessagePage), value);
                 }
             }
         }
@@ -121,7 +121,8 @@ namespace Worktile.Views.IM
                     UnRead = item.UnRead,
                     //NamePinyin = item.To.DisplayName,
                     Name = item.To.Name,
-                    Type = ChatType.Session
+                    Type = ChatType.Session,
+                    IsBot = item.IsBot
                 });
             }
             list.Sort((a, b) =>

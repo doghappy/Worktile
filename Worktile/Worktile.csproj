@@ -204,14 +204,17 @@
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IM\ChannelChatPage.xaml.cs">
-      <DependentUpon>ChannelChatPage.xaml</DependentUpon>
+    <Compile Include="Views\IM\ChannelMessagePage.xaml.cs">
+      <DependentUpon>ChannelMessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IM\IMPage.xaml.cs">
       <DependentUpon>IMPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IM\SessionChatPage.xaml.cs">
-      <DependentUpon>SessionChatPage.xaml</DependentUpon>
+    <Compile Include="Views\IM\GeneralMessagePage.xaml.cs">
+      <DependentUpon>GeneralMessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IM\UnreadPage.xaml.cs">
+      <DependentUpon>UnreadPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Mission\AnalyticInsight\MemberDelayPage.xaml.cs">
       <DependentUpon>MemberDelayPage.xaml</DependentUpon>
@@ -281,6 +284,9 @@
     </Compile>
     <Compile Include="WtControls\Flyout\TaskStateList.xaml.cs">
       <DependentUpon>TaskStateList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WtControls\IM\CalendarMessage.xaml.cs">
+      <DependentUpon>CalendarMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WtControls\IM\MessageItem.xaml.cs">
       <DependentUpon>MessageItem.xaml</DependentUpon>
@@ -379,6 +385,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\MessagePivot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -387,7 +397,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\IM\ChannelChatPage.xaml">
+    <Page Include="Views\IM\ChannelMessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -395,7 +405,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\IM\SessionChatPage.xaml">
+    <Page Include="Views\IM\GeneralMessagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IM\UnreadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -491,6 +505,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WtControls\IM\CalendarMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WtControls\IM\MessageItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -522,7 +540,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.2</Version>
+      <Version>6.2.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
       <Version>5.0.0</Version>
@@ -541,7 +559,9 @@
       <Name>Worktile.WtRequestClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
