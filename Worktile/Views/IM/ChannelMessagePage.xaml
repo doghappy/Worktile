@@ -42,7 +42,10 @@
             </Button>-->
         </Grid>
 
-        <Pivot Grid.Row="1" ItemsSource="{x:Bind ViewModel.NavItems}" SelectedItem="{x:Bind ViewModel.SelectedNav, Mode=TwoWay}">
+        <Pivot Grid.Row="1"
+               ItemsSource="{x:Bind ViewModel.NavItems}"
+               SelectedItem="{x:Bind ViewModel.SelectedNav, Mode=TwoWay}"
+               SelectionChanged="Pivot_SelectionChanged">
             <Pivot.Resources>
                 <StaticResource x:Key="PivotHeaderBackground" ResourceKey="NavigationViewTopPaneBackground"/>
                 <Thickness x:Key="PivotItemMargin">0</Thickness>
@@ -54,31 +57,30 @@
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
                 <DataTemplate x:DataType="modelIM:ChatNavItem">
-                    <ListView ItemsSource="{x:Bind Messages, Mode=OneWay}"
-                              SelectionMode="None"
-                              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                        <!--<ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                            </Style>
-                        </ListView.ItemContainerStyle>-->
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="message:Message">
-                                <controlIM:MessageItem DisplayName="{x:Bind From.DisplayName}"
-                                                AvatarBackground="{x:Bind From.Background}"
-                                                Initials="{x:Bind From.Initials}"
-                                                ChatType="Session"
-                                                Margin="0 0 0 16"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <ScrollViewer ViewChanged="ScrollViewer_ViewChanged" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                        <ItemsControl ItemsSource="{x:Bind Messages, Mode=OneWay}" Margin="12">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="message:Message">
+                                    <controlIM:MessageItem DisplayName="{x:Bind From.DisplayName}"
+                                                           AvatarBackground="{x:Bind From.Background}"
+                                                           Initials="{x:Bind From.Initials}"
+                                                           ChatType="Session"
+                                                           ProfilePicture="{x:Bind From.Avatar}"
+                                                           Message="{x:Bind}"
+                                                           Margin="0 0 0 16"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </DataTemplate>
             </Pivot.ItemTemplate>
         </Pivot>
+        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
 
         <!--<NavigationView Grid.Row="1"
                         PaneDisplayMode="Top"

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Windows.UI;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Worktile.Models.IM.Message
 {
@@ -15,19 +16,9 @@ namespace Worktile.Models.IM.Message
         public string Avatar { get; set; }
 
         [JsonProperty("display_name")]
-        private string _displayName;
-        public string DisplayName
-        {
-            get => _displayName;
-            set
-            {
-                _displayName = value;
-                //Background = AvatarHelper.GetColor(value);
-                //Initials = AvatarHelper.GetInitials(value);
-            }
-        }
+        public string DisplayName { get; set; }
 
-        public Color Background { get; private set; }
-        public string Initials { get; private set; }
+        public Color Background { get; set; }
+        public string Initials { get; set; }
     }
 }

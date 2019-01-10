@@ -24,6 +24,6 @@ namespace Worktile.Models.IM.Message
         public string Color { get; set; }
 
         [JsonProperty("fields")]
-        public List<Field> Fields { get; set; }
+        public List<MessageField> Fields { get; set; }
     }
 }

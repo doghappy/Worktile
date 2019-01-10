@@ -2,7 +2,7 @@
 
 namespace Worktile.Models.IM.Message
 {
-    public class Field
+    public class MessageField
     {
         [JsonProperty("title")]
         public string Title { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -12,16 +13,32 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-//https://go.microsoft.com/fwlink/?LinkId=234236 上介绍了“用户控件”项模板
+using Worktile.Models.IM.Message;
 
 namespace Worktile.WtControls.IM
 {
-    public sealed partial class CalendarMessage : UserControl
+    public sealed partial class CalendarMessage : UserControl, INotifyPropertyChanged
     {
         public CalendarMessage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private Message _message;
+        public Message Message
+        {
+            get => _message;
+            set
+            {
+                if (_message != value)
+                {
+                    _message = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
+                }
+            }
+        }
+
     }
 }

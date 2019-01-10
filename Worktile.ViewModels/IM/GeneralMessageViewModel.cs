@@ -26,6 +26,8 @@ namespace Worktile.ViewModels.IM
 
         public override ObservableCollection<ChatNavItem> NavItems { get; }
 
+        protected override string MessageUrl => throw new NotImplementedException();
+
         protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(prop));

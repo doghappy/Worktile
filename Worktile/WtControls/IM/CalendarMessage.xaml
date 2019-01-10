@@ -5,7 +5,9 @@
     xmlns:local="using:Worktile.WtControls.IM"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
+    xmlns:msg="using:Worktile.Models.IM.Message"
     d:DesignHeight="300"
     d:DesignWidth="640">
 
@@ -18,16 +20,14 @@
           BorderBrush="{StaticResource WarningBrush}"
           VerticalAlignment="Top"
           HorizontalAlignment="Left"
-          MinWidth="640"
+          Width="640"
           Padding="18 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -37,9 +37,9 @@
                   Margin="0 0 8 0"
                   VerticalAlignment="Top"/>
 
-        <TextBlock Grid.Column="1" Text="例会" Margin="0 0 0 12"/>
+        <TextBlock Grid.Column="1" Text="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay}" Margin="0 0 0 12"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="开始时间"/>
+        <!--<TextBlock Grid.Row="1" Grid.Column="1" Text="开始时间"/>
         <TextBlock Grid.Row="1" Grid.Column="2" Text="结束时间"/>
 
         <TextBlock Grid.Row="2"
@@ -49,6 +49,21 @@
         <TextBlock Grid.Row="2"
                    Grid.Column="2"
                    Text="2018年12月27日 15:40"
-                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>-->
+        <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind Message.Body.InlineAttachment.Fields, Mode=OneWay}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="msg:MessageField">
+                    <StackPanel Width="280" Margin="0 0 0 12">
+                        <TextBlock Text="{x:Bind Title}"/>
+                        <TextBlock Text="{x:Bind Value}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

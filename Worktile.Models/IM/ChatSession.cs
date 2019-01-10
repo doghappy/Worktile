@@ -19,6 +19,7 @@ namespace Worktile.Models.IM
         public string NamePinyin { get; set; }
         public string Name { get; set; }
         public bool IsBot { get; set; }
+        public int? Component { get; set; }
     }
 
     public enum ChatType

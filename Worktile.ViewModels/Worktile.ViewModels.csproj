@@ -132,9 +132,21 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Worktile.ApiModels\Worktile.ApiModels.csproj">
+      <Project>{2BE85DB2-67A6-4717-8667-91D0BCBA0131}</Project>
+      <Name>Worktile.ApiModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worktile.Common\Worktile.Common.csproj">
+      <Project>{9FA3672C-80E6-45E1-B493-3EFF5E9F719C}</Project>
+      <Name>Worktile.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Worktile.Models\Worktile.Models.csproj">
       <Project>{D39BBFA0-47A5-4CBD-AD30-6AA3C41B35C5}</Project>
       <Name>Worktile.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worktile.WtRequestClient\Worktile.WtRequestClient.csproj">
+      <Project>{64C1D453-F677-4225-9A30-A5B3C368EFF0}</Project>
+      <Name>Worktile.WtRequestClient</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

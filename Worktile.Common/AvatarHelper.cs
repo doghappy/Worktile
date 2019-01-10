@@ -43,7 +43,20 @@ namespace Worktile.Common
             return WtColorHelper.GetColor(WtColorHelper.GetNewColor(hex));
         }
 
-        public static BitmapImage GetAvatarUrl(string avatar, int size)
+        public static BitmapImage GetAvatarBitmap(string avatar, int size)
+        {
+            string url = GetAvatarUrl(avatar, size);
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return null;
+            }
+            else
+            {
+                return new BitmapImage(new Uri(url));
+            }
+        }
+
+        public static string GetAvatarUrl(string avatar, int size)
         {
             if (string.IsNullOrWhiteSpace(avatar) || avatar == "default.png")
             {
@@ -53,8 +66,7 @@ namespace Worktile.Common
             {
                 string ext = Path.GetExtension(avatar);
                 string name = Path.GetFileNameWithoutExtension(avatar);
-                string uri = DataSource.ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
-                return new BitmapImage(new Uri(uri));
+                return DataSource.ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
             }
         }
 
@@ -67,8 +79,9 @@ namespace Worktile.Common
             }
             return new Avatar
             {
-                ProfilePicture = GetAvatarUrl(member.Avatar, avatarSize),
-                DisplayName = member.DisplayName
+                ProfilePicture = GetAvatarBitmap(member.Avatar, avatarSize),
+                DisplayName = member.DisplayName,
+                Initials = GetInitials(member.DisplayName)
             };
         }
     }

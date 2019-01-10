@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Enums.IM;
 using Worktile.Models.IM;
+using Worktile.Models.IM.Message;
 
 namespace Worktile.WtControls.IM
 {
@@ -56,18 +57,6 @@ namespace Worktile.WtControls.IM
                 }
             }
         }
-
-
-        //public string DisplayName
-        //{
-        //    get { return (string)GetValue(DisplayNameProperty); }
-        //    set { SetValue(DisplayNameProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty DisplayNameProperty =
-        //    DependencyProperty.Register("DisplayName", typeof(string), typeof(MessageItem), new PropertyMetadata(null));
-
-
 
         private string _initials;
         public string Initials
@@ -110,5 +99,20 @@ namespace Worktile.WtControls.IM
                 }
             }
         }
+
+        private Message _message;
+        public Message Message
+        {
+            get => _message;
+            set
+            {
+                if (_message != value)
+                {
+                    _message = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
+                }
+            }
+        }
+
     }
 }

@@ -36,9 +36,10 @@
                            FontSize="12"
                            Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
             </StackPanel>
-            <TextBlock Text="日程提醒" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+            <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
+                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
 
-        <local:CalendarMessage Grid.Row="1" Grid.Column="1"/>
+        <local:CalendarMessage Grid.Row="1" Grid.Column="1" Message="{x:Bind Message, Mode=OneWay}"/>
     </Grid>
 </UserControl>

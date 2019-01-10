@@ -142,6 +142,7 @@
     <Compile Include="ApiTeamLite.cs" />
     <Compile Include="ApiUserMe.cs" />
     <Compile Include="ApiUserSignIn.cs" />
+    <Compile Include="IM\ApiPigeonMessages.cs" />
     <Compile Include="ProjectJoin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Worktile.ApiModels.rd.xml" />

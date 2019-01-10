@@ -329,13 +329,13 @@ namespace Worktile.ApiModel.ApiTeamChats
         [JsonProperty("show")]
         public int Show { get; set; }
 
-        [JsonProperty("component", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Component { get; set; }
+        [JsonProperty("component")]
+        public int? Component { get; set; }
 
-        [JsonProperty("menus", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("menus")]
         public List<object> Menus { get; set; }
 
-        [JsonProperty("service_id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("service_id")]
         public string ServiceId { get; set; }
     }
 
