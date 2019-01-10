@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Collections;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -121,5 +122,10 @@ namespace Worktile.Views.IM
                 }
             }
         }
+    }
+
+    class MessageSource : IIncrementalSource<Message>
+    {
+
     }
 }
