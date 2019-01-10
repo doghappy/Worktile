@@ -92,44 +92,10 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ApiModels\ApiMissionVnexTaskProperties.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextKanbanContent.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextProjectNav.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextProjectsDetail.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextTableContent.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextTask.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextTasksIdstates.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkAddon.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkAddonsKeyGroups.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightGroups.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightMemberDelay.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightMemberProgress.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightProjectDelay.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightProjectProgress.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkMyDirectedActive.cs" />
-    <Compile Include="ApiModels\ApiMissionVnextWorkMyGeneric.cs" />
-    <Compile Include="ApiModels\ApiTeam.cs" />
-    <Compile Include="ApiModels\ApiTeamChats.cs" />
-    <Compile Include="ApiModels\ApiTeamDomainCheck.cs" />
-    <Compile Include="ApiModels\ApiTeamLite.cs" />
-    <Compile Include="ApiModels\ApiUserMe.cs" />
-    <Compile Include="ApiModels\ApiUserSignIn.cs" />
-    <Compile Include="ApiModels\ProjectJoin.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\AvatarHelper.cs" />
-    <Compile Include="Common\CommonData.cs" />
-    <Compile Include="Common\HashEncryptor.cs" />
-    <Compile Include="Common\IncrementalCollection.cs" />
-    <Compile Include="Common\KanbanPageHelper.cs" />
-    <Compile Include="Common\TaskHelper.cs" />
     <Compile Include="Common\TestHelper.cs" />
-    <Compile Include="Common\WtDateTimeHelper.cs" />
-    <Compile Include="Common\UiExtension.cs" />
-    <Compile Include="Common\UtilityTool.cs" />
-    <Compile Include="Common\WtColorHelper.cs" />
-    <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
@@ -163,40 +129,9 @@
     <Compile Include="Domain\Mission\Kanban\AttachmentReader.cs" />
     <Compile Include="Domain\Mission\Kanban\PropertyReader.cs" />
     <Compile Include="Domain\Mission\Kanban\KanbanDataReader.cs" />
-    <Compile Include="Models\IM\Message\Message.cs" />
-    <Compile Include="Models\IM\Message\MessageBody.cs" />
-    <Compile Include="Models\IM\Message\MessageInlineAttachment.cs" />
-    <Compile Include="Models\IM\Message\MessageField.cs" />
-    <Compile Include="Models\IM\Message\MessageFrom.cs" />
-    <Compile Include="Models\IM\Message\MessageTo.cs" />
-    <Compile Include="Enums\IM\MessageType.cs" />
-    <Compile Include="Models\BeginEnd.cs" />
-    <Compile Include="Models\DateSpan.cs" />
-    <Compile Include="Enums\WtTaskPropertyFrom.cs" />
-    <Compile Include="Enums\WtTaskPropertyType.cs" />
-    <Compile Include="Enums\WtHttpResponseCode.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Avatar.cs" />
-    <Compile Include="Models\ColorMapItem.cs" />
-    <Compile Include="Models\IM\ChatNav.cs" />
-    <Compile Include="Enums\IM\ChatType.cs" />
-    <Compile Include="Models\Kanban\KanbanGroup.cs" />
-    <Compile Include="Models\Kanban\KanbanItem.cs" />
-    <Compile Include="Models\Kanban\KanbanItemProperty.cs" />
-    <Compile Include="Models\Mission\AnalyticInsight\TopNavItem.cs" />
-    <Compile Include="Models\Mission\WorkloadEstimate.cs" />
-    <Compile Include="Models\Mission\WorkloadValue.cs" />
-    <Compile Include="Models\Mission\WtMetaProperty.cs" />
-    <Compile Include="Models\WtDate.cs" />
-    <Compile Include="Models\Mission\WtTask\WtTaskProperty.cs" />
-    <Compile Include="Models\TaskState.cs" />
-    <Compile Include="Models\TaskType.cs" />
-    <Compile Include="Enums\RoleType.cs" />
-    <Compile Include="Enums\Visibility.cs" />
-    <Compile Include="Models\WtApp.cs" />
-    <Compile Include="Models\WtIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
@@ -550,9 +485,29 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Worktile.ApiModels\Worktile.ApiModels.csproj">
+      <Project>{2be85db2-67a6-4717-8667-91d0bcba0131}</Project>
+      <Name>Worktile.ApiModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worktile.Common\Worktile.Common.csproj">
+      <Project>{9fa3672c-80e6-45e1-b493-3eff5e9f719c}</Project>
+      <Name>Worktile.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worktile.Enums\Worktile.Enums.csproj">
+      <Project>{3a2fe488-d5e9-4267-9161-6d40208d82a5}</Project>
+      <Name>Worktile.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worktile.Models\Worktile.Models.csproj">
+      <Project>{d39bbfa0-47a5-4cbd-ad30-6aa3c41b35c5}</Project>
+      <Name>Worktile.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Worktile.Tethys\Worktile.Tethys.csproj">
       <Project>{603175b4-99dc-4390-99f3-0f868d0c30e2}</Project>
       <Name>Worktile.Tethys</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worktile.ViewModels\Worktile.ViewModels.csproj">
+      <Project>{44ad1759-2410-45bc-8692-b4c607a5e6dd}</Project>
+      <Name>Worktile.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Worktile.WtRequestClient\Worktile.WtRequestClient.csproj">
       <Project>{64c1d453-f677-4225-9a30-a5b3c368eff0}</Project>

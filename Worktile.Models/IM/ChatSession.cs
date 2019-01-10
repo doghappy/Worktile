@@ -1,11 +1,10 @@
 ﻿using System;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
-using Worktile.Enums.IM;
 
 namespace Worktile.Models.IM
 {
-    public class ChatNav
+    public class ChatSession
     {
         public string Id { get; set; }
         public string DisplayName { get; set; }
@@ -20,5 +19,12 @@ namespace Worktile.Models.IM
         public string NamePinyin { get; set; }
         public string Name { get; set; }
         public bool IsBot { get; set; }
+    }
+
+    public enum ChatType
+    {
+        Channel,
+        Group,
+        Session
     }
 }

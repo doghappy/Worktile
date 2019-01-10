@@ -2,7 +2,7 @@
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Worktile.Enums.IM;
+using Worktile.Models.IM;
 
 namespace Worktile.WtControls
 {

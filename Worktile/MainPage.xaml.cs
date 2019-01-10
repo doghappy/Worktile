@@ -105,7 +105,7 @@ namespace Worktile
             }
             else
             {
-                WtHttpClient.SetBaseAddress(CommonData.SubDomain);
+                WtHttpClient.SetBaseAddress(DataSource.SubDomain);
                 WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
                 Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
                 await RequestApiUserMeAsync();
@@ -118,18 +118,18 @@ namespace Worktile
         {
             var client = new WtHttpClient();
             var me = await client.GetAsync<ApiUserMe>("/api/user/me");
-            CommonData.ApiUserMeConfig = me.Data.Config;
-            CommonData.ApiUserMe = me.Data.Me;
-            DisplayName = CommonData.ApiUserMe.DisplayName;
+            DataSource.ApiUserMeConfig = me.Data.Config;
+            DataSource.ApiUserMe = me.Data.Me;
+            DisplayName = DataSource.ApiUserMe.DisplayName;
 
-            string bgImg = CommonData.ApiUserMe.Preferences.BackgroundImage;
+            string bgImg = DataSource.ApiUserMe.Preferences.BackgroundImage;
             if (bgImg.StartsWith("desktop-") && bgImg.EndsWith(".jpg"))
             {
                 BgImage = new BitmapImage(new Uri("ms-appx:///Assets/Images/Background/" + bgImg));
             }
             else
             {
-                string imgUriString = CommonData.ApiUserMeConfig.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
+                string imgUriString = DataSource.ApiUserMeConfig.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
                 byte[] buffer = await client.GetByteArrayAsync(imgUriString);
                 BgImage = await UtilityTool.GetImageFromBytesAsync(buffer);
             }
@@ -139,15 +139,15 @@ namespace Worktile
         {
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeam>("/api/team");
-            CommonData.Team = data.Data;
-            AppItems.Add(CommonData.Apps.SingleOrDefault(a => a.Name == "message"));
-            CommonData.Team.Apps.ForEach(app =>
+            DataSource.Team = data.Data;
+            AppItems.Add(DataSource.Apps.SingleOrDefault(a => a.Name == "message"));
+            DataSource.Team.Apps.ForEach(app =>
             {
-                var item = CommonData.Apps.Single(a => a.Name == app.Name);
+                var item = DataSource.Apps.Single(a => a.Name == app.Name);
                 AppItems.Add(item);
             });
             //SelectedApp = AppItems.First();
-            Logo = new BitmapImage(new Uri(CommonData.ApiUserMeConfig.Box.LogoUrl + CommonData.Team.Logo));
+            Logo = new BitmapImage(new Uri(DataSource.ApiUserMeConfig.Box.LogoUrl + DataSource.Team.Logo));
         }
 
         private void Nav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

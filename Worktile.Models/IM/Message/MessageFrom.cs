@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Windows.UI;
-using Worktile.Common;
 
 namespace Worktile.Models.IM.Message
 {
@@ -23,8 +22,8 @@ namespace Worktile.Models.IM.Message
             set
             {
                 _displayName = value;
-                Background = AvatarHelper.GetColor(value);
-                Initials = AvatarHelper.GetInitials(value);
+                //Background = AvatarHelper.GetColor(value);
+                //Initials = AvatarHelper.GetInitials(value);
             }
         }
 

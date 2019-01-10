@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wtcontrols="using:Worktile.WtControls"
+    xmlns:modelIM="using:Worktile.Models.IM"
     mc:Ignorable="d">
 
     <Grid>
@@ -22,16 +23,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <wtcontrols:WtAvatar ChatType="{x:Bind ChatNav.Type, Mode=OneWay}"
+            <wtcontrols:WtAvatar ChatType="{x:Bind ViewModel.Session.Type, Mode=OneWay}"
                                  AvatarSize="30"
-                                 AvatarBackground="{x:Bind ChatNav.Background, Mode=OneWay}"
-                                 Initials="{x:Bind ChatNav.Initials, Mode=OneWay}"
-                                 ProfilePicture="{x:Bind ChatNav.ProfilePicture, Mode=OneWay}"/>
+                                 AvatarBackground="{x:Bind ViewModel.Session.Background, Mode=OneWay}"
+                                 Initials="{x:Bind ViewModel.Session.Initials, Mode=OneWay}"
+                                 ProfilePicture="{x:Bind ViewModel.Session.ProfilePicture, Mode=OneWay}"/>
 
             <TextBlock Grid.Column="1"
                        Margin="8 0 0 0"
                        Style="{ThemeResource SubtitleTextBlockStyle}"
-                       Text="{x:Bind ChatNav.DisplayName, Mode=OneWay}"/>
+                       Text="{x:Bind ViewModel.Session.DisplayName, Mode=OneWay}"/>
             <!--<Button Grid.Column="1" Margin="12 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Bind ChatNav.DisplayName, Mode=OneWay}"/>
@@ -43,10 +44,10 @@
                         PaneDisplayMode="Top"
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="False"
-                        SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}"
-                        MenuItemsSource="{x:Bind NavItems}">
+                        SelectedItem="{x:Bind ViewModel.SelectedNav, Mode=TwoWay}"
+                        MenuItemsSource="{x:Bind ViewModel.NavItems}">
             <NavigationView.MenuItemTemplate>
-                <DataTemplate x:DataType="local:NavItem">
+                <DataTemplate x:DataType="modelIM:ChatNavItem">
                     <NavigationViewItem Content="{x:Bind Name}" />
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>

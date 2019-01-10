@@ -16,7 +16,7 @@ namespace Worktile.Common
             }
             else
             {
-                WtHttpClient.SetBaseAddress(CommonData.SubDomain);
+                WtHttpClient.SetBaseAddress(DataSource.SubDomain);
                 WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
             }
         }

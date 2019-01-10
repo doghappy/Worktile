@@ -7,7 +7,7 @@ using Worktile.Models;
 
 namespace Worktile.Common
 {
-    static class WtColorHelper
+    public static class WtColorHelper
     {
         static WtColorHelper()
         {

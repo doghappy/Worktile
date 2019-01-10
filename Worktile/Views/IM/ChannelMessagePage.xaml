@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:message="using:Worktile.Models.IM.Message"
-    xmlns:im="using:Worktile.WtControls.IM"
+    xmlns:controlIM="using:Worktile.WtControls.IM"
+    xmlns:modelIM="using:Worktile.Models.IM"
     mc:Ignorable="d">
 
     <Grid>
@@ -23,16 +24,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <wtcontrols:WtAvatar ChatType="{x:Bind ChatNav.Type, Mode=OneWay}"
+            <wtcontrols:WtAvatar ChatType="{x:Bind ViewModel.Session.Type, Mode=OneWay}"
                                  AvatarSize="30"
-                                 AvatarBackground="{x:Bind ChatNav.Background, Mode=OneWay}"
-                                 Initials="{x:Bind ChatNav.Initials, Mode=OneWay}"
-                                 ProfilePicture="{x:Bind ChatNav.ProfilePicture, Mode=OneWay}"/>
+                                 AvatarBackground="{x:Bind ViewModel.Session.Background, Mode=OneWay}"
+                                 Initials="{x:Bind ViewModel.Session.Initials, Mode=OneWay}"
+                                 ProfilePicture="{x:Bind ViewModel.Session.ProfilePicture, Mode=OneWay}"/>
 
             <TextBlock Grid.Column="1"
                        Margin="8 0 0 0"
                        Style="{ThemeResource SubtitleTextBlockStyle}"
-                       Text="{x:Bind ChatNav.DisplayName, Mode=OneWay}"/>
+                       Text="{x:Bind ViewModel.Session.DisplayName, Mode=OneWay}"/>
             <!--<Button Grid.Column="1" Margin="12 0 0 0" Style="{ThemeResource TextBlockButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Bind ChatNav.DisplayName, Mode=OneWay}"/>
@@ -41,18 +42,18 @@
             </Button>-->
         </Grid>
 
-        <Pivot Grid.Row="1" ItemsSource="{x:Bind NavItems}" SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}">
+        <Pivot Grid.Row="1" ItemsSource="{x:Bind ViewModel.NavItems}" SelectedItem="{x:Bind ViewModel.SelectedNav, Mode=TwoWay}">
             <Pivot.Resources>
                 <StaticResource x:Key="PivotHeaderBackground" ResourceKey="NavigationViewTopPaneBackground"/>
                 <Thickness x:Key="PivotItemMargin">0</Thickness>
             </Pivot.Resources>
             <Pivot.HeaderTemplate>
-                <DataTemplate x:DataType="local:NavItem">
+                <DataTemplate x:DataType="modelIM:ChatNavItem">
                     <TextBlock Text="{x:Bind Name}" FontSize="{ThemeResource ContentControlFontSize}"/>
                 </DataTemplate>
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
-                <DataTemplate x:DataType="local:NavItem">
+                <DataTemplate x:DataType="modelIM:ChatNavItem">
                     <ListView ItemsSource="{x:Bind Messages, Mode=OneWay}"
                               SelectionMode="None"
                               Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -67,7 +68,7 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="message:Message">
-                                <im:MessageItem DisplayName="{x:Bind From.DisplayName}"
+                                <controlIM:MessageItem DisplayName="{x:Bind From.DisplayName}"
                                                 AvatarBackground="{x:Bind From.Background}"
                                                 Initials="{x:Bind From.Initials}"
                                                 ChatType="Session"

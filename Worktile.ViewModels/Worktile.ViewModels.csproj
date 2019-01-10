@@ -120,6 +120,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IM\GeneralMessageViewModel.cs" />
+    <Compile Include="IM\ChannelMessageViewModel.cs" />
+    <Compile Include="IM\MessageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Worktile.ViewModels.rd.xml" />
   </ItemGroup>
@@ -129,7 +132,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="IM\" />
+    <ProjectReference Include="..\Worktile.Models\Worktile.Models.csproj">
+      <Project>{D39BBFA0-47A5-4CBD-AD30-6AA3C41B35C5}</Project>
+      <Name>Worktile.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -29,7 +29,7 @@ namespace Worktile.Views.IM
         public IMPage()
         {
             InitializeComponent();
-            ChatNavs = new ObservableCollection<ChatNav>();
+            ChatNavs = new ObservableCollection<ChatSession>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,10 +48,10 @@ namespace Worktile.Views.IM
             }
         }
 
-        public ObservableCollection<ChatNav> ChatNavs { get; }
+        public ObservableCollection<ChatSession> ChatNavs { get; }
 
-        private ChatNav _selectedChatNav;
-        public ChatNav SelectedChatNav
+        private ChatSession _selectedChatNav;
+        public ChatSession SelectedChatNav
         {
             get => _selectedChatNav;
             set
@@ -73,10 +73,10 @@ namespace Worktile.Views.IM
             IsActive = true;
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeamChats>("/api/team/chats");
-            var list = new List<ChatNav>();
+            var list = new List<ChatSession>();
             foreach (var item in data.Data.Channels)
             {
-                list.Add(new ChatNav
+                list.Add(new ChatSession
                 {
                     Id = item.Id,
                     DisplayName = item.Name,
@@ -92,7 +92,7 @@ namespace Worktile.Views.IM
             }
             foreach (var item in data.Data.Groups)
             {
-                list.Add(new ChatNav
+                list.Add(new ChatSession
                 {
                     Id = item.Id,
                     DisplayName = item.Name,
@@ -108,7 +108,7 @@ namespace Worktile.Views.IM
             }
             foreach (var item in data.Data.Sessions)
             {
-                list.Add(new ChatNav
+                list.Add(new ChatSession
                 {
                     Id = item.Id,
                     DisplayName = item.To.DisplayName,

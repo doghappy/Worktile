@@ -180,13 +180,13 @@ namespace Worktile.Views
                 DomainDisable = !data.Data;
                 if (data.Data)
                 {
-                    CommonData.SubDomain = "https://" + Domain;
+                    DataSource.SubDomain = "https://" + Domain;
                     await RequestApiUserMeAsync();
 
                     var lite = await GetTeamLiteAsync();
                     TeamName = lite.Data.Name;
                     _teamId = lite.Data.Id;
-                    Logo = new BitmapImage(new Uri(CommonData.ApiUserMeConfig.Box.LogoUrl + lite.Data.OutsideLogo));
+                    Logo = new BitmapImage(new Uri(DataSource.ApiUserMeConfig.Box.LogoUrl + lite.Data.OutsideLogo));
                     GridState = GridState.Member;
                 }
             }
@@ -196,24 +196,24 @@ namespace Worktile.Views
 
         private async Task<ApiTeamLite> GetTeamLiteAsync()
         {
-            string uri = CommonData.SubDomain + "/api/team/lite";
+            string uri = DataSource.SubDomain + "/api/team/lite";
             var client = new WtHttpClient();
             return await client.GetAsync<ApiTeamLite>(uri);
         }
 
         private async Task RequestApiUserMeAsync()
         {
-            string uri = CommonData.SubDomain + "/api/user/me";
+            string uri = DataSource.SubDomain + "/api/user/me";
             var client = new WtHttpClient();
             var me = await client.GetAsync<ApiUserMe>(uri);
-            CommonData.ApiUserMeConfig = me.Data.Config;
+            DataSource.ApiUserMeConfig = me.Data.Config;
         }
 
         private async void SignIn_Click(object sender, RoutedEventArgs e)
         {
             IsActive = true;
             PasswordIsError = false;
-            string uri = CommonData.SubDomain + "/api/user/signin";
+            string uri = DataSource.SubDomain + "/api/user/signin";
             var body = new
             {
                 locale = "zh-cn",
@@ -248,7 +248,7 @@ namespace Worktile.Views
 
         private async void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            string url = CommonData.SubDomain + "/forgot";
+            string url = DataSource.SubDomain + "/forgot";
             await Launcher.LaunchUriAsync(new Uri(url));
         }
     }

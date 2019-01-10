@@ -53,14 +53,14 @@ namespace Worktile.Common
             {
                 string ext = Path.GetExtension(avatar);
                 string name = Path.GetFileNameWithoutExtension(avatar);
-                string uri = CommonData.ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
+                string uri = DataSource.ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
                 return new BitmapImage(new Uri(uri));
             }
         }
 
         public static Avatar GetAvatar(string uid, int avatarSize)
         {
-            var member = CommonData.Team.Members.FirstOrDefault(m => m.Uid == uid);
+            var member = DataSource.Team.Members.FirstOrDefault(m => m.Uid == uid);
             if (member == null)
             {
                 return null;

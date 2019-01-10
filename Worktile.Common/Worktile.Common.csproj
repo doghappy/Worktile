@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D39BBFA0-47A5-4CBD-AD30-6AA3C41B35C5}</ProjectGuid>
+    <ProjectGuid>{9FA3672C-80E6-45E1-B493-3EFF5E9F719C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Worktile.Models</RootNamespace>
-    <AssemblyName>Worktile.Models</AssemblyName>
+    <RootNamespace>Worktile.Common</RootNamespace>
+    <AssemblyName>Worktile.Common</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
@@ -120,46 +120,37 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Avatar.cs" />
-    <Compile Include="BeginEnd.cs" />
-    <Compile Include="ColorMapItem.cs" />
-    <Compile Include="DateSpan.cs" />
-    <Compile Include="IM\ChatNavItem.cs" />
-    <Compile Include="IM\ChatSession.cs" />
-    <Compile Include="IM\Message\Message.cs" />
-    <Compile Include="IM\Message\MessageBody.cs" />
-    <Compile Include="IM\Message\MessageField.cs" />
-    <Compile Include="IM\Message\MessageFrom.cs" />
-    <Compile Include="IM\Message\MessageInlineAttachment.cs" />
-    <Compile Include="IM\Message\MessageTo.cs" />
-    <Compile Include="Kanban\KanBanGroup.cs" />
-    <Compile Include="Kanban\KanBanItem.cs" />
-    <Compile Include="Kanban\KanbanItemProperty.cs" />
-    <Compile Include="Mission\AnalyticInsight\TopNavItem.cs" />
-    <Compile Include="Mission\WorkloadEstimate.cs" />
-    <Compile Include="Mission\WorkloadValue.cs" />
-    <Compile Include="Mission\WtMetaProperty.cs" />
-    <Compile Include="Mission\WtTask\WtTaskProperty.cs" />
+    <Compile Include="AvatarHelper.cs" />
+    <Compile Include="DataSource.cs" />
+    <Compile Include="HashEncryptor.cs" />
+    <Compile Include="IncrementalCollection.cs" />
+    <Compile Include="KanbanPageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskState.cs" />
-    <Compile Include="TaskType.cs" />
-    <Compile Include="WtApp.cs" />
-    <Compile Include="WtDate.cs" />
-    <Compile Include="WtIcon.cs" />
-    <EmbeddedResource Include="Properties\Worktile.Models.rd.xml" />
+    <Compile Include="TaskHelper.cs" />
+    <Compile Include="UiExtension.cs" />
+    <Compile Include="UtilityTool.cs" />
+    <Compile Include="WtColorHelper.cs" />
+    <Compile Include="WtDateTimeHelper.cs" />
+    <Compile Include="WtIconHelper.cs" />
+    <EmbeddedResource Include="Properties\Worktile.Common.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.3</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.1</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Worktile.ApiModels\Worktile.ApiModels.csproj">
+      <Project>{2be85db2-67a6-4717-8667-91d0bcba0131}</Project>
+      <Name>Worktile.ApiModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Worktile.Enums\Worktile.Enums.csproj">
       <Project>{3A2FE488-D5E9-4267-9161-6D40208D82A5}</Project>
       <Name>Worktile.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worktile.Models\Worktile.Models.csproj">
+      <Project>{d39bbfa0-47a5-4cbd-ad30-6aa3c41b35c5}</Project>
+      <Name>Worktile.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -54,7 +54,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="im:ChatNav">
+                        <DataTemplate x:DataType="im:ChatSession">
                             <Grid Padding="0 8" HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
