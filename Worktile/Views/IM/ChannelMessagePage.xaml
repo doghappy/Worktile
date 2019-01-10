@@ -60,6 +60,11 @@
                             <Style TargetType="ListViewItem">
                             </Style>
                         </ListView.ItemContainerStyle>-->
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="message:Message">
                                 <im:MessageItem DisplayName="{x:Bind From.DisplayName}"
