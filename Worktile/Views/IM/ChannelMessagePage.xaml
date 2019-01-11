@@ -9,7 +9,14 @@
     xmlns:message="using:Worktile.Models.IM.Message"
     xmlns:controlIM="using:Worktile.WtControls.IM"
     xmlns:modelIM="using:Worktile.Models.IM"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -49,6 +56,39 @@
             <Pivot.Resources>
                 <StaticResource x:Key="PivotHeaderBackground" ResourceKey="NavigationViewTopPaneBackground"/>
                 <Thickness x:Key="PivotItemMargin">0</Thickness>
+                <!--<Style TargetType="ListView">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListView">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}">
+                                    <ScrollViewer x:Name="ScrollViewer"
+                                                  ViewChanged="ScrollViewer_ViewChanged"
+                                                  TabNavigation="{TemplateBinding TabNavigation}"
+                                                  HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                                  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                                  IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
+                                                  VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                                  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                                  IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}"
+                                                  IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                                  IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                                  ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
+                                                  IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                                  BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                                  AutomationProperties.AccessibilityView="Raw">
+                                        <ItemsPresenter Header="{TemplateBinding Header}"
+                                                        HeaderTemplate="{TemplateBinding HeaderTemplate}"
+                                                        HeaderTransitions="{TemplateBinding HeaderTransitions}"
+                                                        Footer="{TemplateBinding Footer}"
+                                                        FooterTemplate="{TemplateBinding FooterTemplate}"
+                                                        FooterTransitions="{TemplateBinding FooterTransitions}"
+                                                        Padding="{TemplateBinding Padding}" />
+                                    </ScrollViewer>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>-->
             </Pivot.Resources>
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="modelIM:ChatNavItem">
@@ -57,14 +97,34 @@
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
                 <DataTemplate x:DataType="modelIM:ChatNavItem">
-                    <ScrollViewer ViewChanged="ScrollViewer_ViewChanged" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                        <ItemsControl ItemsSource="{x:Bind Messages, Mode=OneWay}" Margin="12">
-                            <ItemsControl.ItemsPanel>
+                    <Grid>
+                        <ScrollViewer ViewChanged="ScrollViewer_ViewChanged" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                            <ItemsControl ItemsSource="{x:Bind Messages, Mode=OneWay}" Margin="12">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="message:Message">
+                                        <controlIM:MessageItem DisplayName="{x:Bind From.DisplayName}"
+                                                           AvatarBackground="{x:Bind From.Background}"
+                                                           Initials="{x:Bind From.Initials}"
+                                                           ChatType="Session"
+                                                           ProfilePicture="{x:Bind From.Avatar}"
+                                                           Message="{x:Bind}"
+                                                           Margin="0 0 0 16"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <!--<ListView ItemsSource="{x:Bind Messages, Mode=OneWay}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="12">
+                            <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
                                 </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="message:Message">
                                     <controlIM:MessageItem DisplayName="{x:Bind From.DisplayName}"
                                                            AvatarBackground="{x:Bind From.Background}"
@@ -74,9 +134,19 @@
                                                            Message="{x:Bind}"
                                                            Margin="0 0 0 16"/>
                                 </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                            </ListView.ItemTemplate>
+                        </ListView>-->
+                        <StackPanel x:Name="EmptyPanel" VerticalAlignment="Center" x:Load="{x:Bind Messages.Count, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='0'}">
+                            <FontIcon Style="{StaticResource WtfIcon}"
+                                      Glyph="&#xE655;"
+                                      Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                      FontSize="100"/>
+                            <TextBlock Text="没有未读消息"
+                                       HorizontalAlignment="Center"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                       Margin="0 20 0 0"/>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </Pivot.ItemTemplate>
         </Pivot>

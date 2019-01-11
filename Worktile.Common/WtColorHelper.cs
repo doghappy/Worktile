@@ -32,6 +32,10 @@ namespace Worktile.Common
                 new ColorMapItem { Color = "#c495af", NewColor = "#66c060" },
                 new ColorMapItem { Color = "#cebdf3", NewColor = "#39ba5d" }
             };
+            DangerColor = new SolidColorBrush(Color.FromArgb(255, 255, 91, 87));
+            DangerColor1A = new SolidColorBrush(Color.FromArgb(26, 255, 91, 87));
+            WarningColor = new SolidColorBrush(Color.FromArgb(255, 255, 196, 66));
+            WarningColor1A = new SolidColorBrush(Color.FromArgb(26, 255, 196, 66));
         }
 
         public static List<ColorMapItem> Map { get; }
@@ -101,8 +105,10 @@ namespace Worktile.Common
             return new SolidColorBrush(GetColor(hex));
         }
 
-        public static SolidColorBrush DangerColor => new SolidColorBrush(Color.FromArgb(255, 255, 91, 87));
-        public static SolidColorBrush DangerColor1A => new SolidColorBrush(Color.FromArgb(26, 255, 91, 87));
+        public static SolidColorBrush DangerColor { get; }
+        public static SolidColorBrush DangerColor1A { get; }
+        public static SolidColorBrush WarningColor { get; }
+        public static SolidColorBrush WarningColor1A { get; }
 
         public static SolidColorBrush GetForegroundWithExpire(DateTime date)
         {
