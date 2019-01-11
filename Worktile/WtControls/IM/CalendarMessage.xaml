@@ -8,11 +8,14 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     xmlns:msg="using:Worktile.Models.IM.Message"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:fa="using:FontAwesome.UWP"
     d:DesignHeight="300"
     d:DesignWidth="640">
 
     <UserControl.Resources>
         <local:CalendarBackgroundConverter x:Key="CalendarBackgroundConverter"/>
+        <cvt:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
     </UserControl.Resources>
 
     <Button Padding="0" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0">
@@ -38,7 +41,24 @@
 
                 <TextBlock Grid.Column="1" Text="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay}" Margin="0 0 0 12"/>
 
-                <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{x:Bind Message.Body.InlineAttachment.Fields, Mode=OneWay}">
+                <StackPanel x:Name="Text"
+                            Orientation="Horizontal"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            x:Load="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}">
+                    <fa:FontAwesome Icon="QuoteLeft"
+                                    FontSize="26"
+                                    VerticalAlignment="Top"
+                                    Margin="0 0 8 0"
+                                    Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                    <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"/>
+                </StackPanel>
+
+                <ItemsControl x:Name="MsgFields"
+                              Grid.Row="1"
+                              Grid.Column="1"
+                              ItemsSource="{x:Bind Message.Body.InlineAttachment.Fields, Mode=OneWay}"
+                              x:Load="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <controls:WrapPanel/>
