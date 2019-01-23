@@ -38,18 +38,13 @@ namespace Worktile.Views.IM
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ViewModel.SelectedNav = ViewModel.NavItems.First();
             ViewModel.Session = e.Parameter as ChatSession;
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             var scrollViewer = sender as ScrollViewer;
-            if (ViewModel.SelectedNav.HasMore.HasValue && ViewModel.SelectedNav.HasMore.Value
-                && !ViewModel.IsActive && scrollViewer.VerticalOffset <= 28)
-            {
-                await ViewModel.LoadMessagesAsync();
-            }
+            await ViewModel.ScrollViewerChangedAsync(scrollViewer);
         }
 
         private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)

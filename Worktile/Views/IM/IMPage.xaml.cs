@@ -60,10 +60,14 @@ namespace Worktile.Views.IM
                 {
                     _selectedChatNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChatNav)));
-                    if (value.IsBot)
+                    //if (value.IsBot)
+                    //    ContentFrame.Navigate(typeof(ChannelMessagePage), value);
+                    //else
+                    //    ContentFrame.Navigate(typeof(GeneralMessagePage), value);
+                    if (value.Type == ChatType.Channel)
                         ContentFrame.Navigate(typeof(ChannelMessagePage), value);
                     else
-                        ContentFrame.Navigate(typeof(GeneralMessagePage), value);
+                        ContentFrame.Navigate(typeof(SessionMessagePage), value);
                 }
             }
         }

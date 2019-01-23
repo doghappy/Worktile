@@ -20,6 +20,7 @@ namespace Worktile.Models.IM
         public string Name { get; set; }
         public bool IsBot { get; set; }
         public int? Component { get; set; }
+        public bool IsAssistant => Component.HasValue;
     }
 
     public enum ChatType

@@ -146,8 +146,8 @@
     <Compile Include="Views\IM\IMPage.xaml.cs">
       <DependentUpon>IMPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IM\GeneralMessagePage.xaml.cs">
-      <DependentUpon>GeneralMessagePage.xaml</DependentUpon>
+    <Compile Include="Views\IM\SessionMessagePage.xaml.cs">
+      <DependentUpon>SessionMessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IM\UnreadPage.xaml.cs">
       <DependentUpon>UnreadPage.xaml</DependentUpon>
@@ -341,7 +341,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\IM\GeneralMessagePage.xaml">
+    <Page Include="Views\IM\SessionMessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

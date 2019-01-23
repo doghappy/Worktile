@@ -120,7 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="IM\GeneralMessageViewModel.cs" />
+    <Compile Include="IM\SessionMessageViewModel.cs" />
     <Compile Include="IM\ChannelMessageViewModel.cs" />
     <Compile Include="IM\MessageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

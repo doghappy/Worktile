@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -93,6 +95,25 @@ namespace Worktile.WtRequestClient
             {
                 OnNonSuccessStatusCode?.Invoke(resMsg);
                 return default(T);
+            }
+        }
+
+        public async Task<JToken> GetJTokenAsync(string uri)
+        {
+            var resMsg = await HttpClient.GetAsync(uri);
+            if (resMsg.IsSuccessStatusCode)
+            {
+                IsSuccessStatusCode = true;
+                string json = await resMsg.Content.ReadAsStringAsync();
+                using (var reader = new StringReader(json))
+                {
+                    return await JToken.ReadFromAsync(new JsonTextReader(reader));
+                }
+            }
+            else
+            {
+                OnNonSuccessStatusCode?.Invoke(resMsg);
+                return default(JToken);
             }
         }
 

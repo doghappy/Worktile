@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Worktile.Common
 {
-    static class UiExtension
+    public static class UiExtension
     {
         public static T GetParent<T>(this FrameworkElement obj) where T : FrameworkElement
         {

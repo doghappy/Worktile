@@ -6,9 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wtcontrols="using:Worktile.WtControls"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid HorizontalAlignment="Left">
         <Grid.RowDefinitions>
@@ -31,15 +38,25 @@
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal" Margin="0 4">
                 <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" FontSize="12"/>
-                <TextBlock Text="15:35"
+                <TextBlock Text="{x:Bind Message.CreatedAt, Mode=OneWay}"
                            Margin="12 0 0 0"
                            FontSize="12"
-                           Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
+                           Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
             </StackPanel>
             <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
                        Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
 
-        <local:CalendarMessage Grid.Row="1" Grid.Column="1" Message="{x:Bind Message, Mode=OneWay}"/>
+        <local:CalendarMessage x:Name="CalendarMsg"
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               Message="{x:Bind Message, Mode=OneWay}"
+                               x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Calendar'}"/>
+
+        <local:TextMessage x:Name="TextMsg"
+                           Grid.Row="1"
+                           Grid.Column="1"
+                           Message="{x:Bind Message, Mode=OneWay}"
+                           x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"/>
     </Grid>
 </UserControl>

@@ -130,6 +130,7 @@
     <Compile Include="IM\Message\MessageBody.cs" />
     <Compile Include="IM\Message\MessageField.cs" />
     <Compile Include="IM\Message\MessageFrom.cs" />
+    <Compile Include="IM\Message\MessageGroup.cs" />
     <Compile Include="IM\Message\MessageInlineAttachment.cs" />
     <Compile Include="IM\Message\MessageTo.cs" />
     <Compile Include="Kanban\KanBanGroup.cs" />
