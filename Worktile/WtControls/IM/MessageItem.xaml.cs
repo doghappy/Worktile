@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Common;
 using Worktile.Enums.IM;
 using Worktile.Models.IM;
 using Worktile.Models.IM.Message;
@@ -114,5 +115,29 @@ namespace Worktile.WtControls.IM
             }
         }
 
+    }
+
+    public class IsSelfConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (parameter==null)
+            {
+                return value.ToString() == DataSource.ApiUserMe.Uid;
+            }
+            else
+            {
+                if (parameter.ToString()=="!")
+                {
+                    return value.ToString() != DataSource.ApiUserMe.Uid;
+                }
+            }
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

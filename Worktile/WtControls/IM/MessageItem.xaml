@@ -14,6 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+            <local:IsSelfConverter x:Key="IsSelfConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -25,9 +26,22 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <wtcontrols:WtAvatar AvatarSize="38"
+        <wtcontrols:WtAvatar x:Name="LeftWtAvatar"
+                             x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}, ConverterParameter='!'}"
+                             AvatarSize="38"
+                             Margin="8"
+                             DisplayName="{x:Bind DisplayName, Mode=OneWay}"
+                             AvatarBackground="{x:Bind AvatarBackground, Mode=OneWay}"
+                             ProfilePicture="{x:Bind ProfilePicture, Mode=OneWay}"
+                             Initials="{x:Bind Initials, Mode=OneWay}"
+                             ChatType="{x:Bind ChatType, Mode=OneWay}"/>
+        <wtcontrols:WtAvatar x:Name="RightWtAvatar"
+                             x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}}"
+                             Grid.Column="2"
+                             AvatarSize="38"
                              Margin="8"
                              DisplayName="{x:Bind DisplayName, Mode=OneWay}"
                              AvatarBackground="{x:Bind AvatarBackground, Mode=OneWay}"
@@ -35,7 +49,9 @@
                              Initials="{x:Bind Initials, Mode=OneWay}"
                              ChatType="{x:Bind ChatType, Mode=OneWay}"/>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel x:Name="LeftFromInfo"
+                    x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}, ConverterParameter='!'}"
+                    Grid.Column="1">
             <StackPanel Orientation="Horizontal" Margin="0 4">
                 <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" FontSize="12"/>
                 <TextBlock Text="{x:Bind Message.CreatedAt, Mode=OneWay}"
@@ -44,6 +60,20 @@
                            Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
             </StackPanel>
             <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
+                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+        </StackPanel>
+        <StackPanel x:Name="RightFromInfo"
+                    x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}}"
+                    Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Margin="0 4" HorizontalAlignment="Right">
+                <TextBlock Text="{x:Bind Message.CreatedAt, Mode=OneWay}"
+                           Margin="0 0 12 0"
+                           FontSize="12"
+                           Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" FontSize="12"/>
+            </StackPanel>
+            <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
+                       HorizontalAlignment="Right"
                        Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
 

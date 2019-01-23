@@ -63,5 +63,55 @@
                         Initials="Te"
                         ChatType="Session"
                         Margin="0 0 0 16"/>
+        <Grid HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Margin="12,0,0,0"/>
+            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
+                <TextBlock Text="sssssssssssssssssssssss" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
+            </Grid>
+        </Grid>
+        <Grid HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Background="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" Padding="12" HorizontalAlignment="Left">
+                <TextBlock Text="wwwwwwwwwwwwwwwwwwwwwwww" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
+            </Grid>
+            <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightListAccentHighBrush}" Margin="0,0,12,0"/>
+        </Grid>
+        <Grid HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Background="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
+                <TextBlock Text="wwwwwwwwwwwwwwwwwwwwwwww" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
+            </Grid>
+            <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Margin="0,0,12,0"/>
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" Margin="12,0,0,0"/>
+            <Grid Grid.Row="1" Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" Padding="12" HorizontalAlignment="Left">
+                <TextBlock Text="sssssssssssssssssssssss" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
+            </Grid>
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Margin="12,0,0,0"/>
+            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
+                <TextBlock Text="sssssssssssssssssssssss" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
+            </Grid>
+        </Grid>
     </StackPanel>
 </Page>
