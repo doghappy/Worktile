@@ -121,13 +121,13 @@ namespace Worktile.WtControls.IM
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (parameter==null)
+            if (parameter == null)
             {
                 return value.ToString() == DataSource.ApiUserMe.Uid;
             }
             else
             {
-                if (parameter.ToString()=="!")
+                if (parameter.ToString() == "!")
                 {
                     return value.ToString() != DataSource.ApiUserMe.Uid;
                 }

@@ -15,6 +15,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+            <cvt:MessageHorizontalAlignmentConverter x:Key="MessageHorizontalAlignmentConverter"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -108,12 +109,13 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="message:Message">
                                         <controlIM:MessageItem DisplayName="{x:Bind From.DisplayName}"
-                                                           AvatarBackground="{x:Bind From.Background}"
-                                                           Initials="{x:Bind From.Initials}"
-                                                           ChatType="Session"
-                                                           ProfilePicture="{x:Bind From.Avatar}"
-                                                           Message="{x:Bind}"
-                                                           Margin="0 0 0 16"/>
+                                                               AvatarBackground="{x:Bind From.Background}"
+                                                               Initials="{x:Bind From.Initials}"
+                                                               ChatType="Session"
+                                                               ProfilePicture="{x:Bind From.Avatar}"
+                                                               Message="{x:Bind}"
+                                                               HorizontalAlignment="{x:Bind From.Uid, Converter={StaticResource MessageHorizontalAlignmentConverter}}"
+                                                               Margin="0 0 0 16"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
