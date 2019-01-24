@@ -3,8 +3,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
-using Worktile.ApiModels.IM.ApiPigeonMessages;
 using Worktile.Models.IM;
 using Worktile.WtRequestClient;
 
@@ -94,6 +92,7 @@ namespace Worktile.ViewModels.IM
             //    SelectedNav.Messages.Insert(0, item);
             //}
             IsActive = false;
+            SelectedNav.EmptyFrameVisible = !SelectedNav.Messages.Any();
         }
     }
 }

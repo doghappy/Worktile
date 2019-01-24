@@ -22,5 +22,19 @@ namespace Worktile.Models.IM
         public bool? HasMore { get; set; }
         public string Next { get; set; }
         public string LatestId { get; set; }
+
+        private bool _emptyFrameVisible;
+        public bool EmptyFrameVisible
+        {
+            get => _emptyFrameVisible;
+            set
+            {
+                if (_emptyFrameVisible != value)
+                {
+                    _emptyFrameVisible = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EmptyFrameVisible)));
+                }
+            }
+        }
     }
 }

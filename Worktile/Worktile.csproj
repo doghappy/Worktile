@@ -229,6 +229,9 @@
     <Compile Include="WtControls\IM\CalendarMessage.xaml.cs">
       <DependentUpon>CalendarMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WtControls\IM\ChatPivot.xaml.cs">
+      <DependentUpon>ChatPivot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WtControls\IM\MessageItem.xaml.cs">
       <DependentUpon>MessageItem.xaml</DependentUpon>
     </Compile>
@@ -451,6 +454,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WtControls\IM\CalendarMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WtControls\IM\ChatPivot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
