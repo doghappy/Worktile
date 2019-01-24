@@ -18,11 +18,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid HorizontalAlignment="Left">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
@@ -49,50 +45,49 @@
                              Initials="{x:Bind Initials, Mode=OneWay}"
                              ChatType="{x:Bind ChatType, Mode=OneWay}"/>
 
-        <StackPanel x:Name="LeftFromInfo"
-                    x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}, ConverterParameter='!'}"
-                    Grid.Column="1">
-            <StackPanel Orientation="Horizontal" Margin="0 4">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="LeftFromInfo"
+                        x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}, ConverterParameter='!'}"
+                        Orientation="Horizontal"
+                        Margin="0 0 0 8">
                 <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" FontSize="12"/>
                 <TextBlock Text="{x:Bind Message.CreatedAt, Mode=OneWay}"
                            Margin="12 0 0 0"
                            FontSize="12"
                            Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
             </StackPanel>
-            <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
-                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-        </StackPanel>
-        <StackPanel x:Name="RightFromInfo"
-                    x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}}"
-                    Grid.Column="1">
-            <StackPanel Orientation="Horizontal" Margin="0 4" HorizontalAlignment="Right">
+            <StackPanel x:Name="RightFromInfo"
+                        x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}}"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 0 8">
                 <TextBlock Text="{x:Bind Message.CreatedAt, Mode=OneWay}"
                            Margin="0 0 12 0"
                            FontSize="12"
                            Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                 <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" FontSize="12"/>
             </StackPanel>
-            <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
-                       HorizontalAlignment="Right"
-                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-        </StackPanel>
 
-        <local:CalendarMessage x:Name="CalendarMsg"
+            <local:CalendarMessage x:Name="CalendarMsg"
                                Grid.Row="1"
-                               Grid.Column="1"
                                Message="{x:Bind Message, Mode=OneWay}"
                                x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Calendar'}"/>
 
-        <local:TextMessage x:Name="TextMsg"
+            <local:TextMessage x:Name="TextMsg"
                            Grid.Row="1"
-                           Grid.Column="1"
                            Message="{x:Bind Message, Mode=OneWay}"
                            x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"/>
 
-        <local:ActivityMessage x:Name="ActivityMsg"
+            <local:ActivityMessage x:Name="ActivityMsg"
                            Grid.Row="1"
-                           Grid.Column="1"
                            Message="{x:Bind Message, Mode=OneWay}"
                            x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"/>
+
+        </Grid>
     </Grid>
 </UserControl>

@@ -31,6 +31,12 @@ namespace Worktile.ViewModels.IM
         protected override void ReadApiData(JToken jToken)
         {
             var apiData = jToken.ToObject<ApiMessages>();
+            bool flag = false;
+            if (SelectedNav.Messages.Any())
+            {
+                apiData.Data.Messages.Reverse();
+                flag = true;
+            }
             foreach (var item in apiData.Data.Messages)
             {
                 item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, 80);
@@ -48,7 +54,10 @@ namespace Worktile.ViewModels.IM
                 //    SelectedNav.MessageGroup.Insert(0, groupItem);
                 //}
                 //groupItem.Messages.Insert(0, item);
-                SelectedNav.Messages.Insert(0, item);
+                if (flag)
+                    SelectedNav.Messages.Insert(0, item);
+                else
+                    SelectedNav.Messages.Add(item);
             }
             SelectedNav.LatestId = apiData.Data.LatestId;
             SelectedNav.HasMore = apiData.Data.More;

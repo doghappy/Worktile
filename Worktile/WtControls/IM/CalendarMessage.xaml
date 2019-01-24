@@ -18,63 +18,68 @@
         <cvt:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
     </UserControl.Resources>
 
-    <Button Padding="0" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0">
-        <Grid Width="640">
-            <Grid Padding="18 10"
+    <StackPanel>
+        <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
+                   Margin="0 0 0 8"
+                   Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+        <Button Padding="0" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0">
+            <Grid Width="640">
+                <Grid Padding="18 10"
                   Background="{x:Bind Message.IsUnread, Mode=OneWay, Converter={StaticResource CalendarBackgroundConverter}}"
                   BorderThickness="1"
                   BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-                <FontIcon Style="{StaticResource WtfIcon}"
+                    <FontIcon Style="{StaticResource WtfIcon}"
                           Glyph="&#xE619;"
                           Foreground="{StaticResource WarningBrush}"
                           Margin="0 0 8 0"
                           VerticalAlignment="Top"/>
 
-                <TextBlock Grid.Column="1" Text="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay}" Margin="0 0 0 12"/>
+                    <TextBlock Grid.Column="1" Text="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay}" Margin="0 0 0 12"/>
 
-                <StackPanel x:Name="Text"
+                    <StackPanel x:Name="Text"
                             Orientation="Horizontal"
                             Grid.Row="1"
                             Grid.Column="1"
                             x:Load="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}">
-                    <fa:FontAwesome Icon="QuoteLeft"
+                        <fa:FontAwesome Icon="QuoteLeft"
                                     FontSize="26"
                                     VerticalAlignment="Top"
                                     Margin="0 0 8 0"
                                     Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
-                    <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"/>
-                </StackPanel>
+                        <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"/>
+                    </StackPanel>
 
-                <ItemsControl x:Name="MsgFields"
+                    <ItemsControl x:Name="MsgFields"
                               Grid.Row="1"
                               Grid.Column="1"
                               ItemsSource="{x:Bind Message.Body.InlineAttachment.Fields, Mode=OneWay}"
                               x:Load="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <controls:WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="msg:MessageField">
-                            <StackPanel Width="280" Margin="0 0 0 12">
-                                <TextBlock Text="{x:Bind Title}"/>
-                                <TextBlock Text="{x:Bind Value}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <controls:WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="msg:MessageField">
+                                <StackPanel Width="280" Margin="0 0 0 12">
+                                    <TextBlock Text="{x:Bind Title}"/>
+                                    <TextBlock Text="{x:Bind Value}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                <Rectangle Fill="{StaticResource WarningBrush}" Width="2" HorizontalAlignment="Left"/>
             </Grid>
-            <Rectangle Fill="{StaticResource WarningBrush}" Width="2" HorizontalAlignment="Left"/>
-        </Grid>
-    </Button>
+        </Button>
+    </StackPanel>
 </UserControl>

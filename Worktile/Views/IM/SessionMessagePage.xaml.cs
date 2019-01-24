@@ -39,7 +39,11 @@ namespace Worktile.Views.IM
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             var scrollViewer = sender as ScrollViewer;
-            await ViewModel.ScrollViewerChangedAsync(scrollViewer);
+            if (ViewModel.SelectedNav.HasMore.HasValue && ViewModel.SelectedNav.HasMore.Value
+                && !ViewModel.IsActive && scrollViewer.VerticalOffset <= 10)
+            {
+                await ViewModel.LoadMessagesAsync();
+            }
         }
 
         private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)

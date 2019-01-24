@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Worktile.Models.IM.Message;
 using Windows.UI.Xaml.Controls;
 using System.ComponentModel;
 
@@ -9,7 +8,6 @@ namespace Worktile.Models.IM
     {
         public ChatNavItem()
         {
-            _scrollMode = ItemsUpdatingScrollMode.KeepLastItemInView;
             //MessageGroup = new ObservableCollection<MessageGroup>();
             Messages = new ObservableCollection<Message.Message>();
         }
@@ -24,19 +22,5 @@ namespace Worktile.Models.IM
         public bool? HasMore { get; set; }
         public string Next { get; set; }
         public string LatestId { get; set; }
-
-        private ItemsUpdatingScrollMode _scrollMode;
-        public ItemsUpdatingScrollMode ScrollMode
-        {
-            get => _scrollMode;
-            set
-            {
-                if (_scrollMode != value)
-                {
-                    _scrollMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ScrollMode)));
-                }
-            }
-        }
     }
 }

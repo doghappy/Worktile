@@ -63,7 +63,6 @@ namespace Worktile.ViewModels.IM
         protected override void ReadApiData(JToken jToken)
         {
             var apiData = jToken.ToObject<ApiPigeonMessages>();
-            //apiData.Data.Messages.Reverse();
             foreach (var item in apiData.Data.Messages)
             {
                 item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, 80);

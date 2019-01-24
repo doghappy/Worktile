@@ -95,19 +95,5 @@ namespace Worktile.ViewModels.IM
             //}
             IsActive = false;
         }
-
-        public async Task ScrollViewerChangedAsync(ScrollViewer scrollViewer)
-        {
-            if (scrollViewer.ScrollableHeight - scrollViewer.VerticalOffset <= 10)
-                SelectedNav.ScrollMode = ItemsUpdatingScrollMode.KeepLastItemInView;
-            else
-                SelectedNav.ScrollMode = ItemsUpdatingScrollMode.KeepItemsInView;
-
-            if (SelectedNav.HasMore.HasValue && SelectedNav.HasMore.Value
-                && !IsActive && scrollViewer.VerticalOffset <= 10)
-            {
-                await LoadMessagesAsync();
-            }
-        }
     }
 }
