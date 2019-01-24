@@ -1,19 +1,25 @@
 ﻿using System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.Converters
 {
-    class MessageHorizontalAlignmentConverter : IValueConverter
+    public class IsSelfConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value.ToString() == DataSource.ApiUserMe.Uid)
+            if (parameter == null)
             {
-                return HorizontalAlignment.Right;
+                return value.ToString() == DataSource.ApiUserMe.Uid;
             }
-            return HorizontalAlignment.Left;
+            else
+            {
+                if (parameter.ToString() == "!")
+                {
+                    return value.ToString() != DataSource.ApiUserMe.Uid;
+                }
+            }
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

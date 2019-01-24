@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
-            <local:IsSelfConverter x:Key="IsSelfConverter"/>
+            <cvt:IsSelfConverter x:Key="IsSelfConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -88,5 +88,11 @@
                            Grid.Column="1"
                            Message="{x:Bind Message, Mode=OneWay}"
                            x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"/>
+
+        <local:ActivityMessage x:Name="ActivityMsg"
+                           Grid.Row="1"
+                           Grid.Column="1"
+                           Message="{x:Bind Message, Mode=OneWay}"
+                           x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"/>
     </Grid>
 </UserControl>
