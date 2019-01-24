@@ -5,11 +5,47 @@
     xmlns:local="using:Worktile.WtControls.IM"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
-        <TextBlock Text="sssss"/>
+    <UserControl.Resources>
+        <cvt:MessageHorizontalAlignmentConverter x:Key="MessageHorizontalAlignmentConverter"/>
+        <cvt:IsSelfConverter x:Key="IsSelfConverter"/>
+        <Style TargetType="controls:MarkdownTextBlock">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid VerticalAlignment="Top">
+        <Grid x:Name="LeftMessage"
+              x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}, ConverterParameter='!'}"
+              HorizontalAlignment="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource MessageHorizontalAlignmentConverter}}"
+              VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Margin="12,0,0,0"/>
+            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
+                <TextBlock Text="{x:Bind Message.Body.Content, Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="RightMessage"
+              x:Load="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource IsSelfConverter}}"
+              HorizontalAlignment="{x:Bind Message.From.Uid, Mode=OneWay, Converter={StaticResource MessageHorizontalAlignmentConverter}}"
+              VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Background="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
+                <controls:MarkdownTextBlock Text="{x:Bind Message.Body.Content, Mode=OneWay}" SchemeList="worktile" UriPrefix="ms-appx://" />
+            </Grid>
+            <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Margin="0,0,12,0"/>
+        </Grid>
     </Grid>
 </UserControl>

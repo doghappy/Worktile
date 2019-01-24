@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -13,6 +14,9 @@
     <UserControl.Resources>
         <cvt:MessageHorizontalAlignmentConverter x:Key="MessageHorizontalAlignmentConverter"/>
         <cvt:IsSelfConverter x:Key="IsSelfConverter"/>
+        <Style TargetType="controls:MarkdownTextBlock">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Top">
@@ -39,7 +43,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Background="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
-                <TextBlock Text="{x:Bind Message.Body.Content, Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
+                <controls:MarkdownTextBlock Text="{x:Bind Message.Body.Content, Mode=OneWay}" SchemeList="worktile" UriPrefix="ms-appx://" />
             </Grid>
             <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Margin="0,0,12,0"/>
         </Grid>

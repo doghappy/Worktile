@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Worktile.ApiModels.IM.ApiPigeonMessages;
+using Worktile.Infrastructure;
 using Worktile.Models.IM;
 using Worktile.Models.IM.Message;
 using Worktile.ViewModels.Infrastructure;
