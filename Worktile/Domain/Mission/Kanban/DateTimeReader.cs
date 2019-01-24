@@ -2,10 +2,11 @@
 using System;
 using System.Linq;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
-using Worktile.Common;
+using Worktile.Infrastructure;
 using Worktile.Models;
 using Worktile.Models.Kanban;
 using Worktile.Models.Mission.WtTask;
+using Worktile.ViewModels.Infrastructure;
 using TaskState = Worktile.ApiModels.ApiMissionVnextKanbanContent.TaskState;
 
 namespace Worktile.Domain.Mission.Kanban
@@ -25,7 +26,7 @@ namespace Worktile.Domain.Mission.Kanban
             WtDate date = null;
             if (property.Key.Count(k => k == '.') > 0)
             {
-                date = TaskHelper.GetPropertyValue<WtDate>(jObj, property.Key);
+                date = JTokenHelper.GetPropertyValue<WtDate>(jObj, property.Key);
             }
             else
             {

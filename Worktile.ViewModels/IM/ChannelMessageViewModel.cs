@@ -3,10 +3,10 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Worktile.ApiModels.IM.ApiMessages;
-using Worktile.Common;
 using Worktile.Models.IM;
 using System.Linq;
 using Worktile.Models.IM.Message;
+using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.ViewModels.IM
 {

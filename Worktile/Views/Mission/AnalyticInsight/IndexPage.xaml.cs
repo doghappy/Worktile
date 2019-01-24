@@ -4,11 +4,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using System.ComponentModel;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Common;
 using System.Threading.Tasks;
 using Worktile.WtRequestClient;
 using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightGroups;
 using System.Collections.ObjectModel;
+using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.Views.Mission.AnalyticInsight
 {

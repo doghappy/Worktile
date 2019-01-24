@@ -8,9 +8,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels.ApiMissionVnextProjectNav;
 using Worktile.ApiModels.ApiMissionVnextWorkAddon;
-using Worktile.Common;
 using Worktile.WtRequestClient;
 using System;
+using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.Views.Mission
 {

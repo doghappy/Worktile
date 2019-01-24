@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
+using Worktile.Infrastructure;
 using Worktile.Models.IM.Message;
 
 

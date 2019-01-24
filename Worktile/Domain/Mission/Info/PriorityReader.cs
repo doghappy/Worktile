@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using Worktile.Views.Mission.Project.Detail;
 using Worktile.ApiModel.ApiMissionVnextTask;
-using Worktile.Common;
 using System.Linq;
 using System.Collections.Generic;
 using Windows.UI.Core;
 using System.Threading.Tasks;
 using System;
+using Worktile.ViewModels.Infrastructure;
+using Worktile.Infrastructure;
 
 namespace Worktile.Domain.Mission.Info
 {
@@ -17,7 +18,7 @@ namespace Worktile.Domain.Mission.Info
         public void Read(Property property, PropertyItem item, Data data)
         {
             JObject task = JObject.FromObject(data.Value);
-            string value = TaskHelper.GetPropertyValue<string>(task, property.Key);
+            string value = JTokenHelper.GetPropertyValue<string>(task, property.Key);
             if (value != null)
             {
                 var lookup = JObject.FromObject(data.References.Lookups);
@@ -32,7 +33,7 @@ namespace Worktile.Domain.Mission.Info
                         Value = jObj.Value<string>("_id"),
                         Color = WtColorHelper.GetNewBrush(jObj.Value<string>("color"))
                     };
-                    item.PropertyId = TaskHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
+                    item.PropertyId = JTokenHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
                 }
             }
         }

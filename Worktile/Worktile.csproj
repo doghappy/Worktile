@@ -501,13 +501,13 @@
       <Project>{2be85db2-67a6-4717-8667-91d0bcba0131}</Project>
       <Name>Worktile.ApiModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Worktile.Common\Worktile.Common.csproj">
-      <Project>{9fa3672c-80e6-45e1-b493-3eff5e9f719c}</Project>
-      <Name>Worktile.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Worktile.Enums\Worktile.Enums.csproj">
       <Project>{3a2fe488-d5e9-4267-9161-6d40208d82a5}</Project>
       <Name>Worktile.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Worktile.Infrastructure\Worktile.Infrastructure.csproj">
+      <Project>{3D4D7893-D86C-4B7A-B473-0679615C63BE}</Project>
+      <Name>Worktile.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Worktile.Models\Worktile.Models.csproj">
       <Project>{d39bbfa0-47a5-4cbd-ad30-6aa3c41b35c5}</Project>

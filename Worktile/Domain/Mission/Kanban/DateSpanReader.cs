@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
+using Worktile.Infrastructure;
 using Worktile.Models;
 using Worktile.Models.Kanban;
 using Worktile.Models.Mission.WtTask;
@@ -20,7 +21,7 @@ namespace Worktile.Domain.Mission.Kanban
             SetColor(kbp, setting.Color);
 
             JObject jObj = JObject.FromObject(task);
-            var span = TaskHelper.GetPropertyValue<DateSpan>(jObj, property.Key);
+            var span = JTokenHelper.GetPropertyValue<DateSpan>(jObj, property.Key);
 
             if (span.Begin.Date.HasValue && span.End.Date.HasValue)
             {

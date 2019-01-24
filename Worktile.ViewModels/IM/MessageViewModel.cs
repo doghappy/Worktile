@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels.IM.ApiPigeonMessages;
-using Worktile.Common;
 using Worktile.Models.IM;
 using Worktile.WtRequestClient;
 

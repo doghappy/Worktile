@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9FA3672C-80E6-45E1-B493-3EFF5E9F719C}</ProjectGuid>
+    <ProjectGuid>{3D4D7893-D86C-4B7A-B473-0679615C63BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Worktile.Common</RootNamespace>
-    <AssemblyName>Worktile.Common</AssemblyName>
+    <RootNamespace>Worktile.Infrastructure</RootNamespace>
+    <AssemblyName>Worktile.Infrastructure</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
@@ -120,38 +120,22 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AvatarHelper.cs" />
-    <Compile Include="DataSource.cs" />
     <Compile Include="HashEncryptor.cs" />
     <Compile Include="IncrementalCollection.cs" />
-    <Compile Include="KanbanPageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskHelper.cs" />
+    <Compile Include="JTokenHelper.cs" />
+    <Compile Include="ImageHelper.cs" />
     <Compile Include="UiExtension.cs" />
-    <Compile Include="UtilityTool.cs" />
-    <Compile Include="WtColorHelper.cs" />
     <Compile Include="WtDateTimeHelper.cs" />
-    <Compile Include="WtIconHelper.cs" />
-    <EmbeddedResource Include="Properties\Worktile.Common.rd.xml" />
+    <EmbeddedResource Include="Properties\Worktile.Infrastructure.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.3</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Worktile.ApiModels\Worktile.ApiModels.csproj">
-      <Project>{2be85db2-67a6-4717-8667-91d0bcba0131}</Project>
-      <Name>Worktile.ApiModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.Enums\Worktile.Enums.csproj">
-      <Project>{3A2FE488-D5E9-4267-9161-6D40208D82A5}</Project>
-      <Name>Worktile.Enums</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.Models\Worktile.Models.csproj">
-      <Project>{d39bbfa0-47a5-4cbd-ad30-6aa3c41b35c5}</Project>
-      <Name>Worktile.Models</Name>
-    </ProjectReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

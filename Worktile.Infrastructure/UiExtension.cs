@@ -3,7 +3,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace Worktile.Common
+namespace Worktile.Infrastructure
 {
     public static class UiExtension
     {

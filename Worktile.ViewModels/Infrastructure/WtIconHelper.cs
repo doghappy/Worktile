@@ -2,7 +2,7 @@
 using Worktile.Enums;
 using Worktile.Models;
 
-namespace Worktile.Common
+namespace Worktile.ViewModels.Infrastructure
 {
     public static class WtIconHelper
     {

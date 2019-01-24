@@ -7,6 +7,7 @@ using Windows.UI.Core;
 using System;
 using System.Threading.Tasks;
 using Worktile.Models;
+using Worktile.Infrastructure;
 
 namespace Worktile.Domain.Mission.Info
 {
@@ -17,7 +18,7 @@ namespace Worktile.Domain.Mission.Info
         public void Read(Property property, PropertyItem item, Data data)
         {
             JObject task = JObject.FromObject(data.Value);
-            var beginEnd = TaskHelper.GetPropertyValue<BeginEnd>(task, property.Key);
+            var beginEnd = JTokenHelper.GetPropertyValue<BeginEnd>(task, property.Key);
             if (beginEnd.Begin.Date != null && beginEnd.Begin.Date.HasValue)
             {
                 item.Begin = beginEnd.Begin.Date.Value;

@@ -5,7 +5,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Worktile.Models;
 
-namespace Worktile.Common
+namespace Worktile.ViewModels.Infrastructure
 {
     public static class WtColorHelper
     {

@@ -20,6 +20,8 @@ using Worktile.Views.Mission;
 using Worktile.WtRequestClient;
 using Worktile.Views.IM;
 using Windows.UI.Xaml.Navigation;
+using Worktile.ViewModels.Infrastructure;
+using Worktile.Infrastructure;
 
 namespace Worktile
 {
@@ -131,7 +133,7 @@ namespace Worktile
             {
                 string imgUriString = DataSource.ApiUserMeConfig.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
                 byte[] buffer = await client.GetByteArrayAsync(imgUriString);
-                BgImage = await UtilityTool.GetImageFromBytesAsync(buffer);
+                BgImage = await ImageHelper.GetImageFromBytesAsync(buffer);
             }
         }
 

@@ -8,6 +8,7 @@ using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
 using Worktile.Domain.Mission.Kanban;
 using Worktile.Models.Kanban;
+using Worktile.ViewModels.Infrastructure;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project

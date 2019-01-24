@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace Worktile.Common
+namespace Worktile.Infrastructure
 {
-    public static class TaskHelper
+    public static class JTokenHelper
     {
         public static T GetPropertyValue<T>(JToken obj, string key)
         {

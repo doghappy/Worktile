@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using Worktile.Views.Mission.Project.Detail;
-using Worktile.Common;
 using System.Collections.Generic;
 using Windows.UI.Core;
 using System.Threading.Tasks;
 using System;
+using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.Domain.Mission.Info
 {

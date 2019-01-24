@@ -21,6 +21,7 @@ using Worktile.WtRequestClient;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Enums.IM;
+using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.Views.IM
 {

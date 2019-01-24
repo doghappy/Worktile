@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Worktile.Common;
 using Worktile.Models.IM.Message;
+using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.WtControls.IM
 {

@@ -18,6 +18,7 @@ using Worktile.Common;
 using Worktile.Enums.IM;
 using Worktile.Models.IM;
 using Worktile.Models.IM.Message;
+using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.WtControls.IM
 {

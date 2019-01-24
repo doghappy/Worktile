@@ -6,10 +6,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels.ApiMissionVnextWorkMyDirectedActive;
 using Worktile.Models.Kanban;
-using Worktile.Common;
 using Worktile.WtRequestClient;
 using System.Collections.Generic;
 using System;
+using Worktile.ViewModels.Infrastructure;
+using Worktile.Infrastructure;
 
 namespace Worktile.Views.Mission.My
 {

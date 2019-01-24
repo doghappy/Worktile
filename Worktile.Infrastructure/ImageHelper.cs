@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace Worktile.Common
+namespace Worktile.Infrastructure
 {
-    public static class UtilityTool
+    public static class ImageHelper
     {
         public async static Task<BitmapImage> GetImageFromBytesAsync(byte[] bytes)
         {

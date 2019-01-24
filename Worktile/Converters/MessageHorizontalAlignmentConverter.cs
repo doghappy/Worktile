@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Worktile.Common;
+using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.Converters
 {

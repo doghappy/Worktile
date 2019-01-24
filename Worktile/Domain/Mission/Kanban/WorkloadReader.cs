@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
+using Worktile.Infrastructure;
 using Worktile.Models.Kanban;
 using Worktile.Models.Mission;
 using Worktile.Models.Mission.WtTask;
@@ -19,7 +20,7 @@ namespace Worktile.Domain.Mission.Kanban
             SetColor(kbp, setting.Color);
 
             JObject jObj = JObject.FromObject(task);
-            var workload = TaskHelper.GetPropertyValue<WorkloadValue>(jObj, property.Key);
+            var workload = JTokenHelper.GetPropertyValue<WorkloadValue>(jObj, property.Key);
             if (workload.Actual != 0)
             {
                 kbp.Value = workload.Actual.ToString();

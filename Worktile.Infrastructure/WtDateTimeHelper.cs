@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Worktile.Common
+namespace Worktile.Infrastructure
 {
     public static class WtDateTimeHelper
     {

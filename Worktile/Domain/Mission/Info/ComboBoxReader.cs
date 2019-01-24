@@ -7,6 +7,7 @@ using System.Linq;
 using Windows.UI.Core;
 using System.Threading.Tasks;
 using System;
+using Worktile.Infrastructure;
 
 namespace Worktile.Domain.Mission.Info
 {
@@ -17,8 +18,8 @@ namespace Worktile.Domain.Mission.Info
         public void Read(Property property, PropertyItem item, Data data)
         {
             JObject task = JObject.FromObject(data.Value);
-            string value = TaskHelper.GetPropertyValue<string>(task, property.Key);
-            item.PropertyId = TaskHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
+            string value = JTokenHelper.GetPropertyValue<string>(task, property.Key);
+            item.PropertyId = JTokenHelper.GetPropertyValue<string>(task, property.PropertyKey + ".property_id");
             if (value != null)
             {
                 var lookup = JObject.FromObject(data.References.Lookups);

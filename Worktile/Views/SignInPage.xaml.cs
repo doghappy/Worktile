@@ -14,6 +14,8 @@ using Worktile.ApiModels.ApiTeamLite;
 using Worktile.ApiModels.ApiUserMe;
 using Worktile.ApiModels.ApiUserSignIn;
 using Worktile.Common;
+using Worktile.Infrastructure;
+using Worktile.ViewModels.Infrastructure;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views
