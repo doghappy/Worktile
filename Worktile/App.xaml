@@ -2,17 +2,21 @@
     x:Class="Worktile.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:local="using:Worktile">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Styles/Style.xaml"/>
-                <ResourceDictionary Source="/Styles/MessagePivot.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop" TintOpacity="0" TintColor="#FF000000" FallbackColor="#FF008000" />
 
             <Thickness x:Key="TitleBarHeight">0 32 0 0</Thickness>
+            
+            <Style TargetType="controls:MarkdownTextBlock" x:Key="MessageMarkdown">
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

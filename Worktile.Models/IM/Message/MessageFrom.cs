@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
+using Worktile.Enums.IM;
 
 namespace Worktile.Models.IM.Message
 {
     public class MessageFrom
     {
         [JsonProperty("type")]
-        public int Type { get; set; }
+        public FromType Type { get; set; }
 
         [JsonProperty("uid")]
         public string Uid { get; set; }

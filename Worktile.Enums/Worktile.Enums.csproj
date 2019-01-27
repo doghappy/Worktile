@@ -120,6 +120,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AvatarSize.cs" />
+    <Compile Include="IM\FromType.cs" />
     <Compile Include="IM\MessageType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleType.cs" />

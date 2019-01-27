@@ -9,6 +9,7 @@ namespace Worktile.WtControls.IM
         public TextMessage()
         {
             InitializeComponent();
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -14,9 +14,6 @@
     <UserControl.Resources>
         <cvt:MessageHorizontalAlignmentConverter x:Key="MessageHorizontalAlignmentConverter"/>
         <cvt:IsSelfConverter x:Key="IsSelfConverter"/>
-        <Style TargetType="controls:MarkdownTextBlock">
-            <Setter Property="Background" Value="Transparent"/>
-        </Style>
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Top">
@@ -28,9 +25,11 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Margin="12,0,0,0"/>
-            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
-                <TextBlock Text="{x:Bind Message.Body.Content, Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
+            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlHighlightListAccentHighBrush}" Margin="12,0,0,0"/>
+            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightListAccentHighBrush}" Padding="12" HorizontalAlignment="Left">
+                <controls:MarkdownTextBlock Style="{ThemeResource MessageMarkdown}"
+                                            Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                                            SchemeList="worktile" UriPrefix="ms-appx://" />
             </Grid>
         </Grid>
 
@@ -42,10 +41,12 @@
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid Background="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
-                <controls:MarkdownTextBlock Text="{x:Bind Message.Body.Content, Mode=OneWay}" SchemeList="worktile" UriPrefix="ms-appx://" />
+            <Grid Background="{ThemeResource SystemControlHighlightListAccentLowBrush}" Padding="12" HorizontalAlignment="Left">
+                <controls:MarkdownTextBlock Style="{ThemeResource MessageMarkdown}"
+                                            Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                                            SchemeList="worktile" UriPrefix="ms-appx://" />
             </Grid>
-            <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Margin="0,0,12,0"/>
+            <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightListAccentLowBrush}" Margin="0,0,12,0"/>
         </Grid>
     </Grid>
 </UserControl>

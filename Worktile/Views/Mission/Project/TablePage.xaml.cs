@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextTableContent;
-using Worktile.Common;
+using Worktile.Enums;
 using Worktile.Infrastructure;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Views.Mission.My;
@@ -112,7 +112,7 @@ namespace Worktile.Views.Mission.Project
                 if (item.Properties.ContainsKey("assignee"))
                 {
                     string assineeUid = item.Properties["assignee"].Value<string>("value");
-                    gridItem.Assignee = AvatarHelper.GetAvatar(assineeUid, 40);
+                    gridItem.Assignee = AvatarHelper.GetAvatar(assineeUid, AvatarSize.X40);
                 }
 
                 if (item.Properties.ContainsKey("due"))

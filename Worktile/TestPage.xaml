@@ -69,7 +69,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Margin="12,0,0,0"/>
-            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
+            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightListAccentHighBrush}" Padding="12" HorizontalAlignment="Left">
                 <TextBlock Text="sssssssssssssssssssssss" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
             </Grid>
         </Grid>
@@ -78,7 +78,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid Background="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" Padding="12" HorizontalAlignment="Left">
+            <Grid Background="{ThemeResource SystemControlHighlightListAccentLowBrush}" Padding="12" HorizontalAlignment="Left">
                 <TextBlock Text="wwwwwwwwwwwwwwwwwwwwwwww" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
             </Grid>
             <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightListAccentHighBrush}" Margin="0,0,12,0"/>

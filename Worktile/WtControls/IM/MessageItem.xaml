@@ -76,17 +76,22 @@
             <local:CalendarMessage x:Name="CalendarMsg"
                                Grid.Row="1"
                                Message="{x:Bind Message, Mode=OneWay}"
-                               x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Calendar'}"/>
+                               x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Calendar'}"/>
 
             <local:TextMessage x:Name="TextMsg"
                            Grid.Row="1"
                            Message="{x:Bind Message, Mode=OneWay}"
-                           x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"/>
+                           x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"/>
 
             <local:ActivityMessage x:Name="ActivityMsg"
                            Grid.Row="1"
                            Message="{x:Bind Message, Mode=OneWay}"
-                           x:Load="{x:Bind Message.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"/>
+                           x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"/>
+
+            <local:AttachmentMessage x:Name="AttachmentMsg"
+                           Grid.Row="1"
+                           Message="{x:Bind Message, Mode=OneWay}"
+                           x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Attachment'}"/>
 
         </Grid>
     </Grid>

@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightMemberProgress;
 using Worktile.Common;
+using Worktile.Enums;
 using Worktile.Infrastructure;
 using Worktile.Models;
 using Worktile.ViewModels.Infrastructure;
@@ -161,7 +162,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
                 Point = i.Point,
                 Progress = i.Progress,
                 Total = i.Total,
-                Avatar = AvatarHelper.GetAvatar(i.Uid, 40)
+                Avatar = AvatarHelper.GetAvatar(i.Uid, AvatarSize.X40)
             });
         }
 

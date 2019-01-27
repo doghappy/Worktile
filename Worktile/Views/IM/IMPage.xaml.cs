@@ -118,7 +118,7 @@ namespace Worktile.Views.IM
                     Id = item.Id,
                     DisplayName = item.To.DisplayName,
                     Initials = AvatarHelper.GetInitials(item.To.DisplayName),
-                    ProfilePicture = AvatarHelper.GetAvatarBitmap(item.To.Avatar, 80),
+                    ProfilePicture = AvatarHelper.GetAvatarBitmap(item.To.Avatar, AvatarSize.X80, FromType.User),
                     Background = AvatarHelper.GetColor(item.To.DisplayName),
                     Starred = item.Starred,
                     LatestMessageAt = item.LatestMessageAt,

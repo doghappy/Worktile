@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using Worktile.ApiModels.IM.ApiMessages;
 using Worktile.Models.IM;
 using System.Linq;
-using Worktile.Models.IM.Message;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Infrastructure;
+using Worktile.Enums;
+using Worktile.Enums.IM;
 
 namespace Worktile.ViewModels.IM
 {
@@ -40,10 +40,15 @@ namespace Worktile.ViewModels.IM
             }
             foreach (var item in apiData.Data.Messages)
             {
-                item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, 80);
+                item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, AvatarSize.X80, item.From.Type);
                 item.From.Background = AvatarHelper.GetColor(item.From.DisplayName);
                 item.From.Initials = AvatarHelper.GetInitials(item.From.DisplayName);
                 item.Body.Content = Markdown.FormatForMessage(item.Body.Content);
+
+                if (item.From.Type== FromType.Service)
+                {
+                    item.Body.InlineAttachment.Pretext = Markdown.FormatForMessage(item.Body.InlineAttachment.Pretext);
+                }
 
                 //string key = $"{item.CreatedAt.ToString("m")} {CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(item.CreatedAt.DayOfWeek)}";
                 //var groupItem = SelectedNav.MessageGroup.SingleOrDefault(i => i.Key == key);

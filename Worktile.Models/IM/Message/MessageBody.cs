@@ -15,7 +15,7 @@ namespace Worktile.Models.IM.Message
         public int Style { get; set; }
 
         [JsonProperty("attachment")]
-        public string Attachment { get; set; }
+        public BodyAttachment Attachment { get; set; }
 
         [JsonProperty("links")]
         public List<string> Links { get; set; }

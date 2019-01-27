@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Infrastructure;
+using Worktile.Enums;
 
 namespace Worktile.Views.Mission.My
 {
@@ -89,7 +90,7 @@ namespace Worktile.Views.Mission.My
                         Id = task.Id,
                         Title = task.Title,
                         Properties = props,
-                        Due = AvatarHelper.GetAvatar(DataSource.ApiUserMe.Uid, 40),
+                        Due = AvatarHelper.GetAvatar(DataSource.ApiUserMe.Uid, AvatarSize.X40),
                         State = new Models.TaskState
                         {
                             Name = state.Name,

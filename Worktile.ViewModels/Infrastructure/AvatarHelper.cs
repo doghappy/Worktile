@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
+using Worktile.Enums;
+using Worktile.Enums.IM;
 using Worktile.Models;
 
 namespace Worktile.ViewModels.Infrastructure
@@ -43,9 +45,9 @@ namespace Worktile.ViewModels.Infrastructure
             return WtColorHelper.GetColor(WtColorHelper.GetNewColor(hex));
         }
 
-        public static BitmapImage GetAvatarBitmap(string avatar, int size)
+        public static BitmapImage GetAvatarBitmap(string avatar, AvatarSize size, FromType fromType)
         {
-            string url = GetAvatarUrl(avatar, size);
+            string url = GetAvatarUrl(avatar, size, fromType);
             if (string.IsNullOrWhiteSpace(url))
             {
                 return null;
@@ -56,7 +58,7 @@ namespace Worktile.ViewModels.Infrastructure
             }
         }
 
-        public static string GetAvatarUrl(string avatar, int size)
+        public static string GetAvatarUrl(string avatar, AvatarSize size, FromType fromType)
         {
             if (string.IsNullOrWhiteSpace(avatar) || avatar == "default.png")
             {
@@ -64,13 +66,22 @@ namespace Worktile.ViewModels.Infrastructure
             }
             else
             {
-                string ext = Path.GetExtension(avatar);
-                string name = Path.GetFileNameWithoutExtension(avatar);
-                return DataSource.ApiUserMeConfig.Box.AvatarUrl + name + "_" + size + "x" + size + ext;
+                switch (fromType)
+                {
+                    case FromType.User:
+                        {
+                            string ext = Path.GetExtension(avatar);
+                            string name = Path.GetFileNameWithoutExtension(avatar);
+                            return DataSource.ApiUserMeConfig.Box.AvatarUrl + name + "_" + (int)size + "x" + (int)size + ext;
+                        }
+                    case FromType.Service:
+                        return DataSource.ApiUserMeConfig.Box.ServiceUrl + avatar;
+                    default: throw new NotImplementedException();
+                }
             }
         }
 
-        public static Avatar GetAvatar(string uid, int avatarSize)
+        public static Avatar GetAvatar(string uid, AvatarSize size)
         {
             var member = DataSource.Team.Members.FirstOrDefault(m => m.Uid == uid);
             if (member == null)
@@ -79,7 +90,7 @@ namespace Worktile.ViewModels.Infrastructure
             }
             return new Avatar
             {
-                ProfilePicture = GetAvatarBitmap(member.Avatar, avatarSize),
+                ProfilePicture = GetAvatarBitmap(member.Avatar, size, FromType.User),
                 DisplayName = member.DisplayName,
                 Initials = GetInitials(member.DisplayName)
             };

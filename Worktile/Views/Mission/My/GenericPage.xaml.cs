@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.ApiMissionVnextWorkMyGeneric;
 using Worktile.Common;
+using Worktile.Enums;
 using Worktile.Infrastructure;
 using Worktile.Models;
 using Worktile.ViewModels.Infrastructure;
@@ -102,7 +103,7 @@ namespace Worktile.Views.Mission.My
                         BoldGlyph = WtIconHelper.GetBoldGlyph(state.Type),
                         Name = state.Name
                     },
-                    Assignee = AvatarHelper.GetAvatar(item.Properties.Assignee.Value, 40),
+                    Assignee = AvatarHelper.GetAvatar(item.Properties.Assignee.Value, AvatarSize.X40),
                     TaskType = new Models.TaskType
                     {
                         Color = WtColorHelper.GetColorByClass(type.Icon),

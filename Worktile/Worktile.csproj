@@ -226,6 +226,9 @@
     <Compile Include="WtControls\IM\ActivityMessage.xaml.cs">
       <DependentUpon>ActivityMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WtControls\IM\AttachmentMessage.xaml.cs">
+      <DependentUpon>AttachmentMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WtControls\IM\CalendarMessage.xaml.cs">
       <DependentUpon>CalendarMessage.xaml</DependentUpon>
     </Compile>
@@ -328,10 +331,6 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\MessagePivot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TestPage.xaml">
       <SubType>Designer</SubType>
@@ -453,6 +452,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WtControls\IM\AttachmentMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WtControls\IM\CalendarMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -534,7 +537,9 @@
       <Name>Worktile.WtRequestClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Styles\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

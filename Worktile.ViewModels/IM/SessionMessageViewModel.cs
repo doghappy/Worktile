@@ -1,12 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Worktile.ApiModels.IM.ApiPigeonMessages;
-using Worktile.Infrastructure;
+using Worktile.Enums;
 using Worktile.Models.IM;
-using Worktile.Models.IM.Message;
 using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.ViewModels.IM
@@ -66,7 +63,7 @@ namespace Worktile.ViewModels.IM
             var apiData = jToken.ToObject<ApiPigeonMessages>();
             foreach (var item in apiData.Data.Messages)
             {
-                item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, 80);
+                item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, AvatarSize.X80, item.From.Type);
                 item.From.Background = AvatarHelper.GetColor(item.From.DisplayName);
                 item.From.Initials = AvatarHelper.GetInitials(item.From.DisplayName);
                 SelectedNav.Messages.Insert(0, item);
