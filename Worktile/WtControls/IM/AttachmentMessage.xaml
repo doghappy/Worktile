@@ -22,6 +22,7 @@
     <Grid VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         
@@ -32,7 +33,13 @@
                                     SchemeList="worktile"
                                     UriPrefix="ms-appx://"
                                     Margin="0 0 0 8"/>
-        <StackPanel Grid.Row="1"
+        <TextBlock x:Name="PretextLabel"
+                   Grid.Row="1"
+                   Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
+                   Margin="0 0 0 4"
+                   x:Load="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}"/>
+
+        <StackPanel Grid.Row="2"
                     Padding="20 10 18 10"
                     BorderThickness="2 0 0 0"
                     BorderBrush="{x:Bind Message.Body.InlineAttachment.Color, Mode=OneWay}">

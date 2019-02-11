@@ -16,7 +16,41 @@ namespace Worktile.ViewModels.IM
         }
 
         public ObservableCollection<ChatNavItem> NavItems { get; }
-        protected abstract string MessageUrl { get; }
+
+        protected string Url
+        {
+            get
+            {
+                int refType = Session.Type == ChatType.Channel ? 1 : 2;
+                if (Session.IsAssistant)
+                {
+                    string component = null;
+                    if (Session.Component.HasValue)
+                    {
+                        component = GetComponentByNumber(Session.Component.Value);
+                    }
+                    string url = $"/api/pigeon/messages?ref_id={Session.Id}&ref_type={refType}&filter_type={SelectedNav.FilterType}&component={component}&size=20";
+                    if (!string.IsNullOrEmpty(SelectedNav.Next))
+                    {
+                        url += "&next=" + SelectedNav.Next;
+                    }
+                    return url;
+                }
+                else
+                {
+                    string url = "/api/messages?";
+                    if (SelectedNav.IsPin)
+                    {
+                        url += $"session_id={Session.Id}&size=20";
+                    }
+                    else
+                    {
+                        url += $"ref_id={Session.Id}&ref_type={refType}&latest_id={SelectedNav.LatestId}&size=20";
+                    }
+                    return url;
+                }
+            }
+        }
         protected abstract void OnPropertyChanged([CallerMemberName]string prop = null);
         protected abstract void ReadApiData(JToken jToken);
 
@@ -31,15 +65,15 @@ namespace Worktile.ViewModels.IM
                     _session = value;
                     if (value.IsAssistant)
                     {
-                        NavItems.Add(new ChatNavItem { Key = "unread", Name = "未读", FilterType = 2 });
-                        NavItems.Add(new ChatNavItem { Key = "read", Name = "已读", FilterType = 4 });
-                        NavItems.Add(new ChatNavItem { Key = "pending", Name = "待处理", FilterType = 3 });
+                        NavItems.Add(new ChatNavItem { Name = "未读", FilterType = 2 });
+                        NavItems.Add(new ChatNavItem { Name = "已读", FilterType = 4 });
+                        NavItems.Add(new ChatNavItem { Name = "待处理", FilterType = 3 });
                     }
                     else
                     {
-                        NavItems.Add(new ChatNavItem { Key = "unread", Name = "消息" });
-                        NavItems.Add(new ChatNavItem { Key = "read", Name = "文件" });
-                        NavItems.Add(new ChatNavItem { Key = "pending", Name = "固定消息" });
+                        NavItems.Add(new ChatNavItem { Name = "消息" });
+                        NavItems.Add(new ChatNavItem { Name = "文件" });
+                        NavItems.Add(new ChatNavItem { Name = "固定消息", IsPin = true });
                     }
                     SelectedNav = NavItems.First();
                     OnPropertyChanged();
@@ -79,7 +113,7 @@ namespace Worktile.ViewModels.IM
         {
             IsActive = true;
             var client = new WtHttpClient();
-            var data = await client.GetJTokenAsync(MessageUrl);
+            var data = await client.GetJTokenAsync(Url);
             ReadApiData(data);
             //var data = await client.GetAsync<ApiPigeonMessages>(MessageUrl);
             //SelectedNav.HasMore = data.Data.Next != null;
@@ -93,6 +127,28 @@ namespace Worktile.ViewModels.IM
             //}
             IsActive = false;
             SelectedNav.EmptyFrameVisible = !SelectedNav.Messages.Any();
+        }
+
+        private string GetComponentByNumber(int c)
+        {
+            string component = null;
+            switch (c)
+            {
+                case 0: component = "message"; break;
+                case 1: component = "drive"; break;
+                case 2: component = "task"; break;
+                case 3: component = "calendar"; break;
+                case 4: component = "report"; break;
+                case 5: component = "crm"; break;
+                case 6: component = "approval"; break;
+                case 9: component = "leave"; break;
+                case 20: component = "bulletin"; break;
+                case 30: component = "appraisal"; break;
+                case 40: component = "okr"; break;
+                case 50: component = "portal"; break;
+                case 60: component = "mission"; break;
+            }
+            return component;
         }
     }
 }

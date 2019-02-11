@@ -23,7 +23,9 @@ namespace Worktile.Infrastructure
 
                 // link
                 msg = Regex.Replace(msg, @"\[([a-zA-z]+?://[^\s]+?)\|(.*?)\]",
-                    match => $"[{match.Groups[2].Value}]({match.Groups[1].Value})");
+                    match => string.IsNullOrEmpty(match.Groups[2].Value)
+                        ? match.Groups[1].Value
+                        : $"[{match.Groups[2].Value}]({match.Groups[1].Value})");
             }
             return msg;
         }

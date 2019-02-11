@@ -1,28 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Worktile.ApiModels.IM.ApiMessages;
-using Worktile.Models.IM;
 using System.Linq;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Infrastructure;
 using Worktile.Enums;
 using Worktile.Enums.IM;
+using Worktile.ApiModels.IM.ApiPigeonMessages;
 
 namespace Worktile.ViewModels.IM
 {
     public class ChannelMessageViewModel : MessageViewModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
-        protected override string MessageUrl
-        {
-            get
-            {
-                int refType = Session.Type == ChatType.Channel ? 1 : 2;
-                return $"/api/messages?ref_id={Session.Id}&ref_type={refType}&latest_id={SelectedNav.LatestId}&size=20";
-            }
-        }
 
         protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {
@@ -31,7 +21,7 @@ namespace Worktile.ViewModels.IM
 
         protected override void ReadApiData(JToken jToken)
         {
-            var apiData = jToken.ToObject<ApiMessages>();
+            var apiData = jToken.ToObject<ApiPigeonMessages>();
             bool flag = false;
             if (SelectedNav.Messages.Any())
             {
@@ -66,8 +56,8 @@ namespace Worktile.ViewModels.IM
                 else
                     SelectedNav.Messages.Add(item);
             }
-            SelectedNav.LatestId = apiData.Data.LatestId;
-            SelectedNav.HasMore = apiData.Data.More;
+            SelectedNav.Next = apiData.Data.Next;
+            SelectedNav.HasMore = apiData.Data.Next != null;
         }
     }
 }

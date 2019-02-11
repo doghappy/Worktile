@@ -14,7 +14,6 @@ namespace Worktile.Models.IM
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Key { get; set; }
         public string Name { get; set; }
         public int FilterType { get; set; }
         //public ObservableCollection<MessageGroup> MessageGroup { get; }
@@ -22,6 +21,7 @@ namespace Worktile.Models.IM
         public bool? HasMore { get; set; }
         public string Next { get; set; }
         public string LatestId { get; set; }
+        public bool IsPin { get; set; }
 
         private bool _emptyFrameVisible;
         public bool EmptyFrameVisible
