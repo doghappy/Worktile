@@ -60,7 +60,7 @@ namespace Worktile.Tethys
                 }
                 SetValue(DisplayNameProperty, val);
                 int code = value.Sum(n => n);
-                Background = _brushes[code % 9];
+                Background = _brushes[code % _brushes.Length];
             }
         }
         public static readonly DependencyProperty DisplayNameProperty =
