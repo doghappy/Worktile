@@ -6,29 +6,33 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:main="using:Worktile.Models.Main"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:tethys="using:Worktile.Tethys"
+    mc:Ignorable="d">
+
+    <Page.Background>
+        <ImageBrush ImageSource="{x:Bind BackgroundImage, Mode=OneWay}" Stretch="UniformToFill"/>
+    </Page.Background>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"/>
-            <ColumnDefinition Width="240"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Background="{x:Bind ViewModel.NavBackground}" Padding="0 32 0 0">
+        <Grid Background="{x:Bind NavBackground}" Padding="0 32 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="90"/>
                 <RowDefinition/>
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
 
-            <Image Source="{x:Bind ViewModel.LogoUrl}" Width="50" Height="50"/>
+            <Image Source="{x:Bind LogoUrl}" Width="50" Height="50"/>
 
             <Grid Grid.Row="1">
-                <ListView ItemsSource="{x:Bind ViewModel.NavApps}"
+                <ListView x:Name="NavList"
+                          ItemsSource="{x:Bind NavApps}"
                           IsItemClickEnabled="True"
-                          SelectedItem="{x:Bind ViewModel.NavApp, Mode=TwoWay}">
+                          SelectedItem="{x:Bind NavApp, Mode=TwoWay}">
                     <ListView.Resources>
                         <Style TargetType="FontIcon" x:Key="NavIcon" BasedOn="{StaticResource WtfIcon}">
                             <Setter Property="FontSize" Value="24"/>
@@ -40,13 +44,6 @@
                             <Setter Property="FontSize" Value="12"/>
                             <Setter Property="HorizontalAlignment" Value="Center"/>
                         </Style>
-
-
-                        <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{x:Bind ViewModel.NavSelectedBackground, Mode=OneWay}"/>
-                        <!--<SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed" Color="{Binding ViewModel.NavSelectedBackground}"/>
-                        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{Binding ViewModel.NavSelectedBackground}"/>
-                        <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="{Binding ViewModel.NavSelectedBackground}"/>
-                        <SolidColorBrush x:Key="ListViewItemBackgroundPressed" Color="{Binding ViewModel.NavSelectedBackground}"/>-->
                     </ListView.Resources>
 
                     <ListView.ItemContainerStyle>
@@ -74,6 +71,19 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
+
+            <tethys:Avatar Grid.Row="2" Size="48" DisplayName="王雄" Source="{x:Bind AvatarUrl}"/>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+            <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
         </Grid>
     </Grid>
 </Page>

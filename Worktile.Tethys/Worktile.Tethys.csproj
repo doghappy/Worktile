@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Avatar\Avatar.cs" />
     <Compile Include="IconTextBlock\IconTextBlock.cs" />
     <Compile Include="Label\Label.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,6 +135,10 @@
     <Content Include="Assets\Fonts\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Avatar\Avatar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="IconTextBlock\IconTextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -155,6 +160,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

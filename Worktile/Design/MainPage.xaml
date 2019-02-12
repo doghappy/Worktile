@@ -5,6 +5,7 @@
     xmlns:local="using:Worktile.Design"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wtcontrols="using:Worktile.WtControls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -87,6 +88,9 @@
                     </ListViewItem>
                 </ListView>
             </Grid>
+
+            <!--<wtcontrols:WtAvatar Grid.Row="2" Width="48" Height="48" Initials="WX" ProfilePicture="https://s3.cn-north-1.amazonaws.com.cn/lcavatar/7f79f351-408d-459f-b880-620eef734b65_80x80.png"/>-->
+            <PersonPicture Grid.Row="2" Width="48" Initials="WX" ProfilePicture="https://s3.cn-north-1.amazonaws.com.cn/lcavatar/7f79f351-408d-459f-b880-620eef734b65_80x80.png"/>
         </Grid>
     </Grid>
 </Page>

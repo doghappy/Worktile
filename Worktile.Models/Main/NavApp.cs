@@ -13,6 +13,7 @@ namespace Worktile.Models.Main
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string Id { get; set; }
         public string Label { get; set; }
         public string Glyph { get; set; }
         public string SelectedGlyph { get; set; }

@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiTeamChats;
-using Worktile.Models;
 using Worktile.Models.IM;
 using Worktile.WtRequestClient;
-using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Enums.IM;
 using Worktile.ViewModels.Infrastructure;
@@ -61,14 +48,11 @@ namespace Worktile.Views.IM
                 {
                     _selectedChatNav = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChatNav)));
-                    //if (value.IsBot)
+                    //if (value.Type == ChatType.Channel)
                     //    ContentFrame.Navigate(typeof(ChannelMessagePage), value);
                     //else
-                    //    ContentFrame.Navigate(typeof(GeneralMessagePage), value);
-                    if (value.Type == ChatType.Channel)
-                        ContentFrame.Navigate(typeof(ChannelMessagePage), value);
-                    else
-                        ContentFrame.Navigate(typeof(SessionMessagePage), value);
+                    //    ContentFrame.Navigate(typeof(SessionMessagePage), value);
+                    ContentFrame.Navigate(typeof(ChatPage), value);
                 }
             }
         }

@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="Worktile.Tethys.Sample.Views.DataDisplay.AvatarPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Tethys.Sample.Views.DataDisplay"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tethys="using:Worktile.Tethys"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel>
+        <tethys:Avatar DisplayName="王雄"/>
+        <tethys:Avatar DisplayName="WX"/>
+        <tethys:Avatar DisplayName="WX" Source="https://s3.cn-north-1.amazonaws.com.cn/lclogo/8dbc28b9-ec0e-4d2e-b66d-ea235525942d_180x180.png"/>
+
+        <tethys:Avatar DisplayName="王雄" Size="40"/>
+        <tethys:Avatar DisplayName="WX" Size="40"/>
+        <tethys:Avatar DisplayName="WX" Size="40" Source="https://s3.cn-north-1.amazonaws.com.cn/lclogo/8dbc28b9-ec0e-4d2e-b66d-ea235525942d_180x180.png"/>
+    </StackPanel>
+</Page>

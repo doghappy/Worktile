@@ -25,17 +25,17 @@ namespace Worktile.Views.IM
         public UnreadPage()
         {
             InitializeComponent();
-            Messages = new IncrementalCollection<Message>(LoadMessagesAsync);
+            Messages = new IncrementalCollection<Models.IM.Message.Message>(LoadMessagesAsync);
         }
 
-        public IncrementalCollection<Message> Messages { get; }
+        public IncrementalCollection<Models.IM.Message.Message> Messages { get; }
 
-        private async Task<IEnumerable<Message>> LoadMessagesAsync()
+        private async Task<IEnumerable<Models.IM.Message.Message>> LoadMessagesAsync()
         {
             await Task.Delay(1000);
-            return new List<Message>
+            return new List<Models.IM.Message.Message>
             {
-                new Message()
+                new Models.IM.Message.Message()
             };
         }
     }

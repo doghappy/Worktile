@@ -46,6 +46,12 @@ namespace Worktile.Tethys.Sample.Views
                             Name = "Label",
                             Glyph = "\ue930",
                             SourcePageType = typeof(DataDisplay.LabelPage)
+                        },
+                        new NavItem
+                        {
+                            Name = "Avatar",
+                            Glyph = "\ue13d",
+                            SourcePageType = typeof(DataDisplay.AvatarPage)
                         }
                     }
                 },
