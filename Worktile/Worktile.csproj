@@ -238,6 +238,9 @@
     <Compile Include="WtControls\IM\MessageItem.xaml.cs">
       <DependentUpon>MessageItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WtControls\IM\MissionVNextMessage.xaml.cs">
+      <DependentUpon>MissionVNextMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WtControls\IM\TextMessage.xaml.cs">
       <DependentUpon>TextMessage.xaml</DependentUpon>
     </Compile>
@@ -465,6 +468,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WtControls\IM\MessageItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WtControls\IM\MissionVNextMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

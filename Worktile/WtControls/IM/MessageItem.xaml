@@ -93,6 +93,11 @@
                            Message="{x:Bind Message, Mode=OneWay}"
                            x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Attachment'}"/>
 
+            <local:MissionVNextMessage x:Name="MissionVNextMsg"
+                           Grid.Row="1"
+                           Message="{x:Bind Message, Mode=OneWay}"
+                           x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='MissionVNext'}"/>
+
         </Grid>
     </Grid>
 </UserControl>

@@ -49,6 +49,7 @@
         AppraisalNotice,
         BulletinVoteNotice,
         Okr,
-        PortalPanel
+        PortalPanel,
+        MissionVNext = 60
     }
 }

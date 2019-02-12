@@ -1,17 +1,17 @@
 ﻿<UserControl
-    x:Class="Worktile.WtControls.IM.CalendarMessage"
+    x:Class="Worktile.WtControls.IM.MissionVNextMessage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Worktile.WtControls.IM"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    mc:Ignorable="d"
     xmlns:msg="using:Worktile.Models.IM.Message"
-    xmlns:cvt="using:Worktile.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:fa="using:FontAwesome.UWP"
+    xmlns:cvt="using:Worktile.Converters"
+    mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="640">
+    d:DesignWidth="400">
 
     <UserControl.Resources>
         <local:CalendarBackgroundConverter x:Key="CalendarBackgroundConverter"/>
@@ -38,8 +38,8 @@
                     </Grid.ColumnDefinitions>
 
                     <FontIcon Style="{StaticResource WtfIcon}"
-                          Glyph="&#xE619;"
-                          Foreground="{StaticResource WarningBrush}"
+                          Glyph="&#xE70D;"
+                          Foreground="{StaticResource ProjectBrush}"
                           Margin="0 0 8 0"
                           VerticalAlignment="Top"/>
 
@@ -81,7 +81,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Grid>
-                <Rectangle Fill="{StaticResource WarningBrush}" Width="2" HorizontalAlignment="Left"/>
+                <Rectangle Fill="{StaticResource ProjectBrush}" Width="2" HorizontalAlignment="Left"/>
             </Grid>
         </Button>
     </StackPanel>

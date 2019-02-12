@@ -22,12 +22,12 @@ namespace Worktile.ViewModels.IM
         protected override void ReadApiData(JToken jToken)
         {
             var apiData = jToken.ToObject<ApiPigeonMessages>();
-            bool flag = false;
-            if (SelectedNav.Messages.Any())
-            {
-                apiData.Data.Messages.Reverse();
-                flag = true;
-            }
+            //bool flag = false;
+            //if (SelectedNav.Messages.Any())
+            //{
+            //    apiData.Data.Messages.Reverse();
+            //    flag = true;
+            //}
             foreach (var item in apiData.Data.Messages)
             {
                 item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, AvatarSize.X80, item.From.Type);
@@ -40,10 +40,10 @@ namespace Worktile.ViewModels.IM
                     item.Body.InlineAttachment.Pretext = Markdown.FormatForMessage(item.Body.InlineAttachment.Pretext);
                 }
 
-                if (flag)
+                //if (flag)
                     SelectedNav.Messages.Insert(0, item);
-                else
-                    SelectedNav.Messages.Add(item);
+                //else
+                //    SelectedNav.Messages.Add(item);
             }
             SelectedNav.Next = apiData.Data.Next;
             SelectedNav.HasMore = apiData.Data.Next != null;
