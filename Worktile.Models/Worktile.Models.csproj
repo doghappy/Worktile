@@ -139,6 +139,7 @@
     <Compile Include="Kanban\KanBanGroup.cs" />
     <Compile Include="Kanban\KanBanItem.cs" />
     <Compile Include="Kanban\KanbanItemProperty.cs" />
+    <Compile Include="Main\NavApp.cs" />
     <Compile Include="Mission\AnalyticInsight\TopNavItem.cs" />
     <Compile Include="Mission\WorkloadEstimate.cs" />
     <Compile Include="Mission\WorkloadValue.cs" />

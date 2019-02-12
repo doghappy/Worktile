@@ -1,0 +1,92 @@
+﻿<Page
+    x:Class="Worktile.Design.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Design"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="#6f76fa" Padding="0 32 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"/>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Image Source="https://s3.cn-north-1.amazonaws.com.cn/lclogo/8dbc28b9-ec0e-4d2e-b66d-ea235525942d_180x180.png" Width="50" Height="50"/>
+
+            <Grid Grid.Row="1">
+                <ListView>
+                    <ListView.Resources>
+                        <Style TargetType="FontIcon" x:Key="NavIcon" BasedOn="{StaticResource WtfIcon}">
+                            <Setter Property="FontSize" Value="24"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                        <Style TargetType="TextBlock" x:Key="NavLabel">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                        <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="#575df9"/>
+                        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed" Color="#575df9"/>
+                        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="#575df9"/>
+                        <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="#575df9"/>
+                        <SolidColorBrush x:Key="ListViewItemBackgroundPressed" Color="#575df9"/>
+                    </ListView.Resources>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="MinWidth" Value="70"/>
+                            <Setter Property="Height" Value="70"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListViewItem IsSelected="True">
+                        <Grid>
+                            <FontIcon Style="{StaticResource NavIcon}" Glyph="&#xE618;" Visibility="Collapsed"/>
+
+                            <StackPanel>
+                                <FontIcon Style="{StaticResource NavIcon}" Glyph="&#xE61E;"/>
+                                <TextBlock Style="{StaticResource NavLabel}" Text="消息"/>
+                            </StackPanel>
+
+                            <Polygon Points="0,6 6,0 6,12"
+                                     Fill="White"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Center"/>
+
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <Grid>
+                            <FontIcon Style="{StaticResource NavIcon}" Glyph="&#xE70D;" Visibility="Visible"/>
+
+                            <StackPanel Visibility="Collapsed">
+                                <FontIcon Style="{StaticResource NavIcon}" Glyph="&#xE61E;"/>
+                                <TextBlock Style="{StaticResource NavLabel}" Text="消息"/>
+                            </StackPanel>
+
+                            <Polygon Points="0,6 6,0 6,12"
+                                     Visibility="Collapsed"
+                                     Fill="White"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Center"/>
+                        </Grid>
+                    </ListViewItem>
+                </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
