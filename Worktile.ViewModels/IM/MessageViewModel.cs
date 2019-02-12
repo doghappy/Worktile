@@ -115,16 +115,6 @@ namespace Worktile.ViewModels.IM
             var client = new WtHttpClient();
             var data = await client.GetJTokenAsync(Url);
             ReadApiData(data);
-            //var data = await client.GetAsync<ApiPigeonMessages>(MessageUrl);
-            //SelectedNav.HasMore = data.Data.Next != null;
-            //OnMessageResponsed(data);
-            //foreach (var item in data.Data.Messages)
-            //{
-            //    item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, 80);
-            //    item.From.Background = AvatarHelper.GetColor(item.From.DisplayName);
-            //    item.From.Initials = AvatarHelper.GetInitials(item.From.DisplayName);
-            //    SelectedNav.Messages.Insert(0, item);
-            //}
             IsActive = false;
             SelectedNav.EmptyFrameVisible = !SelectedNav.Messages.Any();
         }
@@ -149,6 +139,21 @@ namespace Worktile.ViewModels.IM
                 case 60: component = "mission"; break;
             }
             return component;
+        }
+
+        public static MessageViewModel GetViewModel(ChatSession session)
+        {
+            MessageViewModel viewModel = null;
+            if (session.IsAssistant)
+            {
+                viewModel = new AssistantMessageViewModel();
+            }
+            else
+            {
+                viewModel = new SessionMessageViewModel();
+            }
+            viewModel.Session = session;
+            return viewModel;
         }
     }
 }

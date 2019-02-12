@@ -1,44 +1,39 @@
-﻿using Microsoft.Toolkit.Collections;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
+﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Common;
 using Worktile.Models.IM;
-using Worktile.Models.IM.Message;
 using Worktile.ViewModels.IM;
 
 namespace Worktile.Views.IM
 {
-    public sealed partial class ChannelMessagePage : Page
+    public sealed partial class ChannelMessagePage : Page, INotifyPropertyChanged
     {
         public ChannelMessagePage()
         {
             InitializeComponent();
-            ViewModel = new ChannelMessageViewModel();
         }
 
-        ChannelMessageViewModel ViewModel { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private MessageViewModel _viewModel;
+        public MessageViewModel ViewModel
+        {
+            get => _viewModel;
+            set
+            {
+                if (_viewModel != value)
+                {
+                    _viewModel = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewModel)));
+                }
+            }
+        }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ViewModel.Session = e.Parameter as ChatSession;
+            var session = e.Parameter as ChatSession;
+            ViewModel = MessageViewModel.GetViewModel(session);
         }
     }
 }

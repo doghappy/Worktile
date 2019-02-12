@@ -10,7 +10,7 @@ using Worktile.ApiModels.IM.ApiPigeonMessages;
 
 namespace Worktile.ViewModels.IM
 {
-    public class ChannelMessageViewModel : MessageViewModel, INotifyPropertyChanged
+    public class AssistantMessageViewModel : MessageViewModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,17 +40,6 @@ namespace Worktile.ViewModels.IM
                     item.Body.InlineAttachment.Pretext = Markdown.FormatForMessage(item.Body.InlineAttachment.Pretext);
                 }
 
-                //string key = $"{item.CreatedAt.ToString("m")} {CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(item.CreatedAt.DayOfWeek)}";
-                //var groupItem = SelectedNav.MessageGroup.SingleOrDefault(i => i.Key == key);
-                //if (groupItem == null)
-                //{
-                //    groupItem = new MessageGroup
-                //    {
-                //        Key = key
-                //    };
-                //    SelectedNav.MessageGroup.Insert(0, groupItem);
-                //}
-                //groupItem.Messages.Insert(0, item);
                 if (flag)
                     SelectedNav.Messages.Insert(0, item);
                 else

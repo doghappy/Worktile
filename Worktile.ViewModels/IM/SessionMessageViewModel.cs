@@ -33,30 +33,12 @@ namespace Worktile.ViewModels.IM
                 item.From.Background = AvatarHelper.GetColor(item.From.DisplayName);
                 item.From.Initials = AvatarHelper.GetInitials(item.From.DisplayName);
                 item.Body.Content = Markdown.FormatForMessage(item.Body.Content);
-                //SelectedNav.Messages.Add(item);
+                item.Body.InlineAttachment.Pretext = Markdown.FormatForMessage(item.Body.InlineAttachment.Pretext);
                 if (flag)
                     SelectedNav.Messages.Insert(0, item);
                 else
                     SelectedNav.Messages.Add(item);
             }
-            //foreach (var item in apiData.Data.Messages)
-            //{
-            //    item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, 80);
-            //    item.From.Background = AvatarHelper.GetColor(item.From.DisplayName);
-            //    item.From.Initials = AvatarHelper.GetInitials(item.From.DisplayName);
-
-            //    string key = $"{item.CreatedAt.ToString("m")} {CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(item.CreatedAt.DayOfWeek)}";
-            //    var groupItem = SelectedNav.MessageGroup.SingleOrDefault(i => i.Key == key);
-            //    if (groupItem == null)
-            //    {
-            //        groupItem = new MessageGroup
-            //        {
-            //            Key = key
-            //        };
-            //        SelectedNav.MessageGroup.Insert(0, groupItem);
-            //    }
-            //    groupItem.Messages.Insert(0, item);
-            //}
             SelectedNav.LatestId = apiData.Data.LatestId;
             SelectedNav.HasMore = apiData.Data.More;
         }

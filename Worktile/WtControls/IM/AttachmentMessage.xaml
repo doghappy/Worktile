@@ -33,7 +33,12 @@
                                     SchemeList="worktile"
                                     UriPrefix="ms-appx://"
                                     Margin="0 0 0 8"/>
-        <TextBlock x:Name="PretextLabel"
+        <!--<TextBlock x:Name="PretextLabel"
+                   Grid.Row="1"
+                   Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
+                   Margin="0 0 0 4"
+                   x:Load="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}"/>-->
+        <controls:MarkdownTextBlock x:Name="PretextLabel"
                    Grid.Row="1"
                    Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
                    Margin="0 0 0 4"

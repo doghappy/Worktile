@@ -1,39 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Models.IM;
 using Worktile.ViewModels.IM;
-using Worktile.Common;
 
 namespace Worktile.Views.IM
 {
-    public sealed partial class SessionMessagePage : Page
+    public sealed partial class SessionMessagePage : Page, INotifyPropertyChanged
     {
         public SessionMessagePage()
         {
             InitializeComponent();
-            ViewModel = new SessionMessageViewModel();
         }
 
-        SessionMessageViewModel ViewModel { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private MessageViewModel _viewModel;
+        public MessageViewModel ViewModel
+        {
+            get => _viewModel;
+            set
+            {
+                if (_viewModel != value)
+                {
+                    _viewModel = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewModel)));
+                }
+            }
+        }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ViewModel.Session = e.Parameter as ChatSession;
+            var session = e.Parameter as ChatSession;
+            ViewModel = MessageViewModel.GetViewModel(session);
         }
     }
 }
