@@ -16,5 +16,14 @@
     <SolidColorBrush x:Key="DangerBrush1A" Color="#1aff5b57"/>
     <SolidColorBrush x:Key="DarkBrush1A" Color="#1a333333"/>
 
+    <SolidColorBrush x:Key="DefaultThemeBrush" Color="#22d7bb"/>
+    <SolidColorBrush x:Key="BrownBlackThemeBrush" Color="#484848"/>
+    <SolidColorBrush x:Key="SkyBlueThemeBrush" Color="#6f76fa"/>
+    <SolidColorBrush x:Key="PurpleThemeBrush" Color="#48525c"/>
+    <SolidColorBrush x:Key="OlivineThemeBrush" Color="#66c060"/>
+    <SolidColorBrush x:Key="BrightYellowThemeBrush" Color="#febc20"/>
+    <SolidColorBrush x:Key="QQBlueThemeBrush" Color="#2dbcff"/>
+    <SolidColorBrush x:Key="BrightPurpleThemeBrush" Color="#4e8afa"/>
+
     <SolidColorBrush x:Key="ProjectBrush" Color="#F76CAA"/>
 </ResourceDictionary>

@@ -3,12 +3,17 @@ using System.ComponentModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Worktile.Models.Main;
-using Worktile.ViewModels;
 using Windows.UI.Xaml;
 using Worktile.ViewModels.Infrastructure;
 using Windows.UI.Xaml.Media.Imaging;
 using System;
 using Worktile.Views.Message;
+using Windows.Storage;
+using Worktile.WtRequestClient;
+using System.Threading.Tasks;
+using Worktile.ApiModels.ApiTeam;
+using Worktile.ApiModels.ApiUserMe;
+using Worktile.Infrastructure;
 
 namespace Worktile.Views
 {
@@ -18,14 +23,12 @@ namespace Worktile.Views
         {
             InitializeComponent();
             NavBackground = "#6f76fa";
-
             var navbg = WtColorHelper.GetColor("#575df9");
             NavList.Resources["ListViewItemBackgroundSelected"] = navbg;
             NavList.Resources["ListViewItemBackgroundSelectedPressed"] = navbg;
             NavList.Resources["ListViewItemBackgroundSelectedPointerOver"] = navbg;
             NavList.Resources["ListViewItemBackgroundPointerOver"] = navbg;
             NavList.Resources["ListViewItemBackgroundPressed"] = navbg;
-            LogoUrl = "https://s3.cn-north-1.amazonaws.com.cn/lclogo/8dbc28b9-ec0e-4d2e-b66d-ea235525942d_180x180.png";
             AvatarUrl = "https://s3.cn-north-1.amazonaws.com.cn/lcavatar/7f79f351-408d-459f-b880-620eef734b65_80x80.png";
             NavApps = new ObservableCollection<NavApp>
             {
@@ -35,24 +38,6 @@ namespace Worktile.Views
                     Label = "消息",
                     Glyph = "\ue618",
                     SelectedGlyph = "\ue61e"
-                },
-                new NavApp
-                {
-                    Label = "项目",
-                    Glyph = "\ue70d",
-                    SelectedGlyph = "\ue70c"
-                },
-                new NavApp
-                {
-                    Label = "应用",
-                    Glyph = "\ue61b",
-                    SelectedGlyph = "\ue61d"
-                },
-                new NavApp
-                {
-                    Label = "通讯录",
-                    Glyph = "\ue617",
-                    SelectedGlyph = "\ue604"
                 }
             };
             NavApp = NavApps.First();
@@ -62,7 +47,21 @@ namespace Worktile.Views
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string NavBackground { get; }
-        public string LogoUrl { get; }
+
+        private BitmapImage _logo;
+        public BitmapImage Logo
+        {
+            get => _logo;
+            set
+            {
+                if (_logo != value)
+                {
+                    _logo = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Logo)));
+                }
+            }
+        }
+
         public string AvatarUrl { get; }
 
         public ObservableCollection<NavApp> NavApps { get; }
@@ -117,6 +116,77 @@ namespace Worktile.Views
                 _backgroundImage = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BackgroundImage)));
             }
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            IsActive = true;
+            string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
+            if (string.IsNullOrEmpty(cookie))
+            {
+                Frame.Navigate(typeof(SignInPage));
+            }
+            else
+            {
+                WtHttpClient.SetBaseAddress(DataSource.SubDomain);
+                WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
+                Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
+                await RequestApiUserMeAsync();
+                await RequestApiTeamAsync();
+            }
+            IsActive = false;
+        }
+
+        private async Task RequestApiUserMeAsync()
+        {
+            var client = new WtHttpClient();
+            var me = await client.GetAsync<ApiUserMe>("/api/user/me");
+            DataSource.ApiUserMeConfig = me.Data.Config;
+            DataSource.ApiUserMe = me.Data.Me;
+
+            string bgImg = DataSource.ApiUserMe.Preferences.BackgroundImage;
+            if (bgImg.StartsWith("desktop-") && bgImg.EndsWith(".jpg"))
+            {
+                BackgroundImage = new BitmapImage(new Uri("ms-appx:///Assets/Images/Background/" + bgImg));
+            }
+            else
+            {
+                string imgUriString = DataSource.ApiUserMeConfig.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
+                byte[] buffer = await client.GetByteArrayAsync(imgUriString);
+                BackgroundImage = await ImageHelper.GetImageFromBytesAsync(buffer);
+            }
+        }
+
+        private async Task RequestApiTeamAsync()
+        {
+            var client = new WtHttpClient();
+            var data = await client.GetAsync<ApiTeam>("/api/team");
+            DataSource.Team = data.Data;
+
+            for (int i = 0; i < 3; i++)
+            {
+                var item = DataSource.Apps.Single(a => a.Name == DataSource.Team.Apps[i].Name);
+                NavApps.Add(new NavApp
+                {
+                    Label = item.DisplayName,
+                    Glyph = item.Glyph,
+                    SelectedGlyph = item.GlyphO
+                });
+            }
+            NavApps.Add(new NavApp
+            {
+                Label = "应用",
+                Glyph = "\ue61b",
+                SelectedGlyph = "\ue61d"
+            });
+            NavApps.Add(new NavApp
+            {
+                Label = "通讯录",
+                Glyph = "\ue617",
+                SelectedGlyph = "\ue604"
+            });
+
+            Logo = new BitmapImage(new Uri(DataSource.ApiUserMeConfig.Box.LogoUrl + DataSource.Team.Logo));
         }
     }
 }

@@ -5,172 +5,94 @@
     xmlns:local="using:Worktile.Views.Message"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:tethys="using:Worktile.Tethys"
-    mc:Ignorable="d">
+    xmlns:cvt="using:Worktile.Converters"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <cvt:NumberVisibilityConverter x:Key="NumberVisibilityConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <Grid Padding="{StaticResource TitleBarHeight}" Background="#F2FDFDFD">
-            <ListView>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListViewItem>
-                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <tethys:Avatar Size="32" DisplayName="DisplayName"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="DisplayName"/>
-                        <Border Grid.Column="1"
-                                Visibility="Visible"
-                                Padding="8 0"
-                                Background="{StaticResource DangerBrush}"
-                                CornerRadius="8"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right">
-                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
-                        </Border>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem>
-                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <tethys:Avatar Size="32" DisplayName="Display Name"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="Display Name"/>
-                        <Border Grid.Column="1"
-                                Visibility="Visible"
-                                Padding="8 0"
-                                Background="{StaticResource DangerBrush}"
-                                CornerRadius="8"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right">
-                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
-                        </Border>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem>
-                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <tethys:Avatar Size="32" DisplayName="WX"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="WX"/>
-                        <Border Grid.Column="1"
-                                Visibility="Visible"
-                                Padding="8 0"
-                                Background="{StaticResource DangerBrush}"
-                                CornerRadius="8"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right">
-                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
-                        </Border>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem>
-                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <tethys:Avatar Size="32" DisplayName="王雄"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="王雄"/>
-                        <Border Grid.Column="1"
-                                Visibility="Visible"
-                                Padding="8 0"
-                                Background="{StaticResource DangerBrush}"
-                                CornerRadius="8"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right">
-                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
-                        </Border>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem>
-                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <tethys:Avatar Size="32" DisplayName="项目助手" BadgeIcon="&#xe64e;" BadgeIconFontFamily="ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="项目助手"/>
-                        <Border Grid.Column="1"
-                                Visibility="Visible"
-                                Padding="8 0"
-                                Background="{StaticResource DangerBrush}"
-                                CornerRadius="8"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right">
-                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
-                        </Border>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem>
-                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <tethys:Avatar Size="32" DisplayName="美女组群" BadgeIcon="&#xe748;" BadgeIconFontFamily="ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="美女组群"/>
-                        <Border Grid.Column="1"
-                                Visibility="Visible"
-                                Padding="8 0"
-                                Background="{StaticResource DangerBrush}"
-                                CornerRadius="8"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right">
-                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
-                        </Border>
-                    </Grid>
-                </ListViewItem>
-                <!--<ListView.ItemTemplate>
-                    <DataTemplate x:DataType="im:ChatSession">
-                        <Grid Padding="0 8" HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <wtcontrols:WtAvatar ChatType="{x:Bind Type}"
-                                                     AvatarSize="30"
-                                                     AvatarBackground="{x:Bind Background}"
-                                                     Initials="{x:Bind Initials}"
-                                                     ProfilePicture="{x:Bind ProfilePicture}"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="{x:Bind DisplayName}"/>
-                            <Border Grid.Column="1"
+            <Grid Padding="{StaticResource TitleBarHeight}" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Padding="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="消息" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="SemiBold"/>
+
+                    <HyperlinkButton Grid.Column="1" HorizontalAlignment="Right">
+                        <HyperlinkButton.Content>
+                            <FontIcon Style="{ThemeResource WtfIcon}" FontSize="24" Glyph="&#xE633;"/>
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
+                </Grid>
+
+                <ListView Grid.Row="1"
+                          ItemsSource="{x:Bind Sessions}"
+                          SelectedItem="{x:Bind SelectedSession, Mode=TwoWay}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:Session">
+                            <Grid Padding="0 8" HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <PersonPicture Width="30"
+                                               Initials="{x:Bind Initials}"
+                                               FontFamily="{x:Bind AvatarFont}"
+                                               Foreground="White"
+                                               ProfilePicture="{x:Bind ProfilePicture}">
+                                    <PersonPicture.Resources>
+                                        <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="{x:Bind Background, Mode=OneWay}"/>
+                                    </PersonPicture.Resources>
+                                </PersonPicture>
+                                <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="{x:Bind DisplayName}"/>
+                                <Border Grid.Column="1"
                                         Visibility="{x:Bind UnRead, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter='!'}"
                                         Padding="8 0"
                                         Background="{StaticResource DangerBrush}"
                                         CornerRadius="8"
                                         VerticalAlignment="Top"
                                         HorizontalAlignment="Right">
-                                <TextBlock Text="{x:Bind UnRead}" FontSize="12" Foreground="White"/>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>-->
-            </ListView>
-        </Grid>
+                                    <TextBlock Text="{x:Bind UnRead}" FontSize="12" Foreground="White"/>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
-        <Grid Grid.Column="1">
-            <Frame x:Name="ContentFrame">
-                <Frame.ContentTransitions>
-                    <TransitionCollection>
-                        <NavigationThemeTransition/>
-                    </TransitionCollection>
-                </Frame.ContentTransitions>
-            </Frame>
+            <Grid Grid.Column="1">
+                <Frame x:Name="ContentFrame">
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition/>
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
+                </Frame>
+            </Grid>
         </Grid>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

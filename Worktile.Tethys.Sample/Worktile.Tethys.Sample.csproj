@@ -126,6 +126,9 @@
     <Compile Include="Views\Basic\ColorPage.xaml.cs">
       <DependentUpon>ColorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basic\ThemePage.xaml.cs">
+      <DependentUpon>ThemePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Basic\WtfPage.xaml.cs">
       <DependentUpon>WtfPage.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Basic\ColorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Basic\ThemePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

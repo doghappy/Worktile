@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -27,53 +28,18 @@ namespace Worktile
         public TestPage()
         {
             InitializeComponent();
-            Persons = new List<Person>
-            {
-                new Person { Id = 1, Name = "Bob" },
-                new Person { Id = 2, Name = "Mary" },
-                new Person { Id = 2, Name = "Mary" },
-                new Person { Id = 2, Name = "HeroWong" }
-            };
+            Font1 = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
+            Font2 = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
         }
 
-        List<Person> Persons { get; }
 
-        private async void SystemDialog_Click(object sender, RoutedEventArgs e)
+        public FontFamily Font1 { get; }
+        public FontFamily Font2 { get; }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new ContentDialog
-            {
-                Title = "Title",
-                PrimaryButtonText = "OK"
-            };
-            await dialog.ShowAsync();
+            //
         }
-
-        private async void NewView_Click(object sender, RoutedEventArgs e)
-        {
-            var newView = CoreApplication.CreateNewView();
-            int newViewId = 0;
-            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                var frame = new Frame();
-                frame.Navigate(typeof(Views.Mission.Project.Detail.DetailPage), null);
-                Window.Current.Content = frame;
-                Window.Current.Activate();
-                newViewId = ApplicationView.GetForCurrentView().Id;
-            });
-            bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            Tb.Text = "\uE64E \uE652";
-            Tb.FontFamily = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-            //Ta.Initials = "\uE64E";
-            Ta.FontFamily = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-        }
-    }
-    class Person
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
 }

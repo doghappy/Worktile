@@ -22,6 +22,7 @@ using Worktile.Views.IM;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Infrastructure;
+using Worktile.Views.Message;
 
 namespace Worktile
 {
@@ -170,7 +171,7 @@ namespace Worktile
             switch (app)
             {
                 case "message":
-                    ContentFrame.Navigate(typeof(IMPage));
+                    ContentFrame.Navigate(typeof(MessagePage));
                     break;
                 case "mission":
                     ContentFrame.Navigate(typeof(MissionPage));

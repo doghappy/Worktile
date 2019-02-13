@@ -32,6 +32,12 @@ namespace Worktile.Tethys.Sample.Views
                             Name = "Wtf",
                             Glyph = "\ue164",
                             SourcePageType = typeof(Basic.WtfPage)
+                        },
+                        new NavItem
+                        {
+                            Name = "Theme",
+                            Glyph = "\ue790",
+                            SourcePageType = typeof(Basic.ThemePage)
                         }
                     }
                 },

@@ -10,108 +10,29 @@
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:im="using:Worktile.WtControls.IM"
     mc:Ignorable="d"
-    Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32">
-        <Button Content="System Dialog" Click="SystemDialog_Click"/>
-        <Button Content="New View Dialog" Click="NewView_Click"/>
-        <TextBlock Text="steest" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-        <wtcontrols:MultipleComboBox ItemsSource="{x:Bind Persons}" EmptyText="请选择">
-            <wtcontrols:MultipleComboBox.Resources>
-                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
-            </wtcontrols:MultipleComboBox.Resources>
-            <wtcontrols:MultipleComboBox.SelectedItemTemplate>
-                <DataTemplate x:DataType="local:Person">
-                    <tethys:Label Content="{x:Bind Name}"
-                              Margin="4"
-                              VerticalAlignment="Center"
-                              Background="{StaticResource PrimaryBrush1A}"
-                              Foreground="{StaticResource PrimaryBrush}"/>
-                </DataTemplate>
-            </wtcontrols:MultipleComboBox.SelectedItemTemplate>
-            <wtcontrols:MultipleComboBox.ListItemTemplate>
-                <DataTemplate x:DataType="local:Person">
-                    <TextBlock Text="{x:Bind Name}"/>
-                </DataTemplate>
-            </wtcontrols:MultipleComboBox.ListItemTemplate>
-        </wtcontrols:MultipleComboBox>
-        <DatePicker/>
-        <StackPanel Orientation="Horizontal">
-            <CalendarDatePicker/>
-            <TimePicker Margin="4 0 0 0"/>
-        </StackPanel>
-        <PersonPicture Initials="&#xE652;" FontFamily="ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf">
+        <Button Content="Button" Click="Button_Click"/>
+        <PersonPicture DisplayName="Test" Initials="&#xE748;" FontFamily="ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf">
             <PersonPicture.Resources>
                 <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
-                <!--<FontFamily x:Key="SymbolThemeFontFamily">ms-appx:///Worktile/Assets/Fonts/lc-iconfont.ttf#lcfont</FontFamily>-->
             </PersonPicture.Resources>
         </PersonPicture>
-        <TextBlock x:Name="Tb"/>
-        <PersonPicture x:Name="Ta" Initials="&#xE652;">
+        <PersonPicture DisplayName="Test" Initials="&#xE64E;" FontFamily="ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont">
             <PersonPicture.Resources>
-                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Red"/>
-                <!--<FontFamily x:Key="SymbolThemeFontFamily">ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont</FontFamily>-->
+                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
             </PersonPicture.Resources>
         </PersonPicture>
-
-        <Border Padding="8 0" Background="{StaticResource DangerBrush}" CornerRadius="8" HorizontalAlignment="Left">
-            <TextBlock Text="555" FontSize="12" Foreground="White"/>
-        </Border>
-        <im:MessageItem DisplayName="FromDisplayName"
-                        AvatarBackground="Blue"
-                        Initials="Te"
-                        ChatType="Session"
-                        Margin="0 0 0 16"/>
-        <Grid HorizontalAlignment="Left">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlHighlightAccentRevealBackgroundBrush}" Margin="12,0,0,0"/>
-            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightListAccentHighBrush}" Padding="12" HorizontalAlignment="Left">
-                <TextBlock Text="sssssssssssssssssssssss" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
-            </Grid>
-        </Grid>
-        <Grid HorizontalAlignment="Right">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid Background="{ThemeResource SystemControlHighlightListAccentLowBrush}" Padding="12" HorizontalAlignment="Left">
-                <TextBlock Text="wwwwwwwwwwwwwwwwwwwwwwww" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
-            </Grid>
-            <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightListAccentHighBrush}" Margin="0,0,12,0"/>
-        </Grid>
-        <Grid HorizontalAlignment="Right">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid Background="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
-                <TextBlock Text="wwwwwwwwwwwwwwwwwwwwwwww" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
-            </Grid>
-            <Polygon Grid.Row="1" Points="0,0 16,16 16,0" HorizontalAlignment="Right" Fill="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Margin="0,0,12,0"/>
-        </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" Margin="12,0,0,0"/>
-            <Grid Grid.Row="1" Background="{ThemeResource SystemControlAccentAcrylicWindowAccentMediumHighBrush}" Padding="12" HorizontalAlignment="Left">
-                <TextBlock Text="sssssssssssssssssssssss" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
-            </Grid>
-        </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Polygon Points="0,0 0,16 16,16" Fill="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Margin="12,0,0,0"/>
-            <Grid Grid.Row="1" Background="{ThemeResource SystemControlHighlightAccent2RevealBackgroundBrush}" Padding="12" HorizontalAlignment="Left">
-                <TextBlock Text="sssssssssssssssssssssss" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"/>
-            </Grid>
-        </Grid>
+        <PersonPicture DisplayName="Test" Initials="&#xE748;" FontFamily="{x:Bind Font1}">
+            <PersonPicture.Resources>
+                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
+            </PersonPicture.Resources>
+        </PersonPicture>
+        <PersonPicture DisplayName="Test" Initials="&#xE64E;" FontFamily="{x:Bind Font2}">
+            <PersonPicture.Resources>
+                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
+            </PersonPicture.Resources>
+        </PersonPicture>
     </StackPanel>
 </Page>

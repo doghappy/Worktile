@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:main="using:Worktile.Models.Main"
     xmlns:tethys="using:Worktile.Tethys"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Background>
@@ -26,7 +27,7 @@
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
 
-            <Image Source="{x:Bind LogoUrl}" Width="50" Height="50"/>
+            <Image Source="{x:Bind Logo, Mode=OneWay}" Width="50" Height="50"/>
 
             <Grid Grid.Row="1">
                 <ListView x:Name="NavList"
