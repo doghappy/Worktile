@@ -5,6 +5,7 @@
     xmlns:local="using:Worktile.Views.Message"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d">
 
     <Grid>
@@ -26,7 +27,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <PersonPicture Width="24" Initials="WX" ProfilePicture="https://s3.cn-north-1.amazonaws.com.cn/lcavatar/7f79f351-408d-459f-b880-620eef734b65_80x80.png"/>
+                        <tethys:Avatar Size="32" DisplayName="DisplayName"/>
                         <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="DisplayName"/>
                         <Border Grid.Column="1"
                                 Visibility="Visible"
@@ -45,8 +46,84 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <PersonPicture Width="24" Initials="WX" ProfilePicture="https://s3.cn-north-1.amazonaws.com.cn/lcavatar/7f79f351-408d-459f-b880-620eef734b65_80x80.png"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="DisplayName"/>
+                        <tethys:Avatar Size="32" DisplayName="Display Name"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="Display Name"/>
+                        <Border Grid.Column="1"
+                                Visibility="Visible"
+                                Padding="8 0"
+                                Background="{StaticResource DangerBrush}"
+                                CornerRadius="8"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right">
+                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
+                        </Border>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <tethys:Avatar Size="32" DisplayName="WX"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="WX"/>
+                        <Border Grid.Column="1"
+                                Visibility="Visible"
+                                Padding="8 0"
+                                Background="{StaticResource DangerBrush}"
+                                CornerRadius="8"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right">
+                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
+                        </Border>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <tethys:Avatar Size="32" DisplayName="王雄"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="王雄"/>
+                        <Border Grid.Column="1"
+                                Visibility="Visible"
+                                Padding="8 0"
+                                Background="{StaticResource DangerBrush}"
+                                CornerRadius="8"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right">
+                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
+                        </Border>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <tethys:Avatar Size="32" DisplayName="项目助手" BadgeIcon="&#xe64e;" BadgeIconFontFamily="ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="项目助手"/>
+                        <Border Grid.Column="1"
+                                Visibility="Visible"
+                                Padding="8 0"
+                                Background="{StaticResource DangerBrush}"
+                                CornerRadius="8"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right">
+                            <TextBlock Text="99+" FontSize="12" Foreground="White"/>
+                        </Border>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid Padding="0 8" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <tethys:Avatar Size="32" DisplayName="美女组群" BadgeIcon="&#xe748;" BadgeIconFontFamily="ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="美女组群"/>
                         <Border Grid.Column="1"
                                 Visibility="Visible"
                                 Padding="8 0"

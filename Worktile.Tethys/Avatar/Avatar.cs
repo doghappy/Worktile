@@ -14,14 +14,12 @@ using Windows.UI.Xaml.Media;
 
 namespace Worktile.Tethys
 {
-    public sealed class Avatar : Control, INotifyPropertyChanged
+    public sealed class Avatar : Control
     {
         public Avatar()
         {
             DefaultStyleKey = typeof(Avatar);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         readonly SolidColorBrush[] _brushes = new[]
         {
@@ -60,6 +58,9 @@ namespace Worktile.Tethys
                 {
                     val = value.ToUpper();
                 }
+
+                FontSize = (Size / 2) * .8;
+
                 SetValue(DisplayNameProperty, val);
                 int code = value.Sum(n => n);
                 Background = _brushes[code % _brushes.Length];
@@ -86,20 +87,11 @@ namespace Worktile.Tethys
                 SetValue(SizeProperty, value);
                 Width = value;
                 Height = value;
-                ViewboxSize = value * .8;
                 CornerRadius = new CornerRadius(value);
             }
         }
         public static readonly DependencyProperty SizeProperty =
             DependencyProperty.Register("Size", typeof(double), typeof(Avatar), new PropertyMetadata(100));
-
-        public double ViewboxSize
-        {
-            get { return (double)GetValue(ViewboxSizeProperty); }
-            private set { SetValue(ViewboxSizeProperty, value); }
-        }
-        public static readonly DependencyProperty ViewboxSizeProperty =
-            DependencyProperty.Register("ViewboxSize", typeof(double), typeof(Avatar), new PropertyMetadata(80));
 
         public string BadgeIcon
         {
@@ -109,6 +101,7 @@ namespace Worktile.Tethys
                 SetValue(BadgeIconProperty, value);
                 if (!string.IsNullOrEmpty(value))
                 {
+                    FontSize = Size / 1.6;
                     DisplayNameVisibility = Visibility.Collapsed;
                     BadgeIconVisibility = Visibility.Visible;
                 }
