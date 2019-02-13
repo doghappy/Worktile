@@ -14,14 +14,16 @@ using Windows.UI.Xaml.Media;
 
 namespace Worktile.Tethys
 {
-    public sealed class Avatar : Control
+    public sealed class Avatar : Control, INotifyPropertyChanged
     {
         public Avatar()
         {
             DefaultStyleKey = typeof(Avatar);
         }
 
-        readonly static SolidColorBrush[] _brushes = new[]
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        readonly SolidColorBrush[] _brushes = new[]
         {
             //"#2cccda", "#2dbcff", "#4e8af9", "#7076fa", "#9473fd", "#ef7ede", "#99d75a", "#66c060", "#39ba5d"
             new SolidColorBrush(Color.FromArgb(255, 44, 204, 218)),
@@ -84,19 +86,59 @@ namespace Worktile.Tethys
                 SetValue(SizeProperty, value);
                 Width = value;
                 Height = value;
-                ViewBoxSize = value * .8;
+                ViewboxSize = value * .8;
                 CornerRadius = new CornerRadius(value);
             }
         }
         public static readonly DependencyProperty SizeProperty =
             DependencyProperty.Register("Size", typeof(double), typeof(Avatar), new PropertyMetadata(100));
 
-        public double ViewBoxSize
+        public double ViewboxSize
         {
-            get { return (double)GetValue(ViewBoxSizeProperty); }
-            set { SetValue(ViewBoxSizeProperty, value); }
+            get { return (double)GetValue(ViewboxSizeProperty); }
+            private set { SetValue(ViewboxSizeProperty, value); }
         }
-        public static readonly DependencyProperty ViewBoxSizeProperty =
-            DependencyProperty.Register("ViewBoxSize", typeof(double), typeof(Avatar), new PropertyMetadata(80));
+        public static readonly DependencyProperty ViewboxSizeProperty =
+            DependencyProperty.Register("ViewboxSize", typeof(double), typeof(Avatar), new PropertyMetadata(80));
+
+        public string BadgeIcon
+        {
+            get { return (string)GetValue(BadgeIconProperty); }
+            set
+            {
+                SetValue(BadgeIconProperty, value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    DisplayNameVisibility = Visibility.Collapsed;
+                    BadgeIconVisibility = Visibility.Visible;
+                }
+            }
+        }
+        public static readonly DependencyProperty BadgeIconProperty =
+            DependencyProperty.Register("BadgeIcon", typeof(string), typeof(Avatar), new PropertyMetadata(null));
+
+        public Visibility DisplayNameVisibility
+        {
+            get { return (Visibility)GetValue(DisplayNameVisibilityProperty); }
+            private set { SetValue(DisplayNameVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty DisplayNameVisibilityProperty =
+            DependencyProperty.Register("DisplayNameVisibility", typeof(Visibility), typeof(Avatar), new PropertyMetadata(Visibility.Visible));
+
+        public Visibility BadgeIconVisibility
+        {
+            get { return (Visibility)GetValue(BadgeIconVisibilityProperty); }
+            private set { SetValue(BadgeIconVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty BadgeIconVisibilityProperty =
+            DependencyProperty.Register("BadgeIconVisibility", typeof(Visibility), typeof(Avatar), new PropertyMetadata(Visibility.Collapsed));
+
+        public FontFamily BadgeIconFontFamily
+        {
+            get { return (FontFamily)GetValue(BadgeIconFontFamilyProperty); }
+            set { SetValue(BadgeIconFontFamilyProperty, value); }
+        }
+        public static readonly DependencyProperty BadgeIconFontFamilyProperty =
+            DependencyProperty.Register("BadgeIconFontFamily", typeof(FontFamily), typeof(Avatar), new PropertyMetadata(new FontFamily("Segoe MDL2 Assets")));
     }
 }

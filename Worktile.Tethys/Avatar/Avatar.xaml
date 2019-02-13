@@ -21,8 +21,9 @@
                                  Width="{TemplateBinding Size}"
                                  Height="{TemplateBinding Size}" />
 
-                        <Viewbox Width="{TemplateBinding ViewBoxSize}"
-                                 Height="{TemplateBinding ViewBoxSize}">
+                        <Viewbox Visibility="{TemplateBinding DisplayNameVisibility}"
+                                 Width="{TemplateBinding ViewboxSize}"
+                                 Height="{TemplateBinding ViewboxSize}">
                             <TextBlock Text="{TemplateBinding DisplayName}"
                                        AutomationProperties.AccessibilityView="Raw"
                                        FontFamily="{TemplateBinding FontFamily}"
@@ -32,6 +33,13 @@
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
                                        IsTextScaleFactorEnabled="False" />
+                        </Viewbox>
+
+                        <Viewbox Visibility="{TemplateBinding BadgeIconVisibility}"
+                                 Width="{TemplateBinding ViewboxSize}"
+                                 Height="{TemplateBinding ViewboxSize}">
+                            <FontIcon FontFamily="{TemplateBinding BadgeIconFontFamily}"
+                                      Glyph="{TemplateBinding BadgeIcon}"/>
                         </Viewbox>
 
                         <Image Source="{TemplateBinding Source}"/>
