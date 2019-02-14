@@ -34,6 +34,7 @@
                                    IsTextScaleFactorEnabled="False" />
                       
                         <FontIcon Visibility="{TemplateBinding BadgeIconVisibility}"
+                                  Foreground="{TemplateBinding Foreground}"
                                   FontFamily="{TemplateBinding BadgeIconFontFamily}"
                                   FontSize="{TemplateBinding FontSize}"
                                   Glyph="{TemplateBinding BadgeIcon}"/>

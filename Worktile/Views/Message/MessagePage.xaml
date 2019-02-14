@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
@@ -58,7 +59,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <PersonPicture Width="30"
+                                <!--<PersonPicture Width="30"
                                                Initials="{x:Bind Initials}"
                                                FontFamily="{x:Bind AvatarFont}"
                                                Foreground="White"
@@ -66,7 +67,14 @@
                                     <PersonPicture.Resources>
                                         <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="{x:Bind Background, Mode=OneWay}"/>
                                     </PersonPicture.Resources>
-                                </PersonPicture>
+                                </PersonPicture>-->
+                                <tethys:Avatar Size="30"
+                                               Foreground="White"
+                                               Source="{x:Bind ProfilePicture}"
+                                               DisplayName="{x:Bind DisplayName}"
+                                               BadgeIcon="{x:Bind DefaultIcon}"
+                                               Background="{x:Bind Background}"
+                                               BadgeIconFontFamily="{x:Bind AvatarFont}"/>
                                 <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="{x:Bind DisplayName}"/>
                                 <Border Grid.Column="1"
                                         Visibility="{x:Bind UnRead, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter='!'}"

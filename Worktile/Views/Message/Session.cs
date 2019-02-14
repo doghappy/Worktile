@@ -11,7 +11,7 @@ namespace Worktile.Views.Message
         public string DisplayName { get; set; }
         public string Initials { get; set; }
         public BitmapImage ProfilePicture { get; set; }
-        public Color Background { get; set; }
+        public SolidColorBrush Background { get; set; }
         public SessionType Type { get; set; }
         public bool Starred { get; set; }
         public DateTime LatestMessageAt { get; set; }
@@ -23,6 +23,7 @@ namespace Worktile.Views.Message
         public int? Component { get; set; }
         public bool IsAssistant => Component.HasValue;
         public FontFamily AvatarFont { get; set; }
+        public string DefaultIcon { get; set; }
     }
 
     public enum SessionType

@@ -12,27 +12,27 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="32">
-        <Button Content="Button" Click="Button_Click"/>
-        <PersonPicture DisplayName="Test" Initials="&#xE748;" FontFamily="ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf">
-            <PersonPicture.Resources>
-                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
-            </PersonPicture.Resources>
-        </PersonPicture>
-        <PersonPicture DisplayName="Test" Initials="&#xE64E;" FontFamily="ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont">
-            <PersonPicture.Resources>
-                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
-            </PersonPicture.Resources>
-        </PersonPicture>
-        <PersonPicture DisplayName="Test" Initials="&#xE748;" FontFamily="{x:Bind Font1}">
-            <PersonPicture.Resources>
-                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
-            </PersonPicture.Resources>
-        </PersonPicture>
-        <PersonPicture DisplayName="Test" Initials="&#xE64E;" FontFamily="{x:Bind Font2}">
-            <PersonPicture.Resources>
-                <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="Yellow"/>
-            </PersonPicture.Resources>
-        </PersonPicture>
-    </StackPanel>
+<StackPanel Padding="32" Orientation="Horizontal">
+    <ListView ItemsSource="{x:Bind Fonts}">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="FontFamily">
+                <StackPanel Orientation="Horizontal">
+                    <PersonPicture DisplayName="Test" Initials="&#xE13D;" FontFamily="Segoe MDL2 Assets"/>
+                    <TextBlock Text="&#xE13D;" FontFamily="{x:Bind}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
+    <ListView ItemsSource="{x:Bind Fonts}">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="FontFamily">
+                <StackPanel Orientation="Horizontal">
+                    <PersonPicture DisplayName="Test" Initials="&#xE13D;" FontFamily="{x:Bind}"/>
+                    <TextBlock Text="&#xE13D;" FontFamily="{x:Bind}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</StackPanel>
 </Page>

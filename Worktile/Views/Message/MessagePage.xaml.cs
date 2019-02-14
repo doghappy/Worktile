@@ -64,7 +64,7 @@ namespace Worktile.Views.Message
                 {
                     Id = item.Id,
                     DisplayName = item.Name,
-                    Background = WtColorHelper.GetColor(WtColorHelper.GetNewColor(item.Color)),
+                    Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color)),
                     Starred = item.Starred,
                     LatestMessageAt = item.LatestMessageAt,
                     Show = item.Show,
@@ -75,11 +75,13 @@ namespace Worktile.Views.Message
                 if (item.Visibility == Enums.Visibility.Public)
                 {
                     session.Initials = "\uE64E";
+                    session.DefaultIcon= "\uE64E";
                     session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
                 }
                 else
                 {
                     session.Initials = "\uE748";
+                    session.DefaultIcon = "\uE748";
                     session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
                 }
                 list.Add(session);
@@ -90,7 +92,7 @@ namespace Worktile.Views.Message
                 {
                     Id = item.Id,
                     DisplayName = item.Name,
-                    Background = WtColorHelper.GetColor(WtColorHelper.GetNewColor(item.Color)),
+                    Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color)),
                     Starred = item.Starred,
                     LatestMessageAt = item.LatestMessageAt,
                     Show = item.Show,
@@ -101,11 +103,13 @@ namespace Worktile.Views.Message
                 if (item.Visibility == Enums.Visibility.Public)
                 {
                     session.Initials = "\uE64E";
+                    session.DefaultIcon = "\uE64E";
                     session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
                 }
                 else
                 {
                     session.Initials = "\uE748";
+                    session.DefaultIcon = "\uE748";
                     session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
                 }
                 list.Add(session);
@@ -118,7 +122,7 @@ namespace Worktile.Views.Message
                     DisplayName = item.To.DisplayName,
                     Initials = AvatarHelper.GetInitials(item.To.DisplayName),
                     ProfilePicture = AvatarHelper.GetAvatarBitmap(item.To.Avatar, AvatarSize.X80, FromType.User),
-                    Background = AvatarHelper.GetColor(item.To.DisplayName),
+                    Background = new SolidColorBrush(AvatarHelper.GetColor(item.To.DisplayName)),
                     Starred = item.Starred,
                     LatestMessageAt = item.LatestMessageAt,
                     Show = item.Show,
@@ -127,8 +131,7 @@ namespace Worktile.Views.Message
                     Component = item.Component,
                     Name = item.To.Name,
                     Type = SessionType.Session,
-                    IsBot = item.IsBot,
-                    AvatarFont = FontFamily.XamlAutoFontFamily
+                    IsBot = item.IsBot
                 });
             }
             list.Sort((a, b) =>

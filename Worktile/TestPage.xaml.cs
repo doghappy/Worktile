@@ -30,11 +30,19 @@ namespace Worktile
             InitializeComponent();
             Font1 = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
             Font2 = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
+            Fonts = new List<FontFamily>
+            {
+                new FontFamily("Segoe MDL2 Assets"),
+                new FontFamily("Segoe MDL2 Assets"),
+                new FontFamily("Segoe MDL2 Assets")
+            };
         }
 
 
         public FontFamily Font1 { get; }
         public FontFamily Font2 { get; }
+
+        public List<FontFamily> Fonts { get; }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
