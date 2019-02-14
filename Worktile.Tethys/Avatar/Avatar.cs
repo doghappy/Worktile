@@ -21,20 +21,6 @@ namespace Worktile.Tethys
             DefaultStyleKey = typeof(Avatar);
         }
 
-        //readonly SolidColorBrush[] _brushes = new[]
-        //{
-        //    //"#2cccda", "#2dbcff", "#4e8af9", "#7076fa", "#9473fd", "#ef7ede", "#99d75a", "#66c060", "#39ba5d"
-        //    new SolidColorBrush(Color.FromArgb(255, 44, 204, 218)),
-        //    new SolidColorBrush(Color.FromArgb(255, 45, 188, 255)),
-        //    new SolidColorBrush(Color.FromArgb(255, 78, 138, 249)),
-        //    new SolidColorBrush(Color.FromArgb(255, 112, 118, 250)),
-        //    new SolidColorBrush(Color.FromArgb(255, 148, 115, 253)),
-        //    new SolidColorBrush(Color.FromArgb(255, 239, 126, 222)),
-        //    new SolidColorBrush(Color.FromArgb(255, 153, 215, 90)),
-        //    new SolidColorBrush(Color.FromArgb(255, 102, 192, 96)),
-        //    new SolidColorBrush(Color.FromArgb(255, 57, 186, 93))
-        //};
-
         public string DisplayName
         {
             get { return (string)GetValue(DisplayNameProperty); }
@@ -62,8 +48,6 @@ namespace Worktile.Tethys
                 FontSize = (Size / 2) * .8;
 
                 SetValue(DisplayNameProperty, val);
-                //int code = value.Sum(n => n);
-                //Background = _brushes[code % _brushes.Length];
             }
         }
         public static readonly DependencyProperty DisplayNameProperty =

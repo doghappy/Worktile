@@ -35,6 +35,7 @@
                                                Margin="16,0"
                                                VerticalAlignment="Top"
                                                DisplayName="{x:Bind Avatar.DisplayName}"
+                                               Foreground="{x:Bind Avatar.Foreground}"
                                                Background="{x:Bind Avatar.Background}"
                                                Source="{x:Bind Avatar.Source}"/>
 

@@ -9,6 +9,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,6 +24,7 @@ using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Enums.IM;
 using Worktile.Infrastructure;
+using Worktile.Models.IM.Message;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.WtRequestClient;
 
@@ -174,7 +176,7 @@ namespace Worktile.Views.Message
                         Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
                         Background = AvatarHelper.GetColorBrush(item.From.DisplayName)
                     },
-                    Content = item.Body.Content,
+                    Content = GetContent(item),
                     Time = item.CreatedAt,
                     Type = (MessageType)item.Type
                 });
@@ -206,12 +208,16 @@ namespace Worktile.Views.Message
                     {
                         DisplayName = item.From.DisplayName,
                         Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
-                        Background = AvatarHelper.GetColorBrush(item.From.DisplayName)
+                        Foreground = new SolidColorBrush(Colors.White)
                     },
-                    Content = item.Body.Content,
+                    Content = GetContent(item),
                     Time = item.CreatedAt,
                     Type = (MessageType)item.Type
                 };
+                if (Path.GetExtension(item.From.Avatar).ToLower() == ".png")
+                    msg.Avatar.Background = new SolidColorBrush(Colors.White);
+                else
+                    msg.Avatar.Background = AvatarHelper.GetColorBrush(item.From.DisplayName);
 
                 if (flag)
                     Messages.Insert(0, msg);
@@ -220,6 +226,17 @@ namespace Worktile.Views.Message
             }
             _latestId = apiData.Data.LatestId;
             _hasMore = apiData.Data.More;
+        }
+
+        private string GetContent(Models.IM.Message.Message msg)
+        {
+            switch (msg.Type)
+            {
+                case Enums.IM.MessageType.Attachment:
+                case Enums.IM.MessageType.Calendar:
+                    return msg.Body.InlineAttachment.Text;
+                default: return msg.Body.Content;
+            }
         }
     }
 }

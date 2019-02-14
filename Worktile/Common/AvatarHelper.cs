@@ -91,6 +91,7 @@ namespace Worktile.Common
                             return DataSource.ApiUserMeConfig.Box.AvatarUrl + name + "_" + (int)size + "x" + (int)size + ext;
                         }
                     case FromType.Service:
+                    case FromType.Addition:
                         return DataSource.ApiUserMeConfig.Box.ServiceUrl + avatar;
                     default: throw new NotImplementedException();
                 }
