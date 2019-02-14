@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.ApiModels.ApiTeam;
 using Worktile.ApiModels.ApiUserMe;
@@ -20,7 +16,6 @@ using Worktile.Views.Mission;
 using Worktile.WtRequestClient;
 using Worktile.Views.IM;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.Infrastructure;
 using Worktile.Views.Message;
 

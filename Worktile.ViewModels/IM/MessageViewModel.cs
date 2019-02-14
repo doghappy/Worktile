@@ -146,11 +146,11 @@ namespace Worktile.ViewModels.IM
             MessageViewModel viewModel = null;
             if (session.IsAssistant)
             {
-                viewModel = new AssistantMessageViewModel();
+                //viewModel = new AssistantMessageViewModel();
             }
             else
             {
-                viewModel = new SessionMessageViewModel();
+               // viewModel = new SessionMessageViewModel();
             }
             viewModel.Session = session;
             return viewModel;

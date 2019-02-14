@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightProjectProgress;
 using Worktile.Common;
 using Worktile.Infrastructure;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.AnalyticInsight

@@ -95,7 +95,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\AvatarHelper.cs" />
+    <Compile Include="Common\DataSource.cs" />
     <Compile Include="Common\TestHelper.cs" />
+    <Compile Include="Common\WtColorHelper.cs" />
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
@@ -163,10 +166,21 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Message\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Message.cs" />
+    <Compile Include="Views\Message\MessageDetailPage.xaml.cs">
+      <DependentUpon>MessageDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Message\MessageDetailToChatNavParam.cs" />
+    <Compile Include="Views\Message\MessageType.cs" />
     <Compile Include="Views\Message\Session.cs" />
+    <Compile Include="Views\Message\TethysAvatar.cs" />
+    <Compile Include="Views\Message\TopNav.cs" />
     <Compile Include="Views\Mission\AnalyticInsight\MemberDelayPage.xaml.cs">
       <DependentUpon>MemberDelayPage.xaml</DependentUpon>
     </Compile>
@@ -381,6 +395,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\MessageDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

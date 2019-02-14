@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextTableContent;
+using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Infrastructure;
 using Worktile.ViewModels.Infrastructure;

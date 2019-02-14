@@ -6,7 +6,7 @@ using System.Linq;
 using Windows.UI.Xaml.Media.Imaging;
 using System;
 
-namespace Worktile.ViewModels.Infrastructure
+namespace Worktile.Common
 {
     public static class DataSource
     {

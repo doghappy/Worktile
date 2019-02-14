@@ -10,6 +10,7 @@ using Worktile.ApiModels.IM.ApiPigeonMessages;
 
 namespace Worktile.ViewModels.IM
 {
+    /*
     public class AssistantMessageViewModel : MessageViewModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -49,4 +50,5 @@ namespace Worktile.ViewModels.IM
             SelectedNav.HasMore = apiData.Data.Next != null;
         }
     }
+    */
 }

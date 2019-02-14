@@ -9,6 +9,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Styles/Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="FontIcon" x:Key="LcIcon">
+                <Setter Property="FontFamily" Value="ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont"/>
+            </Style>
 
             <AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop" TintOpacity="0" TintColor="#FF000000" FallbackColor="#FF008000" />
 

@@ -9,6 +9,7 @@ using Worktile.WtRequestClient;
 using Worktile.Enums;
 using Worktile.Enums.IM;
 using Worktile.ViewModels.Infrastructure;
+using Worktile.Common;
 
 namespace Worktile.Views.IM
 {
@@ -103,7 +104,7 @@ namespace Worktile.Views.IM
                     DisplayName = item.To.DisplayName,
                     Initials = AvatarHelper.GetInitials(item.To.DisplayName),
                     ProfilePicture = AvatarHelper.GetAvatarBitmap(item.To.Avatar, AvatarSize.X80, FromType.User),
-                    Background = AvatarHelper.GetColor(item.To.DisplayName),
+                    Background = AvatarHelper.GetColorBrush(item.To.DisplayName).Color,
                     Starred = item.Starred,
                     LatestMessageAt = item.LatestMessageAt,
                     Show = item.Show,

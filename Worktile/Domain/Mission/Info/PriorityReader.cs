@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Infrastructure;
+using Worktile.Common;
 
 namespace Worktile.Domain.Mission.Info
 {

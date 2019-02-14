@@ -9,6 +9,7 @@ using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.ViewModels.IM
 {
+    /*
     public class SessionMessageViewModel : MessageViewModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -43,4 +44,5 @@ namespace Worktile.ViewModels.IM
             SelectedNav.HasMore = apiData.Data.More;
         }
     }
+    */
 }

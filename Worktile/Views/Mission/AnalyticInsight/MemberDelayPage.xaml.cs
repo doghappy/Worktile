@@ -10,7 +10,6 @@ using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Infrastructure;
 using Worktile.Models;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Mission.AnalyticInsight

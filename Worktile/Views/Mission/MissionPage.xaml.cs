@@ -11,6 +11,7 @@ using Worktile.ApiModels.ApiMissionVnextWorkAddon;
 using Worktile.WtRequestClient;
 using System;
 using Worktile.ViewModels.Infrastructure;
+using Worktile.Common;
 
 namespace Worktile.Views.Mission
 {

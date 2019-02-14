@@ -5,9 +5,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Worktile.ApiModel.ApiTeamChats;
+using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Enums.IM;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Message
@@ -47,7 +47,7 @@ namespace Worktile.Views.Message
                 {
                     _selectedSession = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSession)));
-                    //ContentFrame.Navigate(typeof(ChatPage), value);
+                    ContentFrame.Navigate(typeof(MessageDetailPage), value);
                 }
             }
         }
@@ -122,7 +122,7 @@ namespace Worktile.Views.Message
                     DisplayName = item.To.DisplayName,
                     Initials = AvatarHelper.GetInitials(item.To.DisplayName),
                     ProfilePicture = AvatarHelper.GetAvatarBitmap(item.To.Avatar, AvatarSize.X80, FromType.User),
-                    Background = new SolidColorBrush(AvatarHelper.GetColor(item.To.DisplayName)),
+                    Background = AvatarHelper.GetColorBrush(item.To.DisplayName),
                     Starred = item.Starred,
                     LatestMessageAt = item.LatestMessageAt,
                     Show = item.Show,

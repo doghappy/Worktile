@@ -3,18 +3,29 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.UI;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.Enums;
 using Worktile.Enums.IM;
 using Worktile.Models;
+using Worktile.Views.Message;
 
-namespace Worktile.ViewModels.Infrastructure
+namespace Worktile.Common
 {
     public static class AvatarHelper
     {
-        readonly static string[] _colors = new[]
+        readonly static SolidColorBrush[] _brushes = new[]
         {
-            "#2cccda", "#2dbcff", "#4e8af9", "#7076fa", "#9473fd", "#ef7ede", "#99d75a", "#66c060", "#39ba5d"
+            //"#2cccda", "#2dbcff", "#4e8af9", "#7076fa", "#9473fd", "#ef7ede", "#99d75a", "#66c060", "#39ba5d"
+            new SolidColorBrush(Color.FromArgb(255, 44, 204, 218)),
+            new SolidColorBrush(Color.FromArgb(255, 45, 188, 255)),
+            new SolidColorBrush(Color.FromArgb(255, 78, 138, 249)),
+            new SolidColorBrush(Color.FromArgb(255, 112, 118, 250)),
+            new SolidColorBrush(Color.FromArgb(255, 148, 115, 253)),
+            new SolidColorBrush(Color.FromArgb(255, 239, 126, 222)),
+            new SolidColorBrush(Color.FromArgb(255, 153, 215, 90)),
+            new SolidColorBrush(Color.FromArgb(255, 102, 192, 96)),
+            new SolidColorBrush(Color.FromArgb(255, 57, 186, 93))
         };
 
         public static string GetInitials(string displayName)
@@ -38,11 +49,16 @@ namespace Worktile.ViewModels.Infrastructure
             }
         }
 
-        public static Color GetColor(string displayName)
+        //public static Color GetColor(string displayName)
+        //{
+        //    int code = displayName.Sum(n => n);
+        //    string hex = _colors[code % 9];
+        //    return WtColorHelper.GetColor(WtColorHelper.GetNewColor(hex));
+        //}
+        public static SolidColorBrush GetColorBrush(string displayName)
         {
             int code = displayName.Sum(n => n);
-            string hex = _colors[code % 9];
-            return WtColorHelper.GetColor(WtColorHelper.GetNewColor(hex));
+            return _brushes[code % _brushes.Length];
         }
 
         public static BitmapImage GetAvatarBitmap(string avatar, AvatarSize size, FromType fromType)
