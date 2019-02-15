@@ -92,13 +92,40 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ApiModels\ApiMissionVnexTaskProperties.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextKanbanContent.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextProjectNav.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextProjectsDetail.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextTableContent.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextTask.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextTasksIdstates.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkAddon.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkAddonsKeyGroups.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightGroups.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightMemberDelay.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightMemberProgress.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightProjectDelay.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightProjectProgress.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkMyDirectedActive.cs" />
+    <Compile Include="ApiModels\ApiMissionVnextWorkMyGeneric.cs" />
+    <Compile Include="ApiModels\ApiTeam.cs" />
+    <Compile Include="ApiModels\ApiTeamChats.cs" />
+    <Compile Include="ApiModels\ApiTeamDomainCheck.cs" />
+    <Compile Include="ApiModels\ApiTeamLite.cs" />
+    <Compile Include="ApiModels\ApiUserMe.cs" />
+    <Compile Include="ApiModels\ApiUserSignIn.cs" />
+    <Compile Include="ApiModels\IM\ApiMessages.cs" />
+    <Compile Include="ApiModels\IM\ApiPigeonMessages.cs" />
+    <Compile Include="ApiModels\ProjectJoin.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\AvatarHelper.cs" />
     <Compile Include="Common\DataSource.cs" />
+    <Compile Include="Common\KanbanPageHelper.cs" />
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\WtColorHelper.cs" />
+    <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
@@ -145,27 +172,40 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Avatar.cs" />
+    <Compile Include="Models\BeginEnd.cs" />
+    <Compile Include="Models\ColorMapItem.cs" />
+    <Compile Include="Models\DateSpan.cs" />
+    <Compile Include="Models\IM\Message\AttachmentAddition.cs" />
+    <Compile Include="Models\IM\Message\AttachmentReference.cs" />
+    <Compile Include="Models\IM\Message\BodyAttachment.cs" />
+    <Compile Include="Models\IM\Message\Message.cs" />
+    <Compile Include="Models\IM\Message\MessageBody.cs" />
+    <Compile Include="Models\IM\Message\MessageField.cs" />
+    <Compile Include="Models\IM\Message\MessageFrom.cs" />
+    <Compile Include="Models\IM\Message\MessageGroup.cs" />
+    <Compile Include="Models\IM\Message\MessageInlineAttachment.cs" />
+    <Compile Include="Models\IM\Message\MessageTo.cs" />
+    <Compile Include="Models\Kanban\KanBanGroup.cs" />
+    <Compile Include="Models\Kanban\KanBanItem.cs" />
+    <Compile Include="Models\Kanban\KanbanItemProperty.cs" />
+    <Compile Include="Models\Main\NavApp.cs" />
+    <Compile Include="Models\Mission\AnalyticInsight\TopNavItem.cs" />
+    <Compile Include="Models\Mission\WorkloadEstimate.cs" />
+    <Compile Include="Models\Mission\WorkloadValue.cs" />
+    <Compile Include="Models\Mission\WtMetaProperty.cs" />
+    <Compile Include="Models\Mission\WtTask\WtTaskProperty.cs" />
+    <Compile Include="Models\TaskState.cs" />
+    <Compile Include="Models\TaskType.cs" />
+    <Compile Include="Models\WtApp.cs" />
+    <Compile Include="Models\WtDate.cs" />
+    <Compile Include="Models\WtIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IM\ChannelMessagePage.xaml.cs">
-      <DependentUpon>ChannelMessagePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IM\ChatPage.xaml.cs">
-      <DependentUpon>ChatPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IM\IMPage.xaml.cs">
-      <DependentUpon>IMPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IM\SessionMessagePage.xaml.cs">
-      <DependentUpon>SessionMessagePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IM\UnreadPage.xaml.cs">
-      <DependentUpon>UnreadPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -255,27 +295,6 @@
     <Compile Include="WtControls\Flyout\TaskStateList.xaml.cs">
       <DependentUpon>TaskStateList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WtControls\IM\ActivityMessage.xaml.cs">
-      <DependentUpon>ActivityMessage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WtControls\IM\AttachmentMessage.xaml.cs">
-      <DependentUpon>AttachmentMessage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WtControls\IM\CalendarMessage.xaml.cs">
-      <DependentUpon>CalendarMessage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WtControls\IM\ChatPivot.xaml.cs">
-      <DependentUpon>ChatPivot.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WtControls\IM\MessageItem.xaml.cs">
-      <DependentUpon>MessageItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WtControls\IM\MissionVNextMessage.xaml.cs">
-      <DependentUpon>MissionVNextMessage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WtControls\IM\TextMessage.xaml.cs">
-      <DependentUpon>TextMessage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WtControls\Mission\MissionListViewHeader.xaml.cs">
       <DependentUpon>MissionListViewHeader.xaml</DependentUpon>
     </Compile>
@@ -287,9 +306,6 @@
     </Compile>
     <Compile Include="WtControls\TaskStateButton.xaml.cs">
       <DependentUpon>TaskStateButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WtControls\WtAvatar.xaml.cs">
-      <DependentUpon>WtAvatar.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -376,26 +392,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EmptyPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\IM\ChannelMessagePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\IM\ChatPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\IM\IMPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\IM\SessionMessagePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\IM\UnreadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -507,34 +503,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WtControls\IM\ActivityMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WtControls\IM\AttachmentMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WtControls\IM\CalendarMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WtControls\IM\ChatPivot.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WtControls\IM\MessageItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WtControls\IM\MissionVNextMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WtControls\IM\TextMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="WtControls\Mission\MissionListViewHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -548,10 +516,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WtControls\TaskStateButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WtControls\WtAvatar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -571,10 +535,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Worktile.ApiModels\Worktile.ApiModels.csproj">
-      <Project>{2be85db2-67a6-4717-8667-91d0bcba0131}</Project>
-      <Name>Worktile.ApiModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Worktile.Enums\Worktile.Enums.csproj">
       <Project>{3a2fe488-d5e9-4267-9161-6d40208d82a5}</Project>
       <Name>Worktile.Enums</Name>
@@ -582,10 +542,6 @@
     <ProjectReference Include="..\Worktile.Infrastructure\Worktile.Infrastructure.csproj">
       <Project>{3D4D7893-D86C-4B7A-B473-0679615C63BE}</Project>
       <Name>Worktile.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.Models\Worktile.Models.csproj">
-      <Project>{d39bbfa0-47a5-4cbd-ad30-6aa3c41b35c5}</Project>
-      <Name>Worktile.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Worktile.Tethys\Worktile.Tethys.csproj">
       <Project>{603175b4-99dc-4390-99f3-0f868d0c30e2}</Project>

@@ -1,14 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Linq;
-using Worktile.ViewModels.Infrastructure;
-using Worktile.Infrastructure;
-using Worktile.Enums;
-using Worktile.Enums.IM;
-using Worktile.ApiModels.IM.ApiPigeonMessages;
-
-namespace Worktile.ViewModels.IM
+﻿namespace Worktile.ViewModels.IM
 {
     /*
     public class AssistantMessageViewModel : MessageViewModel, INotifyPropertyChanged

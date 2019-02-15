@@ -120,31 +120,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ApiMissionVnexTaskProperties.cs" />
-    <Compile Include="ApiMissionVnextKanbanContent.cs" />
-    <Compile Include="ApiMissionVnextProjectNav.cs" />
-    <Compile Include="ApiMissionVnextProjectsDetail.cs" />
-    <Compile Include="ApiMissionVnextTableContent.cs" />
-    <Compile Include="ApiMissionVnextTask.cs" />
-    <Compile Include="ApiMissionVnextTasksIdstates.cs" />
-    <Compile Include="ApiMissionVnextWorkAddon.cs" />
-    <Compile Include="ApiMissionVnextWorkAddonsKeyGroups.cs" />
-    <Compile Include="ApiMissionVnextWorkAnalyticInsightGroups.cs" />
-    <Compile Include="ApiMissionVnextWorkAnalyticInsightMemberDelay.cs" />
-    <Compile Include="ApiMissionVnextWorkAnalyticInsightMemberProgress.cs" />
-    <Compile Include="ApiMissionVnextWorkAnalyticInsightProjectDelay.cs" />
-    <Compile Include="ApiMissionVnextWorkAnalyticInsightProjectProgress.cs" />
-    <Compile Include="ApiMissionVnextWorkMyDirectedActive.cs" />
-    <Compile Include="ApiMissionVnextWorkMyGeneric.cs" />
-    <Compile Include="ApiTeam.cs" />
-    <Compile Include="ApiTeamChats.cs" />
-    <Compile Include="ApiTeamDomainCheck.cs" />
-    <Compile Include="ApiTeamLite.cs" />
-    <Compile Include="ApiUserMe.cs" />
-    <Compile Include="ApiUserSignIn.cs" />
-    <Compile Include="IM\ApiMessages.cs" />
-    <Compile Include="IM\ApiPigeonMessages.cs" />
-    <Compile Include="ProjectJoin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Worktile.ApiModels.rd.xml" />
   </ItemGroup>

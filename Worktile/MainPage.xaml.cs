@@ -14,7 +14,6 @@ using Worktile.Common;
 using Worktile.Views;
 using Worktile.Views.Mission;
 using Worktile.WtRequestClient;
-using Worktile.Views.IM;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Infrastructure;
 using Worktile.Views.Message;
@@ -241,7 +240,7 @@ namespace Worktile
                 int index = -1;
                 switch (e.SourcePageType)
                 {
-                    case Type t when e.SourcePageType == typeof(IMPage):
+                    case Type t when e.SourcePageType == typeof(MessagePage):
                         index = 0;
                         break;
                     case Type t when e.SourcePageType == typeof(MissionPage):

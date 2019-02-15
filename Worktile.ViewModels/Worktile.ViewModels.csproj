@@ -123,8 +123,6 @@
     <Compile Include="IM\SessionMessageViewModel.cs" />
     <Compile Include="IM\AssistantMessageViewModel.cs" />
     <Compile Include="IM\MessageViewModel.cs" />
-    <Compile Include="Infrastructure\KanbanPageHelper.cs" />
-    <Compile Include="Infrastructure\WtIconHelper.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Worktile.ViewModels.rd.xml" />
@@ -135,10 +133,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Worktile.ApiModels\Worktile.ApiModels.csproj">
-      <Project>{2BE85DB2-67A6-4717-8667-91D0BCBA0131}</Project>
-      <Name>Worktile.ApiModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Worktile.Enums\Worktile.Enums.csproj">
       <Project>{3a2fe488-d5e9-4267-9161-6d40208d82a5}</Project>
       <Name>Worktile.Enums</Name>
@@ -146,10 +140,6 @@
     <ProjectReference Include="..\Worktile.Infrastructure\Worktile.Infrastructure.csproj">
       <Project>{3d4d7893-d86c-4b7a-b473-0679615c63be}</Project>
       <Name>Worktile.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.Models\Worktile.Models.csproj">
-      <Project>{D39BBFA0-47A5-4CBD-AD30-6AA3C41B35C5}</Project>
-      <Name>Worktile.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Worktile.WtRequestClient\Worktile.WtRequestClient.csproj">
       <Project>{64C1D453-F677-4225-9A30-A5B3C368EFF0}</Project>

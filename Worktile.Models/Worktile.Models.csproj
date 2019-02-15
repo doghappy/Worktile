@@ -120,38 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Avatar.cs" />
-    <Compile Include="BeginEnd.cs" />
-    <Compile Include="ColorMapItem.cs" />
-    <Compile Include="DateSpan.cs" />
-    <Compile Include="IM\ChatNavItem.cs" />
-    <Compile Include="IM\ChatSession.cs" />
-    <Compile Include="IM\Message\AttachmentAddition.cs" />
-    <Compile Include="IM\Message\AttachmentReference.cs" />
-    <Compile Include="IM\Message\Message.cs" />
-    <Compile Include="IM\Message\BodyAttachment.cs" />
-    <Compile Include="IM\Message\MessageBody.cs" />
-    <Compile Include="IM\Message\MessageField.cs" />
-    <Compile Include="IM\Message\MessageFrom.cs" />
-    <Compile Include="IM\Message\MessageGroup.cs" />
-    <Compile Include="IM\Message\MessageInlineAttachment.cs" />
-    <Compile Include="IM\Message\MessageTo.cs" />
-    <Compile Include="Kanban\KanBanGroup.cs" />
-    <Compile Include="Kanban\KanBanItem.cs" />
-    <Compile Include="Kanban\KanbanItemProperty.cs" />
-    <Compile Include="Main\NavApp.cs" />
-    <Compile Include="Message\Session.cs" />
-    <Compile Include="Mission\AnalyticInsight\TopNavItem.cs" />
-    <Compile Include="Mission\WorkloadEstimate.cs" />
-    <Compile Include="Mission\WorkloadValue.cs" />
-    <Compile Include="Mission\WtMetaProperty.cs" />
-    <Compile Include="Mission\WtTask\WtTaskProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskState.cs" />
-    <Compile Include="TaskType.cs" />
-    <Compile Include="WtApp.cs" />
-    <Compile Include="WtDate.cs" />
-    <Compile Include="WtIcon.cs" />
     <EmbeddedResource Include="Properties\Worktile.Models.rd.xml" />
   </ItemGroup>
   <ItemGroup>
