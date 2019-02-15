@@ -198,7 +198,7 @@ namespace Worktile
             var timer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
-                 {
+                {
                      using (var dataWriter = new DataWriter(_socket.OutputStream))
                      {
                          dataWriter.WriteString("2");
