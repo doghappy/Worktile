@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Enums;
@@ -75,7 +80,7 @@ namespace Worktile.Views.Message
                 if (item.Visibility == Enums.Visibility.Public)
                 {
                     session.Initials = "\uE64E";
-                    session.DefaultIcon= "\uE64E";
+                    session.DefaultIcon = "\uE64E";
                     session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
                 }
                 else
@@ -159,6 +164,24 @@ namespace Worktile.Views.Message
                 Sessions.Add(item);
             }
             IsActive = false;
+
+            Worktile.MainPage.OnMessageReceived += OnMessageReceived;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            Worktile.MainPage.OnMessageReceived -= OnMessageReceived;
+        }
+
+        private async void OnMessageReceived(string json)
+        {
+            var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(json);
+            if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
+            {
+                var session = Sessions.Single(s => s.Id == apiMsg.To.Id);
+                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => session.UnRead += 1));
+            }
         }
     }
 }

@@ -83,7 +83,7 @@
                                         CornerRadius="8"
                                         VerticalAlignment="Top"
                                         HorizontalAlignment="Right">
-                                    <TextBlock Text="{x:Bind UnRead}" FontSize="12" Foreground="White"/>
+                                    <TextBlock Text="{x:Bind UnRead, Mode=OneWay}" FontSize="12" Foreground="White"/>
                                 </Border>
                             </Grid>
                         </DataTemplate>

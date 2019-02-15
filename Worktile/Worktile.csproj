@@ -167,6 +167,7 @@
     <Compile Include="Domain\Mission\Kanban\KanbanDataReader.cs" />
     <Compile Include="Domain\SocketMessageConverter\Converters\ISocketConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\Converters\MessageConverter.cs" />
+    <Compile Include="Domain\SocketMessageConverter\Converters\OpenConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -556,9 +557,7 @@
       <Name>Worktile.WtRequestClient</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Styles\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -2,37 +2,25 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.IM.ApiMessages;
 using Worktile.ApiModels.IM.ApiPigeonMessages;
 using Worktile.Common;
 using Worktile.Domain.SocketMessageConverter;
-using Worktile.Domain.SocketMessageConverter.Converters;
 using Worktile.Enums;
 using Worktile.Enums.IM;
-using Worktile.Infrastructure;
-using Worktile.Models.IM.Message;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.WtRequestClient;
 
 namespace Worktile.Views.Message
@@ -67,7 +55,6 @@ namespace Worktile.Views.Message
         private string _next;
         private string _latestId;
         private bool? _hasMore;
-
 
         private string Url
         {
@@ -121,6 +108,24 @@ namespace Worktile.Views.Message
         {
             await LoadMessagesAsync();
             MsgTextBox.Focus(FocusState.Programmatic);
+            await ClearUnReadAsync();
+        }
+
+        private async Task ClearUnReadAsync()
+        {
+            if (_navParam.Session.IsAssistant)
+            {
+                string url = $"/api/unreads/{_navParam.Session.Id}/messages-unreads?socket_id=";
+                var client = new WtHttpClient();
+                await client.PutAsync<object>(url);
+            }
+            else
+            {
+                string url = $"/api/messages/unread/clear?ref_id={_navParam.Session.Id}";
+                var client = new WtHttpClient();
+                await client.PutAsync<object>(url);
+            }
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _navParam.Session.UnRead = 0));
         }
 
         private async void OnMessageReceived(string json)

@@ -21,6 +21,7 @@ using Windows.Networking.Sockets;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.Storage.Streams;
 using Worktile.Domain.SocketMessageConverter;
+using Worktile.Domain.SocketMessageConverter.Converters;
 
 namespace Worktile
 {
@@ -149,6 +150,7 @@ namespace Worktile
         }
 
         #region Socket
+        public static string SocketId { get; private set; }
 
         private static MessageWebSocket _socket;
         public static event Action<string> OnMessageReceived;
@@ -184,10 +186,19 @@ namespace Worktile
             {
                 dataReader.UnicodeEncoding = UnicodeEncoding.Utf8;
                 string rawMsg = dataReader.ReadString(dataReader.UnconsumedBufferLength);
-                string msg = SocketMessageConverter.Read(rawMsg);
-                if (!string.IsNullOrWhiteSpace(msg))
+                var (msg, cvt) = SocketMessageConverter.Read(rawMsg);
+                if (cvt != null)
                 {
-                    OnMessageReceived?.Invoke(msg);
+                    var cvtType = cvt.GetType();
+                    switch (cvtType.Name)
+                    {
+                        case nameof(OpenConverter):
+                            SocketId = msg;
+                            break;
+                        case nameof(MessageConverter):
+                            OnMessageReceived?.Invoke(msg);
+                            break;
+                    }
                 }
             }
         }

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.ComponentModel;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Worktile.Views.Message
 {
-    public class Session
+    public class Session : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string Id { get; set; }
         public string DisplayName { get; set; }
         public string Initials { get; set; }
@@ -16,7 +19,21 @@ namespace Worktile.Views.Message
         public bool Starred { get; set; }
         public DateTime LatestMessageAt { get; set; }
         public int Show { get; set; }
-        public int UnRead { get; set; }
+
+        private int _unRead;
+        public int UnRead
+        {
+            get => _unRead;
+            set
+            {
+                if (_unRead != value)
+                {
+                    _unRead = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnRead)));
+                }
+            }
+        }
+
         public string NamePinyin { get; set; }
         public string Name { get; set; }
         public bool IsBot { get; set; }
