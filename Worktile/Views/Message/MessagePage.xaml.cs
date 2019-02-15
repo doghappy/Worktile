@@ -70,7 +70,7 @@ namespace Worktile.Views.Message
                     Show = item.Show,
                     UnRead = item.UnRead,
                     NamePinyin = item.NamePinyin,
-                    Type = SessionType.Channel,
+                    Type = SessionType.Channel
                 };
                 if (item.Visibility == Enums.Visibility.Public)
                 {

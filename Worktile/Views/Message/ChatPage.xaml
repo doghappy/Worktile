@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <Grid>
-            <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
+            <ScrollViewer ViewChanged="ScrollViewer_ViewChanged" IsTabStop="False">
                 <ItemsControl ItemsSource="{x:Bind Messages}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -70,7 +70,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="120"/>
             </Grid.RowDefinitions>
-            <Border Background="{ThemeResource NavigationViewTopPaneBackground}">
+            <Grid Background="{ThemeResource NavigationViewTopPaneBackground}">
                 <CommandBar Background="Transparent" HorizontalAlignment="Left" DefaultLabelPosition="Right">
                     <AppBarButton Label="表情">
                         <AppBarButton.Icon>
@@ -79,9 +79,16 @@
                     </AppBarButton>
                     <AppBarButton Label="附件" Icon="Attach"/>
                 </CommandBar>
-            </Border>
+                <CommandBar Background="Transparent" HorizontalAlignment="Right" DefaultLabelPosition="Right">
+                    <AppBarButton Label="发送" Icon="Send" Click="SendButton_Click"/>
+                </CommandBar>
+            </Grid>
 
-            <TextBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" PlaceholderText="按Enter发送消息" />
+            <TextBox x:Name="MsgTextBox"
+                     Grid.Row="1"
+                     TextWrapping="Wrap"
+                     KeyDown="MsgTextBox_KeyDown"
+                     PlaceholderText="Ctrl+Enter发送消息" />
         </Grid>
     </Grid>
 </Page>

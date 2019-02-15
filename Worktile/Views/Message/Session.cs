@@ -24,6 +24,7 @@ namespace Worktile.Views.Message
         public bool IsAssistant => Component.HasValue;
         public FontFamily AvatarFont { get; set; }
         public string DefaultIcon { get; set; }
+        public string Uid { get; set; }
     }
 
     public enum SessionType

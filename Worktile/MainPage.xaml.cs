@@ -18,6 +18,10 @@ using Worktile.Views.IM;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Infrastructure;
 using Worktile.Views.Message;
+using Windows.Networking.Sockets;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Windows.Storage.Streams;
+using Worktile.Domain.SocketMessageConverter;
 
 namespace Worktile
 {
@@ -31,22 +35,8 @@ namespace Worktile
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #region Property
         public ObservableCollection<WtApp> AppItems { get; }
-
-        //private WtApp _selectedApp;
-        //public WtApp SelectedApp
-        //{
-        //    get => _selectedApp;
-        //    set
-        //    {
-        //        if (_selectedApp != value)
-        //        {
-        //            _selectedApp = value;
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedApp)));
-        //            ContentFrameNavigate(value.Name);
-        //        }
-        //    }
-        //}
 
         private bool _isActive;
         public bool IsActive
@@ -91,8 +81,9 @@ namespace Worktile
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BgImage)));
             }
         }
+        #endregion
 
-
+        #region Init
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
@@ -119,6 +110,8 @@ namespace Worktile
             DataSource.ApiUserMeConfig = me.Data.Config;
             DataSource.ApiUserMe = me.Data.Me;
             DisplayName = DataSource.ApiUserMe.DisplayName;
+
+            await ConnectSocketAsync();
 
             string bgImg = DataSource.ApiUserMe.Preferences.BackgroundImage;
             if (bgImg.StartsWith("desktop-") && bgImg.EndsWith(".jpg"))
@@ -147,7 +140,73 @@ namespace Worktile
             //SelectedApp = AppItems.First();
             Logo = new BitmapImage(new Uri(DataSource.ApiUserMeConfig.Box.LogoUrl + DataSource.Team.Logo));
         }
+        #endregion
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            _socket.MessageReceived -= Socket_MessageReceived;
+            _socket.Dispose();
+        }
+
+        #region Socket
+
+        private static MessageWebSocket _socket;
+        public static event Action<string> OnMessageReceived;
+
+        private async Task ConnectSocketAsync()
+        {
+            await Task.Run(async () =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+                {
+                    _socket = new MessageWebSocket();
+                    _socket.Control.MessageType = Windows.Networking.Sockets.SocketMessageType.Utf8;
+                    _socket.MessageReceived += Socket_MessageReceived;
+                    //MessageWebSocket.Closed += MessageWebSocket_Closed;
+
+                    Uri uri = new Uri($"wss://im.worktile.com/socket.io/?token={DataSource.ApiUserMe.ImToken}&uid={DataSource.ApiUserMe.Uid}&client=web&EIO=3&transport=websocket");
+                    await _socket.ConnectAsync(uri);
+
+                    using (var dataWriter = new DataWriter(_socket.OutputStream))
+                    {
+                        string msg = $"40/message?token={DataSource.ApiUserMe.ImToken}&uid={DataSource.ApiUserMe.Uid}&client=web";
+                        dataWriter.WriteString(msg);
+                        await dataWriter.StoreAsync();
+                        dataWriter.DetachStream();
+                    }
+                });
+            });
+        }
+
+        private void Socket_MessageReceived(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
+        {
+            using (DataReader dataReader = args.GetDataReader())
+            {
+                dataReader.UnicodeEncoding = UnicodeEncoding.Utf8;
+                string rawMsg = dataReader.ReadString(dataReader.UnconsumedBufferLength);
+                string msg = SocketMessageConverter.Read(rawMsg);
+                if (!string.IsNullOrWhiteSpace(msg))
+                {
+                    OnMessageReceived?.Invoke(msg);
+                }
+            }
+        }
+
+        public static async Task SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
+        {
+            string msg = SocketMessageConverter.Process(msgType, data);
+            using (var dataWriter = new DataWriter(_socket.OutputStream))
+            {
+                dataWriter.WriteString(msg);
+                await dataWriter.StoreAsync();
+                dataWriter.DetachStream();
+            }
+        }
+
+        #endregion
+
+        #region Navigate
         private void Nav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
@@ -204,5 +263,6 @@ namespace Worktile
                 ContentFrame.GoBack();
             }
         }
+        #endregion
     }
 }

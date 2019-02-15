@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +11,10 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Streams;
+using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,6 +26,8 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.IM.ApiMessages;
 using Worktile.ApiModels.IM.ApiPigeonMessages;
 using Worktile.Common;
+using Worktile.Domain.SocketMessageConverter;
+using Worktile.Domain.SocketMessageConverter.Converters;
 using Worktile.Enums;
 using Worktile.Enums.IM;
 using Worktile.Infrastructure;
@@ -101,11 +108,45 @@ namespace Worktile.Views.Message
         {
             base.OnNavigatedTo(e);
             _navParam = e.Parameter as MessageDetailToChatNavParam;
+            Worktile.MainPage.OnMessageReceived += OnMessageReceived;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            Worktile.MainPage.OnMessageReceived -= OnMessageReceived;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadMessagesAsync();
+            MsgTextBox.Focus(FocusState.Programmatic);
+        }
+
+        private async void OnMessageReceived(string json)
+        {
+            var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(json);
+            await Task.Run(async () =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
+                    Messages.Add(new Message
+                    {
+                        Avatar = new TethysAvatar
+                        {
+                            DisplayName = member.DisplayName,
+                            Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
+                            Foreground = new SolidColorBrush(Colors.White),
+                            Background = AvatarHelper.GetColorBrush(member.DisplayName)
+                        },
+                        Content = GetContent(apiMsg),
+                        Time = apiMsg.CreatedAt,
+                        Type = (MessageType)apiMsg.Type
+                    });
+                    MsgTextBox.Text = string.Empty;
+                });
+            });
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -236,6 +277,52 @@ namespace Worktile.Views.Message
                 case Enums.IM.MessageType.Calendar:
                     return msg.Body.InlineAttachment.Text;
                 default: return msg.Body.Content;
+            }
+        }
+
+        private async void MsgTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                if (Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
+                {
+                    await SendMessageAsync();
+                }
+                else
+                {
+                    int index = MsgTextBox.SelectionStart;
+                    MsgTextBox.Text = MsgTextBox.Text.Insert(index, Environment.NewLine);
+                    MsgTextBox.SelectionStart = index + 1;
+                }
+            }
+        }
+
+        private async void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            await SendMessageAsync();
+        }
+
+        private async Task SendMessageAsync()
+        {
+            string msg = MsgTextBox.Text.Trim();
+            if (msg != string.Empty)
+            {
+                int toType = 1;
+                if (_navParam.Session.Type == SessionType.Session)
+                    toType = 2;
+                var data = new
+                {
+                    fromType = 1,
+                    from = DataSource.ApiUserMe.Uid,
+                    to = _navParam.Session.Id,
+                    toType,
+                    messageType = 1,
+                    client = 1,
+                    markdown = 1,
+                    //attachment = null,
+                    content = msg
+                };
+                await Worktile.MainPage.SendMessageAsync(SocketMessageType.Message, data);
             }
         }
     }

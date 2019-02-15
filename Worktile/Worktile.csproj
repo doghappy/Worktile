@@ -138,6 +138,10 @@
     <Compile Include="Domain\Mission\Kanban\AttachmentReader.cs" />
     <Compile Include="Domain\Mission\Kanban\PropertyReader.cs" />
     <Compile Include="Domain\Mission\Kanban\KanbanDataReader.cs" />
+    <Compile Include="Domain\SocketMessageConverter\Converters\ISocketConverter.cs" />
+    <Compile Include="Domain\SocketMessageConverter\Converters\MessageConverter.cs" />
+    <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
+    <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -247,6 +251,7 @@
     <Compile Include="Views\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Domain\SocketMessageConverter\SocketMessageType.cs" />
     <Compile Include="WtControls\Flyout\TaskStateList.xaml.cs">
       <DependentUpon>TaskStateList.xaml</DependentUpon>
     </Compile>
