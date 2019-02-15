@@ -22,6 +22,8 @@ using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.Storage.Streams;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Domain.SocketMessageConverter.Converters;
+using Windows.UI.Notifications;
+using Windows.Data.Xml.Dom;
 
 namespace Worktile
 {
@@ -203,6 +205,24 @@ namespace Worktile
             }
         }
 
+        private static int _unreadBadge;
+        public static int UnreadBadge
+        {
+            get => _unreadBadge;
+            set
+            {
+                if (_unreadBadge != value)
+                {
+                    _unreadBadge = value;
+                    if (value > 0)
+                        UpdateBadgeNumber(value);
+                    else
+                        BadgeUpdateManager.CreateBadgeUpdaterForApplication().Clear();
+                }
+            }
+        }
+
+
         public static async Task SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
         {
             string msg = SocketMessageConverter.Process(msgType, data);
@@ -212,6 +232,25 @@ namespace Worktile
                 await dataWriter.StoreAsync();
                 dataWriter.DetachStream();
             }
+        }
+
+        public static void UpdateBadgeNumber(int number)
+        {
+            // Get the blank badge XML payload for a badge number
+            XmlDocument badgeXml = BadgeUpdateManager.GetTemplateContent(BadgeTemplateType.BadgeNumber);
+
+            // Set the value of the badge in the XML to our number
+            XmlElement badgeElement = badgeXml.SelectSingleNode("/badge") as XmlElement;
+            badgeElement.SetAttribute("value", number.ToString());
+
+            // Create the badge notification
+            BadgeNotification badge = new BadgeNotification(badgeXml);
+
+            // Create the badge updater for the application
+            BadgeUpdater badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication();
+
+            // And update the badge
+            badgeUpdater.Update(badge);
         }
 
         #endregion

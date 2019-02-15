@@ -125,33 +125,36 @@ namespace Worktile.Views.Message
                 var client = new WtHttpClient();
                 await client.PutAsync<object>(url);
             }
+            Worktile.MainPage.UnreadBadge -= _navParam.Session.UnRead;
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _navParam.Session.UnRead = 0));
         }
 
         private async void OnMessageReceived(string json)
         {
             var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(json);
-            await Task.Run(async () =>
+            if (apiMsg.Id == _navParam.Session.Id)
             {
-                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                await Task.Run(async () =>
                 {
-                    var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
-                    Messages.Add(new Message
+                    await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                     {
-                        Avatar = new TethysAvatar
+                        var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
+                        Messages.Add(new Message
                         {
-                            DisplayName = member.DisplayName,
-                            Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
-                            Foreground = new SolidColorBrush(Colors.White),
-                            Background = AvatarHelper.GetColorBrush(member.DisplayName)
-                        },
-                        Content = GetContent(apiMsg),
-                        Time = apiMsg.CreatedAt,
-                        Type = (MessageType)apiMsg.Type
+                            Avatar = new TethysAvatar
+                            {
+                                DisplayName = member.DisplayName,
+                                Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
+                                Foreground = new SolidColorBrush(Colors.White),
+                                Background = AvatarHelper.GetColorBrush(member.DisplayName)
+                            },
+                            Content = GetContent(apiMsg),
+                            Time = apiMsg.CreatedAt,
+                            Type = (MessageType)apiMsg.Type
+                        });
                     });
-                    MsgTextBox.Text = string.Empty;
                 });
-            });
+            }
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -328,6 +331,7 @@ namespace Worktile.Views.Message
                     content = msg
                 };
                 await Worktile.MainPage.SendMessageAsync(SocketMessageType.Message, data);
+                MsgTextBox.Text = string.Empty;
             }
         }
     }

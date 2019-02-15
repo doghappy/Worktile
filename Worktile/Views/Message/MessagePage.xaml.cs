@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -165,6 +167,7 @@ namespace Worktile.Views.Message
             }
             IsActive = false;
 
+            Worktile.MainPage.UnreadBadge += Sessions.Sum(s => s.UnRead);
             Worktile.MainPage.OnMessageReceived += OnMessageReceived;
         }
 
@@ -181,6 +184,7 @@ namespace Worktile.Views.Message
             {
                 var session = Sessions.Single(s => s.Id == apiMsg.To.Id);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => session.UnRead += 1));
+                Worktile.MainPage.UnreadBadge += 1;
             }
         }
     }
