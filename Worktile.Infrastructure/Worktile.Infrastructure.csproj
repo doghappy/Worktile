@@ -126,7 +126,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JTokenHelper.cs" />
     <Compile Include="ImageHelper.cs" />
-    <Compile Include="UiExtension.cs" />
     <Compile Include="UnixDateTimeConverter.cs" />
     <Compile Include="WtDateTimeHelper.cs" />
     <EmbeddedResource Include="Properties\Worktile.Infrastructure.rd.xml" />

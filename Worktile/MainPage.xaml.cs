@@ -24,6 +24,12 @@ using Worktile.Domain.SocketMessageConverter;
 using Worktile.Domain.SocketMessageConverter.Converters;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
+using Microsoft.Toolkit.Uwp.Notifications;
+using Newtonsoft.Json;
+using Worktile.Enums;
+using Worktile.Enums.IM;
+using Windows.System.Threading;
+using Windows.UI.Core;
 
 namespace Worktile
 {
@@ -155,7 +161,7 @@ namespace Worktile
         public static string SocketId { get; private set; }
 
         private static MessageWebSocket _socket;
-        public static event Action<string> OnMessageReceived;
+        public static event Action<Models.IM.Message.Message> OnMessageReceived;
 
         private async Task ConnectSocketAsync()
         {
@@ -178,8 +184,30 @@ namespace Worktile
                         await dataWriter.StoreAsync();
                         dataWriter.DetachStream();
                     }
+
+                    KeepConnection();
                 });
             });
+        }
+
+        /// <summary>
+        /// 心跳机制，防止服务端断开连接。
+        /// </summary>
+        private void KeepConnection()
+        {
+            var timer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
+                 {
+                     using (var dataWriter = new DataWriter(_socket.OutputStream))
+                     {
+                         dataWriter.WriteString("2");
+                         await dataWriter.StoreAsync();
+                         dataWriter.DetachStream();
+                     }
+                 });
+
+            }, TimeSpan.FromSeconds(30));
         }
 
         private void Socket_MessageReceived(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
@@ -198,11 +226,23 @@ namespace Worktile
                             SocketId = msg;
                             break;
                         case nameof(MessageConverter):
-                            OnMessageReceived?.Invoke(msg);
+                            MessageReceived(msg);
                             break;
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 接收解析到的消息，以提供Toast通知和Tile Badge功能
+        /// </summary>
+        /// <param name="msg"></param>
+        private void MessageReceived(string msg)
+        {
+            var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(msg);
+            OnMessageReceived?.Invoke(apiMsg);
+            UnreadBadge += 1;
+            SendToast(apiMsg);
         }
 
         private static int _unreadBadge;
@@ -253,6 +293,72 @@ namespace Worktile
             badgeUpdater.Update(badge);
         }
 
+        private void SendToast(Models.IM.Message.Message apiMsg)
+        {
+            var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
+            string avatar = "Assets/StoreLogo.scale-400.png";
+            if (member.Avatar != string.Empty)
+            {
+                avatar = AvatarHelper.GetAvatarUrl(member.Avatar, AvatarSize.X80, FromType.User);
+            }
+
+            var toastContent = new ToastContent()
+            {
+                DisplayTimestamp = apiMsg.CreatedAt,
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = member.DisplayName,
+                                HintMaxLines = 1
+                            },
+                            new AdaptiveText()
+                            {
+                                Text = ChatPage.GetContent(apiMsg)
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = avatar,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        }
+                    }
+                },
+                Actions = new ToastActionsCustom()
+                {
+                    Inputs =
+                    {
+                        new ToastTextBox("textBox")
+                        {
+                            PlaceholderContent = "请输入消息快速回复"
+                        }
+                    },
+                    Buttons =
+                    {
+                        new ToastButton("Send", "action=reply&threadId=92187")
+                        {
+                            ActivationType = ToastActivationType.Background,
+                            ImageUri = "Assets/Images/Icons/send.png",
+                            TextBoxId = "textBox"
+                            //InputId = "textBox"
+                        }
+                    }
+                },
+                //Launch = $"action=SendMessage&toType={apiMsg.To.Type}&to={apiMsg.To.Id}&from={apiMsg.From.Uid}"
+                Launch = $"action=Message"
+            };
+
+            // Create the toast notification
+            var toastNotif = new ToastNotification(toastContent.GetXml());
+
+            // And send the notification
+            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+        }
+
         #endregion
 
         #region Navigate
@@ -260,7 +366,7 @@ namespace Worktile
         {
             if (args.IsSettingsSelected)
             {
-
+                ContentFrame.Navigate(typeof(TestPage));
             }
             else
             {

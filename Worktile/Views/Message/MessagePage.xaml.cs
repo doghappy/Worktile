@@ -177,14 +177,12 @@ namespace Worktile.Views.Message
             Worktile.MainPage.OnMessageReceived -= OnMessageReceived;
         }
 
-        private async void OnMessageReceived(string json)
+        private async void OnMessageReceived(Models.IM.Message.Message apiMsg)
         {
-            var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(json);
             if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
             {
                 var session = Sessions.Single(s => s.Id == apiMsg.To.Id);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => session.UnRead += 1));
-                Worktile.MainPage.UnreadBadge += 1;
             }
         }
     }

@@ -1,10 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.QueryStringDotNET;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -20,6 +22,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Domain.SocketMessageConverter;
 using Worktile.Views;
 using Worktile.WtRequestClient;
 
@@ -40,17 +43,9 @@ namespace Worktile
             Suspending += OnSuspending;
         }
 
-        /// <summary>
-        /// 在应用程序由最终用户正常启动时进行调用。
-        /// 将在启动应用程序以打开特定文件等情况下使用。
-        /// </summary>
-        /// <param name="e">有关启动请求和过程的详细信息。</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        private void OnLaunchedOrActivated(IActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-
-            // 不要在窗口已包含内容时重复应用程序初始化，
-            // 只需确保窗口处于活动状态
             if (rootFrame == null)
             {
                 // 创建要充当导航上下文的框架，并导航到第一页
@@ -67,20 +62,79 @@ namespace Worktile
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (e is LaunchActivatedEventArgs)
             {
-                if (rootFrame.Content == null)
+                var args = e as LaunchActivatedEventArgs;
+
+                if (args.PrelaunchActivated == false)
                 {
-                    // 当导航堆栈尚未还原时，导航到第一页，
-                    // 并通过将所需信息作为导航参数传入来配置
-                    // 参数
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                    //rootFrame.Navigate(typeof(TestPage), e.Arguments);
+                    if (rootFrame.Content == null)
+                    {
+                        // 当导航堆栈尚未还原时，导航到第一页，
+                        // 并通过将所需信息作为导航参数传入来配置
+                        // 参数
+                        rootFrame.Navigate(typeof(MainPage), args.Arguments);
+                    }
                 }
-                // 确保当前窗口处于活动状态
-                Window.Current.Activate();
             }
+            //else if (e is ToastNotificationActivatedEventArgs)
+            //{
+            //var data = new
+            //{
+            //    fromType = 1,
+            //    from = int.Parse(args["from"]),
+            //    to = int.Parse(args["to"]),
+            //    toType = int.Parse(args["toType"]),
+            //    messageType = 1,
+            //    client = 1,
+            //    markdown = 1,
+            //    //attachment = null,
+            //    content = "toastActivationArgs.UserInput."
+            //};
+            //await MainPage.SendMessageAsync(SocketMessageType.Message, data);
+
+            //var mainPage = rootFrame.Content as MainPage;
+            //mainPage.isac
+
+            //var toastActivationArgs = e as ToastNotificationActivatedEventArgs;
+            //QueryString args = QueryString.Parse(toastActivationArgs.Argument);
+            //switch (args["action"])
+            //{
+            //    case "Message":
+            //        rootFrame.Navigate(typeof(MainPage));
+            //        break;
+            //}
+
+            // If we're loading the app for the first time, place the main page on
+            // the back stack so that user can go back after they've been
+            // navigated to the specific page
+            //if (rootFrame.BackStack.Count == 0)
+            //    rootFrame.BackStack.Add(new PageStackEntry(typeof(MainPage), null, null));
+            //}
+
+            // 确保当前窗口处于活动状态
+            Window.Current.Activate();
             CustomTitleBar();
+        }
+
+        /// <summary>
+        /// 在应用程序由最终用户正常启动时进行调用。
+        /// 将在启动应用程序以打开特定文件等情况下使用。
+        /// </summary>
+        /// <param name="e">有关启动请求和过程的详细信息。</param>
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        {
+            OnLaunchedOrActivated(e);
+        }
+
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            OnLaunchedOrActivated(e);
+        }
+
+        protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        {
+
         }
 
         /// <summary>

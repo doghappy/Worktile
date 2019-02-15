@@ -129,9 +129,8 @@ namespace Worktile.Views.Message
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _navParam.Session.UnRead = 0));
         }
 
-        private async void OnMessageReceived(string json)
+        private async void OnMessageReceived(Models.IM.Message.Message apiMsg)
         {
-            var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(json);
             if (apiMsg.To.Id == _navParam.Session.Id)
             {
                 await Task.Run(async () =>
@@ -277,7 +276,7 @@ namespace Worktile.Views.Message
             _hasMore = apiData.Data.More;
         }
 
-        private string GetContent(Models.IM.Message.Message msg)
+        public static string GetContent(Models.IM.Message.Message msg)
         {
             switch (msg.Type)
             {
