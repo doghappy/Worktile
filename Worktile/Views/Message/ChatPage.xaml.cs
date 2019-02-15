@@ -132,7 +132,7 @@ namespace Worktile.Views.Message
         private async void OnMessageReceived(string json)
         {
             var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(json);
-            if (apiMsg.Id == _navParam.Session.Id)
+            if (apiMsg.To.Id == _navParam.Session.Id)
             {
                 await Task.Run(async () =>
                 {
