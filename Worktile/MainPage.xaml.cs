@@ -38,13 +38,13 @@ namespace Worktile
         public MainPage()
         {
             InitializeComponent();
-            AppItems = new ObservableCollection<WtApp>();
+            Apps = new ObservableCollection<WtApp>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Property
-        public ObservableCollection<WtApp> AppItems { get; }
+        public ObservableCollection<WtApp> Apps { get; }
 
         private bool _isActive;
         public bool IsActive
@@ -87,6 +87,24 @@ namespace Worktile
             {
                 _bgImage = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BgImage)));
+            }
+        }
+
+        private WtApp _selectedApp;
+        public WtApp SelectedApp
+        {
+            get => _selectedApp;
+            set
+            {
+                if (_selectedApp != value)
+                {
+                    _selectedApp = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedApp)));
+                    if (value != null)
+                    {
+                        ContentFrameNavigate(value.Name);
+                    }
+                }
             }
         }
         #endregion
@@ -139,13 +157,13 @@ namespace Worktile
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeam>("/api/team");
             DataSource.Team = data.Data;
-            AppItems.Add(DataSource.Apps.SingleOrDefault(a => a.Name == "message"));
+            Apps.Add(DataSource.Apps.SingleOrDefault(a => a.Name == "message"));
             DataSource.Team.Apps.ForEach(app =>
             {
                 var item = DataSource.Apps.Single(a => a.Name == app.Name);
-                AppItems.Add(item);
+                Apps.Add(item);
             });
-            //SelectedApp = AppItems.First();
+            SelectedApp = Apps.First();
             Logo = new BitmapImage(new Uri(DataSource.ApiUserMeConfig.Box.LogoUrl + DataSource.Team.Logo));
         }
         #endregion
@@ -199,13 +217,13 @@ namespace Worktile
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
                 {
-                     using (var dataWriter = new DataWriter(_socket.OutputStream))
-                     {
-                         dataWriter.WriteString("2");
-                         await dataWriter.StoreAsync();
-                         dataWriter.DetachStream();
-                     }
-                 });
+                    using (var dataWriter = new DataWriter(_socket.OutputStream))
+                    {
+                        dataWriter.WriteString("2");
+                        await dataWriter.StoreAsync();
+                        dataWriter.DetachStream();
+                    }
+                });
 
             }, TimeSpan.FromSeconds(30));
         }
@@ -241,8 +259,14 @@ namespace Worktile
         {
             var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(msg);
             OnMessageReceived?.Invoke(apiMsg);
-            UnreadBadge += 1;
-            SendToast(apiMsg);
+            if (apiMsg.From.Uid != DataSource.ApiUserMe.Uid)
+            {
+                UnreadBadge += 1;
+                if (Apps.IndexOf(SelectedApp) != 0)
+                {
+                    SendToast(apiMsg);
+                }
+            }
         }
 
         private static int _unreadBadge;
@@ -362,18 +386,19 @@ namespace Worktile
         #endregion
 
         #region Navigate
-        private void Nav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-        {
-            if (args.IsSettingsSelected)
-            {
-                ContentFrame.Navigate(typeof(TestPage));
-            }
-            else
-            {
-                var app = args.SelectedItem as WtApp;
-                ContentFrameNavigate(app.Name);
-            }
-        }
+        //private void Nav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        //{
+        //    if (args.IsSettingsSelected)
+        //    {
+        //        ContentFrame.Navigate(typeof(TestPage));
+        //    }
+        //    else
+        //    {
+        //        var app = args.SelectedItem as WtApp;
+        //        SelectedApp = app;
+        //        ContentFrameNavigate(app.Name);
+        //    }
+        //}
 
         private void ContentFrameNavigate(string app)
         {
@@ -419,5 +444,15 @@ namespace Worktile
             }
         }
         #endregion
+
+        private void Me_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            SelectedApp = null;
+        }
+
+        private void Setting_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            SelectedApp = null;
+        }
     }
 }

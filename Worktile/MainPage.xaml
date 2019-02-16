@@ -17,8 +17,9 @@
 
         <NavigationView x:Name="Nav"
                         PaneDisplayMode="LeftCompact"
-                        MenuItemsSource="{x:Bind AppItems}"
-                        SelectionChanged="Nav_SelectionChanged"
+                        MenuItemsSource="{x:Bind Apps}"
+                        SelectedItem="{x:Bind SelectedApp, Mode=TwoWay}"
+                        IsSettingsVisible="False"
                         BackRequested="Nav_BackRequested">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:WtApp">
@@ -39,11 +40,15 @@
             </NavigationView.PaneHeader>
 
             <NavigationView.PaneFooter>
-                <NavigationViewItem Tag="me" Content="{x:Bind DisplayName, Mode=OneWay}">
-                    <NavigationViewItem.Icon>
-                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xE642;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                <StackPanel>
+                    <!--<NavigationViewItem Content="{x:Bind DisplayName, Mode=OneWay}" Tapped="Me_Tapped">
+                        <NavigationViewItem.Icon>
+                            <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xE642;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>-->
+                    <NavigationViewItem Content="{x:Bind DisplayName, Mode=OneWay}" Icon="Contact" Tapped="Me_Tapped"/>
+                    <NavigationViewItem Content="设置" Icon="Setting" Tapped="Setting_Tapped"/>
+                </StackPanel>
             </NavigationView.PaneFooter>
 
             <Frame x:Name="ContentFrame" Navigated="ContentFrame_Navigated">
