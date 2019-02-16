@@ -127,6 +127,14 @@ namespace Worktile
                 await RequestApiTeamAsync();
             }
             IsActive = false;
+            Window.Current.Activated += Window_Activated;
+        }
+
+        private CoreWindowActivationState _windowActivationState;
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            _windowActivationState = e.WindowActivationState;
         }
 
         private async Task RequestApiUserMeAsync()
@@ -173,6 +181,7 @@ namespace Worktile
             base.OnNavigatedFrom(e);
             _socket.MessageReceived -= Socket_MessageReceived;
             _socket.Dispose();
+            Window.Current.Activated -= Window_Activated;
         }
 
         #region Socket
@@ -190,7 +199,6 @@ namespace Worktile
                     _socket = new MessageWebSocket();
                     _socket.Control.MessageType = Windows.Networking.Sockets.SocketMessageType.Utf8;
                     _socket.MessageReceived += Socket_MessageReceived;
-                    //MessageWebSocket.Closed += MessageWebSocket_Closed;
 
                     Uri uri = new Uri($"wss://im.worktile.com/socket.io/?token={DataSource.ApiUserMe.ImToken}&uid={DataSource.ApiUserMe.Uid}&client=web&EIO=3&transport=websocket");
                     await _socket.ConnectAsync(uri);
@@ -215,7 +223,7 @@ namespace Worktile
         {
             var timer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
             {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.High, async () =>
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
                     using (var dataWriter = new DataWriter(_socket.OutputStream))
                     {
@@ -262,9 +270,16 @@ namespace Worktile
             if (apiMsg.From.Uid != DataSource.ApiUserMe.Uid)
             {
                 UnreadBadge += 1;
-                if (Apps.IndexOf(SelectedApp) != 0)
+                if (_windowActivationState == CoreWindowActivationState.Deactivated)
                 {
                     SendToast(apiMsg);
+                }
+                else
+                {
+                    if (Apps.IndexOf(SelectedApp) != 0)
+                    {
+                        SendToast(apiMsg);
+                    }
                 }
             }
         }
@@ -356,24 +371,22 @@ namespace Worktile
                 {
                     Inputs =
                     {
-                        new ToastTextBox("textBox")
+                        new ToastTextBox("msg")
                         {
                             PlaceholderContent = "请输入消息快速回复"
                         }
                     },
                     Buttons =
                     {
-                        new ToastButton("Send", "action=reply&threadId=92187")
+                        new ToastButton("Send", $"action=reply&toType={apiMsg.To.Type}&to={apiMsg.To.Id}&from={apiMsg.Body.At.First()}")
                         {
-                            ActivationType = ToastActivationType.Background,
+                            ActivationType = ToastActivationType.Foreground,
                             ImageUri = "Assets/Images/Icons/send.png",
-                            TextBoxId = "textBox"
-                            //InputId = "textBox"
+                            TextBoxId = "msg"
                         }
                     }
                 },
-                //Launch = $"action=SendMessage&toType={apiMsg.To.Type}&to={apiMsg.To.Id}&from={apiMsg.From.Uid}"
-                Launch = $"action=Message"
+                Launch = "action=launch"
             };
 
             // Create the toast notification

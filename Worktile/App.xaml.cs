@@ -43,7 +43,7 @@ namespace Worktile
             Suspending += OnSuspending;
         }
 
-        private void OnLaunchedOrActivated(IActivatedEventArgs e)
+        private async Task OnLaunchedOrActivatedAsync(IActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
@@ -77,40 +77,33 @@ namespace Worktile
                     }
                 }
             }
-            //else if (e is ToastNotificationActivatedEventArgs)
-            //{
-            //var data = new
-            //{
-            //    fromType = 1,
-            //    from = int.Parse(args["from"]),
-            //    to = int.Parse(args["to"]),
-            //    toType = int.Parse(args["toType"]),
-            //    messageType = 1,
-            //    client = 1,
-            //    markdown = 1,
-            //    //attachment = null,
-            //    content = "toastActivationArgs.UserInput."
-            //};
-            //await MainPage.SendMessageAsync(SocketMessageType.Message, data);
+            else if (e is ToastNotificationActivatedEventArgs)
+            {
+                var toastActivationArgs = e as ToastNotificationActivatedEventArgs;
+                QueryString args = QueryString.Parse(toastActivationArgs.Argument);
 
-            //var mainPage = rootFrame.Content as MainPage;
-            //mainPage.isac
-
-            //var toastActivationArgs = e as ToastNotificationActivatedEventArgs;
-            //QueryString args = QueryString.Parse(toastActivationArgs.Argument);
-            //switch (args["action"])
-            //{
-            //    case "Message":
-            //        rootFrame.Navigate(typeof(MainPage));
-            //        break;
-            //}
-
-            // If we're loading the app for the first time, place the main page on
-            // the back stack so that user can go back after they've been
-            // navigated to the specific page
-            //if (rootFrame.BackStack.Count == 0)
-            //    rootFrame.BackStack.Add(new PageStackEntry(typeof(MainPage), null, null));
-            //}
+                string msg = toastActivationArgs.UserInput["msg"].ToString().Trim();
+                if (msg != string.Empty && args["action"] == "reply")
+                {
+                    var data = new
+                    {
+                        fromType = 1,
+                        from = args["from"],
+                        to = args["to"],
+                        toType = int.Parse(args["toType"]),
+                        messageType = 1,
+                        client = 1,
+                        markdown = 1,
+                        content = toastActivationArgs.UserInput["msg"].ToString()
+                    };
+                    await MainPage.SendMessageAsync(SocketMessageType.Message, data);
+                }
+                // If we're loading the app for the first time, place the main page on
+                // the back stack so that user can go back after they've been
+                // navigated to the specific page
+                //if (rootFrame.BackStack.Count == 0)
+                //    rootFrame.BackStack.Add(new PageStackEntry(typeof(MainPage), null, null));
+            }
 
             // 确保当前窗口处于活动状态
             Window.Current.Activate();
@@ -122,14 +115,14 @@ namespace Worktile
         /// 将在启动应用程序以打开特定文件等情况下使用。
         /// </summary>
         /// <param name="e">有关启动请求和过程的详细信息。</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            OnLaunchedOrActivated(e);
+            await OnLaunchedOrActivatedAsync(e);
         }
 
-        protected override void OnActivated(IActivatedEventArgs e)
+        protected override async void OnActivated(IActivatedEventArgs e)
         {
-            OnLaunchedOrActivated(e);
+            await OnLaunchedOrActivatedAsync(e);
         }
 
         protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)

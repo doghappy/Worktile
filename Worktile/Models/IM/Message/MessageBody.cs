@@ -8,6 +8,9 @@ namespace Worktile.Models.IM.Message
         [JsonProperty("content")]
         public string Content { get; set; }
 
+        [JsonProperty("at")]
+        public List<string> At { get; set; }
+
         [JsonProperty("markdown")]
         public int Markdown { get; set; }
 
