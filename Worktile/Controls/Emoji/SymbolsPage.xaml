@@ -1,0 +1,835 @@
+﻿<Page
+    x:Class="Worktile.Controls.Emoji.SymbolsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <GridView SelectionMode="None" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❤️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🧡"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💛"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💚"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💙"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💜"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🖤"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💔"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❣️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💕"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💞"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💓"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💗"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💖"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💘"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💝"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💟"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="☮️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="✝️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="☪️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕉"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="☸️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="✡️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔯"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕎"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="☯️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="☦️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🛐"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⛎"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♈️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♉️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♊️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♋️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♌️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♍️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♎️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♏️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♐️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♑️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♒️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♓️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆔"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⚛️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🉑"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="☢️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="☣️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="📴"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="📳"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈶"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈚️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈸"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈺"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈷️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="✴️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆚"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💮"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🉐"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="㊙️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="㊗️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈴"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈵"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈹"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈲"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🅰️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🅱️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆎"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆑"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🅾️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆘"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❌"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⭕️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🛑"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⛔️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="📛"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚫"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💯"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💢"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♨️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚷"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚯"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚳"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚱"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔞"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="📵"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚭"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❗️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❕"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❓"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❔"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="‼️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⁉️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔅"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔆"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="〽️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⚠️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚸"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔱"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⚜️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔰"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♻️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="✅"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈯️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💹"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❇️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="✳️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="❎"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🌐"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💠"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="Ⓜ️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🌀"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💤"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🏧"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚾"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♿️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🅿️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈳"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈂️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🛂"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🛃"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🛄"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🛅"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚹"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚺"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚼"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚻"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🚮"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🎦"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="📶"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🈁"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="ℹ️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔤"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔡"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔠"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆖"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆗"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆙"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆒"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆕"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🆓"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="0️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="1️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="2️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="3️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="4️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="5️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="6️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="7️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="8️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="9️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔟"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔢"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="#️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="*️⃣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏏️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="▶️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏸"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏯"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏹"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏺"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏭"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏮"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏩"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏪"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏫"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⏬"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="◀️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔼"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔽"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="➡️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⬅️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⬆️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⬇️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="↗️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="↘️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="↙️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="↖️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="↕️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="↔️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="↪️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="↩️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⤴️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⤵️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔀"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔁"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔂"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔄"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔃"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🎵"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🎶"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="➕"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="➖"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="➗"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="✖️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♾"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💲"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💱"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="™️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="©️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="®️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="〰️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="➰"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="➿"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔚"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔙"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔛"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔝"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔜"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="✔️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="☑️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔘"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⚪️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⚫️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔴"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔵"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔺"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔻"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔸"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔹"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔶"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔷"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔳"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔲"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="▪️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="▫️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="◾️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="◽️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="◼️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="◻️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⬛️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="⬜️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔈"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔇"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔉"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔊"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔔"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🔕"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="📣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="📢"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="👁‍🗨"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💬"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="💭"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🗯"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♠️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♣️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♥️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="♦️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🃏"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🎴"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🀄️"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕐"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕑"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕒"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕓"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕔"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕕"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕖"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕗"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕘"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕙"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕚"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕛"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕜"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕝"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕞"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕟"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕠"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕡"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕢"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕣"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕤"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕥"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕦"/>
+            </GridViewItem>
+            <GridViewItem>
+                <TextBlock Style="{StaticResource EmojiPickerItem}"  Text="🕧"/>
+            </GridViewItem>
+        </GridView>
+    </Grid>
+</Page>

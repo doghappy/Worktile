@@ -333,5 +333,12 @@ namespace Worktile.Views.Message
                 MsgTextBox.Text = string.Empty;
             }
         }
+
+        private void EmojiPicker_OnEmojiSelected(string emoji)
+        {
+            int index = MsgTextBox.SelectionStart;
+            MsgTextBox.Text = MsgTextBox.Text.Insert(index, emoji);
+            MsgTextBox.SelectionStart = index + 1;
+        }
     }
 }

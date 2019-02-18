@@ -129,6 +129,54 @@
     <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="Common\WtRequestClient\HttpClientExtension.cs" />
     <Compile Include="Common\WtRequestClient\WtHttpClient.cs" />
+    <Compile Include="Controls\Emoji\EmojiPicker.xaml.cs">
+      <DependentUpon>EmojiPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\PaleEmojisPage.xaml.cs">
+      <DependentUpon>PaleEmojisPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\CreamWhiteEmojisPage.xaml.cs">
+      <DependentUpon>CreamWhiteEmojisPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\ModerateBrownEmojisPage.xaml.cs">
+      <DependentUpon>ModerateBrownEmojisPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\DarkBrownEmojisPage.xaml.cs">
+      <DependentUpon>DarkBrownEmojisPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\BlackEmojisPage.xaml.cs">
+      <DependentUpon>BlackEmojisPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\AnimalsNaturePage.xaml.cs">
+      <DependentUpon>AnimalsNaturePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\FoodDrinkPage.xaml.cs">
+      <DependentUpon>FoodDrinkPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\ActivitySportsPage.xaml.cs">
+      <DependentUpon>ActivitySportsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\TravelPlacesPage.xaml.cs">
+      <DependentUpon>TravelPlacesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\ObjectsPage.xaml.cs">
+      <DependentUpon>ObjectsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\SymbolsPage.xaml.cs">
+      <DependentUpon>SymbolsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\NewEmojisPage.xaml.cs">
+      <DependentUpon>NewEmojisPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\ClothingAccessoriesPage.xaml.cs">
+      <DependentUpon>ClothingAccessoriesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\PeopleFantasyPage.xaml.cs">
+      <DependentUpon>PeopleFantasyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Emoji\EmojiSmileysPage.xaml.cs">
+      <DependentUpon>EmojiSmileysPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
@@ -387,6 +435,70 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Emoji\EmojiPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Emoji\PaleEmojisPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\CreamWhiteEmojisPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\ModerateBrownEmojisPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\DarkBrownEmojisPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\BlackEmojisPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\AnimalsNaturePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\FoodDrinkPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\ActivitySportsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\TravelPlacesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\ObjectsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\SymbolsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\NewEmojisPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\ClothingAccessoriesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\PeopleFantasyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Emoji\EmojiSmileysPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Design\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

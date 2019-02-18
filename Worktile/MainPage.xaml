@@ -21,7 +21,7 @@
                         MenuItemsSource="{x:Bind Apps}"
                         SelectedItem="{x:Bind SelectedApp, Mode=TwoWay}"
                         IsSettingsVisible="False"
-                        BackRequested="Nav_BackRequested">
+                        IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:WtApp">
                     <NavigationViewItem Tag="{x:Bind Name}" Content="{x:Bind DisplayName}">
@@ -47,7 +47,7 @@
                 </StackPanel>
             </NavigationView.PaneFooter>
 
-            <Frame x:Name="ContentFrame" Navigated="ContentFrame_Navigated">
+            <Frame x:Name="ContentFrame">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition/>

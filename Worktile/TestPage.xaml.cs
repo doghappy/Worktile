@@ -23,31 +23,37 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Worktile
 {
-    public sealed partial class TestPage : Page
+    public sealed partial class TestPage : Page, INotifyPropertyChanged
     {
         public TestPage()
         {
             InitializeComponent();
-            Font1 = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
-            Font2 = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-            Fonts = new List<FontFamily>
-            {
-                new FontFamily("Segoe MDL2 Assets"),
-                new FontFamily("Segoe MDL2 Assets"),
-                new FontFamily("Segoe MDL2 Assets")
-            };
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public FontFamily Font1 { get; }
-        public FontFamily Font2 { get; }
-
-        public List<FontFamily> Fonts { get; }
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private string _emoji;
+        public string Emoji
         {
-            //
+            get => _emoji;
+            set
+            {
+                if (_emoji != value)
+                {
+                    _emoji = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Emoji)));
+                }
+            }
+        }
+
+        private void EmojiPicker_OnEmojiSelected(string emoji)
+        {
+            Emoji = emoji;
+        }
+
+        private void Flyout_Opened(object sender, object e)
+        {
+            var flyout = sender as Flyout;
         }
     }
 }

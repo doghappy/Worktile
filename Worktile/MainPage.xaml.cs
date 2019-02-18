@@ -431,19 +431,6 @@ namespace Worktile
                     break;
             }
         }
-
-        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
-        {
-            Nav.IsBackEnabled = ContentFrame.CanGoBack;
-        }
-
-        private void Nav_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-        {
-            if (ContentFrame.CanGoBack)
-            {
-                ContentFrame.GoBack();
-            }
-        }
         #endregion
 
         private void Me_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -455,7 +442,7 @@ namespace Worktile
         private void Setting_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             SelectedApp = null;
-            ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
+            ContentFrame.Navigate(typeof(TestPage));
         }
 
         private static InAppNotification _inAppNotification;

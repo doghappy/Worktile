@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Styles/Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <Style TargetType="FontIcon" x:Key="LcIcon">
                 <Setter Property="FontFamily" Value="ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont"/>
             </Style>
@@ -17,11 +17,15 @@
             <AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop" TintOpacity="0" TintColor="#FF000000" FallbackColor="#FF008000" />
 
             <Thickness x:Key="TitleBarHeight">0 32 0 0</Thickness>
-            
+
             <Style TargetType="controls:MarkdownTextBlock" x:Key="MessageMarkdown">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="QuoteForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="QuoteBorderBrush" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="EmojiPickerItem">
+                <Setter Property="FontSize" Value="20"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
