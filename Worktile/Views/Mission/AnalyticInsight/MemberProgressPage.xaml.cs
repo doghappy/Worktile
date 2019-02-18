@@ -11,7 +11,7 @@ using Worktile.Enums;
 using Worktile.Infrastructure;
 using Worktile.Models;
 using Worktile.ViewModels.Infrastructure;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Mission.AnalyticInsight
 {

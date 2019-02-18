@@ -9,7 +9,7 @@ using Worktile.Common;
 using Worktile.Domain.Mission.Kanban;
 using Worktile.Models.Kanban;
 using Worktile.ViewModels.Infrastructure;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
 {

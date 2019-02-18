@@ -21,7 +21,7 @@ using Worktile.Common;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Enums;
 using Worktile.Enums.IM;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Message
 {

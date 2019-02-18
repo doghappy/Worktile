@@ -1,0 +1,20 @@
+﻿<Page
+    x:Class="Worktile.Views.WaitForDevelopmentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Padding="32">
+        <StackPanel>
+            <TextBlock Style="{ThemeResource HeaderTextBlockStyle}" Text="此功能待开发"/>
+            <TextBlock Text="此应用为Worktile第三方应用，因为Worktile功能模块很多，作者只有业余时间开发，目前主要做“消息模块”。"/>
+            <TextBlock Text="想使用更多功能请使用Worktile访问worktile.com"/>
+            <TextBlock Text="此应用不会记录您的任何个人数据，源代码公开在github，请放心使用。"/>
+            <TextBlock Text="此应用不支持微软消息推送，使用微软消息推送服务需要Worktile服务端的支持。"/>
+        </StackPanel>
+    </StackPanel>
+</Page>

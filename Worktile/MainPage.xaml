@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Worktile.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -41,11 +42,6 @@
 
             <NavigationView.PaneFooter>
                 <StackPanel>
-                    <!--<NavigationViewItem Content="{x:Bind DisplayName, Mode=OneWay}" Tapped="Me_Tapped">
-                        <NavigationViewItem.Icon>
-                            <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xE642;"/>
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>-->
                     <NavigationViewItem Content="{x:Bind DisplayName, Mode=OneWay}" Icon="Contact" Tapped="Me_Tapped"/>
                     <NavigationViewItem Content="设置" Icon="Setting" Tapped="Setting_Tapped"/>
                 </StackPanel>
@@ -60,5 +56,6 @@
             </Frame>
         </NavigationView>
         <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+        <controls:InAppNotification x:Name="InAppNotification" Margin="0" VerticalAlignment="Bottom"/>
     </Grid>
 </Page>

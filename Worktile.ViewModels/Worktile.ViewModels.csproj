@@ -141,10 +141,6 @@
       <Project>{3d4d7893-d86c-4b7a-b473-0679615c63be}</Project>
       <Name>Worktile.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Worktile.WtRequestClient\Worktile.WtRequestClient.csproj">
-      <Project>{64C1D453-F677-4225-9A30-A5B3C368EFF0}</Project>
-      <Name>Worktile.WtRequestClient</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

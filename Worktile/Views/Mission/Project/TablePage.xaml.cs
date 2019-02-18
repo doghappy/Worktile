@@ -10,7 +10,7 @@ using Worktile.Enums;
 using Worktile.Infrastructure;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Views.Mission.My;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
 {

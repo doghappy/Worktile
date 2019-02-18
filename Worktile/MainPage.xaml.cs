@@ -13,7 +13,7 @@ using Worktile.Models;
 using Worktile.Common;
 using Worktile.Views;
 using Worktile.Views.Mission;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Infrastructure;
 using Worktile.Views.Message;
@@ -30,6 +30,8 @@ using Worktile.Enums;
 using Worktile.Enums.IM;
 using Windows.System.Threading;
 using Windows.UI.Core;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Worktile
 {
@@ -112,6 +114,7 @@ namespace Worktile
         #region Init
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            _inAppNotification = InAppNotification;
             IsActive = true;
             string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
             if (string.IsNullOrEmpty(cookie))
@@ -290,7 +293,7 @@ namespace Worktile
             get => _unreadBadge;
             set
             {
-                if (_unreadBadge != value)
+                if (_unreadBadge != value || value == 0)
                 {
                     _unreadBadge = value;
                     if (value > 0)
@@ -420,8 +423,11 @@ namespace Worktile
                 case "message":
                     ContentFrame.Navigate(typeof(MessagePage));
                     break;
-                case "mission":
-                    ContentFrame.Navigate(typeof(MissionPage));
+                //case "mission":
+                //    ContentFrame.Navigate(typeof(MissionPage));
+                //    break;
+                default:
+                    ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
                     break;
             }
         }
@@ -429,24 +435,6 @@ namespace Worktile
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
             Nav.IsBackEnabled = ContentFrame.CanGoBack;
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                int index = -1;
-                switch (e.SourcePageType)
-                {
-                    case Type t when e.SourcePageType == typeof(MessagePage):
-                        index = 0;
-                        break;
-                    case Type t when e.SourcePageType == typeof(MissionPage):
-                        index = 2;
-                        break;
-                }
-                if (index != -1)
-                {
-                    var item = Nav.MenuItems[index] as NavigationViewItem;
-                    item.IsSelected = true;
-                }
-            }
         }
 
         private void Nav_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -461,11 +449,39 @@ namespace Worktile
         private void Me_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             SelectedApp = null;
+            ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
         }
 
         private void Setting_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             SelectedApp = null;
+            ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
         }
+
+        private static InAppNotification _inAppNotification;
+        public static void ShowNotification(string text, NotificationLevel level, int duration = 0)
+        {
+            if (_inAppNotification != null)
+            {
+                if (level == NotificationLevel.Default)
+                {
+                    _inAppNotification.BorderBrush = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
+                }
+                else
+                {
+                    string key = level.ToString() + "Brush";
+                    _inAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
+                }
+                _inAppNotification.Show(text, duration);
+            }
+        }
+    }
+
+    public enum NotificationLevel
+    {
+        Default,
+        Success,
+        Warning,
+        Danger
     }
 }

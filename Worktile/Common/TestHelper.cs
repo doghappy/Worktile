@@ -2,7 +2,7 @@
 using Windows.Storage;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Views;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Common
 {

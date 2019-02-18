@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Worktile.Views.Mission.Project.Detail;
 using Worktile.Enums;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 using System.Threading.Tasks;
 using Worktile.ApiModels.ApiMissionVnexTaskProperties;
 using Data = Worktile.ApiModel.ApiMissionVnextTask.Data;

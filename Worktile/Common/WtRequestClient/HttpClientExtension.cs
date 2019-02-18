@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Worktile.WtRequestClient
+namespace Worktile.Common.WtRequestClient
 {
     public static class HttpClientExtension
     {

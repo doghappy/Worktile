@@ -59,15 +59,6 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <!--<PersonPicture Width="30"
-                                               Initials="{x:Bind Initials}"
-                                               FontFamily="{x:Bind AvatarFont}"
-                                               Foreground="White"
-                                               ProfilePicture="{x:Bind ProfilePicture}">
-                                    <PersonPicture.Resources>
-                                        <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="{x:Bind Background, Mode=OneWay}"/>
-                                    </PersonPicture.Resources>
-                                </PersonPicture>-->
                                 <tethys:Avatar Size="30"
                                                Foreground="White"
                                                Source="{x:Bind ProfilePicture}"

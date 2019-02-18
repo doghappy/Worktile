@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Worktile.WtRequestClient
+namespace Worktile.Common.WtRequestClient
 {
     public class WtHttpClient
     {

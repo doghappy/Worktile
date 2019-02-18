@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiProjectJoin;
 using Worktile.ApiModels.ApiMissionVnextProjectsDetail;
 using Worktile.Common;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project
 {

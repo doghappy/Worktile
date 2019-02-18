@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 using System.ComponentModel;
 using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightGroups;
 using System.Collections.ObjectModel;
 using Worktile.ViewModels.Infrastructure;

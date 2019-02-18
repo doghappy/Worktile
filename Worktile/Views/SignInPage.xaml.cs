@@ -16,7 +16,7 @@ using Worktile.ApiModels.ApiUserSignIn;
 using Worktile.Common;
 using Worktile.Infrastructure;
 using Worktile.ViewModels.Infrastructure;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views
 {

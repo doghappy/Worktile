@@ -127,6 +127,8 @@
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\WtColorHelper.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
+    <Compile Include="Common\WtRequestClient\HttpClientExtension.cs" />
+    <Compile Include="Common\WtRequestClient\WtHttpClient.cs" />
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
@@ -294,6 +296,9 @@
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Domain\SocketMessageConverter\SocketMessageType.cs" />
+    <Compile Include="Views\WaitForDevelopmentPage.xaml.cs">
+      <DependentUpon>WaitForDevelopmentPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WtControls\Flyout\TaskStateList.xaml.cs">
       <DependentUpon>TaskStateList.xaml</DependentUpon>
     </Compile>
@@ -502,6 +507,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\WaitForDevelopmentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WtControls\Flyout\TaskStateList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -529,6 +538,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Connectivity">
+      <Version>5.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>5.1.0</Version>
@@ -559,10 +571,6 @@
     <ProjectReference Include="..\Worktile.ViewModels\Worktile.ViewModels.csproj">
       <Project>{44ad1759-2410-45bc-8692-b4c607a5e6dd}</Project>
       <Name>Worktile.ViewModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.WtRequestClient\Worktile.WtRequestClient.csproj">
-      <Project>{64c1d453-f677-4225-9a30-a5b3c368eff0}</Project>
-      <Name>Worktile.WtRequestClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

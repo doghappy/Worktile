@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using System;
 using Worktile.Views.Message;
 using Windows.Storage;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 using System.Threading.Tasks;
 using Worktile.ApiModels.ApiTeam;
 using Worktile.ApiModels.ApiUserMe;

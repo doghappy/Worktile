@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextWorkAddonsKeyGroups;
 using Worktile.ViewModels.Infrastructure;
-using Worktile.WtRequestClient;
+using Worktile.Common.WtRequestClient;
 using Value = Worktile.ApiModels.ApiMissionVnextWorkAddon.Value;
 
 namespace Worktile.Views.Mission.My
