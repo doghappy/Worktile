@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:controls="using:Worktile.Controls"
-    xmlns:fa="using:FontAwesome.UWP"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
@@ -69,11 +68,24 @@
                                             </StackPanel>
                                         </Grid>
 
-                                        <Button Grid.Column="1"
+                                        <Button x:Name="MoreOptionButton"
+                                                x:Load="{x:Bind IsShowPin}"
+                                                Grid.Column="1"
                                                 Style="{ThemeResource TextBlockButtonStyle}"
                                                 VerticalAlignment="Top">
+                                            <Button.Flyout>
+                                                <MenuFlyout>
+                                                    <ToggleMenuFlyoutItem Text="固定" Visibility="{x:Bind PinVisibility, Mode=OneWay}">
+                                                        <ToggleMenuFlyoutItem.Icon>
+                                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE840;" />
+                                                        </ToggleMenuFlyoutItem.Icon>
+                                                    </ToggleMenuFlyoutItem>
+                                                    <ToggleMenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}" Text="取消固定" Icon="Pin"/>
+                                                </MenuFlyout>
+                                            </Button.Flyout>
                                             <FontIcon FontSize="12" Glyph="&#xE10C;"/>
                                         </Button>
+                                        
                                     </Grid>
                                 </Grid>
                             </Grid>
