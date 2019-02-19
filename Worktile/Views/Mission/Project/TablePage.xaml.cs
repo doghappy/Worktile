@@ -7,7 +7,6 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiMissionVnextTableContent;
 using Worktile.Common;
 using Worktile.Enums;
-using Worktile.Infrastructure;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Views.Mission.My;
 using Worktile.Common.WtRequestClient;

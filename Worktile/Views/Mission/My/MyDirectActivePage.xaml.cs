@@ -10,7 +10,6 @@ using Worktile.Common.WtRequestClient;
 using System.Collections.Generic;
 using System;
 using Worktile.ViewModels.Infrastructure;
-using Worktile.Infrastructure;
 using Worktile.Enums;
 using Worktile.Common;
 
@@ -91,7 +90,7 @@ namespace Worktile.Views.Mission.My
                         Id = task.Id,
                         Title = task.Title,
                         Properties = props,
-                        Due = AvatarHelper.GetAvatar(DataSource.ApiUserMe.Uid, AvatarSize.X40),
+                        Due = AvatarHelper.GetAvatar(DataSource.ApiUserMeData.Me.Uid, AvatarSize.X40),
                         State = new Models.TaskState
                         {
                             Name = state.Name,

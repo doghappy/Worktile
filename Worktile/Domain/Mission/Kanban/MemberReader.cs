@@ -2,7 +2,6 @@
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
 using Worktile.Enums;
-using Worktile.Infrastructure;
 using Worktile.Models.Kanban;
 using Worktile.Models.Mission.WtTask;
 using Worktile.ViewModels.Infrastructure;

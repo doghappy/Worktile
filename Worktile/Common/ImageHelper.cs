@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace Worktile.Infrastructure
+namespace Worktile.Common
 {
     public static class ImageHelper
     {

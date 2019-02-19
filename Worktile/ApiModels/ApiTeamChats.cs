@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using Worktile.Common;
 using Worktile.Enums;
 
 namespace Worktile.ApiModel.ApiTeamChats
@@ -78,7 +78,7 @@ namespace Worktile.ApiModel.ApiTeamChats
         public string LatestMessageId { get; set; }
 
         [JsonProperty("latest_message_at")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(SafeUnixDateTimeConverter))]
         public DateTime LatestMessageAt { get; set; }
 
         [JsonProperty("unread")]
@@ -241,7 +241,7 @@ namespace Worktile.ApiModel.ApiTeamChats
         public string LatestMessageId { get; set; }
 
         [JsonProperty("latest_message_at")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(SafeUnixDateTimeConverter))]
         public DateTime LatestMessageAt { get; set; }
 
         [JsonProperty("unread")]
@@ -320,7 +320,7 @@ namespace Worktile.ApiModel.ApiTeamChats
         public To To { get; set; }
 
         [JsonProperty("latest_message_at")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(SafeUnixDateTimeConverter))]
         public DateTime LatestMessageAt { get; set; }
 
         [JsonProperty("unread")]

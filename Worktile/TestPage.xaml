@@ -14,34 +14,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32" Orientation="Horizontal">
-        <TextBlock Text="{x:Bind Emoji, Mode=OneWay}"/>
-        <Button Content="flyout">
-            <Button.Flyout>
-                <Flyout Opened="Flyout_Opened">
-                    <Flyout.FlyoutPresenterStyle>
-                        <Style TargetType="FlyoutPresenter">
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="MaxWidth" Value="800"/>
-                        </Style>
-                    </Flyout.FlyoutPresenterStyle>
-                    <controls:EmojiPicker Width="700" Height="360" OnEmojiSelected="EmojiPicker_OnEmojiSelected"/>
-                </Flyout>
-            </Button.Flyout>
-        </Button>
-        <Button Content="flyout2">
-            <Button.Flyout>
-                <Flyout>
-                    <NavigationView x:Name="nvSample" PaneDisplayMode="Top">
-                        <NavigationView.MenuItems>
-                            <NavigationViewItem Icon="Play" Content="Menu Item1" Tag="SamplePage1" />
-                            <NavigationViewItem Icon="Save" Content="Menu Item2" Tag="SamplePage2" />
-                            <NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
-                            <NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
-                        </NavigationView.MenuItems>
-                        <Frame x:Name="contentFrame"/>
-                    </NavigationView>
-                </Flyout>
-            </Button.Flyout>
-        </Button>
+        <AppBarToggleButton Grid.Column="2" Padding="0" Icon="UnPin" LabelPosition="Collapsed" MinWidth="0" MinHeight="0"/>
     </StackPanel>
 </Page>

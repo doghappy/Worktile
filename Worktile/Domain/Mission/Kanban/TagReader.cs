@@ -5,7 +5,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
-using Worktile.Infrastructure;
 using Worktile.Models.Kanban;
 using Worktile.Models.Mission.WtTask;
 using Worktile.ViewModels.Infrastructure;

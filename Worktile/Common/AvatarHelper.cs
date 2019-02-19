@@ -6,7 +6,6 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.Enums;
-using Worktile.Enums.IM;
 using Worktile.Models;
 using Worktile.Views.Message;
 
@@ -88,11 +87,11 @@ namespace Worktile.Common
                         {
                             string ext = Path.GetExtension(avatar);
                             string name = Path.GetFileNameWithoutExtension(avatar);
-                            return DataSource.ApiUserMeConfig.Box.AvatarUrl + name + "_" + (int)size + "x" + (int)size + ext;
+                            return DataSource.ApiUserMeData.Config.Box.AvatarUrl + name + "_" + (int)size + "x" + (int)size + ext;
                         }
                     case FromType.Service:
                     case FromType.Addition:
-                        return DataSource.ApiUserMeConfig.Box.ServiceUrl + avatar;
+                        return DataSource.ApiUserMeData.Config.Box.ServiceUrl + avatar;
                     default: throw new NotImplementedException();
                 }
             }

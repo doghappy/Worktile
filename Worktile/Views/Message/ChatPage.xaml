@@ -26,7 +26,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="local:Message">
-                            <Grid Margin="0 16 16 16">
+                            <Grid Margin="0 16 16 16" HorizontalAlignment="Left">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition />
@@ -41,21 +41,51 @@
                                                Source="{x:Bind Avatar.Source}"/>
 
                                 <Grid Grid.Column="1">
+
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
+
                                     <Polygon Points="0,0 16,0 16,16" Fill="{ThemeResource SystemControlAcrylicElementBrush}" Margin="0,12,0,0"/>
-                                    <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="12" HorizontalAlignment="Left">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"/>
-                                        <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="{x:Bind Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                            <TextBlock Text="{x:Bind Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                        </StackPanel>
+
+                                    <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}" HorizontalAlignment="Left">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Padding="12">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"/>
+                                            <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <TextBlock Text="{x:Bind Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                                <TextBlock Text="{x:Bind Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Button x:Name="MoreOptionButton"
+                                                x:Load="{x:Bind IsShowPin}"
+                                                Grid.Column="1"
+                                                Style="{ThemeResource TextBlockButtonStyle}"
+                                                VerticalAlignment="Top">
+                                            <Button.Flyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem Text="固定" Visibility="{x:Bind PinVisibility, Mode=OneWay}">
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE840;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+                                                    <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}" Text="取消固定" Icon="Pin"/>
+                                                </MenuFlyout>
+                                            </Button.Flyout>
+                                            <FontIcon FontSize="12" Glyph="&#xE10C;"/>
+                                        </Button>
+                                        
                                     </Grid>
                                 </Grid>
                             </Grid>

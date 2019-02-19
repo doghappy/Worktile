@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using Worktile.Common;
 
 namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
 {
@@ -320,7 +320,7 @@ namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
     public partial class DueValue
     {
         [JsonProperty("date")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(SafeUnixDateTimeConverter))]
         public DateTime? Date { get; set; }
 
         [JsonProperty("with_time")]

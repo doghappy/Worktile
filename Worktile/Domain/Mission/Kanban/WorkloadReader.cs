@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
-using Worktile.Infrastructure;
 using Worktile.Models.Kanban;
 using Worktile.Models.Mission;
 using Worktile.Models.Mission.WtTask;

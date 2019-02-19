@@ -132,16 +132,6 @@
       <Version>6.2.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Worktile.Enums\Worktile.Enums.csproj">
-      <Project>{3a2fe488-d5e9-4267-9161-6d40208d82a5}</Project>
-      <Name>Worktile.Enums</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.Infrastructure\Worktile.Infrastructure.csproj">
-      <Project>{3d4d7893-d86c-4b7a-b473-0679615c63be}</Project>
-      <Name>Worktile.Infrastructure</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

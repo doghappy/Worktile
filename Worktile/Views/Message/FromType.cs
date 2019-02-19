@@ -1,4 +1,4 @@
-﻿namespace Worktile.Enums.IM
+﻿namespace Worktile.Views.Message
 {
     public enum FromType
     {

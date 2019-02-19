@@ -15,7 +15,6 @@ using Worktile.Views;
 using Worktile.Views.Mission;
 using Worktile.Common.WtRequestClient;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Infrastructure;
 using Worktile.Views.Message;
 using Windows.Networking.Sockets;
 using Microsoft.Toolkit.Uwp.Helpers;
@@ -27,7 +26,6 @@ using Windows.Data.Xml.Dom;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Newtonsoft.Json;
 using Worktile.Enums;
-using Worktile.Enums.IM;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Microsoft.Toolkit.Uwp.UI.Controls;
@@ -144,20 +142,19 @@ namespace Worktile
         {
             var client = new WtHttpClient();
             var me = await client.GetAsync<ApiUserMe>("/api/user/me");
-            DataSource.ApiUserMeConfig = me.Data.Config;
-            DataSource.ApiUserMe = me.Data.Me;
-            DisplayName = DataSource.ApiUserMe.DisplayName;
+            DataSource.ApiUserMeData = me.Data;
+            DisplayName = DataSource.ApiUserMeData.Me.DisplayName;
 
             await ConnectSocketAsync();
 
-            string bgImg = DataSource.ApiUserMe.Preferences.BackgroundImage;
+            string bgImg = DataSource.ApiUserMeData.Me.Preferences.BackgroundImage;
             if (bgImg.StartsWith("desktop-") && bgImg.EndsWith(".jpg"))
             {
                 BgImage = new BitmapImage(new Uri("ms-appx:///Assets/Images/Background/" + bgImg));
             }
             else
             {
-                string imgUriString = DataSource.ApiUserMeConfig.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
+                string imgUriString = DataSource.ApiUserMeData.Config.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
                 byte[] buffer = await client.GetByteArrayAsync(imgUriString);
                 BgImage = await ImageHelper.GetImageFromBytesAsync(buffer);
             }
@@ -175,7 +172,7 @@ namespace Worktile
                 Apps.Add(item);
             });
             SelectedApp = Apps.First();
-            Logo = new BitmapImage(new Uri(DataSource.ApiUserMeConfig.Box.LogoUrl + DataSource.Team.Logo));
+            Logo = new BitmapImage(new Uri(DataSource.ApiUserMeData.Config.Box.LogoUrl + DataSource.Team.Logo));
         }
         #endregion
 
@@ -203,12 +200,12 @@ namespace Worktile
                     _socket.Control.MessageType = Windows.Networking.Sockets.SocketMessageType.Utf8;
                     _socket.MessageReceived += Socket_MessageReceived;
 
-                    Uri uri = new Uri($"wss://im.worktile.com/socket.io/?token={DataSource.ApiUserMe.ImToken}&uid={DataSource.ApiUserMe.Uid}&client=web&EIO=3&transport=websocket");
+                    Uri uri = new Uri($"wss://im.worktile.com/socket.io/?token={DataSource.ApiUserMeData.Me.ImToken}&uid={DataSource.ApiUserMeData.Me.Uid}&client=web&EIO=3&transport=websocket");
                     await _socket.ConnectAsync(uri);
 
                     using (var dataWriter = new DataWriter(_socket.OutputStream))
                     {
-                        string msg = $"40/message?token={DataSource.ApiUserMe.ImToken}&uid={DataSource.ApiUserMe.Uid}&client=web";
+                        string msg = $"40/message?token={DataSource.ApiUserMeData.Me.ImToken}&uid={DataSource.ApiUserMeData.Me.Uid}&client=web";
                         dataWriter.WriteString(msg);
                         await dataWriter.StoreAsync();
                         dataWriter.DetachStream();
@@ -270,7 +267,7 @@ namespace Worktile
         {
             var apiMsg = JsonConvert.DeserializeObject<Models.Message.Message>(msg);
             OnMessageReceived?.Invoke(apiMsg);
-            if (apiMsg.From.Uid != DataSource.ApiUserMe.Uid)
+            if (apiMsg.From.Uid != DataSource.ApiUserMeData.Me.Uid)
             {
                 UnreadBadge += 1;
                 if (_windowActivationState == CoreWindowActivationState.Deactivated)

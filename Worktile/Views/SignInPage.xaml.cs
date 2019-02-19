@@ -14,7 +14,6 @@ using Worktile.ApiModels.ApiTeamLite;
 using Worktile.ApiModels.ApiUserMe;
 using Worktile.ApiModels.ApiUserSignIn;
 using Worktile.Common;
-using Worktile.Infrastructure;
 using Worktile.ViewModels.Infrastructure;
 using Worktile.Common.WtRequestClient;
 
@@ -188,7 +187,7 @@ namespace Worktile.Views
                     var lite = await GetTeamLiteAsync();
                     TeamName = lite.Data.Name;
                     _teamId = lite.Data.Id;
-                    Logo = new BitmapImage(new Uri(DataSource.ApiUserMeConfig.Box.LogoUrl + lite.Data.OutsideLogo));
+                    Logo = new BitmapImage(new Uri(DataSource.ApiUserMeData.Config.Box.LogoUrl + lite.Data.OutsideLogo));
                     GridState = GridState.Member;
                 }
             }
@@ -208,7 +207,7 @@ namespace Worktile.Views
             string uri = DataSource.SubDomain + "/api/user/me";
             var client = new WtHttpClient();
             var me = await client.GetAsync<ApiUserMe>(uri);
-            DataSource.ApiUserMeConfig = me.Data.Config;
+            DataSource.ApiUserMeData = me.Data;
         }
 
         private async void SignIn_Click(object sender, RoutedEventArgs e)

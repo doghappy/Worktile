@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModel.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Enums;
-using Worktile.Enums.IM;
 using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Message

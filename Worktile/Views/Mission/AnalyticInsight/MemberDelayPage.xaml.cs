@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightMemberDelay;
 using Worktile.Common;
 using Worktile.Enums;
-using Worktile.Infrastructure;
 using Worktile.Models;
 using Worktile.Common.WtRequestClient;
 
