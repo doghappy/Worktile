@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:fa="using:FontAwesome.UWP"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
@@ -26,7 +27,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="local:Message">
-                            <Grid Margin="0 16 16 16">
+                            <Grid Margin="0 16 16 16" HorizontalAlignment="Left">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition />
@@ -41,21 +42,38 @@
                                                Source="{x:Bind Avatar.Source}"/>
 
                                 <Grid Grid.Column="1">
+
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
+
                                     <Polygon Points="0,0 16,0 16,16" Fill="{ThemeResource SystemControlAcrylicElementBrush}" Margin="0,12,0,0"/>
-                                    <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="12" HorizontalAlignment="Left">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"/>
-                                        <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <TextBlock Text="{x:Bind Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                            <TextBlock Text="{x:Bind Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                        </StackPanel>
+
+                                    <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}" HorizontalAlignment="Left">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Padding="12">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"/>
+                                            <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <TextBlock Text="{x:Bind Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                                <TextBlock Text="{x:Bind Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Button Grid.Column="1"
+                                                Style="{ThemeResource TextBlockButtonStyle}"
+                                                VerticalAlignment="Top">
+                                            <FontIcon FontSize="12" Glyph="&#xE10C;"/>
+                                        </Button>
                                     </Grid>
                                 </Grid>
                             </Grid>

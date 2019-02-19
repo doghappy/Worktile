@@ -16,7 +16,6 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
-                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <tethys:Avatar Size="40"
@@ -28,33 +27,43 @@
                                        Source="{x:Bind Avatar.Source}"/>
 
                         <Grid Grid.Column="1">
+                            
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
+                            
                             <Polygon Points="0,0 16,0 16,16" Fill="{ThemeResource SystemControlAcrylicElementBrush}" Margin="0,12,0,0"/>
-                            <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="12" HorizontalAlignment="Left">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"/>
-                                <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <TextBlock Text="{x:Bind Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                    <TextBlock Text="{x:Bind Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                </StackPanel>
+                            
+                            <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Grid Padding="12" HorizontalAlignment="Left">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"/>
+                                    <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock Text="{x:Bind Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                        <TextBlock Text="{x:Bind Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Button Style="{ThemeResource TextBlockButtonStyle}"
+                                            DataContext="{x:Bind}"
+                                            VerticalAlignment="Top"
+                                            Click="UnPin_Click">
+                                        <FontIcon FontSize="12" Glyph="&#xE840;"/>
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Grid>
-
-                        <AppBarToggleButton Grid.Column="2"
-                                            DataContext="{x:Bind}"
-                                            IsChecked="True"
-                                            Unchecked="Pin_UnChecked"
-                                            LabelPosition="Collapsed">
-                            <AppBarToggleButton.Icon>
-                                <FontIcon Glyph="&#xE840;" />
-                            </AppBarToggleButton.Icon>
-                        </AppBarToggleButton>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

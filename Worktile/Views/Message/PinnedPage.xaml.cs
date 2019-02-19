@@ -97,9 +97,9 @@ namespace Worktile.Views.Message
             return list;
         }
 
-        private async void Pin_UnChecked(object sender, RoutedEventArgs e)
+        private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
-            var btn = sender as AppBarToggleButton;
+            var btn = sender as Button;
             var msg = btn.DataContext as Message;
             string url = $"/api/messages/{msg.Id}/unpinned?session_id={_session.Id}";
             var client = new WtHttpClient();

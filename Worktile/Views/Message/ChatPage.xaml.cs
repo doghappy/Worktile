@@ -217,7 +217,8 @@ namespace Worktile.Views.Message
                     },
                     Content = GetContent(item),
                     Time = item.CreatedAt,
-                    Type = item.Type
+                    Type = item.Type,
+                    IsPinned = item.IsPinned
                 });
             }
             _next = apiData.Data.Next;
@@ -245,7 +246,8 @@ namespace Worktile.Views.Message
                     },
                     Content = GetContent(item),
                     Time = item.CreatedAt,
-                    Type = item.Type
+                    Type = item.Type,
+                    IsPinned = item.IsPinned
                 };
                 if (Path.GetExtension(item.From.Avatar).ToLower() == ".png")
                     msg.Avatar.Background = new SolidColorBrush(Colors.White);

@@ -42,15 +42,15 @@ namespace Worktile.Models.Message
         public string Team { get; set; }
 
         [JsonProperty("is_star")]
-        public int IsStar { get; set; }
+        public bool IsStar { get; set; }
 
         [JsonProperty("is_pinned")]
-        public int IsPinned { get; set; }
+        public bool IsPinned { get; set; }
 
         [JsonProperty("is_pending")]
-        public int IsPending { get; set; }
+        public bool IsPending { get; set; }
 
         [JsonProperty("is_unread")]
-        public int IsUnread { get; set; }
+        public bool IsUnread { get; set; }
     }
 }
