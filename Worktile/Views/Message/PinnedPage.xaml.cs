@@ -3,23 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.ApiModels;
 using Worktile.ApiModels.ApiPinnedMessages;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
-using Visibility = Windows.UI.Xaml.Visibility;
 
 namespace Worktile.Views.Message
 {
@@ -29,9 +23,6 @@ namespace Worktile.Views.Message
         {
             InitializeComponent();
             Messages = new IncrementalCollection<Message>(LoadMessagesAsync);
-            SelectionMode = ListViewSelectionMode.None;
-            SingleButtonVisibility = Visibility.Visible;
-            MultipleButtonVisibility = Visibility.Visible;
         }
 
         Session _session;
@@ -48,48 +39,6 @@ namespace Worktile.Views.Message
                 {
                     _isActive = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
-                }
-            }
-        }
-
-        private Visibility _singleButtonVisibility;
-        public Visibility SingleButtonVisibility
-        {
-            get => _singleButtonVisibility;
-            set
-            {
-                if (_singleButtonVisibility != value)
-                {
-                    _singleButtonVisibility = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SingleButtonVisibility)));
-                }
-            }
-        }
-
-        private Visibility _multipleButtonVisibility;
-        public Visibility MultipleButtonVisibility
-        {
-            get => _multipleButtonVisibility;
-            set
-            {
-                if (_multipleButtonVisibility != value)
-                {
-                    _multipleButtonVisibility = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MultipleButtonVisibility)));
-                }
-            }
-        }
-
-        private ListViewSelectionMode _selectionMode;
-        public ListViewSelectionMode SelectionMode
-        {
-            get => _selectionMode;
-            set
-            {
-                if (_selectionMode != value)
-                {
-                    _selectionMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectionMode)));
                 }
             }
         }
@@ -122,6 +71,7 @@ namespace Worktile.Views.Message
                 {
                     var msg = new Message
                     {
+                        Id = item.Reference.Id,
                         Avatar = new TethysAvatar
                         {
                             DisplayName = item.Reference.From.DisplayName,
@@ -147,18 +97,17 @@ namespace Worktile.Views.Message
             return list;
         }
 
-        private void SingleSelectButton_Click(object sender, RoutedEventArgs e)
+        private async void Pin_UnChecked(object sender, RoutedEventArgs e)
         {
-            SingleButtonVisibility = Visibility.Collapsed;
-            MultipleButtonVisibility = Visibility.Visible;
-            SelectionMode = ListViewSelectionMode.Single;
-        }
-
-        private void MultipleSelectButton_Click(object sender, RoutedEventArgs e)
-        {
-            MultipleButtonVisibility = Visibility.Collapsed;
-            SingleButtonVisibility = Visibility.Visible;
-            SelectionMode = ListViewSelectionMode.Multiple;
+            var btn = sender as AppBarToggleButton;
+            var msg = btn.DataContext as Message;
+            string url = $"/api/messages/{msg.Id}/unpinned?session_id={_session.Id}";
+            var client = new WtHttpClient();
+            var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+            if (response.Code == 200 && response.Data)
+            {
+                Messages.Remove(msg);
+            }
         }
     }
 }

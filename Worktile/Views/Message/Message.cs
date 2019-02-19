@@ -4,6 +4,7 @@ namespace Worktile.Views.Message
 {
     public class Message
     {
+        public string Id { get; set; }
         public TethysAvatar Avatar { get; set; }
         public MessageType Type { get; set; }
         public DateTime Time { get; set; }

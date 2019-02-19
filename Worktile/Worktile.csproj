@@ -108,6 +108,8 @@
     <Compile Include="ApiModels\ApiMissionVnextWorkAnalyticInsightProjectProgress.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkMyDirectedActive.cs" />
     <Compile Include="ApiModels\ApiMissionVnextWorkMyGeneric.cs" />
+    <Compile Include="ApiModels\ApiDataResponse.cs" />
+    <Compile Include="ApiModels\ApiResponse.cs" />
     <Compile Include="ApiModels\ApiTeam.cs" />
     <Compile Include="ApiModels\ApiTeamChats.cs" />
     <Compile Include="ApiModels\ApiTeamDomainCheck.cs" />

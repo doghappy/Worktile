@@ -9,18 +9,14 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <ListView ItemsSource="{x:Bind Messages}" SelectionMode="{x:Bind SelectionMode, Mode=OneWay}">
+        <ListView ItemsSource="{x:Bind Messages}" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:Message">
                     <Grid Margin="0 16 16 16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <tethys:Avatar Size="40"
@@ -49,29 +45,21 @@
                                 </StackPanel>
                             </Grid>
                         </Grid>
+
+                        <AppBarToggleButton Grid.Column="2"
+                                            DataContext="{x:Bind}"
+                                            IsChecked="True"
+                                            Unchecked="Pin_UnChecked"
+                                            LabelPosition="Collapsed">
+                            <AppBarToggleButton.Icon>
+                                <FontIcon Glyph="&#xE840;" />
+                            </AppBarToggleButton.Icon>
+                        </AppBarToggleButton>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
         <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
-
-        <CommandBar Grid.Row="1">
-            <AppBarButton Label="单选模式"
-                          Visibility="{x:Bind SingleButtonVisibility, Mode=OneWay}"
-                          Click="SingleSelectButton_Click">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE0A2;"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Label="多选模式"
-                          Visibility="{x:Bind MultipleButtonVisibility, Mode=OneWay}"
-                          Click="MultipleSelectButton_Click">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE762;"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Icon="Delete" Label="删除"/>
-        </CommandBar>
     </Grid>
 </Page>

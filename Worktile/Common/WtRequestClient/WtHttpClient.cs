@@ -184,5 +184,21 @@ namespace Worktile.Common.WtRequestClient
                 return default(T);
             }
         }
+
+        public async Task<T> DeleteAsync<T>(string uri)
+        {
+            var resMsg = await HttpClient.DeleteAsync(uri);
+            if (resMsg.IsSuccessStatusCode)
+            {
+                IsSuccessStatusCode = true;
+                OnSuccessStatusCode?.Invoke(resMsg);
+                return await resMsg.ReadAsModelAsync<T>();
+            }
+            else
+            {
+                OnNonSuccessStatusCode?.Invoke(resMsg);
+                return default(T);
+            }
+        }
     }
 }
