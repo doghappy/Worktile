@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Worktile.ApiModels.ApiTeam
 {
-
-    public partial class ApiTeam
+    public class ApiTeam
     {
         [JsonProperty("data")]
         public Data Data { get; set; }
@@ -16,7 +12,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long Code { get; set; }
     }
 
-    public partial class Data
+    public class Data
     {
         [JsonProperty("_id")]
         public string Id { get; set; }
@@ -127,7 +123,7 @@ namespace Worktile.ApiModels.ApiTeam
         public Modules Modules { get; set; }
     }
 
-    public partial class App
+    public class App
     {
         [JsonProperty("_id")]
         public string Id { get; set; }
@@ -145,7 +141,7 @@ namespace Worktile.ApiModels.ApiTeam
         public Bulletin Privileges { get; set; }
     }
 
-    public partial class Bulletin
+    public class Bulletin
     {
         [JsonProperty("value")]
         public string Value { get; set; }
@@ -154,7 +150,7 @@ namespace Worktile.ApiModels.ApiTeam
         public BulletinScope Scope { get; set; }
     }
 
-    public partial class BulletinScope
+    public class BulletinScope
     {
         [JsonProperty("view", NullValueHandling = NullValueHandling.Ignore)]
         public long? View { get; set; }
@@ -163,7 +159,7 @@ namespace Worktile.ApiModels.ApiTeam
         public List<long> Manage { get; set; }
     }
 
-    public partial class Location
+    public class Location
     {
         [JsonProperty("district")]
         public string District { get; set; }
@@ -178,7 +174,7 @@ namespace Worktile.ApiModels.ApiTeam
         public string Country { get; set; }
     }
 
-    public partial class Member
+    public class Member
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -222,12 +218,12 @@ namespace Worktile.ApiModels.ApiTeam
         public string DisplayNamePinyin { get; set; }
     }
 
-    public partial class MemberPreferences
+    public class MemberPreferences
     {
         public string Locale { get; set; }
     }
 
-    public partial class Modules
+    public class Modules
     {
         [JsonProperty("chat")]
         public Chat Chat { get; set; }
@@ -251,13 +247,13 @@ namespace Worktile.ApiModels.ApiTeam
         public Okr Okr { get; set; }
     }
 
-    public partial class CalendarClass
+    public class CalendarClass
     {
         [JsonProperty("permission")]
         public long Permission { get; set; }
     }
 
-    public partial class Chat
+    public class Chat
     {
         [JsonProperty("permission")]
         public long Permission { get; set; }
@@ -266,7 +262,7 @@ namespace Worktile.ApiModels.ApiTeam
         public ChatPermissions Permissions { get; set; }
     }
 
-    public partial class ChatPermissions
+    public class ChatPermissions
     {
         [JsonProperty("message_post_general")]
         public long MessagePostGeneral { get; set; }
@@ -278,7 +274,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long MessageDeleting { get; set; }
     }
 
-    public partial class Drive
+    public class Drive
     {
         [JsonProperty("permission")]
         public long Permission { get; set; }
@@ -287,7 +283,7 @@ namespace Worktile.ApiModels.ApiTeam
         public DrivePermissions Permissions { get; set; }
     }
 
-    public partial class DrivePermissions
+    public class DrivePermissions
     {
         [JsonProperty("team_root_permission")]
         public long TeamRootPermission { get; set; }
@@ -296,13 +292,13 @@ namespace Worktile.ApiModels.ApiTeam
         public long PersonalRootPermission { get; set; }
     }
 
-    public partial class Mission
+    public class Mission
     {
         [JsonProperty("permissions")]
         public MissionPermissions Permissions { get; set; }
     }
 
-    public partial class MissionPermissions
+    public class MissionPermissions
     {
         [JsonProperty("is_workload_enabled")]
         public bool IsWorkloadEnabled { get; set; }
@@ -311,7 +307,7 @@ namespace Worktile.ApiModels.ApiTeam
         public bool IsGanttEnabled { get; set; }
     }
 
-    public partial class Okr
+    public class Okr
     {
         [JsonProperty("limits")]
         public Limits Limits { get; set; }
@@ -320,7 +316,7 @@ namespace Worktile.ApiModels.ApiTeam
         public double OperationObjectiveDifferential { get; set; }
     }
 
-    public partial class Limits
+    public class Limits
     {
         [JsonProperty("company_objective")]
         public long CompanyObjective { get; set; }
@@ -335,7 +331,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long KeyResult { get; set; }
     }
 
-    public partial class DataPreferences
+    public class DataPreferences
     {
         [JsonProperty("project_nav_mode")]
         public long ProjectNavMode { get; set; }
@@ -365,7 +361,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long AllowSelfEditJob { get; set; }
     }
 
-    public partial class PricingSetting
+    public class PricingSetting
     {
         [JsonProperty("has_trail_experience")]
         public long HasTrailExperience { get; set; }
@@ -374,7 +370,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long HasTrailNotice { get; set; }
     }
 
-    public partial class Privileges
+    public class Privileges
     {
         [JsonProperty("admin")]
         public Admin Admin { get; set; }
@@ -419,7 +415,7 @@ namespace Worktile.ApiModels.ApiTeam
         public Admin MissionVnext { get; set; }
     }
 
-    public partial class Admin
+    public class Admin
     {
         [JsonProperty("value")]
         public string Value { get; set; }
@@ -428,11 +424,11 @@ namespace Worktile.ApiModels.ApiTeam
         public AdminScope Scope { get; set; }
     }
 
-    public partial class AdminScope
+    public class AdminScope
     {
     }
 
-    public partial class LeaveClass
+    public class LeaveClass
     {
         [JsonProperty("value")]
         public long Value { get; set; }
@@ -441,13 +437,13 @@ namespace Worktile.ApiModels.ApiTeam
         public ApprovalScope Scope { get; set; }
     }
 
-    public partial class ApprovalScope
+    public class ApprovalScope
     {
         [JsonProperty("view")]
         public long View { get; set; }
     }
 
-    public partial class Security
+    public class Security
     {
         [JsonProperty("min_length")]
         public long MinLength { get; set; }
@@ -456,7 +452,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long Level { get; set; }
     }
 
-    public partial class Service
+    public class Service
     {
         [JsonProperty("service_id")]
         public string ServiceId { get; set; }
@@ -483,7 +479,7 @@ namespace Worktile.ApiModels.ApiTeam
         public string AdditionId { get; set; }
     }
 
-    public partial class Reference
+    public class Reference
     {
         [JsonProperty("type")]
         public long Type { get; set; }

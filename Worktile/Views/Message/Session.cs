@@ -41,6 +41,7 @@ namespace Worktile.Views.Message
         public FontFamily AvatarFont { get; set; }
         public string DefaultIcon { get; set; }
         public string Uid { get; set; }
+        public int RefType => Type == SessionType.Channel ? 1 : 2;
     }
 
     public enum SessionType

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
-using Worktile.Enums.IM;
 using Newtonsoft.Json.Converters;
+using System;
+using Worktile.Views.Message;
 
 namespace Worktile.Models.Message
 {
@@ -26,7 +26,7 @@ namespace Worktile.Models.Message
         public int Client { get; set; }
 
         [JsonProperty("created_at")]
-        [JsonConverter(typeof(Infrastructure.UnixDateTimeConverter))]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
         public DateTime CreatedAt { get; set; }
 
         [JsonProperty("component")]

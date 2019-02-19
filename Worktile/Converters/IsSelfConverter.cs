@@ -10,13 +10,13 @@ namespace Worktile.Converters
         {
             if (parameter == null)
             {
-                return value.ToString() == DataSource.ApiUserMe.Uid;
+                return value.ToString() == DataSource.ApiUserMeData.Me.Uid;
             }
             else
             {
                 if (parameter.ToString() == "!")
                 {
-                    return value.ToString() != DataSource.ApiUserMe.Uid;
+                    return value.ToString() != DataSource.ApiUserMeData.Me.Uid;
                 }
             }
             return false;

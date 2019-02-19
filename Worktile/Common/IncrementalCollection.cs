@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Data;
 
-namespace Worktile.Infrastructure
+namespace Worktile.Common
 {
     public class IncrementalCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {

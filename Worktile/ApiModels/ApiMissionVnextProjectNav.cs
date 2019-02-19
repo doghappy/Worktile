@@ -4,7 +4,6 @@ using Worktile.Enums;
 
 namespace Worktile.ApiModels.ApiMissionVnextProjectNav
 {
-
     public partial class ApiMissionVnextProjectNav
     {
         [JsonProperty("oid")]

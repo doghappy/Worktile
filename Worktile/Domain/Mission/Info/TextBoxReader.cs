@@ -4,7 +4,7 @@ using Worktile.ApiModel.ApiMissionVnextTask;
 using System.Collections.Generic;
 using Windows.UI.Core;
 using System.Threading.Tasks;
-using Worktile.Infrastructure;
+using Worktile.Common;
 
 namespace Worktile.Domain.Mission.Info
 {

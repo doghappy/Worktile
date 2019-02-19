@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
-using Worktile.Infrastructure;
 using Worktile.Models;
 using Worktile.Models.Kanban;
 using Worktile.Models.Mission.WtTask;

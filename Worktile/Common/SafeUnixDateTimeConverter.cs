@@ -1,9 +1,13 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 
-namespace Worktile.Infrastructure
+namespace Worktile.Common
 {
-    public class UnixDateTimeConverter : Newtonsoft.Json.Converters.DateTimeConverterBase
+    /// <summary>
+    /// 安全的UnixDateTimeConverter，当API返回的Unix中包含小数点时，使用此Converter
+    /// </summary>
+    public class SafeUnixDateTimeConverter : DateTimeConverterBase
     {
         internal static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 

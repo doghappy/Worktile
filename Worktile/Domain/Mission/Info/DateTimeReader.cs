@@ -7,7 +7,6 @@ using Windows.UI.Core;
 using System;
 using System.Threading.Tasks;
 using Worktile.Models;
-using Worktile.Infrastructure;
 
 namespace Worktile.Domain.Mission.Info
 {

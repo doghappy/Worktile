@@ -114,6 +114,7 @@
     <Compile Include="ApiModels\ApiTeamLite.cs" />
     <Compile Include="ApiModels\ApiUserMe.cs" />
     <Compile Include="ApiModels\ApiUserSignIn.cs" />
+    <Compile Include="ApiModels\Message\ApiMessageFiles.cs" />
     <Compile Include="ApiModels\Message\ApiMessages.cs" />
     <Compile Include="ApiModels\Message\ApiPigeonMessages.cs" />
     <Compile Include="ApiModels\ProjectJoin.cs" />
@@ -123,10 +124,17 @@
     </Compile>
     <Compile Include="Common\AvatarHelper.cs" />
     <Compile Include="Common\DataSource.cs" />
+    <Compile Include="Common\HashEncryptor.cs" />
+    <Compile Include="Common\ImageHelper.cs" />
+    <Compile Include="Common\IncrementalCollection.cs" />
+    <Compile Include="Common\JTokenHelper.cs" />
     <Compile Include="Common\KanbanPageHelper.cs" />
+    <Compile Include="Common\Markdown.cs" />
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\UiExtension.cs" />
+    <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
     <Compile Include="Common\WtColorHelper.cs" />
+    <Compile Include="Common\WtDateTimeHelper.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="Common\WtRequestClient\HttpClientExtension.cs" />
     <Compile Include="Common\WtRequestClient\WtHttpClient.cs" />
@@ -222,6 +230,14 @@
     <Compile Include="Domain\SocketMessageConverter\Converters\OpenConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
+    <Compile Include="Enums\AvatarSize.cs" />
+    <Compile Include="Views\Message\FileItem.cs" />
+    <Compile Include="Views\Message\FromType.cs" />
+    <Compile Include="Enums\RoleType.cs" />
+    <Compile Include="Enums\Visibility.cs" />
+    <Compile Include="Enums\WtHttpResponseCode.cs" />
+    <Compile Include="Enums\WtTaskPropertyFrom.cs" />
+    <Compile Include="Enums\WtTaskPropertyType.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -264,6 +280,9 @@
     </Compile>
     <Compile Include="Views\Message\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\FilePage.xaml.cs">
+      <DependentUpon>FilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Message.cs" />
     <Compile Include="Views\Message\MessageDetailPage.xaml.cs">
@@ -523,6 +542,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Message\FilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Message\MessageDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -663,19 +686,14 @@
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>5.1.0</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.1</Version>
+    </PackageReference>
     <PackageReference Include="QueryString.NET">
       <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Worktile.Enums\Worktile.Enums.csproj">
-      <Project>{3a2fe488-d5e9-4267-9161-6d40208d82a5}</Project>
-      <Name>Worktile.Enums</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.Infrastructure\Worktile.Infrastructure.csproj">
-      <Project>{3D4D7893-D86C-4B7A-B473-0679615C63BE}</Project>
-      <Name>Worktile.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Worktile.Tethys\Worktile.Tethys.csproj">
       <Project>{603175b4-99dc-4390-99f3-0f868d0c30e2}</Project>
       <Name>Worktile.Tethys</Name>

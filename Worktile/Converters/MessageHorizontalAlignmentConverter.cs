@@ -9,7 +9,7 @@ namespace Worktile.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value.ToString() == DataSource.ApiUserMe.Uid)
+            if (value.ToString() == DataSource.ApiUserMeData.Me.Uid)
             {
                 return HorizontalAlignment.Right;
             }

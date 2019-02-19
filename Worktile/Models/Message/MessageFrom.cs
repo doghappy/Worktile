@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Windows.UI;
-using Windows.UI.Xaml.Media.Imaging;
-using Worktile.Enums.IM;
+using Worktile.Views.Message;
 
 namespace Worktile.Models.Message
 {

@@ -20,7 +20,6 @@ using Worktile.ApiModels.Message.ApiPigeonMessages;
 using Worktile.Common;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Enums;
-using Worktile.Enums.IM;
 using Worktile.Common.WtRequestClient;
 using Windows.Storage.Pickers;
 using System.Net.Http;
@@ -60,8 +59,6 @@ namespace Worktile.Views.Message
         private string _latestId;
         private bool? _hasMore;
 
-        private int RefType => _navParam.Session.Type == SessionType.Channel ? 1 : 2;
-
         private string Url
         {
             get
@@ -73,7 +70,7 @@ namespace Worktile.Views.Message
                     {
                         component = GetComponentByNumber(_navParam.Session.Component.Value);
                     }
-                    string url = $"/api/pigeon/messages?ref_id={_navParam.Session.Id}&ref_type={RefType}&filter_type={_navParam.Nav.FilterType}&component={component}&size=20";
+                    string url = $"/api/pigeon/messages?ref_id={_navParam.Session.Id}&ref_type={_navParam.Session.RefType}&filter_type={_navParam.Nav.FilterType}&component={component}&size=20";
                     if (!string.IsNullOrEmpty(_next))
                     {
                         url += "&next=" + _next;
@@ -89,7 +86,7 @@ namespace Worktile.Views.Message
                     }
                     else
                     {
-                        url += $"ref_id={_navParam.Session.Id}&ref_type={RefType}&latest_id={_latestId}&size=20";
+                        url += $"ref_id={_navParam.Session.Id}&ref_type={_navParam.Session.RefType}&latest_id={_latestId}&size=20";
                     }
                     return url;
                 }
@@ -154,7 +151,7 @@ namespace Worktile.Views.Message
                             },
                             Content = GetContent(apiMsg),
                             Time = apiMsg.CreatedAt,
-                            Type = (MessageType)apiMsg.Type
+                            Type = apiMsg.Type
                         });
                     });
                 });
@@ -231,7 +228,7 @@ namespace Worktile.Views.Message
                     },
                     Content = GetContent(item),
                     Time = item.CreatedAt,
-                    Type = (MessageType)item.Type
+                    Type = item.Type
                 });
             }
             _next = apiData.Data.Next;
@@ -265,7 +262,7 @@ namespace Worktile.Views.Message
                     },
                     Content = GetContent(item),
                     Time = item.CreatedAt,
-                    Type = (MessageType)item.Type
+                    Type = item.Type
                 };
                 if (Path.GetExtension(item.From.Avatar).ToLower() == ".png")
                     msg.Avatar.Background = new SolidColorBrush(Colors.White);
@@ -285,8 +282,8 @@ namespace Worktile.Views.Message
         {
             switch (msg.Type)
             {
-                case Enums.IM.MessageType.Attachment:
-                case Enums.IM.MessageType.Calendar:
+                case MessageType.Attachment:
+                case MessageType.Calendar:
                     return msg.Body.InlineAttachment.Text;
                 default: return msg.Body.Content;
             }
@@ -325,7 +322,7 @@ namespace Worktile.Views.Message
                 var data = new
                 {
                     fromType = 1,
-                    from = DataSource.ApiUserMe.Uid,
+                    from = DataSource.ApiUserMeData.Me.Uid,
                     to = _navParam.Session.Id,
                     toType,
                     messageType = 1,
@@ -358,7 +355,7 @@ namespace Worktile.Views.Message
             if (files.Any())
             {
                 var client = new WtHttpClient();
-                string url = $"{DataSource.ApiUserMeConfig.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={_navParam.Session.Id}&ref_type={RefType}";
+                string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={_navParam.Session.Id}&ref_type={_navParam.Session.RefType}";
                 foreach (var file in files)
                 {
                     StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);

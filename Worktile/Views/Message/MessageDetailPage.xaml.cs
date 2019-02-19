@@ -63,13 +63,21 @@ namespace Worktile.Views.Message
                 if (_selectedNav != value)
                 {
                     _selectedNav = value;
-                    if (Navs.IndexOf(value) == 0)
+                    int index = Navs.IndexOf(value);
+                    if (index == 0)
                     {
                         ContentFrame.Navigate(typeof(ChatPage), new MessageDetailToChatNavParam
                         {
                             Session = Session,
                             Nav = value
                         });
+                    }
+                    else if (index == 1)
+                    {
+                        if (value.Name == "文件")
+                        {
+                            ContentFrame.Navigate(typeof(FilePage), Session);
+                        }
                     }
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
                 }

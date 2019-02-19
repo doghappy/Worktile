@@ -13,7 +13,6 @@ using Worktile.Common.WtRequestClient;
 using System.Threading.Tasks;
 using Worktile.ApiModels.ApiTeam;
 using Worktile.ApiModels.ApiUserMe;
-using Worktile.Infrastructure;
 using Worktile.Common;
 
 namespace Worktile.Views
@@ -142,17 +141,16 @@ namespace Worktile.Views
         {
             var client = new WtHttpClient();
             var me = await client.GetAsync<ApiUserMe>("/api/user/me");
-            DataSource.ApiUserMeConfig = me.Data.Config;
-            DataSource.ApiUserMe = me.Data.Me;
+            DataSource.ApiUserMeData = me.Data;
 
-            string bgImg = DataSource.ApiUserMe.Preferences.BackgroundImage;
+            string bgImg = DataSource.ApiUserMeData.Me.Preferences.BackgroundImage;
             if (bgImg.StartsWith("desktop-") && bgImg.EndsWith(".jpg"))
             {
                 BackgroundImage = new BitmapImage(new Uri("ms-appx:///Assets/Images/Background/" + bgImg));
             }
             else
             {
-                string imgUriString = DataSource.ApiUserMeConfig.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
+                string imgUriString = DataSource.ApiUserMeData.Config.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
                 byte[] buffer = await client.GetByteArrayAsync(imgUriString);
                 BackgroundImage = await ImageHelper.GetImageFromBytesAsync(buffer);
             }
@@ -187,7 +185,7 @@ namespace Worktile.Views
                 SelectedGlyph = "\ue604"
             });
 
-            Logo = new BitmapImage(new Uri(DataSource.ApiUserMeConfig.Box.LogoUrl + DataSource.Team.Logo));
+            Logo = new BitmapImage(new Uri(DataSource.ApiUserMeData.Config.Box.LogoUrl + DataSource.Team.Logo));
         }
     }
 }
