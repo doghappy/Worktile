@@ -117,6 +117,7 @@
     <Compile Include="ApiModels\Message\ApiMessageFiles.cs" />
     <Compile Include="ApiModels\Message\ApiMessages.cs" />
     <Compile Include="ApiModels\Message\ApiPigeonMessages.cs" />
+    <Compile Include="ApiModels\Message\ApiPinnedMessages.cs" />
     <Compile Include="ApiModels\ProjectJoin.cs" />
     <Compile Include="ApiModels\Upload\ApiEntitiesUpload.cs" />
     <Compile Include="App.xaml.cs">
@@ -293,6 +294,9 @@
     </Compile>
     <Compile Include="Views\Message\MessageDetailToChatNavParam.cs" />
     <Compile Include="Views\Message\MessageType.cs" />
+    <Compile Include="Views\Message\PinnedPage.xaml.cs">
+      <DependentUpon>PinnedPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\Session.cs" />
     <Compile Include="Views\Message\TethysAvatar.cs" />
     <Compile Include="Views\Message\TopNav.cs" />
@@ -551,6 +555,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\MessagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\PinnedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

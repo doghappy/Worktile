@@ -79,6 +79,13 @@ namespace Worktile.Views.Message
                             ContentFrame.Navigate(typeof(FilePage), Session);
                         }
                     }
+                    else if (index == 2)
+                    {
+                        if (value.Name == "固定消息")
+                        {
+                            ContentFrame.Navigate(typeof(PinnedPage), Session);
+                        }
+                    }
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
                 }
             }

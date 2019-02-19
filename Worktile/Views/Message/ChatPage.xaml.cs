@@ -207,19 +207,8 @@ namespace Worktile.Views.Message
 
             foreach (var item in apiData.Data.Messages)
             {
-                //item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, AvatarSize.X80, item.From.Type);
-                //item.From.Background = AvatarHelper.GetColor(item.From.DisplayName);
-                //item.From.Initials = AvatarHelper.GetInitials(item.From.DisplayName);
-                //item.Body.Content = Markdown.FormatForMessage(item.Body.Content);
-
-                //if (item.From.Type == FromType.Service)
-                //{
-                //    item.Body.InlineAttachment.Pretext = Markdown.FormatForMessage(item.Body.InlineAttachment.Pretext);
-                //}
-
                 Messages.Insert(0, new Message
                 {
-                    //Avatar = AvatarHelper.GetTethysAvatar(item.From.Uid, item.From.Type),
                     Avatar = new TethysAvatar
                     {
                         DisplayName = item.From.DisplayName,
@@ -246,12 +235,6 @@ namespace Worktile.Views.Message
             }
             foreach (var item in apiData.Data.Messages)
             {
-                //item.From.Avatar = AvatarHelper.GetAvatarUrl(item.From.Avatar, AvatarSize.X80, item.From.Type);
-                //item.From.Background = AvatarHelper.GetColor(item.From.DisplayName);
-                //item.From.Initials = AvatarHelper.GetInitials(item.From.DisplayName);
-                //item.Body.Content = Markdown.FormatForMessage(item.Body.Content);
-                //item.Body.InlineAttachment.Pretext = Markdown.FormatForMessage(item.Body.InlineAttachment.Pretext);
-
                 var msg = new Message
                 {
                     Avatar = new TethysAvatar
