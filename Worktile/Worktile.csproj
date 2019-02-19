@@ -114,9 +114,10 @@
     <Compile Include="ApiModels\ApiTeamLite.cs" />
     <Compile Include="ApiModels\ApiUserMe.cs" />
     <Compile Include="ApiModels\ApiUserSignIn.cs" />
-    <Compile Include="ApiModels\IM\ApiMessages.cs" />
-    <Compile Include="ApiModels\IM\ApiPigeonMessages.cs" />
+    <Compile Include="ApiModels\Message\ApiMessages.cs" />
+    <Compile Include="ApiModels\Message\ApiPigeonMessages.cs" />
     <Compile Include="ApiModels\ProjectJoin.cs" />
+    <Compile Include="ApiModels\Upload\ApiEntitiesUpload.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -228,16 +229,15 @@
     <Compile Include="Models\BeginEnd.cs" />
     <Compile Include="Models\ColorMapItem.cs" />
     <Compile Include="Models\DateSpan.cs" />
-    <Compile Include="Models\IM\Message\AttachmentAddition.cs" />
-    <Compile Include="Models\IM\Message\AttachmentReference.cs" />
-    <Compile Include="Models\IM\Message\BodyAttachment.cs" />
-    <Compile Include="Models\IM\Message\Message.cs" />
-    <Compile Include="Models\IM\Message\MessageBody.cs" />
-    <Compile Include="Models\IM\Message\MessageField.cs" />
-    <Compile Include="Models\IM\Message\MessageFrom.cs" />
-    <Compile Include="Models\IM\Message\MessageGroup.cs" />
-    <Compile Include="Models\IM\Message\MessageInlineAttachment.cs" />
-    <Compile Include="Models\IM\Message\MessageTo.cs" />
+    <Compile Include="Models\Message\AttachmentAddition.cs" />
+    <Compile Include="Models\Message\AttachmentReference.cs" />
+    <Compile Include="Models\Message\BodyAttachment.cs" />
+    <Compile Include="Models\Message\Message.cs" />
+    <Compile Include="Models\Message\MessageBody.cs" />
+    <Compile Include="Models\Message\MessageField.cs" />
+    <Compile Include="Models\Message\MessageFrom.cs" />
+    <Compile Include="Models\Message\MessageInlineAttachment.cs" />
+    <Compile Include="Models\Message\MessageTo.cs" />
     <Compile Include="Models\Kanban\KanBanGroup.cs" />
     <Compile Include="Models\Kanban\KanBanItem.cs" />
     <Compile Include="Models\Kanban\KanbanItemProperty.cs" />

@@ -15,13 +15,17 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModels.IM.ApiMessages;
-using Worktile.ApiModels.IM.ApiPigeonMessages;
+using Worktile.ApiModels.Message.ApiMessages;
+using Worktile.ApiModels.Message.ApiPigeonMessages;
 using Worktile.Common;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Enums;
 using Worktile.Enums.IM;
 using Worktile.Common.WtRequestClient;
+using Windows.Storage.Pickers;
+using System.Net.Http;
+using Worktile.ApiModels.Upload;
+using Windows.Storage.AccessCache;
 
 namespace Worktile.Views.Message
 {
@@ -56,11 +60,12 @@ namespace Worktile.Views.Message
         private string _latestId;
         private bool? _hasMore;
 
+        private int RefType => _navParam.Session.Type == SessionType.Channel ? 1 : 2;
+
         private string Url
         {
             get
             {
-                int refType = _navParam.Session.Type == SessionType.Channel ? 1 : 2;
                 if (_navParam.Session.IsAssistant)
                 {
                     string component = null;
@@ -68,7 +73,7 @@ namespace Worktile.Views.Message
                     {
                         component = GetComponentByNumber(_navParam.Session.Component.Value);
                     }
-                    string url = $"/api/pigeon/messages?ref_id={_navParam.Session.Id}&ref_type={refType}&filter_type={_navParam.Nav.FilterType}&component={component}&size=20";
+                    string url = $"/api/pigeon/messages?ref_id={_navParam.Session.Id}&ref_type={RefType}&filter_type={_navParam.Nav.FilterType}&component={component}&size=20";
                     if (!string.IsNullOrEmpty(_next))
                     {
                         url += "&next=" + _next;
@@ -84,7 +89,7 @@ namespace Worktile.Views.Message
                     }
                     else
                     {
-                        url += $"ref_id={_navParam.Session.Id}&ref_type={refType}&latest_id={_latestId}&size=20";
+                        url += $"ref_id={_navParam.Session.Id}&ref_type={RefType}&latest_id={_latestId}&size=20";
                     }
                     return url;
                 }
@@ -129,7 +134,7 @@ namespace Worktile.Views.Message
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _navParam.Session.UnRead = 0));
         }
 
-        private async void OnMessageReceived(Models.IM.Message.Message apiMsg)
+        private async void OnMessageReceived(Models.Message.Message apiMsg)
         {
             if (apiMsg.To.Id == _navParam.Session.Id)
             {
@@ -276,7 +281,7 @@ namespace Worktile.Views.Message
             _hasMore = apiData.Data.More;
         }
 
-        public static string GetContent(Models.IM.Message.Message msg)
+        public static string GetContent(Models.Message.Message msg)
         {
             switch (msg.Type)
             {
@@ -339,6 +344,36 @@ namespace Worktile.Views.Message
             int index = MsgTextBox.SelectionStart;
             MsgTextBox.Text = MsgTextBox.Text.Insert(index, emoji);
             MsgTextBox.SelectionStart = index + 1;
+        }
+
+        private async void AttachmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            var picker = new FileOpenPicker
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.Downloads
+            };
+            picker.FileTypeFilter.Add("*");
+            var files = await picker.PickMultipleFilesAsync();
+            if (files.Any())
+            {
+                var client = new WtHttpClient();
+                string url = $"{DataSource.ApiUserMeConfig.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={_navParam.Session.Id}&ref_type={RefType}";
+                foreach (var file in files)
+                {
+                    StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);
+                    using (var stream = await file.OpenStreamForReadAsync())
+                    {
+                        string fileName = file.DisplayName + file.FileType;
+                        var content = new MultipartFormDataContent
+                        {
+                            { new StringContent(fileName), "name" },
+                            { new StreamContent(stream), "file", fileName }
+                        };
+                        await client.PostAsync<ApiEntitiesUpload>(url, content);
+                    }
+                }
+            }
         }
     }
 }

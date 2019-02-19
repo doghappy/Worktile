@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Worktile.Models.IM.Message
+namespace Worktile.Models.Message
 {
     public class MessageTo
     {

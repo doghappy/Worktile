@@ -191,7 +191,7 @@ namespace Worktile
         public static string SocketId { get; private set; }
 
         private static MessageWebSocket _socket;
-        public static event Action<Models.IM.Message.Message> OnMessageReceived;
+        public static event Action<Models.Message.Message> OnMessageReceived;
 
         private async Task ConnectSocketAsync()
         {
@@ -268,7 +268,7 @@ namespace Worktile
         /// <param name="msg"></param>
         private void MessageReceived(string msg)
         {
-            var apiMsg = JsonConvert.DeserializeObject<Models.IM.Message.Message>(msg);
+            var apiMsg = JsonConvert.DeserializeObject<Models.Message.Message>(msg);
             OnMessageReceived?.Invoke(apiMsg);
             if (apiMsg.From.Uid != DataSource.ApiUserMe.Uid)
             {
@@ -335,7 +335,7 @@ namespace Worktile
             badgeUpdater.Update(badge);
         }
 
-        private void SendToast(Models.IM.Message.Message apiMsg)
+        private void SendToast(Models.Message.Message apiMsg)
         {
             var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
             string avatar = "Assets/StoreLogo.scale-400.png";

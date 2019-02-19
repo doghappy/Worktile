@@ -3,7 +3,7 @@ using System;
 using Worktile.Enums.IM;
 using Newtonsoft.Json.Converters;
 
-namespace Worktile.Models.IM.Message
+namespace Worktile.Models.Message
 {
     public class Message
     {

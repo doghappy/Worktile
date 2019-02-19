@@ -177,7 +177,7 @@ namespace Worktile.Views.Message
             Worktile.MainPage.OnMessageReceived -= OnMessageReceived;
         }
 
-        private async void OnMessageReceived(Models.IM.Message.Message apiMsg)
+        private async void OnMessageReceived(Models.Message.Message apiMsg)
         {
             if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
             {

@@ -3,7 +3,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.Enums.IM;
 
-namespace Worktile.Models.IM.Message
+namespace Worktile.Models.Message
 {
     public class MessageFrom
     {

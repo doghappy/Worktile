@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Worktile.Models.IM.Message;
 
-namespace Worktile.ApiModels.IM.ApiMessages
+namespace Worktile.ApiModels.Message.ApiMessages
 {
 
     public partial class ApiMessages
@@ -17,7 +16,7 @@ namespace Worktile.ApiModels.IM.ApiMessages
     public partial class Data
     {
         [JsonProperty("messages")]
-        public List<Message> Messages { get; set; }
+        public List<Models.Message.Message> Messages { get; set; }
 
         [JsonProperty("more")]
         public bool More { get; set; }

@@ -135,6 +135,22 @@ namespace Worktile.Common.WtRequestClient
             }
         }
 
+        public async Task<T> PostAsync<T>(string uri, HttpContent content)
+        {
+            var resMsg = await HttpClient.PostAsync(uri, content);
+            if (resMsg.IsSuccessStatusCode)
+            {
+                IsSuccessStatusCode = true;
+                OnSuccessStatusCode?.Invoke(resMsg);
+                return await resMsg.ReadAsModelAsync<T>();
+            }
+            else
+            {
+                OnNonSuccessStatusCode?.Invoke(resMsg);
+                return default(T);
+            }
+        }
+
         public async Task<T> PutAsync<T>(string uri)
         {
             var resMsg = await HttpClient.PutAsync(uri, null);

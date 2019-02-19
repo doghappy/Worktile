@@ -90,7 +90,7 @@
                             <FontIcon Glyph="&#xE170;"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <AppBarButton Label="附件" Icon="Attach"/>
+                    <AppBarButton Label="附件" Icon="Attach" Click="AttachmentButton_Click"/>
                 </CommandBar>
                 <CommandBar Background="Transparent" HorizontalAlignment="Right" DefaultLabelPosition="Right">
                     <AppBarButton Label="发送" Icon="Send" Click="SendButton_Click"/>

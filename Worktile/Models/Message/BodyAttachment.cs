@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Worktile.Models.IM.Message
+namespace Worktile.Models.Message
 {
     public class BodyAttachment
     {

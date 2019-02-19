@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Worktile.Models.IM.Message;
 
-namespace Worktile.ApiModels.IM.ApiPigeonMessages
+namespace Worktile.ApiModels.Message.ApiPigeonMessages
 {
 
     public partial class ApiPigeonMessages
@@ -17,7 +16,7 @@ namespace Worktile.ApiModels.IM.ApiPigeonMessages
     public partial class Data
     {
         [JsonProperty("messages")]
-        public List<Message> Messages { get; set; }
+        public List<Models.Message.Message> Messages { get; set; }
 
         [JsonProperty("unread_length")]
         public int UnreadLength { get; set; }
