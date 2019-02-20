@@ -80,7 +80,7 @@
                                                                     Click="Pin_Click"
                                                                     Visibility="{x:Bind PinVisibility, Mode=OneWay}">
                                                         <MenuFlyoutItem.Icon>
-                                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE840;" />
+                                                            <FontIcon Glyph="&#xE840;" />
                                                         </MenuFlyoutItem.Icon>
                                                     </MenuFlyoutItem>
                                                     
