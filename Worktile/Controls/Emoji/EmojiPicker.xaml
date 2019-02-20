@@ -5,22 +5,23 @@
     xmlns:local="using:Worktile.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     Loaded="UserControl_Loaded"
     d:DesignWidth="900">
 
     <Grid>
-        <NavigationView PaneDisplayMode="Top"
+        <winui:NavigationView PaneDisplayMode="Top"
                         MenuItemsSource="{x:Bind Pages}"
                         SelectedItem="{x:Bind SelectedPage, Mode=TwoWay}"
                         IsSettingsVisible="False"
                         IsBackButtonVisible="Collapsed">
-            <NavigationView.MenuItemTemplate>
+            <winui:NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="local:EmojiPage">
-                    <NavigationViewItem Content="{x:Bind Header}"/>
+                    <winui:NavigationViewItem Content="{x:Bind Header}"/>
                 </DataTemplate>
-            </NavigationView.MenuItemTemplate>
+            </winui:NavigationView.MenuItemTemplate>
 
             <Frame x:Name="ContentFrame">
                 <Frame.ContentTransitions>
@@ -29,6 +30,6 @@
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
-        </NavigationView>
+        </winui:NavigationView>
     </Grid>
 </UserControl>
