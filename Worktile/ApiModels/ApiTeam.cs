@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Worktile.Models;
 
 namespace Worktile.ApiModels.ApiTeam
 {
@@ -152,10 +153,10 @@ namespace Worktile.ApiModels.ApiTeam
 
     public class BulletinScope
     {
-        [JsonProperty("view", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("view")]
         public long? View { get; set; }
 
-        [JsonProperty("manage", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("manage")]
         public List<long> Manage { get; set; }
     }
 
@@ -174,14 +175,14 @@ namespace Worktile.ApiModels.ApiTeam
         public string Country { get; set; }
     }
 
-    public class Member
+    public class Member : IMemberBase
     {
         [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("email")]
         public string Email { get; set; }
-        
+
         public string Team { get; set; }
 
         [JsonProperty("uid")]
@@ -199,13 +200,13 @@ namespace Worktile.ApiModels.ApiTeam
         [JsonProperty("mobile")]
         public string Mobile { get; set; }
 
-        [JsonProperty("mobile_area", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("mobile_area")]
         public string MobileArea { get; set; }
 
         [JsonProperty("desc")]
         public string Desc { get; set; }
 
-        [JsonProperty("short_code", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("short_code")]
         public string ShortCode { get; set; }
 
         [JsonProperty("display_name")]
@@ -452,7 +453,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long Level { get; set; }
     }
 
-    public class Service
+    public class Service : IMemberBase
     {
         [JsonProperty("service_id")]
         public string ServiceId { get; set; }
@@ -466,16 +467,16 @@ namespace Worktile.ApiModels.ApiTeam
         [JsonProperty("integration")]
         public string Integration { get; set; }
 
-        [JsonProperty("display_name", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("display_name")]
         public string DisplayName { get; set; }
 
-        [JsonProperty("avatar", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("avatar")]
         public string Avatar { get; set; }
 
-        [JsonProperty("reference", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("reference")]
         public Reference Reference { get; set; }
 
-        [JsonProperty("addition_id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("addition_id")]
         public string AdditionId { get; set; }
     }
 

@@ -234,6 +234,7 @@
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="Enums\AvatarSize.cs" />
+    <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Views\Message\FileItem.cs" />
     <Compile Include="Views\Message\FromType.cs" />
     <Compile Include="Enums\RoleType.cs" />

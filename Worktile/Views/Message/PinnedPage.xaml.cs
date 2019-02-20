@@ -14,6 +14,7 @@ using Worktile.ApiModels.ApiPinnedMessages;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
+using Worktile.Models;
 
 namespace Worktile.Views.Message
 {
@@ -52,12 +53,14 @@ namespace Worktile.Views.Message
 
         string _anchor;
 
+        string IdType => _session.Type == SessionType.Channel ? "channel_id" : "session_id";
+
         private async Task<IEnumerable<Message>> LoadMessagesAsync()
         {
             IsActive = true;
             const int SIZE = 10;
             var list = new List<Message>();
-            string url = $"/api/pinneds?session_id={_session.Id}&anchor={_anchor}&size={SIZE}";
+            string url = $"/api/pinneds?{IdType}={_session.Id}&anchor={_anchor}&size={SIZE}";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiPinnedMessages>(url);
             if (data.Data.Pinneds.Any())
@@ -69,23 +72,28 @@ namespace Worktile.Views.Message
                 }
                 foreach (var item in data.Data.Pinneds)
                 {
+                    IMemberBase member = null;
+                    if (item.Reference.From.Type == FromType.User)
+                        member = DataSource.Team.Members.Single(m => m.Uid == item.Reference.From.Uid);
+                    else if (item.Reference.From.Type == FromType.Service)
+                        member = DataSource.Team.Services.Single(m => m.ServiceId == item.Reference.From.Uid);
                     var msg = new Message
                     {
                         Id = item.Reference.Id,
                         Avatar = new TethysAvatar
                         {
-                            DisplayName = item.Reference.From.DisplayName,
-                            Source = AvatarHelper.GetAvatarBitmap(item.Reference.From.Avatar, AvatarSize.X80, item.Reference.From.Type),
+                            DisplayName = member.DisplayName,
+                            Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, item.Reference.From.Type),
                             Foreground = new SolidColorBrush(Colors.White)
                         },
                         Content = ChatPage.GetContent(item.Reference),
                         Time = item.Reference.CreatedAt,
                         Type = item.Reference.Type
                     };
-                    if (Path.GetExtension(item.Reference.From.Avatar).ToLower() == ".png")
+                    if (Path.GetExtension(member.Avatar).ToLower() == ".png")
                         msg.Avatar.Background = new SolidColorBrush(Colors.White);
                     else
-                        msg.Avatar.Background = AvatarHelper.GetColorBrush(item.Reference.From.DisplayName);
+                        msg.Avatar.Background = AvatarHelper.GetColorBrush(member.DisplayName);
                     list.Add(msg);
                 }
             }
@@ -101,7 +109,7 @@ namespace Worktile.Views.Message
         {
             var btn = sender as Button;
             var msg = btn.DataContext as Message;
-            string url = $"/api/messages/{msg.Id}/unpinned?session_id={_session.Id}";
+            string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={_session.Id}";
             var client = new WtHttpClient();
             var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
             if (response.Code == 200 && response.Data)

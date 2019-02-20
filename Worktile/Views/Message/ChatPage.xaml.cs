@@ -373,7 +373,8 @@ namespace Worktile.Views.Message
             {
                 type = 1,
                 message_id = msg.Id,
-                session_id = _navParam.Session.Id
+                session_id = _navParam.Session.Id,
+                channel_id = _navParam.Session.Id
             });
             if (response.Code == 200)
             {
@@ -381,11 +382,13 @@ namespace Worktile.Views.Message
             }
         }
 
+        string IdType => _navParam.Session.Type == SessionType.Channel ? "channel_id" : "session_id";
+
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Message;
-            string url = $"/api/messages/{msg.Id}/unpinned?session_id={_navParam.Session.Id}";
+            string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={_navParam.Session.Id}";
             var client = new WtHttpClient();
             var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
             if (response.Code == 200 && response.Data)
