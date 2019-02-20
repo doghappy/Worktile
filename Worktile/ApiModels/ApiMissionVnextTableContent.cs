@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Worktile.Models.Mission.WtTask;
 
-namespace Worktile.ApiModel.ApiMissionVnextTableContent
+namespace Worktile.ApiModels.ApiMissionVnextTableContent
 {
     public partial class ApiMissionVnextTableContent
     {

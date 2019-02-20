@@ -5,66 +5,22 @@
     xmlns:local="using:Worktile.Views.Message"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:tethys="using:Worktile.Tethys"
+    xmlns:controls="using:Worktile.Controls"
     mc:Ignorable="d">
 
     <Grid>
         <ListView ItemsSource="{x:Bind Messages}" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:Message">
-                    <Grid Margin="0 16 16 16">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <tethys:Avatar Size="40"
-                                       Margin="16,0"
-                                       VerticalAlignment="Top"
-                                       DisplayName="{x:Bind Avatar.DisplayName}"
-                                       Foreground="{x:Bind Avatar.Foreground}"
-                                       Background="{x:Bind Avatar.Background}"
-                                       Source="{x:Bind Avatar.Source}"/>
-
-                        <Grid Grid.Column="1">
-                            
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <Polygon Points="0,0 16,0 16,16" Fill="{ThemeResource SystemControlAcrylicElementBrush}" Margin="0,12,0,0"/>
-                            
-                            <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}">
-                                
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Grid Padding="12" HorizontalAlignment="Left">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap"/>
-                                    <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Text="{x:Bind Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                        <TextBlock Text="{x:Bind Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                    </StackPanel>
-                                </Grid>
-
-                                <Grid Grid.Column="1">
-                                    <Button Style="{ThemeResource TextBlockButtonStyle}"
-                                            DataContext="{x:Bind}"
-                                            VerticalAlignment="Top"
-                                            Click="UnPin_Click">
-                                        <FontIcon FontSize="12" Glyph="&#xE840;"/>
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    <controls:MessageControl Message="{x:Bind}">
+                        <controls:MessageControl.RightContent>
+                            <Button Style="{ThemeResource TextBlockButtonStyle}"
+                                    DataContext="{x:Bind}"
+                                    Click="UnPin_Click">
+                                <FontIcon FontSize="12" Glyph="&#xE840;"/>
+                            </Button>
+                        </controls:MessageControl.RightContent>
+                    </controls:MessageControl>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

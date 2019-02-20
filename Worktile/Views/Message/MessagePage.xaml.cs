@@ -11,7 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiTeamChats;
+using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Common.WtRequestClient;

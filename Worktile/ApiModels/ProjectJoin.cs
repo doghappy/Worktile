@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Worktile.ApiModel.ApiProjectJoin
+namespace Worktile.ApiModels.ApiProjectJoin
 {
     public partial class ApiProjectJoin
     {

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Worktile.Enums;
 
-namespace Worktile.ApiModel.ApiMissionVnextTask
+namespace Worktile.ApiModels.ApiMissionVnextTask
 {
 
     public partial class ApiMissionVnextTask

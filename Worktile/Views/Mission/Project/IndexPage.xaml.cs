@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiProjectJoin;
+using Worktile.ApiModels.ApiProjectJoin;
 using Worktile.ApiModels.ApiMissionVnextProjectsDetail;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;

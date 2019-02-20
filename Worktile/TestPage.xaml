@@ -8,12 +8,26 @@
     xmlns:mission="using:Worktile.WtControls.Mission"
     xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:tethys="using:Worktile.Tethys"
-    xmlns:im="using:Worktile.WtControls.IM"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32" Orientation="Horizontal">
-        <AppBarToggleButton Grid.Column="2" Padding="0" Icon="UnPin" LabelPosition="Collapsed" MinWidth="0" MinHeight="0"/>
+        <Button Content="flyout2">
+            <Button.Flyout>
+                <Flyout>
+                    <winui:NavigationView x:Name="nvSample" PaneDisplayMode="Top">
+                        <winui:NavigationView.MenuItems>
+                            <winui:NavigationViewItem Icon="Play" Content="Menu Item1" Tag="SamplePage1" />
+                            <winui:NavigationViewItem Icon="Save" Content="Menu Item2" Tag="SamplePage2" />
+                            <winui:NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
+                            <winui:NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
+                        </winui:NavigationView.MenuItems>
+                        <Frame x:Name="contentFrame"/>
+                    </winui:NavigationView>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
     </StackPanel>
 </Page>
