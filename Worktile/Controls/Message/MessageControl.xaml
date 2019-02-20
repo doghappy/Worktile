@@ -2,7 +2,6 @@
     x:Class="Worktile.Controls.MessageControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Worktile.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
@@ -19,10 +18,10 @@
         <tethys:Avatar Size="40"
                        Margin="16,0"
                        VerticalAlignment="Top"
-                       DisplayName="{x:Bind Message.Avatar.DisplayName}"
-                       Foreground="{x:Bind Message.Avatar.Foreground}"
-                       Background="{x:Bind Message.Avatar.Background}"
-                       Source="{x:Bind Message.Avatar.Source}"/>
+                       DisplayName="{x:Bind Message.Avatar.DisplayName, Mode=OneWay}"
+                       Foreground="{x:Bind Message.Avatar.Foreground, Mode=OneWay}"
+                       Background="{x:Bind Message.Avatar.Background, Mode=OneWay}"
+                       Source="{x:Bind Message.Avatar.Source, Mode=OneWay}"/>
 
         <Grid Grid.Column="1">
 
@@ -45,39 +44,17 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
+                    <TextBlock Text="{x:Bind Message.Content, Mode=OneWay}" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
                     <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{x:Bind Message.Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                        <TextBlock Text="{x:Bind Message.Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        <TextBlock Text="{x:Bind Message.Avatar.DisplayName, Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        <TextBlock Text="{x:Bind Message.Time, Mode=OneWay}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                     </StackPanel>
                 </Grid>
-
-                <Button x:Name="MoreOptionButton"
-                        x:Load="{x:Bind Message.IsShowPin}"
-                        Grid.Column="1"
-                        Style="{ThemeResource TextBlockButtonStyle}"
-                        VerticalAlignment="Top">
-                    <Button.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Text="固定"
-                                            DataContext="{x:Bind}"
-                                            Click="Pin_Click"
-                                            Visibility="{x:Bind Message.PinVisibility, Mode=OneWay}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE840;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-
-                            <MenuFlyoutItem Visibility="{x:Bind Message.UnPinVisibility, Mode=OneWay}"
-                                            Text="取消固定"
-                                            DataContext="{x:Bind}"
-                                            Icon="Pin"
-                                            Click="UnPin_Click"/>
-                        </MenuFlyout>
-                    </Button.Flyout>
-                    <FontIcon FontSize="12" Glyph="&#xE10C;"/>
-                </Button>
-
+                
+                <ContentPresenter Grid.Column="1"
+                                  Content="{x:Bind RightContent}"
+                                  VerticalAlignment="Top"/>
+                
             </Grid>
         </Grid>
     </Grid>

@@ -5,10 +5,14 @@
     xmlns:local="using:Worktile.Views.Message"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:tethys="using:Worktile.Tethys"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <cvt:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -26,77 +30,32 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="local:Message">
-                            <Grid Margin="0 16 16 16" HorizontalAlignment="Left">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                            <controls:MessageControl Message="{x:Bind}">
+                                <controls:MessageControl.RightContent>
+                                    <Button Visibility="{x:Bind IsShowPin, Converter={StaticResource BooleanVisibilityConverter}}"
+                                                Style="{ThemeResource TextBlockButtonStyle}">
+                                        <Button.Flyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="固定"
+                                                                DataContext="{x:Bind}"
+                                                                Click="Pin_Click"
+                                                                Visibility="{x:Bind PinVisibility, Mode=OneWay}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE840;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
 
-                                <tethys:Avatar Size="40"
-                                               Margin="16,0"
-                                               VerticalAlignment="Top"
-                                               DisplayName="{x:Bind Avatar.DisplayName}"
-                                               Foreground="{x:Bind Avatar.Foreground}"
-                                               Background="{x:Bind Avatar.Background}"
-                                               Source="{x:Bind Avatar.Source}"/>
-
-                                <Grid Grid.Column="1">
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Polygon Points="0,0 16,0 16,16" Fill="{ThemeResource SystemControlAcrylicElementBrush}" Margin="0,12,0,0"/>
-
-                                    <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}" HorizontalAlignment="Left">
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid Padding="12">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Text="{x:Bind Content}" TextWrapping="Wrap" IsTextSelectionEnabled="True"/>
-                                            <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <TextBlock Text="{x:Bind Avatar.DisplayName}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                                <TextBlock Text="{x:Bind Time}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                            </StackPanel>
-                                        </Grid>
-
-                                        <Button x:Name="MoreOptionButton"
-                                                x:Load="{x:Bind IsShowPin}"
-                                                Grid.Column="1"
-                                                Style="{ThemeResource TextBlockButtonStyle}"
-                                                VerticalAlignment="Top">
-                                            <Button.Flyout>
-                                                <MenuFlyout>
-                                                    <MenuFlyoutItem Text="固定"
-                                                                    DataContext="{x:Bind}"
-                                                                    Click="Pin_Click"
-                                                                    Visibility="{x:Bind PinVisibility, Mode=OneWay}">
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE840;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
-                                                    
-                                                    <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}"
-                                                                    Text="取消固定"
-                                                                    DataContext="{x:Bind}"
-                                                                    Icon="Pin"
-                                                                    Click="UnPin_Click"/>
-                                                </MenuFlyout>
-                                            </Button.Flyout>
-                                            <FontIcon FontSize="12" Glyph="&#xE10C;"/>
-                                        </Button>
-                                        
-                                    </Grid>
-                                </Grid>
-                            </Grid>
+                                                <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}"
+                                                                Text="取消固定"
+                                                                DataContext="{x:Bind}"
+                                                                Icon="Pin"
+                                                                Click="UnPin_Click"/>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                        <FontIcon FontSize="12" Glyph="&#xE10C;"/>
+                                    </Button>
+                                </controls:MessageControl.RightContent>
+                            </controls:MessageControl>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

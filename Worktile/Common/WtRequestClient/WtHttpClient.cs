@@ -42,14 +42,14 @@ namespace Worktile.Common.WtRequestClient
             HttpClient.DefaultRequestHeaders.Add(name, value);
         }
 
-        public static void SetBaseAddress(string uri)
+        public static void SetBaseAddress(string url)
         {
             if (HttpClient != null)
             {
                 HttpClient.Dispose();
                 HttpClient = null;
             }
-            HttpClient.BaseAddress = new Uri(uri);
+            HttpClient.BaseAddress = new Uri(url);
         }
 
         public static Cookie GetCookieByString(string value)
@@ -78,14 +78,14 @@ namespace Worktile.Common.WtRequestClient
                 + "Expires=" + cookie.Expires.ToString("r");
         }
 
-        public async Task<byte[]> GetByteArrayAsync(string uri)
+        public async Task<byte[]> GetByteArrayAsync(string url)
         {
-            return await HttpClient.GetByteArrayAsync(uri);
+            return await HttpClient.GetByteArrayAsync(url);
         }
 
-        public async Task<T> GetAsync<T>(string uri)
+        public async Task<T> GetAsync<T>(string url)
         {
-            var resMsg = await HttpClient.GetAsync(uri);
+            var resMsg = await HttpClient.GetAsync(url);
             if (resMsg.IsSuccessStatusCode)
             {
                 IsSuccessStatusCode = true;
@@ -98,9 +98,9 @@ namespace Worktile.Common.WtRequestClient
             }
         }
 
-        public async Task<JToken> GetJTokenAsync(string uri)
+        public async Task<JToken> GetJTokenAsync(string url)
         {
-            var resMsg = await HttpClient.GetAsync(uri);
+            var resMsg = await HttpClient.GetAsync(url);
             if (resMsg.IsSuccessStatusCode)
             {
                 IsSuccessStatusCode = true;
@@ -117,77 +117,65 @@ namespace Worktile.Common.WtRequestClient
             }
         }
 
-        public async Task<T> PostAsync<T>(string uri, object data)
+        public async Task<T> PostAsync<T>(string url, object data)
+        {
+            string json = JsonConvert.SerializeObject(data);
+            return await PostAsync<T>(url, json);
+        }
+
+        public async Task<T> PostAsync<T>(string url, string json)
+        {
+            var content = new StringContent(json, Encoding.UTF8, ApplicationJson);
+            return await PostAsync<T>(url, content);
+        }
+
+        public async Task<T> PostAsync<T>(string url, HttpContent content)
+        {
+            var resMsg = await HttpClient.PostAsync(url, content);
+            if (resMsg.IsSuccessStatusCode)
+            {
+                IsSuccessStatusCode = true;
+                OnSuccessStatusCode?.Invoke(resMsg);
+                return await resMsg.ReadAsModelAsync<T>();
+            }
+            else
+            {
+                OnNonSuccessStatusCode?.Invoke(resMsg);
+                return default(T);
+            }
+        }
+
+        public async Task<T> PutAsync<T>(string url)
+        {
+            return await PutAsync<T>(url, null);
+        }
+
+        public async Task<T> PutAsync<T>(string url, HttpContent content)
+        {
+            var resMsg = await HttpClient.PutAsync(url, content);
+            if (resMsg.IsSuccessStatusCode)
+            {
+                IsSuccessStatusCode = true;
+                OnSuccessStatusCode?.Invoke(resMsg);
+                return await resMsg.ReadAsModelAsync<T>();
+            }
+            else
+            {
+                OnNonSuccessStatusCode?.Invoke(resMsg);
+                return default(T);
+            }
+        }
+
+        public async Task<T> PutAsync<T>(string url, object data)
         {
             string json = JsonConvert.SerializeObject(data);
             var content = new StringContent(json, Encoding.UTF8, ApplicationJson);
-            var resMsg = await HttpClient.PostAsync(uri, content);
-            if (resMsg.IsSuccessStatusCode)
-            {
-                IsSuccessStatusCode = true;
-                OnSuccessStatusCode?.Invoke(resMsg);
-                return await resMsg.ReadAsModelAsync<T>();
-            }
-            else
-            {
-                OnNonSuccessStatusCode?.Invoke(resMsg);
-                return default(T);
-            }
+            return await PutAsync<T>(url, content);
         }
 
-        public async Task<T> PostAsync<T>(string uri, HttpContent content)
+        public async Task<T> DeleteAsync<T>(string url)
         {
-            var resMsg = await HttpClient.PostAsync(uri, content);
-            if (resMsg.IsSuccessStatusCode)
-            {
-                IsSuccessStatusCode = true;
-                OnSuccessStatusCode?.Invoke(resMsg);
-                return await resMsg.ReadAsModelAsync<T>();
-            }
-            else
-            {
-                OnNonSuccessStatusCode?.Invoke(resMsg);
-                return default(T);
-            }
-        }
-
-        public async Task<T> PutAsync<T>(string uri)
-        {
-            var resMsg = await HttpClient.PutAsync(uri, null);
-            if (resMsg.IsSuccessStatusCode)
-            {
-                IsSuccessStatusCode = true;
-                OnSuccessStatusCode?.Invoke(resMsg);
-                return await resMsg.ReadAsModelAsync<T>();
-            }
-            else
-            {
-                OnNonSuccessStatusCode?.Invoke(resMsg);
-                return default(T);
-            }
-        }
-
-        public async Task<T> PutAsync<T>(string uri, object data)
-        {
-            string json = JsonConvert.SerializeObject(data);
-            var content = new StringContent(json, Encoding.UTF8, ApplicationJson);
-            var resMsg = await HttpClient.PutAsync(uri, content);
-            if (resMsg.IsSuccessStatusCode)
-            {
-                IsSuccessStatusCode = true;
-                OnSuccessStatusCode?.Invoke(resMsg);
-                return await resMsg.ReadAsModelAsync<T>();
-            }
-            else
-            {
-                OnNonSuccessStatusCode?.Invoke(resMsg);
-                return default(T);
-            }
-        }
-
-        public async Task<T> DeleteAsync<T>(string uri)
-        {
-            var resMsg = await HttpClient.DeleteAsync(uri);
+            var resMsg = await HttpClient.DeleteAsync(url);
             if (resMsg.IsSuccessStatusCode)
             {
                 IsSuccessStatusCode = true;

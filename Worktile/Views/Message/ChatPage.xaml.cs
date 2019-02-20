@@ -318,7 +318,6 @@ namespace Worktile.Views.Message
                     messageType = 1,
                     client = 1,
                     markdown = 1,
-                    //attachment = null,
                     content = msg
                 };
                 await Worktile.MainPage.SendMessageAsync(SocketMessageType.Message, data);
@@ -369,13 +368,16 @@ namespace Worktile.Views.Message
             var msg = flyoutItem.DataContext as Message;
             string url = "/api/pinneds";
             var client = new WtHttpClient();
-            var response = await client.PostAsync<ApiResponse>(url, new
+            var req = new
             {
                 type = 1,
                 message_id = msg.Id,
-                session_id = _navParam.Session.Id,
-                channel_id = _navParam.Session.Id
-            });
+                session_id = _navParam.Session.Id
+            };
+            string json = JsonConvert.SerializeObject(req);
+            if (_navParam.Session.Type == SessionType.Channel)
+                json = json.Replace("session_id", "channel_id");
+            var response = await client.PostAsync<ApiResponse>(url, json);
             if (response.Code == 200)
             {
                 msg.IsPinned = true;
