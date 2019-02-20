@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Worktile.Common;
 using Worktile.Enums;
 
-namespace Worktile.ApiModel.ApiTeamChats
+namespace Worktile.ApiModels.ApiTeamChats
 {
     public partial class ApiTeamChats
     {

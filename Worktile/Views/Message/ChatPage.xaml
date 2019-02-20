@@ -75,12 +75,20 @@
                                                 VerticalAlignment="Top">
                                             <Button.Flyout>
                                                 <MenuFlyout>
-                                                    <MenuFlyoutItem Text="固定" Visibility="{x:Bind PinVisibility, Mode=OneWay}">
+                                                    <MenuFlyoutItem Text="固定"
+                                                                    DataContext="{x:Bind}"
+                                                                    Click="Pin_Click"
+                                                                    Visibility="{x:Bind PinVisibility, Mode=OneWay}">
                                                         <MenuFlyoutItem.Icon>
                                                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE840;" />
                                                         </MenuFlyoutItem.Icon>
                                                     </MenuFlyoutItem>
-                                                    <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}" Text="取消固定" Icon="Pin"/>
+                                                    
+                                                    <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}"
+                                                                    Text="取消固定"
+                                                                    DataContext="{x:Bind}"
+                                                                    Icon="Pin"
+                                                                    Click="UnPin_Click"/>
                                                 </MenuFlyout>
                                             </Button.Flyout>
                                             <FontIcon FontSize="12" Glyph="&#xE10C;"/>

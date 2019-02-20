@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModel.ApiMissionVnextTableContent;
+using Worktile.ApiModels.ApiMissionVnextTableContent;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.ViewModels.Infrastructure;

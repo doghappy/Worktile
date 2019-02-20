@@ -6,7 +6,7 @@ using Worktile.Enums;
 using Worktile.Common.WtRequestClient;
 using System.Threading.Tasks;
 using Worktile.ApiModels.ApiMissionVnexTaskProperties;
-using Data = Worktile.ApiModel.ApiMissionVnextTask.Data;
+using Data = Worktile.ApiModels.ApiMissionVnextTask.Data;
 using Windows.UI.Core;
 
 namespace Worktile.Domain.Mission.Info

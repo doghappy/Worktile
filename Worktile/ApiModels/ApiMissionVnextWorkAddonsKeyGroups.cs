@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Worktile.ApiModel.ApiMissionVnextWorkAddonsKeyGroups
+namespace Worktile.ApiModels.ApiMissionVnextWorkAddonsKeyGroups
 {
     public partial class ApiMissionVnextWorkAddonsKeyGroups
     {

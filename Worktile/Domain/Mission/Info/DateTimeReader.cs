@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Worktile.Views.Mission.Project.Detail;
-using Worktile.ApiModel.ApiMissionVnextTask;
+using Worktile.ApiModels.ApiMissionVnextTask;
 using Worktile.Common;
 using System.Collections.Generic;
 using Windows.UI.Core;

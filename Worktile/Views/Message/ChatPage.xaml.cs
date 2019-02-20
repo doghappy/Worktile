@@ -25,6 +25,7 @@ using Windows.Storage.Pickers;
 using System.Net.Http;
 using Worktile.ApiModels.Upload;
 using Windows.Storage.AccessCache;
+using Worktile.ApiModels;
 
 namespace Worktile.Views.Message
 {
@@ -142,6 +143,7 @@ namespace Worktile.Views.Message
                         var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
                         Messages.Add(new Message
                         {
+                            Id = apiMsg.Id,
                             Avatar = new TethysAvatar
                             {
                                 DisplayName = member.DisplayName,
@@ -151,6 +153,7 @@ namespace Worktile.Views.Message
                             },
                             Content = GetContent(apiMsg),
                             Time = apiMsg.CreatedAt,
+                            IsPinned = false,
                             Type = apiMsg.Type
                         });
                     });
@@ -209,6 +212,7 @@ namespace Worktile.Views.Message
             {
                 Messages.Insert(0, new Message
                 {
+                    Id = item.Id,
                     Avatar = new TethysAvatar
                     {
                         DisplayName = item.From.DisplayName,
@@ -238,6 +242,7 @@ namespace Worktile.Views.Message
             {
                 var msg = new Message
                 {
+                    Id = item.Id,
                     Avatar = new TethysAvatar
                     {
                         DisplayName = item.From.DisplayName,
@@ -355,6 +360,37 @@ namespace Worktile.Views.Message
                         await client.PostAsync<ApiEntitiesUpload>(url, content);
                     }
                 }
+            }
+        }
+
+        private async void Pin_Click(object sender, RoutedEventArgs e)
+        {
+            var flyoutItem = sender as MenuFlyoutItem;
+            var msg = flyoutItem.DataContext as Message;
+            string url = "/api/pinneds";
+            var client = new WtHttpClient();
+            var response = await client.PostAsync<ApiResponse>(url, new
+            {
+                type = 1,
+                message_id = msg.Id,
+                session_id = _navParam.Session.Id
+            });
+            if (response.Code == 200)
+            {
+                msg.IsPinned = true;
+            }
+        }
+
+        private async void UnPin_Click(object sender, RoutedEventArgs e)
+        {
+            var flyoutItem = sender as MenuFlyoutItem;
+            var msg = flyoutItem.DataContext as Message;
+            string url = $"/api/messages/{msg.Id}/unpinned?session_id={_navParam.Session.Id}";
+            var client = new WtHttpClient();
+            var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+            if (response.Code == 200 && response.Data)
+            {
+                msg.IsPinned = false;
             }
         }
     }
