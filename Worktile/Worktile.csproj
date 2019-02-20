@@ -189,6 +189,9 @@
     <Compile Include="Controls\Emoji\EmojiSmileysPage.xaml.cs">
       <DependentUpon>EmojiSmileysPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Message\MessageControl.xaml.cs">
+      <DependentUpon>MessageControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
@@ -522,6 +525,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Emoji\EmojiSmileysPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Message\MessageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
