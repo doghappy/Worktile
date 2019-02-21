@@ -37,11 +37,36 @@
 
                     <TextBlock Text="消息" Style="{ThemeResource TitleTextBlockStyle}" FontWeight="SemiBold"/>
 
-                    <HyperlinkButton Grid.Column="1" HorizontalAlignment="Right">
-                        <HyperlinkButton.Content>
-                            <FontIcon Style="{ThemeResource WtfIcon}" FontSize="24" Glyph="&#xE633;"/>
-                        </HyperlinkButton.Content>
-                    </HyperlinkButton>
+                    <Button Grid.Column="1" HorizontalAlignment="Right" Style="{ThemeResource TextBlockButtonStyle}">
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyout.Items>
+                                    <MenuFlyoutItem Text="创建组群" Click="CreateGroup_Click">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xEBDA;"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="加入组群">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE902;"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="发起私聊">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE8BD;"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="添加成员">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE8FA;"/>
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+                                </MenuFlyout.Items>
+                            </MenuFlyout>
+                        </Button.Flyout>
+
+                        <FontIcon Style="{ThemeResource WtfIcon}" FontSize="24" Glyph="&#xE633;"/>
+                    </Button>
                 </Grid>
 
                 <ListView Grid.Row="1"
@@ -70,13 +95,13 @@
                             </MenuFlyout.Items>
                         </MenuFlyout>
                     </ListView.Resources>
-                    
+
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         </Style>
                     </ListView.ItemContainerStyle>
-                    
+
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Session">
                             <Grid Padding="0 8" HorizontalAlignment="Stretch">

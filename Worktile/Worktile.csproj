@@ -192,6 +192,9 @@
     <Compile Include="Controls\Message\MessageControl.xaml.cs">
       <DependentUpon>MessageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WtColorPicker.xaml.cs">
+      <DependentUpon>WtColorPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
@@ -238,6 +241,9 @@
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="Enums\AvatarSize.cs" />
     <Compile Include="Models\IMemberBase.cs" />
+    <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
+      <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\FileItem.cs" />
     <Compile Include="Views\Message\FromType.cs" />
     <Compile Include="Enums\RoleType.cs" />
@@ -532,6 +538,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WtColorPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Design\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -553,6 +563,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\Dialog\CreateGroupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

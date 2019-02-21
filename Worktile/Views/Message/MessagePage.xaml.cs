@@ -1,12 +1,10 @@
-﻿using Microsoft.Toolkit.Uwp.Helpers;
-using Newtonsoft.Json;
+﻿using System;
+using Microsoft.Toolkit.Uwp.Helpers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -16,6 +14,7 @@ using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Common.WtRequestClient;
 using Windows.UI.Xaml.Input;
+using Worktile.Views.Message.Dialog;
 
 namespace Worktile.Views.Message
 {
@@ -191,6 +190,12 @@ namespace Worktile.Views.Message
             var listView = sender as ListView;
             ListViewItemMenuFlyout.ShowAt(listView, e.GetPosition(listView));
             var data = ((FrameworkElement)e.OriginalSource).DataContext;
+        }
+
+        private async void CreateGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CreateGroupDialog();
+            await dialog.ShowAsync();
         }
     }
 }
