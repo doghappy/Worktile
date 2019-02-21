@@ -14,6 +14,7 @@ using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Worktile.ApiModels;
 using Worktile.ApiModels.Message.ApiMessageFiles;
 using Worktile.ApiModels.Upload;
 using Worktile.Common;
@@ -79,7 +80,9 @@ namespace Worktile.Views.Message
                         Background = AvatarHelper.GetColorBrush(item.CreatedBy.DisplayName),
                         Source = AvatarHelper.GetAvatarBitmap(item.CreatedBy.Avatar, AvatarSize.X40, FromType.User)
                     },
-                    DateTime = item.CreatedAt
+                    DateTime = item.CreatedAt,
+                    IsEnableDelete = item.CreatedBy.Uid == DataSource.ApiUserMeData.Me.Uid,
+                    IsEnableDownload = !string.IsNullOrEmpty(item.Addition.Path)
                 });
             }
 
@@ -207,20 +210,18 @@ namespace Worktile.Views.Message
             else
             {
                 var units = new[] { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
-                int index = -1;
-                while (true)
+                int index = 0;
+                double cursor = size * 1.0;
+                while (cursor >= 1024)
                 {
                     index++;
-                    if (size / 1024 < 1024)
-                    {
-                        break;
-                    }
+                    cursor /= 1024;
                 }
-                return size % 1024 + units[index];
+                return cursor.ToString("0.00").Replace(".00", string.Empty) + " " + units[index];
             }
         }
 
-        private async void UploadButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void UploadButton_Click(object sender, RoutedEventArgs e)
         {
             var picker = new FileOpenPicker
             {
@@ -291,6 +292,33 @@ namespace Worktile.Views.Message
                 ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
             }
             IsActive = false;
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "确认删除文件",
+                Content = "删除文件后，你将看不到该文件的任何信息，同时关于该文件的消息也将删除。",
+                PrimaryButtonText = "确定删除",
+                CloseButtonText = "取消",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                IsActive = true;
+                var control = sender as MenuFlyoutItem;
+                var file = control.DataContext as FileItem;
+                string url = $"/api/entities/{file.Id}";
+                var client = new WtHttpClient();
+                var res = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+                if (res.Code == 200 && res.Data)
+                {
+                    Files.Remove(file);
+                }
+                IsActive = false;
+            }
         }
     }
 }

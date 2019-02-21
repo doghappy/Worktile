@@ -87,7 +87,7 @@ namespace Worktile.ApiModels.Message.ApiMessageFiles
         public string Thumbnail { get; set; }
 
         [JsonProperty("path")]
-        public Guid? Path { get; set; }
+        public string Path { get; set; }
 
         [JsonProperty("size")]
         public int Size { get; set; }
