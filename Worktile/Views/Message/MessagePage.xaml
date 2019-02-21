@@ -46,12 +46,37 @@
 
                 <ListView Grid.Row="1"
                           ItemsSource="{x:Bind Sessions}"
+                          RightTapped="ListView_RightTapped"
                           SelectedItem="{x:Bind SelectedSession, Mode=TwoWay}">
+
+                    <ListView.Resources>
+                        <MenuFlyout x:Name="ListViewItemMenuFlyout">
+                            <MenuFlyout.Items>
+                                <MenuFlyoutItem Text="成员资料">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE136;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="置顶">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE11C;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="删除">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE107;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout.Items>
+                        </MenuFlyout>
+                    </ListView.Resources>
+                    
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         </Style>
                     </ListView.ItemContainerStyle>
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Session">
                             <Grid Padding="0 8" HorizontalAlignment="Stretch">

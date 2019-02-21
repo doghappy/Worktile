@@ -15,6 +15,7 @@ using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Common.WtRequestClient;
+using Windows.UI.Xaml.Input;
 
 namespace Worktile.Views.Message
 {
@@ -183,6 +184,13 @@ namespace Worktile.Views.Message
                 var session = Sessions.Single(s => s.Id == apiMsg.To.Id);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => session.UnRead += 1));
             }
+        }
+
+        private void ListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            var listView = sender as ListView;
+            ListViewItemMenuFlyout.ShowAt(listView, e.GetPosition(listView));
+            var data = ((FrameworkElement)e.OriginalSource).DataContext;
         }
     }
 }
