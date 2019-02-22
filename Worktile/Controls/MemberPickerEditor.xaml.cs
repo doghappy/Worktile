@@ -2,25 +2,20 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Worktile.ApiModels;
 using Worktile.Common;
+using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
+using Worktile.Models.Department;
 using Worktile.Views.Message;
 
 namespace Worktile.Controls
 {
-    public sealed partial class MemberPickerEditor : UserControl, INotifyPropertyChanged
+    public sealed partial class MemberPickerEditor : UserControl//, INotifyPropertyChanged
     {
         public MemberPickerEditor()
         {
@@ -28,6 +23,7 @@ namespace Worktile.Controls
             Avatars = new ObservableCollection<TethysAvatar>();
             SelectedAvatars = new ObservableCollection<TethysAvatar>();
             SuggestAvatars = new ObservableCollection<TethysAvatar>();
+            DepartmentNodes = new ObservableCollection<DepartmentNode>();
             foreach (var item in DataSource.Team.Members)
             {
                 if (item.Role != 5)
@@ -43,7 +39,7 @@ namespace Worktile.Controls
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
         //private string _title;
         //public string Title
@@ -63,6 +59,7 @@ namespace Worktile.Controls
         public ObservableCollection<TethysAvatar> Avatars { get; }
         public ObservableCollection<TethysAvatar> SelectedAvatars { get; }
         public ObservableCollection<TethysAvatar> SuggestAvatars { get; }
+        public ObservableCollection<DepartmentNode> DepartmentNodes { get; }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -123,6 +120,41 @@ namespace Worktile.Controls
                 Avatars.Add(item);
             }
             SelectedAvatars.Clear();
+        }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!DepartmentNodes.Any())
+            {
+                string url = $"/api/departments/tree?async=false";
+                var client = new WtHttpClient();
+                var data = await client.GetAsync<ApiDataResponse<List<DepartmentNode>>>(url);
+                foreach (var item in data.Data)
+                {
+                    SetAvatar(item);
+                    DepartmentNodes.Add(item);
+                }
+            }
+        }
+
+        private void SetAvatar(DepartmentNode node)
+        {
+            if (node.Type == DepartmentNodeType.Member)
+            {
+                node.Avatar = new TethysAvatar
+                {
+                    DisplayName = node.Addition.DisplayName,
+                    Background = AvatarHelper.GetColorBrush(node.Addition.DisplayName),
+                    Source = AvatarHelper.GetAvatarBitmap(node.Addition.Avatar, AvatarSize.X40, FromType.User)
+                };
+            }
+            else if (node.Type == DepartmentNodeType.Department)
+            {
+                foreach (var item in node.Children)
+                {
+                    SetAvatar(item);
+                }
+            }
         }
     }
 }

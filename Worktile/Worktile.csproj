@@ -246,6 +246,9 @@
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="Enums\AvatarSize.cs" />
+    <Compile Include="Models\Department\DepartmentNode.cs" />
+    <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
+    <Compile Include="Models\Department\DepartmentNodeType.cs" />
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
       <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
