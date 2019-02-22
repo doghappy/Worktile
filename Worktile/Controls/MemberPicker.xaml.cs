@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Views.Message;
 
 namespace Worktile.Controls
 {
@@ -21,14 +22,24 @@ namespace Worktile.Controls
         public MemberPicker()
         {
             InitializeComponent();
-            Data = new ObservableCollection<int>();
+            SelectedAvatars = new ObservableCollection<TethysAvatar>();
         }
 
-        public ObservableCollection<int> Data { get; }
+        public ObservableCollection<TethysAvatar> SelectedAvatars { get; }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void MemberPickerEditor_OnPrimaryButtonClick(MemberPickerEditor editor)
         {
-            Data.Add(1);
+            SelectedAvatars.Clear();
+            foreach (var item in editor.SelectedAvatars)
+            {
+                SelectedAvatars.Add(item);
+            }
+            EditorFlyout.Hide();
+        }
+
+        private void MemberPickerEditor_OnCloseButtonClick(MemberPickerEditor editor)
+        {
+            EditorFlyout.Hide();
         }
     }
 }

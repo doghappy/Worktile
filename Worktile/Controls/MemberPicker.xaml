@@ -5,35 +5,39 @@
     xmlns:local="using:Worktile.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:message="using:Worktile.Views.Message"
+    xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid VerticalAlignment="Top">
-        <GridView ItemsSource="{x:Bind Data}" SelectionMode="None">
+        <GridView ItemsSource="{x:Bind SelectedAvatars}" SelectionMode="None">
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="x:Int32">
-                    <TextBlock Text="{x:Bind}"/>
+                <DataTemplate x:DataType="message:TethysAvatar">
+                    <tethys:Avatar Size="30" DisplayName="{x:Bind DisplayName}" Source="{x:Bind Source}" Background="{x:Bind Background}"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.Footer>
-                <Button Click="Button_Click"
-                        CornerRadius="30"
+                <Button CornerRadius="30"
                         Width="30"
                         Height="30"
                         Style="{ThemeResource ButtonRevealStyle}"
                         Padding="0">
 
                     <Button.Flyout>
-                        <Flyout>
+                        <Flyout x:Name="EditorFlyout">
                             <Flyout.FlyoutPresenterStyle>
                                 <Style TargetType="FlyoutPresenter">
                                     <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="MaxWidth" Value="662"/>
+                                    <Setter Property="MaxWidth" Value="664"/>
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
 
-                            <local:MemberPickerEditor MaxHeight="580" Title="选择成员"/>
+                            <local:MemberPickerEditor MaxHeight="580"
+                                                      Title="选择成员"
+                                                      OnPrimaryButtonClick="MemberPickerEditor_OnPrimaryButtonClick"
+                                                      OnCloseButtonClick="MemberPickerEditor_OnCloseButtonClick"/>
                         </Flyout>
                     </Button.Flyout>
 

@@ -12,7 +12,18 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Padding="32">
+    <StackPanel Padding="32">
         <controls:MemberPicker/>
-    </Grid>
+
+        <winui:TreeView ItemsSource="{x:Bind SampleDatas}" SelectionMode="Multiple">
+            <winui:TreeView.ItemTemplate>
+                <DataTemplate x:DataType="local:SampleData">
+                    <winui:TreeViewItem ItemsSource="{x:Bind Chidren}"
+                                Content="{x:Bind Name}"
+                                IsExpanded="True"
+                                IsSelected="{x:Bind IsChecked}"/>
+                </DataTemplate>
+            </winui:TreeView.ItemTemplate>
+        </winui:TreeView>
+    </StackPanel>
 </Page>

@@ -9,41 +9,51 @@
     mc:Ignorable="d"
     Title="创建群组"
     PrimaryButtonText="确定"
+    Padding="0"
     CloseButtonText="取消"
     DefaultButton="Primary"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
-        <TextBox PlaceholderText="群组名称"/>
+    <!--<ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0</Thickness>
+    </ContentDialog.Resources>-->
 
-        <controls:WtColorPicker Grid.Row="1"
+    <ScrollViewer Padding="12 0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBox PlaceholderText="群组名称"/>
+
+            <controls:WtColorPicker Grid.Row="1"
                                 Margin="0 12"
                                 SelectedColor="{x:Bind Color, Mode=TwoWay}"/>
 
-        <TextBox Grid.Row="2"
+            <TextBox Grid.Row="2"
                  Header="群组主题"
                  PlaceholderText="说明群组主要讨论的内容"
                  AcceptsReturn="True"/>
 
-        <ComboBox Grid.Row="3"
+            <ComboBox Grid.Row="3"
                   Margin="0 12"
                   Header="可见范围"
                   ItemsSource="{x:Bind WtVisibilities}"
                   SelectedItem="{x:Bind SelectedVisibility, Mode=TwoWay}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate x:DataType="local:WtVisibility">
-                    <TextBlock Text="{x:Bind Text}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-    </Grid>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="local:WtVisibility">
+                        <TextBlock Text="{x:Bind Text}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <controls:MemberPicker Grid.Row="4"/>
+        </Grid>
+    </ScrollViewer>
 </ContentDialog>

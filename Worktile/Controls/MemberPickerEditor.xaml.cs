@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI.Xaml;
@@ -20,24 +20,15 @@ namespace Worktile.Controls
         public MemberPickerEditor()
         {
             InitializeComponent();
-            Avatars = new ObservableCollection<TethysAvatar>();
+            UnSelectedAvatars = new ObservableCollection<TethysAvatar>();
             SelectedAvatars = new ObservableCollection<TethysAvatar>();
+            //SelectedAvatars.CollectionChanged += SelectedAvatars_CollectionChanged;
             SuggestAvatars = new ObservableCollection<TethysAvatar>();
             DepartmentNodes = new ObservableCollection<DepartmentNode>();
-            foreach (var item in DataSource.Team.Members)
-            {
-                if (item.Role != 5)
-                {
-                    Avatars.Add(new TethysAvatar
-                    {
-                        DisplayName = item.DisplayName,
-                        Background = AvatarHelper.GetColorBrush(item.DisplayName),
-                        Source = AvatarHelper.GetAvatarBitmap(item.Avatar, AvatarSize.X40, FromType.User),
-                        DisplayNamePinyin = item.DisplayNamePinyin.Split(',').ToArray()
-                    });
-                }
-            }
         }
+
+        public event Action<MemberPickerEditor> OnPrimaryButtonClick;
+        public event Action<MemberPickerEditor> OnCloseButtonClick;
 
         //public event PropertyChangedEventHandler PropertyChanged;
 
@@ -54,9 +45,11 @@ namespace Worktile.Controls
         //        }
         //    }
         //}
+        private List<DepartmentNode> _departmentNodeList { get; set; }
+
         public string Title { get; set; }
 
-        public ObservableCollection<TethysAvatar> Avatars { get; }
+        public ObservableCollection<TethysAvatar> UnSelectedAvatars { get; }
         public ObservableCollection<TethysAvatar> SelectedAvatars { get; }
         public ObservableCollection<TethysAvatar> SuggestAvatars { get; }
         public ObservableCollection<DepartmentNode> DepartmentNodes { get; }
@@ -64,7 +57,7 @@ namespace Worktile.Controls
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var item = e.ClickedItem as TethysAvatar;
-            Avatars.Remove(item);
+            UnSelectedAvatars.Remove(item);
             SelectedAvatars.Add(item);
         }
 
@@ -72,7 +65,7 @@ namespace Worktile.Controls
         {
             var btn = sender as AppBarButton;
             var item = btn.DataContext as TethysAvatar;
-            Avatars.Add(item);
+            UnSelectedAvatars.Add(item);
             SelectedAvatars.Remove(item);
         }
 
@@ -84,7 +77,7 @@ namespace Worktile.Controls
                 if (text != string.Empty)
                 {
                     SuggestAvatars.Clear();
-                    var items = Avatars.Where(a => a.DisplayName.Contains(text) || a.DisplayNamePinyin.Any(p => p.Contains(text, StringComparison.CurrentCultureIgnoreCase)));
+                    var items = UnSelectedAvatars.Where(a => a.DisplayName.Contains(text) || a.DisplayNamePinyin.Any(p => p.Contains(text, StringComparison.CurrentCultureIgnoreCase)));
                     foreach (var item in items)
                     {
                         SuggestAvatars.Add(item);
@@ -98,18 +91,18 @@ namespace Worktile.Controls
             if (args.ChosenSuggestion is TethysAvatar item)
             {
                 SelectedAvatars.Add(item);
-                Avatars.Remove(item);
+                UnSelectedAvatars.Remove(item);
                 SuggestAvatars.Remove(item);
             }
         }
 
         private void AddMembers_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in Avatars)
+            foreach (var item in UnSelectedAvatars)
             {
                 SelectedAvatars.Add(item);
             }
-            Avatars.Clear();
+            UnSelectedAvatars.Clear();
             SuggestAvatars.Clear();
         }
 
@@ -117,18 +110,38 @@ namespace Worktile.Controls
         {
             foreach (var item in SelectedAvatars)
             {
-                Avatars.Add(item);
+                UnSelectedAvatars.Add(item);
             }
             SelectedAvatars.Clear();
         }
 
+        // 加载部门树，TreeView控件存在Bug
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!UnSelectedAvatars.Any())
+            {
+                foreach (var item in DataSource.Team.Members)
+                {
+                    if (item.Role != 5)
+                    {
+                        UnSelectedAvatars.Add(new TethysAvatar
+                        {
+                            Id = item.Uid,
+                            DisplayName = item.DisplayName,
+                            Background = AvatarHelper.GetColorBrush(item.DisplayName),
+                            Source = AvatarHelper.GetAvatarBitmap(item.Avatar, AvatarSize.X40, FromType.User),
+                            DisplayNamePinyin = item.DisplayNamePinyin.Split(',').ToArray()
+                        });
+                    }
+                }
+            }
+
             if (!DepartmentNodes.Any())
             {
                 string url = $"/api/departments/tree?async=false";
                 var client = new WtHttpClient();
                 var data = await client.GetAsync<ApiDataResponse<List<DepartmentNode>>>(url);
+                _departmentNodeList = new List<DepartmentNode>();
                 foreach (var item in data.Data)
                 {
                     SetAvatar(item);
@@ -147,6 +160,7 @@ namespace Worktile.Controls
                     Background = AvatarHelper.GetColorBrush(node.Addition.DisplayName),
                     Source = AvatarHelper.GetAvatarBitmap(node.Addition.Avatar, AvatarSize.X40, FromType.User)
                 };
+                _departmentNodeList.Add(node);
             }
             else if (node.Type == DepartmentNodeType.Department)
             {
@@ -156,5 +170,62 @@ namespace Worktile.Controls
                 }
             }
         }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnCloseButtonClick?.Invoke(this);
+        }
+        private void PrimaryButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnPrimaryButtonClick?.Invoke(this);
+        }
+
+
+        //private void SelectedAvatars_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //    if (_departmentNodeList != null)
+        //    {
+        //        // 每次更新一个
+        //        //void SetIsSelected(bool isSelected)
+        //        //{
+        //        //    var item = e.NewItems.Cast<TethysAvatar>().First();
+        //        //    var node = _departmentNodeList.Single(n => n.Id == item.Id);
+        //        //    node.IsSelected = isSelected;
+        //        //}
+
+        //        //switch (e.Action)
+        //        //{
+        //        //    case NotifyCollectionChangedAction.Add:
+        //        //        SetIsSelected(true);
+        //        //        break;
+        //        //    case NotifyCollectionChangedAction.Remove:
+        //        //        SetIsSelected(false);
+        //        //        break;
+        //        //    case NotifyCollectionChangedAction.Reset:
+        //        //        {
+        //        //            foreach (var item in _departmentNodeList)
+        //        //            {
+        //        //                item.IsSelected = false;
+        //        //            }
+        //        //        }
+        //        //        break;
+        //        //}
+
+        //        // 每次更新所有的IsSelected
+        //        //foreach (var item in SelectedAvatars)
+        //        //{
+        //        //    var node = _departmentNodeList.Single(n => n.Id == item.Id);
+        //        //    node.IsSelected = true;
+        //        //}
+        //        //foreach (var item in UnSelectedAvatars)
+        //        //{
+        //        //    var node = _departmentNodeList.SingleOrDefault(n => n.Id == item.Id);
+        //        //    if (node != null)
+        //        //    {
+        //        //        node.IsSelected = false;
+        //        //    }
+        //        //}
+        //    }
+        //}
     }
 }

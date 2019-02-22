@@ -22,6 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="{x:Bind Title}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
@@ -74,7 +75,7 @@
                                   SelectionMode="None"
                                   IsItemClickEnabled="True"
                                   ItemClick="ListView_ItemClick"
-                                  ItemsSource="{x:Bind Avatars}">
+                                  ItemsSource="{x:Bind UnSelectedAvatars}">
 
                             <ListView.Header>
                                 <Button Style="{ThemeResource TextBlockButtonStyle}" Click="AddMembers_Click">
@@ -101,7 +102,7 @@
                 </PivotItem>
 
                 <PivotItem Header="部门">
-                    <TreeView SelectionMode="Multiple" ItemsSource="{x:Bind DepartmentNodes}">
+                    <TreeView ItemsSource="{x:Bind DepartmentNodes}" SelectionMode="Multiple">
                         <TreeView.ItemTemplate>
                             <DataTemplate x:DataType="department:DepartmentNode">
                                 <TreeViewItem ItemsSource="{x:Bind Children}">
@@ -171,5 +172,15 @@
                 </ListBox>
             </Grid>
         </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Content="确定"
+                    Background="{ThemeResource SystemAccentColor}"
+                    Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"
+                    Click="PrimaryButton_Click"/>
+            <Button Content="关闭"
+                    Margin="12 0 0 0"
+                    Click="CloseButton_Click"/>
+        </StackPanel>
     </Grid>
 </UserControl>
