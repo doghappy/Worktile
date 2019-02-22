@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Media;
+﻿using System.Collections.Generic;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Worktile.Views.Message
@@ -11,5 +12,6 @@ namespace Worktile.Views.Message
         public SolidColorBrush Background { get; set; }
         public SolidColorBrush Foreground { get; set; }
         public FontFamily AvatarFont { get; set; }
+        public IEnumerable<string> DisplayNamePinyin { get; set; }
     }
 }

@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,15 +14,21 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace Worktile
+namespace Worktile.Controls
 {
-    public sealed partial class TestPage : Page, INotifyPropertyChanged
+    public sealed partial class MemberPicker : UserControl
     {
-        public TestPage()
+        public MemberPicker()
         {
             InitializeComponent();
+            Data = new ObservableCollection<int>();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ObservableCollection<int> Data { get; }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Data.Add(1);
+        }
     }
 }

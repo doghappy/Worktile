@@ -45,19 +45,5 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <!--<Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Text="群组主题"/>
-            <TextBox Grid.Column="1"/>
-        </Grid>-->
     </Grid>
 </ContentDialog>

@@ -189,6 +189,12 @@
     <Compile Include="Controls\Emoji\EmojiSmileysPage.xaml.cs">
       <DependentUpon>EmojiSmileysPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MemberPicker.xaml.cs">
+      <DependentUpon>MemberPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MemberPickerEditor.xaml.cs">
+      <DependentUpon>MemberPickerEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\MessageControl.xaml.cs">
       <DependentUpon>MessageControl.xaml</DependentUpon>
     </Compile>
@@ -531,6 +537,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Emoji\EmojiSmileysPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MemberPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MemberPickerEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

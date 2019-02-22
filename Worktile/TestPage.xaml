@@ -6,14 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mission="using:Worktile.WtControls.Mission"
-    xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:tethys="using:Worktile.Tethys"
-    xmlns:controls="using:Worktile.Controls"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Worktile.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="32" Orientation="Horizontal">
-        <controls:WtColorPicker SelectedColor="#39ba5d"/>
-    </StackPanel>
+    <Grid Padding="32">
+        <controls:MemberPicker/>
+    </Grid>
 </Page>
