@@ -15,6 +15,7 @@ using Worktile.Enums;
 using Worktile.Common.WtRequestClient;
 using Windows.UI.Xaml.Input;
 using Worktile.Views.Message.Dialog;
+using Worktile.ApiModels;
 
 namespace Worktile.Views.Message
 {
@@ -178,11 +179,40 @@ namespace Worktile.Views.Message
 
         private async void OnMessageReceived(Models.Message.Message apiMsg)
         {
-            if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                var session = Sessions.Single(s => s.Id == apiMsg.To.Id);
-                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => session.UnRead += 1));
-            }
+                var session = Sessions.SingleOrDefault(s => s.Id == apiMsg.To.Id);
+                if (session == null)
+                {
+                    var client = new WtHttpClient();
+                    var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
+
+                    Sessions.Insert(0, new Session
+                    {
+                        Id = data.Data.Id,
+                        DisplayName = data.Data.To.DisplayName,
+                        Initials = AvatarHelper.GetInitials(data.Data.To.DisplayName),
+                        ProfilePicture = AvatarHelper.GetAvatarBitmap(data.Data.To.Avatar, AvatarSize.X80, FromType.User),
+                        Background = AvatarHelper.GetColorBrush(data.Data.To.DisplayName),
+                        Starred = data.Data.Starred,
+                        LatestMessageAt = data.Data.LatestMessageAt,
+                        Show = data.Data.Show,
+                        UnRead = 1,
+                        NamePinyin = data.Data.To.DisplayName,
+                        Component = data.Data.Component,
+                        Name = data.Data.To.Name,
+                        Type = SessionType.Session,
+                        IsBot = data.Data.IsBot
+                    });
+                }
+                else
+                {
+                    if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
+                    {
+                        session.UnRead += 1;
+                    }
+                }
+            }));
         }
 
         private void ListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
