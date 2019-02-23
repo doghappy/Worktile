@@ -9,7 +9,6 @@
     mc:Ignorable="d"
     Title="创建群组"
     PrimaryButtonText="确定"
-    Padding="0"
     CloseButtonText="取消"
     DefaultButton="Primary"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
