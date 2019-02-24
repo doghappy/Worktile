@@ -23,37 +23,38 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Worktile
 {
-    public sealed partial class TestPage : Page, INotifyPropertyChanged
+public sealed partial class TestPage : Page, INotifyPropertyChanged
+{
+    public TestPage()
     {
-        public TestPage()
-        {
-            InitializeComponent();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private string _emoji;
-        public string Emoji
-        {
-            get => _emoji;
-            set
+        InitializeComponent();
+        SampleDatas = new List<SampleData>
+    {
+        new SampleData { Name = "Google", IsChecked = true },
+        new SampleData {
+            Name = "Microsoft",
+            IsChecked = true,
+            Chidren = new List<SampleData>
             {
-                if (_emoji != value)
-                {
-                    _emoji = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Emoji)));
-                }
+                new SampleData { Name = ".Net", IsChecked = true },
+                new SampleData { Name = "Office", IsChecked = false },
+                new SampleData { Name = "Windows", IsChecked = true }
             }
-        }
-
-        private void EmojiPicker_OnEmojiSelected(string emoji)
-        {
-            Emoji = emoji;
-        }
-
-        private void Flyout_Opened(object sender, object e)
-        {
-            var flyout = sender as Flyout;
-        }
+        },
+        new SampleData { Name = "Apple", IsChecked = true }
+    };
     }
+
+    List<SampleData> SampleDatas { get; }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+}
+
+class SampleData
+{
+    public string Name { get; set; }
+    public bool IsChecked { get; set; }
+
+    public List<SampleData> Chidren { get; set; }
+}
 }

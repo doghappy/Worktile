@@ -1,12 +1,10 @@
-﻿using Microsoft.Toolkit.Uwp.Helpers;
-using Newtonsoft.Json;
+﻿using System;
+using Microsoft.Toolkit.Uwp.Helpers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -15,6 +13,9 @@ using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Common.WtRequestClient;
+using Windows.UI.Xaml.Input;
+using Worktile.Views.Message.Dialog;
+using Worktile.ApiModels;
 
 namespace Worktile.Views.Message
 {
@@ -54,6 +55,34 @@ namespace Worktile.Views.Message
                     _selectedSession = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSession)));
                     ContentFrame.Navigate(typeof(MessageDetailPage), value);
+                }
+            }
+        }
+
+        private Windows.UI.Xaml.Visibility _starVisibility;
+        public Windows.UI.Xaml.Visibility StarVisibility
+        {
+            get => _starVisibility;
+            set
+            {
+                if (_starVisibility != value)
+                {
+                    _starVisibility = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StarVisibility)));
+                }
+            }
+        }
+
+        private Windows.UI.Xaml.Visibility _unStarVisibility;
+        public Windows.UI.Xaml.Visibility UnStarVisibility
+        {
+            get => _unStarVisibility;
+            set
+            {
+                if (_unStarVisibility != value)
+                {
+                    _unStarVisibility = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnStarVisibility)));
                 }
             }
         }
@@ -168,20 +197,159 @@ namespace Worktile.Views.Message
 
             Worktile.MainPage.UnreadBadge += Sessions.Sum(s => s.UnRead);
             Worktile.MainPage.OnMessageReceived += OnMessageReceived;
+            Worktile.MainPage.OnFeedReceived += OnFeedReceived;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
             Worktile.MainPage.OnMessageReceived -= OnMessageReceived;
+            Worktile.MainPage.OnFeedReceived -= OnFeedReceived;
         }
 
         private async void OnMessageReceived(Models.Message.Message apiMsg)
         {
-            if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
             {
-                var session = Sessions.Single(s => s.Id == apiMsg.To.Id);
-                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => session.UnRead += 1));
+                var session = Sessions.SingleOrDefault(s => s.Id == apiMsg.To.Id);
+                if (session == null)
+                {
+                    if (apiMsg.Body.At != null && apiMsg.Body.At.Count == 1)
+                    {
+                        var client = new WtHttpClient();
+                        //api/channels/5c726867ccb4bd72fc022399
+                        var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
+
+                        session = new Session
+                        {
+                            Id = data.Data.Id,
+                            DisplayName = data.Data.To.DisplayName,
+                            Initials = AvatarHelper.GetInitials(data.Data.To.DisplayName),
+                            ProfilePicture = AvatarHelper.GetAvatarBitmap(data.Data.To.Avatar, AvatarSize.X80, FromType.User),
+                            Background = AvatarHelper.GetColorBrush(data.Data.To.DisplayName),
+                            Starred = data.Data.Starred,
+                            LatestMessageAt = data.Data.LatestMessageAt,
+                            Show = data.Data.Show,
+                            UnRead = 1,
+                            NamePinyin = data.Data.To.DisplayName,
+                            Component = data.Data.Component,
+                            Name = data.Data.To.Name,
+                            Type = SessionType.Session,
+                            IsBot = data.Data.IsBot
+                        };
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
+                    {
+                        session.UnRead += 1;
+                        Sessions.Remove(session);
+                    }
+                }
+                Sessions.Insert(0, session);
+            }));
+        }
+
+        private async void OnFeedReceived(Feed feed)
+        {
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+            {
+                if (feed.Type == FeedType.NewChannel)
+                {
+                    string url = $"/api/channels/{feed.ChannelId}";
+                    var client = new WtHttpClient();
+                    var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
+                    var session = new Session
+                    {
+                        Id = data.Data.Id,
+                        DisplayName = data.Data.Name,
+                        Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(data.Data.Color)),
+                        Starred = data.Data.Starred,
+                        LatestMessageAt = data.Data.LatestMessageAt,
+                        Show = data.Data.Show,
+                        UnRead = data.Data.UnRead,
+                        NamePinyin = data.Data.NamePinyin,
+                        Type = SessionType.Channel
+                    };
+                    if (data.Data.Visibility == Enums.Visibility.Public)
+                    {
+                        session.Initials = "\uE64E";
+                        session.DefaultIcon = "\uE64E";
+                        session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
+                    }
+                    else
+                    {
+                        session.Initials = "\uE748";
+                        session.DefaultIcon = "\uE748";
+                        session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
+                    }
+                    Sessions.Insert(0, session);
+                }
+            }));
+        }
+
+        private Session _rightTappedSession;
+
+        private void ListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            var listView = sender as ListView;
+            ListViewItemMenuFlyout.ShowAt(listView, e.GetPosition(listView));
+            _rightTappedSession = ((FrameworkElement)e.OriginalSource).DataContext as Session;
+            if (_rightTappedSession.Starred)
+            {
+                StarVisibility = Windows.UI.Xaml.Visibility.Collapsed;
+                UnStarVisibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                StarVisibility = Windows.UI.Xaml.Visibility.Visible;
+                UnStarVisibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+        }
+
+        private async void CreateGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CreateGroupDialog();
+            await dialog.ShowAsync();
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            string url = $"/api/sessions/{_rightTappedSession.Id}";
+            var client = new WtHttpClient();
+            var data = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+            if (data.Code == 200 && data.Data)
+            {
+                Sessions.Remove(_rightTappedSession);
+            }
+        }
+
+        private async void StarButton_Click(object sender, RoutedEventArgs e)
+        {
+            string sessionType = _rightTappedSession.Type.ToString().ToLower();
+            string url = $"/api/{sessionType}s/{_rightTappedSession.Id}/star";
+            var client = new WtHttpClient();
+            var data = await client.PutAsync<ApiDataResponse<bool>>(url);
+            if (data.Code == 200 && data.Data)
+            {
+                _rightTappedSession.Starred = true;
+            }
+        }
+
+        private async void UnStarButton_Click(object sender, RoutedEventArgs e)
+        {
+            string sessionType = _rightTappedSession.Type.ToString().ToLower();
+            string url = $"/api/{sessionType}s/{_rightTappedSession.Id}/unstar";
+            var client = new WtHttpClient();
+            var data = await client.PutAsync<ApiDataResponse<bool>>(url);
+            if (data.Code == 200 && data.Data)
+            {
+                _rightTappedSession.Starred = false;
             }
         }
     }

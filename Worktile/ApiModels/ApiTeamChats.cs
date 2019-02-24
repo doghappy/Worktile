@@ -177,7 +177,7 @@ namespace Worktile.ApiModels.ApiTeamChats
         [JsonProperty("preferences")]
         public Preferences Preferences { get; set; }
 
-        [JsonProperty("preference", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("preference")]
         public Preference Preference { get; set; }
     }
 
@@ -310,7 +310,7 @@ namespace Worktile.ApiModels.ApiTeamChats
         [JsonProperty("is_bot")]
         public bool IsBot { get; set; }
 
-        [JsonProperty("latest_message_id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("latest_message_id")]
         public string LatestMessageId { get; set; }
 
         [JsonProperty("starred")]

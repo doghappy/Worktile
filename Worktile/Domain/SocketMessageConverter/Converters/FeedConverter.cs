@@ -2,14 +2,14 @@
 
 namespace Worktile.Domain.SocketMessageConverter.Converters
 {
-    class FeedConverter : ISocketConverter
+    class MessageConverter : ISocketConverter
     {
-        public FeedConverter()
+        public MessageConverter()
         {
-            _regex = new Regex("^42/message,\\[\"feed\",(.+)\\]$");
+            _regex = new Regex("^42/message,\\[\"message\",(.+)\\]$");
         }
 
-        const string TEMPLATE = "42/message,[\"feed\",$]";
+        const string TEMPLATE = "42/message,[\"message\",$]";
         readonly Regex _regex;
 
         public bool IsMatch(string rawMessage) => _regex.IsMatch(rawMessage);

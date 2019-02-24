@@ -6,28 +6,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mission="using:Worktile.WtControls.Mission"
-    xmlns:wtcontrols="using:Worktile.WtControls"
     xmlns:tethys="using:Worktile.Tethys"
-    xmlns:controls="using:Worktile.Controls"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Worktile.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="32" Orientation="Horizontal">
-        <Button Content="flyout2">
-            <Button.Flyout>
-                <Flyout>
-                    <winui:NavigationView x:Name="nvSample" PaneDisplayMode="Top">
-                        <winui:NavigationView.MenuItems>
-                            <winui:NavigationViewItem Icon="Play" Content="Menu Item1" Tag="SamplePage1" />
-                            <winui:NavigationViewItem Icon="Save" Content="Menu Item2" Tag="SamplePage2" />
-                            <winui:NavigationViewItem Icon="Refresh" Content="Menu Item3" Tag="SamplePage3" />
-                            <winui:NavigationViewItem Icon="Download" Content="Menu Item4" Tag="SamplePage4" />
-                        </winui:NavigationView.MenuItems>
-                        <Frame x:Name="contentFrame"/>
-                    </winui:NavigationView>
-                </Flyout>
-            </Button.Flyout>
-        </Button>
+    <StackPanel Padding="32">
+        <controls:MemberPicker/>
+
+        <winui:TreeView ItemsSource="{x:Bind SampleDatas}" SelectionMode="Multiple">
+            <winui:TreeView.ItemTemplate>
+                <DataTemplate x:DataType="local:SampleData">
+                    <winui:TreeViewItem ItemsSource="{x:Bind Chidren}"
+                                Content="{x:Bind Name}"
+                                IsExpanded="True"
+                                IsSelected="{x:Bind IsChecked}"/>
+                </DataTemplate>
+            </winui:TreeView.ItemTemplate>
+        </winui:TreeView>
+        <Polygon Points="0,0 8,0 0,8" Fill="{ThemeResource SystemAccentColor}" VerticalAlignment="Top"/>
     </StackPanel>
 </Page>

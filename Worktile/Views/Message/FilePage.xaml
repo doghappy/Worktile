@@ -20,6 +20,7 @@
         <Button Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"
                 Background="{ThemeResource SystemAccentColor}"
                 HorizontalAlignment="Right"
+                Click="UploadButton_Click"
                 Margin="12">
             <StackPanel Orientation="Horizontal">
                 <FontIcon Style="{StaticResource LcIcon}" Glyph="&#xe60c;" FontSize="14"/>
@@ -111,17 +112,27 @@
                                             <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe670;"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="下载">
+                                    <MenuFlyoutItem Text="下载..."
+                                                    x:Name="DownloadMenuFlyoutItem"
+                                                    x:Load="{x:Bind IsEnableDownload}"
+                                                    Click="Download_Click"
+                                                    DataContext="{x:Bind}">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe628;"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="转存到网盘">
+                                    <MenuFlyoutItem Text="转存到网盘"
+                                                    x:Name="SaveToDriveMenuFlyoutItem"
+                                                    x:Load="{x:Bind IsEnableDownload}">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe61c;"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="删除">
+                                    <MenuFlyoutItem Text="删除..."
+                                                    x:Name="DeleteMenuFlyoutItem"
+                                                    x:Load="{x:Bind IsEnableDelete}"
+                                                    Click="DeleteButton_Click"
+                                                    DataContext="{x:Bind}">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe639;"/>
                                         </MenuFlyoutItem.Icon>

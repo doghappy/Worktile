@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Common;
+using System.Linq;
 
 namespace Worktile
 {
@@ -85,22 +86,24 @@ namespace Worktile
             {
                 var toastActivationArgs = e as ToastNotificationActivatedEventArgs;
                 QueryString args = QueryString.Parse(toastActivationArgs.Argument);
-
-                string msg = toastActivationArgs.UserInput["msg"].ToString().Trim();
-                if (msg != string.Empty && args["action"] == "reply")
+                if (args.Any())
                 {
-                    var data = new
+                    string msg = toastActivationArgs.UserInput["msg"].ToString().Trim();
+                    if (msg != string.Empty && args["action"] == "reply")
                     {
-                        fromType = 1,
-                        from = args["from"],
-                        to = args["to"],
-                        toType = int.Parse(args["toType"]),
-                        messageType = 1,
-                        client = 1,
-                        markdown = 1,
-                        content = toastActivationArgs.UserInput["msg"].ToString()
-                    };
-                    await MainPage.SendMessageAsync(SocketMessageType.Message, data);
+                        var data = new
+                        {
+                            fromType = 1,
+                            from = args["from"],
+                            to = args["to"],
+                            toType = int.Parse(args["toType"]),
+                            messageType = 1,
+                            client = 1,
+                            markdown = 1,
+                            content = toastActivationArgs.UserInput["msg"].ToString()
+                        };
+                        await MainPage.SendMessageAsync(SocketMessageType.Message, data);
+                    }
                 }
                 // If we're loading the app for the first time, place the main page on
                 // the back stack so that user can go back after they've been

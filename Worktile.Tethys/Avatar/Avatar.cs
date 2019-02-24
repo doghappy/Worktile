@@ -75,7 +75,7 @@ namespace Worktile.Tethys
             }
         }
         public static readonly DependencyProperty SizeProperty =
-            DependencyProperty.Register("Size", typeof(double), typeof(Avatar), new PropertyMetadata(100));
+            DependencyProperty.Register("Size", typeof(double), typeof(Avatar), new PropertyMetadata(100d));
 
         public string BadgeIcon
         {

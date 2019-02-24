@@ -14,20 +14,6 @@ namespace Worktile.Views.Message
         public DateTime Time { get; set; }
         public string Content { get; set; }
         public bool IsShowPin => Type != MessageType.Activity;
-        //public bool IsShowPin { get; set; }
-        //private bool _isShowPin;
-        //public bool IsShowPin
-        //{
-        //    get => _isShowPin;
-        //    set
-        //    {
-        //        if (_isShowPin != value)
-        //        {
-        //            _isShowPin = value;
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsShowPin)));
-        //        }
-        //    }
-        //}
 
         private bool _isPinned;
         public bool IsPinned

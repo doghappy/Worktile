@@ -10,6 +10,7 @@ namespace Worktile.Domain.SocketMessageConverter
             _converters = new ISocketConverter[]
             {
                 new MessageConverter(),
+                new FeedConverter(),
                 new OpenConverter()
             };
         }

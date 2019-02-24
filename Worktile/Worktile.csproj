@@ -189,8 +189,17 @@
     <Compile Include="Controls\Emoji\EmojiSmileysPage.xaml.cs">
       <DependentUpon>EmojiSmileysPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MemberPicker.xaml.cs">
+      <DependentUpon>MemberPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MemberPickerEditor.xaml.cs">
+      <DependentUpon>MemberPickerEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\MessageControl.xaml.cs">
       <DependentUpon>MessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WtColorPicker.xaml.cs">
+      <DependentUpon>WtColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanReserveConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
@@ -232,12 +241,21 @@
     <Compile Include="Domain\Mission\Kanban\PropertyReader.cs" />
     <Compile Include="Domain\Mission\Kanban\KanbanDataReader.cs" />
     <Compile Include="Domain\SocketMessageConverter\Converters\ISocketConverter.cs" />
+    <Compile Include="Domain\SocketMessageConverter\Converters\FeedConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\Converters\MessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\Converters\OpenConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="Enums\AvatarSize.cs" />
+    <Compile Include="Models\Department\DepartmentNode.cs" />
+    <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
+    <Compile Include="Models\Department\DepartmentNodeType.cs" />
     <Compile Include="Models\IMemberBase.cs" />
+    <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
+      <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Feed.cs" />
+    <Compile Include="Views\Message\FeedType.cs" />
     <Compile Include="Views\Message\FileItem.cs" />
     <Compile Include="Views\Message\FromType.cs" />
     <Compile Include="Enums\RoleType.cs" />
@@ -528,7 +546,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\MemberPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MemberPickerEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Message\MessageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WtColorPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -553,6 +583,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\Dialog\CreateGroupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

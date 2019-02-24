@@ -10,5 +10,7 @@ namespace Worktile.Views.Message
         public string Size { get; set; }
         public TethysAvatar Avatar { get; set; }
         public DateTime DateTime { get; set; }
+        public bool IsEnableDelete { get; set; }
+        public bool IsEnableDownload { get; set; }
     }
 }

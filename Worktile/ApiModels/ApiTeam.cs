@@ -195,7 +195,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long Status { get; set; }
 
         [JsonProperty("role")]
-        public long Role { get; set; }
+        public int Role { get; set; }
 
         [JsonProperty("mobile")]
         public string Mobile { get; set; }

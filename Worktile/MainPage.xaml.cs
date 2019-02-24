@@ -189,6 +189,7 @@ namespace Worktile
 
         private static MessageWebSocket _socket;
         public static event Action<Models.Message.Message> OnMessageReceived;
+        public static event Action<Views.Message.Feed> OnFeedReceived;
 
         private async Task ConnectSocketAsync()
         {
@@ -254,6 +255,9 @@ namespace Worktile
                         case nameof(MessageConverter):
                             MessageReceived(msg);
                             break;
+                        case nameof(FeedConverter):
+                            FeedReceived(msg);
+                            break;
                     }
                 }
             }
@@ -282,6 +286,12 @@ namespace Worktile
                     }
                 }
             }
+        }
+
+        private void FeedReceived(string msg)
+        {
+            var feed = JsonConvert.DeserializeObject<Views.Message.Feed>(msg);
+            OnFeedReceived?.Invoke(feed);
         }
 
         private static int _unreadBadge;
@@ -366,8 +376,12 @@ namespace Worktile
                             HintCrop = ToastGenericAppLogoCrop.Circle
                         }
                     }
-                },
-                Actions = new ToastActionsCustom()
+                }
+            };
+
+            if (apiMsg.Body.At != null && apiMsg.Body.At.Count == 1)
+            {
+                toastContent.Actions = new ToastActionsCustom()
                 {
                     Inputs =
                     {
@@ -385,9 +399,9 @@ namespace Worktile
                             TextBoxId = "msg"
                         }
                     }
-                },
-                Launch = "action=launch"
-            };
+                };
+                toastContent.Launch = "action=launch";
+            }
 
             // Create the toast notification
             var toastNotif = new ToastNotification(toastContent.GetXml());
