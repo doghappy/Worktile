@@ -15,7 +15,21 @@ namespace Worktile.Views.Message
         public BitmapImage ProfilePicture { get; set; }
         public SolidColorBrush Background { get; set; }
         public SessionType Type { get; set; }
-        public bool Starred { get; set; }
+
+        private bool _starred;
+        public bool Starred
+        {
+            get => _starred;
+            set
+            {
+                if (_starred != value)
+                {
+                    _starred = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Starred)));
+                }
+            }
+        }
+
         public DateTime LatestMessageAt { get; set; }
         public int Show { get; set; }
 

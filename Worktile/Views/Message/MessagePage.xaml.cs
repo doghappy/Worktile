@@ -59,6 +59,34 @@ namespace Worktile.Views.Message
             }
         }
 
+        private Windows.UI.Xaml.Visibility _starVisibility;
+        public Windows.UI.Xaml.Visibility StarVisibility
+        {
+            get => _starVisibility;
+            set
+            {
+                if (_starVisibility != value)
+                {
+                    _starVisibility = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StarVisibility)));
+                }
+            }
+        }
+
+        private Windows.UI.Xaml.Visibility _unStarVisibility;
+        public Windows.UI.Xaml.Visibility UnStarVisibility
+        {
+            get => _unStarVisibility;
+            set
+            {
+                if (_unStarVisibility != value)
+                {
+                    _unStarVisibility = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnStarVisibility)));
+                }
+            }
+        }
+
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
@@ -224,6 +252,16 @@ namespace Worktile.Views.Message
             var listView = sender as ListView;
             ListViewItemMenuFlyout.ShowAt(listView, e.GetPosition(listView));
             _rightTappedSession = ((FrameworkElement)e.OriginalSource).DataContext as Session;
+            if (_rightTappedSession.Starred)
+            {
+                StarVisibility = Windows.UI.Xaml.Visibility.Collapsed;
+                UnStarVisibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+            else
+            {
+                StarVisibility = Windows.UI.Xaml.Visibility.Visible;
+                UnStarVisibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
         }
 
         private async void CreateGroup_Click(object sender, RoutedEventArgs e)
@@ -240,6 +278,30 @@ namespace Worktile.Views.Message
             if (data.Code == 200 && data.Data)
             {
                 Sessions.Remove(_rightTappedSession);
+            }
+        }
+
+        private async void StarButton_Click(object sender, RoutedEventArgs e)
+        {
+            string sessionType = _rightTappedSession.Type.ToString().ToLower();
+            string url = $"/api/{sessionType}s/{_rightTappedSession.Id}/star";
+            var client = new WtHttpClient();
+            var data = await client.PutAsync<ApiDataResponse<bool>>(url);
+            if (data.Code == 200 && data.Data)
+            {
+                _rightTappedSession.Starred = true;
+            }
+        }
+
+        private async void UnStarButton_Click(object sender, RoutedEventArgs e)
+        {
+            string sessionType = _rightTappedSession.Type.ToString().ToLower();
+            string url = $"/api/{sessionType}s/{_rightTappedSession.Id}/unstar";
+            var client = new WtHttpClient();
+            var data = await client.PutAsync<ApiDataResponse<bool>>(url);
+            if (data.Code == 200 && data.Data)
+            {
+                _rightTappedSession.Starred = false;
             }
         }
     }
