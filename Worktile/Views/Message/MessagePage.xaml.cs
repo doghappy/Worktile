@@ -187,7 +187,7 @@ namespace Worktile.Views.Message
                     var client = new WtHttpClient();
                     var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
 
-                    Sessions.Insert(0, new Session
+                    session = new Session
                     {
                         Id = data.Data.Id,
                         DisplayName = data.Data.To.DisplayName,
@@ -203,29 +203,44 @@ namespace Worktile.Views.Message
                         Name = data.Data.To.Name,
                         Type = SessionType.Session,
                         IsBot = data.Data.IsBot
-                    });
+                    };
                 }
                 else
                 {
                     if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
                     {
                         session.UnRead += 1;
+                        Sessions.Remove(session);
                     }
                 }
+                Sessions.Insert(0, session);
             }));
         }
+
+        private Session _rightTappedSession;
 
         private void ListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             var listView = sender as ListView;
             ListViewItemMenuFlyout.ShowAt(listView, e.GetPosition(listView));
-            var data = ((FrameworkElement)e.OriginalSource).DataContext;
+            _rightTappedSession = ((FrameworkElement)e.OriginalSource).DataContext as Session;
         }
 
         private async void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new CreateGroupDialog();
             await dialog.ShowAsync();
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            string url = $"/api/sessions/{_rightTappedSession.Id}";
+            var client = new WtHttpClient();
+            var data = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+            if (data.Code == 200 && data.Data)
+            {
+                Sessions.Remove(_rightTappedSession);
+            }
         }
     }
 }
