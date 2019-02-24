@@ -241,6 +241,7 @@
     <Compile Include="Domain\Mission\Kanban\PropertyReader.cs" />
     <Compile Include="Domain\Mission\Kanban\KanbanDataReader.cs" />
     <Compile Include="Domain\SocketMessageConverter\Converters\ISocketConverter.cs" />
+    <Compile Include="Domain\SocketMessageConverter\Converters\FeedConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\Converters\MessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\Converters\OpenConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
@@ -253,6 +254,8 @@
     <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
       <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Message\Feed.cs" />
+    <Compile Include="Views\Message\FeedType.cs" />
     <Compile Include="Views\Message\FileItem.cs" />
     <Compile Include="Views\Message\FromType.cs" />
     <Compile Include="Enums\RoleType.cs" />

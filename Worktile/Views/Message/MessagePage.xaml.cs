@@ -197,12 +197,14 @@ namespace Worktile.Views.Message
 
             Worktile.MainPage.UnreadBadge += Sessions.Sum(s => s.UnRead);
             Worktile.MainPage.OnMessageReceived += OnMessageReceived;
+            Worktile.MainPage.OnFeedReceived += OnFeedReceived;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
             Worktile.MainPage.OnMessageReceived -= OnMessageReceived;
+            Worktile.MainPage.OnFeedReceived -= OnFeedReceived;
         }
 
         private async void OnMessageReceived(Models.Message.Message apiMsg)
@@ -212,26 +214,34 @@ namespace Worktile.Views.Message
                 var session = Sessions.SingleOrDefault(s => s.Id == apiMsg.To.Id);
                 if (session == null)
                 {
-                    var client = new WtHttpClient();
-                    var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
-
-                    session = new Session
+                    if (apiMsg.Body.At != null && apiMsg.Body.At.Count == 1)
                     {
-                        Id = data.Data.Id,
-                        DisplayName = data.Data.To.DisplayName,
-                        Initials = AvatarHelper.GetInitials(data.Data.To.DisplayName),
-                        ProfilePicture = AvatarHelper.GetAvatarBitmap(data.Data.To.Avatar, AvatarSize.X80, FromType.User),
-                        Background = AvatarHelper.GetColorBrush(data.Data.To.DisplayName),
-                        Starred = data.Data.Starred,
-                        LatestMessageAt = data.Data.LatestMessageAt,
-                        Show = data.Data.Show,
-                        UnRead = 1,
-                        NamePinyin = data.Data.To.DisplayName,
-                        Component = data.Data.Component,
-                        Name = data.Data.To.Name,
-                        Type = SessionType.Session,
-                        IsBot = data.Data.IsBot
-                    };
+                        var client = new WtHttpClient();
+                        //api/channels/5c726867ccb4bd72fc022399
+                        var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
+
+                        session = new Session
+                        {
+                            Id = data.Data.Id,
+                            DisplayName = data.Data.To.DisplayName,
+                            Initials = AvatarHelper.GetInitials(data.Data.To.DisplayName),
+                            ProfilePicture = AvatarHelper.GetAvatarBitmap(data.Data.To.Avatar, AvatarSize.X80, FromType.User),
+                            Background = AvatarHelper.GetColorBrush(data.Data.To.DisplayName),
+                            Starred = data.Data.Starred,
+                            LatestMessageAt = data.Data.LatestMessageAt,
+                            Show = data.Data.Show,
+                            UnRead = 1,
+                            NamePinyin = data.Data.To.DisplayName,
+                            Component = data.Data.Component,
+                            Name = data.Data.To.Name,
+                            Type = SessionType.Session,
+                            IsBot = data.Data.IsBot
+                        };
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 else
                 {
@@ -242,6 +252,44 @@ namespace Worktile.Views.Message
                     }
                 }
                 Sessions.Insert(0, session);
+            }));
+        }
+
+        private async void OnFeedReceived(Feed feed)
+        {
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+            {
+                if (feed.Type == FeedType.NewChannel)
+                {
+                    string url = $"/api/channels/{feed.ChannelId}";
+                    var client = new WtHttpClient();
+                    var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
+                    var session = new Session
+                    {
+                        Id = data.Data.Id,
+                        DisplayName = data.Data.Name,
+                        Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(data.Data.Color)),
+                        Starred = data.Data.Starred,
+                        LatestMessageAt = data.Data.LatestMessageAt,
+                        Show = data.Data.Show,
+                        UnRead = data.Data.UnRead,
+                        NamePinyin = data.Data.NamePinyin,
+                        Type = SessionType.Channel
+                    };
+                    if (data.Data.Visibility == Enums.Visibility.Public)
+                    {
+                        session.Initials = "\uE64E";
+                        session.DefaultIcon = "\uE64E";
+                        session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
+                    }
+                    else
+                    {
+                        session.Initials = "\uE748";
+                        session.DefaultIcon = "\uE748";
+                        session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
+                    }
+                    Sessions.Insert(0, session);
+                }
             }));
         }
 
