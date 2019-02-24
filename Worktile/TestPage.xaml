@@ -25,5 +25,6 @@
                 </DataTemplate>
             </winui:TreeView.ItemTemplate>
         </winui:TreeView>
+        <Polygon Points="0,0 8,0 0,8" Fill="{ThemeResource SystemAccentColor}" VerticalAlignment="Top"/>
     </StackPanel>
 </Page>

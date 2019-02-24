@@ -99,33 +99,44 @@
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="0"/>
                         </Style>
                     </ListView.ItemContainerStyle>
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Session">
-                            <Grid Padding="0 8" HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <tethys:Avatar Size="30"
+                            <Grid>
+                                <Grid Padding="12 8" HorizontalAlignment="Stretch">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <tethys:Avatar Size="30"
                                                Foreground="White"
                                                Source="{x:Bind ProfilePicture}"
                                                DisplayName="{x:Bind DisplayName}"
                                                BadgeIcon="{x:Bind DefaultIcon}"
                                                Background="{x:Bind Background}"
                                                BadgeIconFontFamily="{x:Bind AvatarFont}"/>
-                                <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="{x:Bind DisplayName}"/>
-                                <Border Grid.Column="1"
+
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="{x:Bind DisplayName}"/>
+                                    <Border Grid.Column="1"
                                         Visibility="{x:Bind UnRead, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter='!'}"
                                         Padding="8 0"
                                         Background="{StaticResource DangerBrush}"
                                         CornerRadius="8"
                                         VerticalAlignment="Top"
                                         HorizontalAlignment="Right">
-                                    <TextBlock Text="{x:Bind UnRead, Mode=OneWay}" FontSize="12" Foreground="White"/>
-                                </Border>
+                                        <TextBlock Text="{x:Bind UnRead, Mode=OneWay}" FontSize="12" Foreground="White"/>
+                                    </Border>
+                                </Grid>
+                                <Polygon x:Name="StarredPolygon"
+                                         x:Load="{x:Bind Starred}"
+                                         Points="0,0 8,0 0,8"
+                                         Fill="{ThemeResource SystemAccentColor}"
+                                         VerticalAlignment="Top"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
