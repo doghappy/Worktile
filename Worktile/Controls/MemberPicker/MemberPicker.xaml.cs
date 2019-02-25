@@ -22,10 +22,10 @@ namespace Worktile.Controls
         public MemberPicker()
         {
             InitializeComponent();
-            SelectedAvatars = new ObservableCollection<TethysAvatar>();
+            //SelectedAvatars = new ObservableCollection<TethysAvatar>();
         }
 
-        public ObservableCollection<TethysAvatar> SelectedAvatars { get; }
+        public ObservableCollection<TethysAvatar> SelectedAvatars { get; set; }
 
         private void MemberPickerEditor_OnPrimaryButtonClick(MemberPickerEditor editor)
         {

@@ -93,62 +93,13 @@ namespace Worktile.Views.Message
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeamChats>("/api/team/chats");
             var list = new List<Session>();
-            foreach (var item in data.Data.Channels)
+            var channels = data.Data.Channels.Concat(data.Data.Groups);
+            foreach (var item in channels)
             {
-                var session = new Session
-                {
-                    Id = item.Id,
-                    DisplayName = item.Name,
-                    Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color)),
-                    Starred = item.Starred,
-                    LatestMessageAt = item.LatestMessageAt,
-                    Show = item.Show,
-                    UnRead = item.UnRead,
-                    NamePinyin = item.NamePinyin,
-                    Type = SessionType.Channel
-                };
-                if (item.Visibility == Enums.Visibility.Public)
-                {
-                    session.Initials = "\uE64E";
-                    session.DefaultIcon = "\uE64E";
-                    session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-                }
-                else
-                {
-                    session.Initials = "\uE748";
-                    session.DefaultIcon = "\uE748";
-                    session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
-                }
+                var session = GetSession(item);
                 list.Add(session);
             }
-            foreach (var item in data.Data.Groups)
-            {
-                var session = new Session
-                {
-                    Id = item.Id,
-                    DisplayName = item.Name,
-                    Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color)),
-                    Starred = item.Starred,
-                    LatestMessageAt = item.LatestMessageAt,
-                    Show = item.Show,
-                    UnRead = item.UnRead,
-                    NamePinyin = item.NamePinyin,
-                    Type = SessionType.Channel
-                };
-                if (item.Visibility == Enums.Visibility.Public)
-                {
-                    session.Initials = "\uE64E";
-                    session.DefaultIcon = "\uE64E";
-                    session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-                }
-                else
-                {
-                    session.Initials = "\uE748";
-                    session.DefaultIcon = "\uE748";
-                    session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
-                }
-                list.Add(session);
-            }
+            
             foreach (var item in data.Data.Sessions)
             {
                 list.Add(new Session
@@ -207,6 +158,35 @@ namespace Worktile.Views.Message
             Worktile.MainPage.OnFeedReceived -= OnFeedReceived;
         }
 
+        private Session GetSession(Channel channel)
+        {
+            var session = new Session
+            {
+                Id = channel.Id,
+                DisplayName = channel.Name,
+                Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(channel.Color)),
+                Starred = channel.Starred,
+                LatestMessageAt = channel.LatestMessageAt,
+                Show = channel.Show,
+                UnRead = channel.UnRead,
+                NamePinyin = channel.NamePinyin,
+                Type = SessionType.Channel
+            };
+            if (channel.Visibility == Enums.Visibility.Public)
+            {
+                session.Initials = "\uE64E";
+                session.DefaultIcon = "\uE64E";
+                session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
+            }
+            else
+            {
+                session.Initials = "\uE748";
+                session.DefaultIcon = "\uE748";
+                session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
+            }
+            return session;
+        }
+
         private async void OnMessageReceived(Models.Message.Message apiMsg)
         {
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
@@ -217,7 +197,6 @@ namespace Worktile.Views.Message
                     if (apiMsg.Body.At != null && apiMsg.Body.At.Count == 1)
                     {
                         var client = new WtHttpClient();
-                        //api/channels/5c726867ccb4bd72fc022399
                         var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
 
                         session = new Session
@@ -292,8 +271,11 @@ namespace Worktile.Views.Message
                 }
                 else if (feed.Type == FeedType.RemoveChannel)
                 {
-                    var session = Sessions.Single(s => s.Id == feed.ChannelId);
-                    Sessions.Remove(session);
+                    var session = Sessions.SingleOrDefault(s => s.Id == feed.ChannelId);
+                    if (session != null)
+                    {
+                        Sessions.Remove(session);
+                    }
                 }
             }));
         }
@@ -320,6 +302,11 @@ namespace Worktile.Views.Message
         private async void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new CreateGroupDialog();
+            dialog.OnCreateSuccess += channel =>
+            {
+                var session = GetSession(channel);
+                Sessions.Insert(0, session);
+            };
             await dialog.ShowAsync();
         }
 
