@@ -99,7 +99,7 @@ namespace Worktile.Views.Message
                 var session = GetSession(item);
                 list.Add(session);
             }
-            
+
             foreach (var item in data.Data.Sessions)
             {
                 list.Add(new Session
@@ -217,9 +217,12 @@ namespace Worktile.Views.Message
                             IsBot = data.Data.IsBot
                         };
                     }
-                    else
+                    else if(apiMsg.Type == MessageType.Activity)
                     {
-                        return;
+                        var client = new WtHttpClient();
+                        string url = $"/api/channels/{apiMsg.To.Id}";
+                        var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
+                        session = GetSession(data.Data);
                     }
                 }
                 else
@@ -273,6 +276,14 @@ namespace Worktile.Views.Message
                 {
                     var session = Sessions.SingleOrDefault(s => s.Id == feed.ChannelId);
                     if (session != null)
+                    {
+                        Sessions.Remove(session);
+                    }
+                }
+                else if (feed.Type == FeedType.RemoveChannelMember)
+                {
+                    var session = Sessions.Single(s => s.Id == feed.ChannelId);
+                    if (feed.Uid == DataSource.ApiUserMeData.Me.Uid)
                     {
                         Sessions.Remove(session);
                     }

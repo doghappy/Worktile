@@ -12,8 +12,7 @@
     CloseButtonText="取消"
     DefaultButton="Primary"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
     <ScrollViewer Padding="12 0">
         <Grid>

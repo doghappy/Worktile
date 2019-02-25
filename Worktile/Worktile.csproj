@@ -254,6 +254,9 @@
     <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
       <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Message\Dialog\JoinGroupDialog.xaml.cs">
+      <DependentUpon>JoinGroupDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\Feed.cs" />
     <Compile Include="Views\Message\FeedType.cs" />
     <Compile Include="Views\Message\FileItem.cs" />
@@ -587,6 +590,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\Dialog\CreateGroupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\Dialog\JoinGroupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

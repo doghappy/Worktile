@@ -180,10 +180,6 @@ namespace Worktile.Views.Message.Dialog
                 args.Cancel = true;
             }
         }
-
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
     }
 
     class WtVisibility

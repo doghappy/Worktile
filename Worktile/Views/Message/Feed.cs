@@ -5,10 +5,13 @@ namespace Worktile.Views.Message
     public class Feed
     {
         [JsonProperty("id")]
-        public object Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("from")]
         public string From { get; set; }
+
+        [JsonProperty("uid")]
+        public string Uid { get; set; }
 
         [JsonProperty("type")]
         public FeedType Type { get; set; }
