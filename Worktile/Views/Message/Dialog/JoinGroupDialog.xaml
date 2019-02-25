@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:message="using:Worktile.Views.Message"
     xmlns:tethys="using:Worktile.Tethys"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
     Title="加入群组"
     PrimaryButtonText="关闭"
@@ -14,18 +15,28 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     Loaded="ContentDialog_Loaded">
 
-    <Grid>
+    <ContentDialog.Resources>
+        <cvt:BooleanReserveConverter x:Key="BooleanReserveConverter"/>
+        <x:Double x:Key="ContentDialogMaxWidth">640</x:Double>
+        <x:Double x:Key="ContentDialogMinHeight">756</x:Double>
+    </ContentDialog.Resources>
+
+    <Grid Width="580">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <AutoSuggestBox/>
+        <AutoSuggestBox Margin="0 0 0 12"
+                        QueryIcon="Find"
+                        PlaceholderText="搜索组群..."
+                        TextChanged="AutoSuggestBox_TextChanged"/>
 
         <ListView Grid.Row="1" ItemsSource="{x:Bind Sessions}" SelectionMode="None">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Padding" Value="12"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 </Style>
             </ListView.ItemContainerStyle>
 
@@ -37,7 +48,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <tethys:Avatar Size="40"
                                        Foreground="White"
                                        Source="{x:Bind ProfilePicture}"
@@ -59,6 +70,26 @@
                                 <Run Text="{x:Bind CreatedAt}"/>
                             </TextBlock>
                         </Grid>
+
+                        <Button x:Name="JoinButton"
+                                x:Load="{x:Bind Joined, Converter={StaticResource BooleanReserveConverter}}"
+                                Grid.Column="2"
+                                Style="{ThemeResource TextBlockButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Add"/>
+                                <TextBlock Margin="8 0 0 0" Text="加入"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="SendMessageButton"
+                                x:Load="{x:Bind Joined}"
+                                Grid.Column="2"
+                                Style="{ThemeResource TextBlockButtonStyle}">
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Message"/>
+                                <TextBlock Margin="8 0 0 0" Text="发消息"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

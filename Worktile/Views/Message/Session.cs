@@ -60,6 +60,7 @@ namespace Worktile.Views.Message
 
         public Member CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
+        public bool Joined { get; set; }
     }
 
     public enum SessionType

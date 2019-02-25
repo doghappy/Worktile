@@ -19,6 +19,7 @@ namespace Worktile.Common
                 UnRead = channel.UnRead,
                 NamePinyin = channel.NamePinyin,
                 Type = SessionType.Channel,
+                Joined = channel.Joined,
                 CreatedBy = new Models.Member.Member
                 {
                     DisplayName = channel.CreatedBy.DisplayName,

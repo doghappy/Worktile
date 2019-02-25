@@ -68,10 +68,10 @@ namespace Worktile.ApiModels.ApiTeamChats
         public Visibility Visibility { get; set; }
 
         [JsonProperty("disabled")]
-        public int Disabled { get; set; }
+        public bool Disabled { get; set; }
 
         [JsonProperty("joined")]
-        public int Joined { get; set; }
+        public bool Joined { get; set; }
 
         [JsonProperty("starred")]
         public bool Starred { get; set; }
