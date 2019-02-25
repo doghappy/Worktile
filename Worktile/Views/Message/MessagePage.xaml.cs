@@ -290,6 +290,11 @@ namespace Worktile.Views.Message
                     }
                     Sessions.Insert(0, session);
                 }
+                else if (feed.Type == FeedType.RemoveChannel)
+                {
+                    var session = Sessions.Single(s => s.Id == feed.ChannelId);
+                    Sessions.Remove(session);
+                }
             }));
         }
 
