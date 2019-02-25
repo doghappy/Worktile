@@ -5,6 +5,8 @@
     xmlns:local="using:Worktile.Views.Message.Dialog"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:message="using:Worktile.Views.Message"
+    xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
     Title="加入群组"
     PrimaryButtonText="关闭"
@@ -20,8 +22,48 @@
 
         <AutoSuggestBox/>
 
-        <ListView Grid.Row="1">
-            
+        <ListView Grid.Row="1" ItemsSource="{x:Bind Sessions}" SelectionMode="None">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="12"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="message:Session">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <tethys:Avatar Size="40"
+                                       Foreground="White"
+                                       Source="{x:Bind ProfilePicture}"
+                                       DisplayName="{x:Bind DisplayName}"
+                                       BadgeIcon="{x:Bind DefaultIcon}"
+                                       Background="{x:Bind Background}"
+                                       BadgeIconFontFamily="{x:Bind AvatarFont}"/>
+
+                        <Grid Grid.Column="1" Padding="8 0 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="{x:Bind DisplayName}"/>
+                            <TextBlock Grid.Row="1" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+                                <Run Text="{x:Bind CreatedBy.DisplayName}"/>
+                                <Run Text="创建于"/>
+                                <Run Text="{x:Bind CreatedAt}"/>
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
+
+        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </ContentDialog>

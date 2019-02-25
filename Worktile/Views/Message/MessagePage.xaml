@@ -46,7 +46,7 @@
                                             <FontIcon Glyph="&#xEBDA;"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="加入组群">
+                                    <MenuFlyoutItem Text="加入组群" Click="JoinGroup_Click">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Glyph="&#xE902;"/>
                                         </MenuFlyoutItem.Icon>
@@ -123,12 +123,12 @@
                                     </Grid.ColumnDefinitions>
 
                                     <tethys:Avatar Size="30"
-                                               Foreground="White"
-                                               Source="{x:Bind ProfilePicture}"
-                                               DisplayName="{x:Bind DisplayName}"
-                                               BadgeIcon="{x:Bind DefaultIcon}"
-                                               Background="{x:Bind Background}"
-                                               BadgeIconFontFamily="{x:Bind AvatarFont}"/>
+                                                   Foreground="White"
+                                                   Source="{x:Bind ProfilePicture}"
+                                                   DisplayName="{x:Bind DisplayName}"
+                                                   BadgeIcon="{x:Bind DefaultIcon}"
+                                                   Background="{x:Bind Background}"
+                                                   BadgeIconFontFamily="{x:Bind AvatarFont}"/>
 
                                     <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="{x:Bind DisplayName}"/>
                                     <Border Grid.Column="1"

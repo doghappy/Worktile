@@ -46,7 +46,8 @@ namespace Worktile.ApiModels.ApiTeamChats
         public string Color { get; set; }
 
         [JsonProperty("created_at")]
-        public int CreatedAt { get; set; }
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime CreatedAt { get; set; }
 
         [JsonProperty("created_by")]
         public ChannelCreatedBy CreatedBy { get; set; }

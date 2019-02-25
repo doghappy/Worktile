@@ -133,6 +133,7 @@
     <Compile Include="Common\JTokenHelper.cs" />
     <Compile Include="Common\KanbanPageHelper.cs" />
     <Compile Include="Common\Markdown.cs" />
+    <Compile Include="Common\MessageHelper.cs" />
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
@@ -251,6 +252,8 @@
     <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
     <Compile Include="Models\Department\DepartmentNodeType.cs" />
     <Compile Include="Models\IMemberBase.cs" />
+    <Compile Include="Models\Member\Member.cs" />
+    <Compile Include="Models\Member\Preference.cs" />
     <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
       <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
     </Compile>

@@ -151,7 +151,7 @@ namespace Worktile.Views.Message
                                 Foreground = new SolidColorBrush(Colors.White),
                                 Background = AvatarHelper.GetColorBrush(member.DisplayName)
                             },
-                            Content = GetContent(apiMsg),
+                            Content = MessageHelper.GetContent(apiMsg),
                             Time = apiMsg.CreatedAt,
                             IsPinned = false,
                             Type = apiMsg.Type
@@ -219,7 +219,7 @@ namespace Worktile.Views.Message
                         Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
                         Background = AvatarHelper.GetColorBrush(item.From.DisplayName)
                     },
-                    Content = GetContent(item),
+                    Content = MessageHelper.GetContent(item),
                     Time = item.CreatedAt,
                     Type = item.Type,
                     IsPinned = item.IsPinned
@@ -249,7 +249,7 @@ namespace Worktile.Views.Message
                         Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
                         Foreground = new SolidColorBrush(Colors.White)
                     },
-                    Content = GetContent(item),
+                    Content = MessageHelper.GetContent(item),
                     Time = item.CreatedAt,
                     Type = item.Type,
                     IsPinned = item.IsPinned
@@ -266,17 +266,6 @@ namespace Worktile.Views.Message
             }
             _latestId = apiData.Data.LatestId;
             _hasMore = apiData.Data.More;
-        }
-
-        public static string GetContent(Models.Message.Message msg)
-        {
-            switch (msg.Type)
-            {
-                case MessageType.Attachment:
-                case MessageType.Calendar:
-                    return msg.Body.InlineAttachment.Text;
-                default: return msg.Body.Content;
-            }
         }
 
         private async void MsgTextBox_KeyDown(object sender, KeyRoutedEventArgs e)

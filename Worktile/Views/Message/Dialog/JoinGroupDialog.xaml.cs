@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels;
 using Worktile.ApiModels.ApiTeamChats;
+using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Message.Dialog
@@ -25,12 +15,12 @@ namespace Worktile.Views.Message.Dialog
         public JoinGroupDialog()
         {
             InitializeComponent();
-            Channels = new ObservableCollection<Channel>();
+            Sessions = new ObservableCollection<Session>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Channel> Channels { get; }
+        public ObservableCollection<Session> Sessions { get; }
 
         private bool _isActive;
         public bool IsActive
@@ -58,7 +48,7 @@ namespace Worktile.Views.Message.Dialog
             var data = await client.GetAsync<ApiDataResponse<List<Channel>>>(url);
             foreach (var item in data.Data)
             {
-
+               Sessions.Add(MessageHelper.GetSession(item));
             }
             IsActive = false;
         }

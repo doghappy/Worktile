@@ -96,7 +96,7 @@ namespace Worktile.Views.Message
             var channels = data.Data.Channels.Concat(data.Data.Groups);
             foreach (var item in channels)
             {
-                var session = GetSession(item);
+                var session = MessageHelper.GetSession(item);
                 list.Add(session);
             }
 
@@ -158,35 +158,6 @@ namespace Worktile.Views.Message
             Worktile.MainPage.OnFeedReceived -= OnFeedReceived;
         }
 
-        private Session GetSession(Channel channel)
-        {
-            var session = new Session
-            {
-                Id = channel.Id,
-                DisplayName = channel.Name,
-                Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(channel.Color)),
-                Starred = channel.Starred,
-                LatestMessageAt = channel.LatestMessageAt,
-                Show = channel.Show,
-                UnRead = channel.UnRead,
-                NamePinyin = channel.NamePinyin,
-                Type = SessionType.Channel
-            };
-            if (channel.Visibility == Enums.Visibility.Public)
-            {
-                session.Initials = "\uE64E";
-                session.DefaultIcon = "\uE64E";
-                session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-            }
-            else
-            {
-                session.Initials = "\uE748";
-                session.DefaultIcon = "\uE748";
-                session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
-            }
-            return session;
-        }
-
         private async void OnMessageReceived(Models.Message.Message apiMsg)
         {
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
@@ -222,7 +193,7 @@ namespace Worktile.Views.Message
                         var client = new WtHttpClient();
                         string url = $"/api/channels/{apiMsg.To.Id}";
                         var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
-                        session = GetSession(data.Data);
+                        session = MessageHelper.GetSession(data.Data);
                     }
                 }
                 else
@@ -246,7 +217,7 @@ namespace Worktile.Views.Message
                     string url = $"/api/channels/{feed.ChannelId}";
                     var client = new WtHttpClient();
                     var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
-                    var session = GetSession(data.Data);
+                    var session = MessageHelper.GetSession(data.Data);
                     Sessions.Insert(0, session);
                 }
                 else if (feed.Type == FeedType.RemoveChannel)
@@ -292,9 +263,15 @@ namespace Worktile.Views.Message
             var dialog = new CreateGroupDialog();
             dialog.OnCreateSuccess += channel =>
             {
-                var session = GetSession(channel);
+                var session = MessageHelper.GetSession(channel);
                 Sessions.Insert(0, session);
             };
+            await dialog.ShowAsync();
+        }
+
+        private async void JoinGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new JoinGroupDialog();
             await dialog.ShowAsync();
         }
 
