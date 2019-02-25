@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Worktile.Common;
 using Worktile.Enums;
 
@@ -21,7 +22,7 @@ namespace Worktile.ApiModels.ApiTeamChats
         public List<Channel> Channels { get; set; }
 
         [JsonProperty("groups")]
-        public List<Group> Groups { get; set; }
+        public List<Channel> Groups { get; set; }
 
         [JsonProperty("sessions")]
         public List<Session> Sessions { get; set; }
@@ -45,7 +46,8 @@ namespace Worktile.ApiModels.ApiTeamChats
         public string Color { get; set; }
 
         [JsonProperty("created_at")]
-        public int CreatedAt { get; set; }
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTime CreatedAt { get; set; }
 
         [JsonProperty("created_by")]
         public ChannelCreatedBy CreatedBy { get; set; }
@@ -188,109 +190,6 @@ namespace Worktile.ApiModels.ApiTeamChats
 
         [JsonProperty("notify_mobile")]
         public int NotifyMobile { get; set; }
-    }
-
-    public partial class Group
-    {
-        [JsonProperty("_id")]
-        public string Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("name_pinyin")]
-        public string NamePinyin { get; set; }
-
-        [JsonProperty("desc")]
-        public string Desc { get; set; }
-
-        [JsonProperty("color")]
-        public string Color { get; set; }
-
-        [JsonProperty("created_at")]
-        public int CreatedAt { get; set; }
-
-        [JsonProperty("created_by")]
-        public GroupCreatedBy CreatedBy { get; set; }
-
-        [JsonProperty("members")]
-        public List<Member> Members { get; set; }
-
-        [JsonProperty("is_system")]
-        public int IsSystem { get; set; }
-
-        [JsonProperty("team")]
-        public string Team { get; set; }
-
-        [JsonProperty("status")]
-        public int Status { get; set; }
-
-        [JsonProperty("visibility")]
-        public Visibility Visibility { get; set; }
-
-        [JsonProperty("disabled")]
-        public int Disabled { get; set; }
-
-        [JsonProperty("joined")]
-        public int Joined { get; set; }
-
-        [JsonProperty("starred")]
-        public bool Starred { get; set; }
-
-        [JsonProperty("latest_message_id")]
-        public string LatestMessageId { get; set; }
-
-        [JsonProperty("latest_message_at")]
-        [JsonConverter(typeof(SafeUnixDateTimeConverter))]
-        public DateTime LatestMessageAt { get; set; }
-
-        [JsonProperty("unread")]
-        public int UnRead { get; set; }
-
-        [JsonProperty("show")]
-        public int Show { get; set; }
-    }
-
-    public partial class GroupCreatedBy
-    {
-        [JsonProperty("team")]
-        public string Team { get; set; }
-
-        [JsonProperty("uid")]
-        public string Uid { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("display_name")]
-        public string DisplayName { get; set; }
-
-        [JsonProperty("avatar")]
-        public string Avatar { get; set; }
-
-        [JsonProperty("role")]
-        public int Role { get; set; }
-
-        [JsonProperty("desc")]
-        public string Desc { get; set; }
-
-        [JsonProperty("short_code")]
-        public string ShortCode { get; set; }
-
-        [JsonProperty("email")]
-        public string Email { get; set; }
-
-        [JsonProperty("mobile")]
-        public string Mobile { get; set; }
-
-        [JsonProperty("status")]
-        public int Status { get; set; }
-
-        [JsonProperty("display_name_pinyin")]
-        public string DisplayNamePinyin { get; set; }
-
-        [JsonProperty("preferences")]
-        public Preferences Preferences { get; set; }
     }
 
     public partial class Session

@@ -1,8 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Worktile.ApiModels;
+using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
+using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
 
 namespace Worktile.Views.Message.Dialog
@@ -12,6 +19,7 @@ namespace Worktile.Views.Message.Dialog
         public CreateGroupDialog()
         {
             InitializeComponent();
+            SelectedAvatars = new ObservableCollection<TethysAvatar>();
             WtVisibilities = new List<WtVisibility>
             {
                 new WtVisibility
@@ -27,9 +35,11 @@ namespace Worktile.Views.Message.Dialog
             };
             SelectedVisibility = WtVisibilities.First();
             Color = WtColorHelper.Map.First().NewColor;
+            MessageVisibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event Action<Channel> OnCreateSuccess;
 
         private string _color;
         public string Color
@@ -45,7 +55,37 @@ namespace Worktile.Views.Message.Dialog
             }
         }
 
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                if (_description != value)
+                {
+                    _description = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                }
+            }
+        }
+
+        private string _groupName;
+        public string GroupName
+        {
+            get => _groupName;
+            set
+            {
+                if (_groupName != value)
+                {
+                    _groupName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GroupName)));
+                }
+            }
+        }
+
         List<WtVisibility> WtVisibilities { get; }
+
+        public ObservableCollection<TethysAvatar> SelectedAvatars { get; }
 
         WtVisibility _selectedVisibility;
         WtVisibility SelectedVisibility
@@ -61,18 +101,90 @@ namespace Worktile.Views.Message.Dialog
             }
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private string _message;
+        public string Message
         {
+            get => _message;
+            set
+            {
+                if (_message != value)
+                {
+                    _message = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
+                }
+            }
         }
 
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private Windows.UI.Xaml.Visibility _messageVisibility;
+        public Windows.UI.Xaml.Visibility MessageVisibility
         {
+            get => _messageVisibility;
+            set
+            {
+                if (_messageVisibility != value)
+                {
+                    _messageVisibility = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MessageVisibility)));
+                }
+            }
+        }
+
+        private SolidColorBrush _messageColor;
+        public SolidColorBrush MessageColor
+        {
+            get => _messageColor;
+            set
+            {
+                if (_messageColor != value)
+                {
+                    _messageColor = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MessageColor)));
+                }
+            }
+        }
+
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            var uids = SelectedAvatars.Select(a => a.Id);
+
+            string groupName = GroupName.Trim();
+            if (string.IsNullOrEmpty(groupName))
+            {
+                args.Cancel = true;
+                Message = "请输入群组名称";
+                MessageColor = Application.Current.Resources["WarningBrush"] as SolidColorBrush;
+                MessageVisibility = Windows.UI.Xaml.Visibility.Visible;
+                return;
+            }
+            else
+            {
+                MessageVisibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+
+            var reqData = new
+            {
+                name = groupName,
+                color = Color,
+                desc = Description,
+                default_uids = string.Join(',', uids),
+                visibility = SelectedVisibility.Visibility
+            };
+            var client = new WtHttpClient();
+            var data = await client.PostAsync<ApiDataResponse<Channel>>("/api/channel", reqData);
+            if (data.Code == 200)
+            {
+                OnCreateSuccess?.Invoke(data.Data);
+            }
+            else
+            {
+                args.Cancel = true;
+            }
         }
     }
 
     class WtVisibility
     {
-        public Visibility Visibility { get; set; }
+        public Enums.Visibility Visibility { get; set; }
         public string Text { get; set; }
     }
 }

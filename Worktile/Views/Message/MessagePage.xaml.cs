@@ -93,62 +93,13 @@ namespace Worktile.Views.Message
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeamChats>("/api/team/chats");
             var list = new List<Session>();
-            foreach (var item in data.Data.Channels)
+            var channels = data.Data.Channels.Concat(data.Data.Groups);
+            foreach (var item in channels)
             {
-                var session = new Session
-                {
-                    Id = item.Id,
-                    DisplayName = item.Name,
-                    Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color)),
-                    Starred = item.Starred,
-                    LatestMessageAt = item.LatestMessageAt,
-                    Show = item.Show,
-                    UnRead = item.UnRead,
-                    NamePinyin = item.NamePinyin,
-                    Type = SessionType.Channel
-                };
-                if (item.Visibility == Enums.Visibility.Public)
-                {
-                    session.Initials = "\uE64E";
-                    session.DefaultIcon = "\uE64E";
-                    session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-                }
-                else
-                {
-                    session.Initials = "\uE748";
-                    session.DefaultIcon = "\uE748";
-                    session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
-                }
+                var session = MessageHelper.GetSession(item);
                 list.Add(session);
             }
-            foreach (var item in data.Data.Groups)
-            {
-                var session = new Session
-                {
-                    Id = item.Id,
-                    DisplayName = item.Name,
-                    Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(item.Color)),
-                    Starred = item.Starred,
-                    LatestMessageAt = item.LatestMessageAt,
-                    Show = item.Show,
-                    UnRead = item.UnRead,
-                    NamePinyin = item.NamePinyin,
-                    Type = SessionType.Channel
-                };
-                if (item.Visibility == Enums.Visibility.Public)
-                {
-                    session.Initials = "\uE64E";
-                    session.DefaultIcon = "\uE64E";
-                    session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-                }
-                else
-                {
-                    session.Initials = "\uE748";
-                    session.DefaultIcon = "\uE748";
-                    session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
-                }
-                list.Add(session);
-            }
+
             foreach (var item in data.Data.Sessions)
             {
                 list.Add(new Session
@@ -217,7 +168,6 @@ namespace Worktile.Views.Message
                     if (apiMsg.Body.At != null && apiMsg.Body.At.Count == 1)
                     {
                         var client = new WtHttpClient();
-                        //api/channels/5c726867ccb4bd72fc022399
                         var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
 
                         session = new Session
@@ -238,9 +188,12 @@ namespace Worktile.Views.Message
                             IsBot = data.Data.IsBot
                         };
                     }
-                    else
+                    else if (apiMsg.Type == MessageType.Activity)
                     {
-                        return;
+                        var client = new WtHttpClient();
+                        string url = $"/api/channels/{apiMsg.To.Id}";
+                        var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
+                        session = MessageHelper.GetSession(data.Data);
                     }
                 }
                 else
@@ -264,31 +217,24 @@ namespace Worktile.Views.Message
                     string url = $"/api/channels/{feed.ChannelId}";
                     var client = new WtHttpClient();
                     var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
-                    var session = new Session
-                    {
-                        Id = data.Data.Id,
-                        DisplayName = data.Data.Name,
-                        Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(data.Data.Color)),
-                        Starred = data.Data.Starred,
-                        LatestMessageAt = data.Data.LatestMessageAt,
-                        Show = data.Data.Show,
-                        UnRead = data.Data.UnRead,
-                        NamePinyin = data.Data.NamePinyin,
-                        Type = SessionType.Channel
-                    };
-                    if (data.Data.Visibility == Enums.Visibility.Public)
-                    {
-                        session.Initials = "\uE64E";
-                        session.DefaultIcon = "\uE64E";
-                        session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-                    }
-                    else
-                    {
-                        session.Initials = "\uE748";
-                        session.DefaultIcon = "\uE748";
-                        session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
-                    }
+                    var session = MessageHelper.GetSession(data.Data);
                     Sessions.Insert(0, session);
+                }
+                else if (feed.Type == FeedType.RemoveChannel)
+                {
+                    var session = Sessions.SingleOrDefault(s => s.Id == feed.ChannelId);
+                    if (session != null)
+                    {
+                        Sessions.Remove(session);
+                    }
+                }
+                else if (feed.Type == FeedType.RemoveChannelMember)
+                {
+                    var session = Sessions.Single(s => s.Id == feed.ChannelId);
+                    if (feed.Uid == DataSource.ApiUserMeData.Me.Uid)
+                    {
+                        Sessions.Remove(session);
+                    }
                 }
             }));
         }
@@ -315,6 +261,17 @@ namespace Worktile.Views.Message
         private async void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new CreateGroupDialog();
+            dialog.OnCreateSuccess += channel =>
+            {
+                var session = MessageHelper.GetSession(channel);
+                Sessions.Insert(0, session);
+            };
+            await dialog.ShowAsync();
+        }
+
+        private async void JoinGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new JoinGroupDialog();
             await dialog.ShowAsync();
         }
 

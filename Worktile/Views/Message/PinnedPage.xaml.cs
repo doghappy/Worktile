@@ -86,7 +86,7 @@ namespace Worktile.Views.Message
                             Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, item.Reference.From.Type),
                             Foreground = new SolidColorBrush(Colors.White)
                         },
-                        Content = ChatPage.GetContent(item.Reference),
+                        Content = MessageHelper.GetContent(item.Reference),
                         Time = item.Reference.CreatedAt,
                         Type = item.Reference.Type
                     };

@@ -12,7 +12,6 @@ using Worktile.ApiModels.ApiUserMe;
 using Worktile.Models;
 using Worktile.Common;
 using Worktile.Views;
-using Worktile.Views.Mission;
 using Worktile.Common.WtRequestClient;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Views.Message;
@@ -367,7 +366,7 @@ namespace Worktile
                             },
                             new AdaptiveText()
                             {
-                                Text = ChatPage.GetContent(apiMsg)
+                                Text = MessageHelper.GetContent(apiMsg)
                             }
                         },
                         AppLogoOverride = new ToastGenericAppLogo()

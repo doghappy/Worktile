@@ -133,6 +133,7 @@
     <Compile Include="Common\JTokenHelper.cs" />
     <Compile Include="Common\KanbanPageHelper.cs" />
     <Compile Include="Common\Markdown.cs" />
+    <Compile Include="Common\MessageHelper.cs" />
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\UiExtension.cs" />
     <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
@@ -189,10 +190,10 @@
     <Compile Include="Controls\Emoji\EmojiSmileysPage.xaml.cs">
       <DependentUpon>EmojiSmileysPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MemberPicker.xaml.cs">
+    <Compile Include="Controls\MemberPicker\MemberPicker.xaml.cs">
       <DependentUpon>MemberPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MemberPickerEditor.xaml.cs">
+    <Compile Include="Controls\MemberPicker\MemberPickerEditor.xaml.cs">
       <DependentUpon>MemberPickerEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Message\MessageControl.xaml.cs">
@@ -251,8 +252,13 @@
     <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
     <Compile Include="Models\Department\DepartmentNodeType.cs" />
     <Compile Include="Models\IMemberBase.cs" />
+    <Compile Include="Models\Member\Member.cs" />
+    <Compile Include="Models\Member\Preference.cs" />
     <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
       <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Dialog\JoinGroupDialog.xaml.cs">
+      <DependentUpon>JoinGroupDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Feed.cs" />
     <Compile Include="Views\Message\FeedType.cs" />
@@ -546,11 +552,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\MemberPicker.xaml">
+    <Page Include="Controls\MemberPicker\MemberPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\MemberPickerEditor.xaml">
+    <Page Include="Controls\MemberPicker\MemberPickerEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -587,6 +593,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\Dialog\CreateGroupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\Dialog\JoinGroupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -724,7 +734,7 @@
       <Version>4.7.0.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.3</Version>
+      <Version>6.1.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Connectivity">
       <Version>5.1.0</Version>
