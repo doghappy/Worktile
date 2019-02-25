@@ -217,7 +217,7 @@ namespace Worktile.Views.Message
                             IsBot = data.Data.IsBot
                         };
                     }
-                    else if(apiMsg.Type == MessageType.Activity)
+                    else if (apiMsg.Type == MessageType.Activity)
                     {
                         var client = new WtHttpClient();
                         string url = $"/api/channels/{apiMsg.To.Id}";
@@ -246,30 +246,7 @@ namespace Worktile.Views.Message
                     string url = $"/api/channels/{feed.ChannelId}";
                     var client = new WtHttpClient();
                     var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
-                    var session = new Session
-                    {
-                        Id = data.Data.Id,
-                        DisplayName = data.Data.Name,
-                        Background = WtColorHelper.GetSolidColorBrush(WtColorHelper.GetNewColor(data.Data.Color)),
-                        Starred = data.Data.Starred,
-                        LatestMessageAt = data.Data.LatestMessageAt,
-                        Show = data.Data.Show,
-                        UnRead = data.Data.UnRead,
-                        NamePinyin = data.Data.NamePinyin,
-                        Type = SessionType.Channel
-                    };
-                    if (data.Data.Visibility == Enums.Visibility.Public)
-                    {
-                        session.Initials = "\uE64E";
-                        session.DefaultIcon = "\uE64E";
-                        session.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
-                    }
-                    else
-                    {
-                        session.Initials = "\uE748";
-                        session.DefaultIcon = "\uE748";
-                        session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
-                    }
+                    var session = GetSession(data.Data);
                     Sessions.Insert(0, session);
                 }
                 else if (feed.Type == FeedType.RemoveChannel)
