@@ -111,7 +111,6 @@ namespace Worktile
         #region Init
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            _inAppNotification = InAppNotification;
             IsActive = true;
             string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
             if (string.IsNullOrEmpty(cookie))
@@ -184,11 +183,11 @@ namespace Worktile
         }
 
         #region Socket
-        public static string SocketId { get; private set; }
+        public string SocketId { get; private set; }
 
-        private static MessageWebSocket _socket;
-        public static event Action<Models.Message.Message> OnMessageReceived;
-        public static event Action<Views.Message.Feed> OnFeedReceived;
+        private MessageWebSocket _socket;
+        public event Action<Models.Message.Message> OnMessageReceived;
+        public event Action<Views.Message.Feed> OnFeedReceived;
 
         private async Task ConnectSocketAsync()
         {
@@ -293,8 +292,8 @@ namespace Worktile
             OnFeedReceived?.Invoke(feed);
         }
 
-        private static int _unreadBadge;
-        public static int UnreadBadge
+        private int _unreadBadge;
+        public int UnreadBadge
         {
             get => _unreadBadge;
             set
@@ -311,7 +310,7 @@ namespace Worktile
         }
 
 
-        public static async Task SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
+        public async Task SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
         {
             string msg = SocketMessageConverter.Process(msgType, data);
             using (var dataWriter = new DataWriter(_socket.OutputStream))
@@ -322,7 +321,7 @@ namespace Worktile
             }
         }
 
-        public static void UpdateBadgeNumber(int number)
+        public void UpdateBadgeNumber(int number)
         {
             // Get the blank badge XML payload for a badge number
             XmlDocument badgeXml = BadgeUpdateManager.GetTemplateContent(BadgeTemplateType.BadgeNumber);
@@ -431,7 +430,7 @@ namespace Worktile
             switch (app)
             {
                 case "message":
-                    ContentFrame.Navigate(typeof(MessagePage));
+                    ContentFrame.Navigate(typeof(MessagePage), this);
                     break;
                 //case "mission":
                 //    ContentFrame.Navigate(typeof(MissionPage));
@@ -455,22 +454,18 @@ namespace Worktile
             ContentFrame.Navigate(typeof(TestPage));
         }
 
-        private static InAppNotification _inAppNotification;
-        public static void ShowNotification(string text, NotificationLevel level, int duration = 0)
+        public void ShowNotification(string text, NotificationLevel level, int duration = 0)
         {
-            if (_inAppNotification != null)
+            if (level == NotificationLevel.Default)
             {
-                if (level == NotificationLevel.Default)
-                {
-                    _inAppNotification.BorderBrush = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
-                }
-                else
-                {
-                    string key = level.ToString() + "Brush";
-                    _inAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
-                }
-                _inAppNotification.Show(text, duration);
+                InAppNotification.BorderBrush = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
             }
+            else
+            {
+                string key = level.ToString() + "Brush";
+                InAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
+            }
+            InAppNotification.Show(text, duration);
         }
     }
 

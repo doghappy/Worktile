@@ -34,18 +34,19 @@ namespace Worktile
             UnhandledException += App_UnhandledException;
         }
 
-        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        private async void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
+
             if (e.Exception is HttpRequestException ex)
             {
                 if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
                 {
-                    MainPage.ShowNotification("请确认网络是否连通", NotificationLevel.Danger);
+                    await ShowNotificationAsync("请确认网络是否连通", NotificationLevel.Danger);
                     return;
                 }
             }
-            MainPage.ShowNotification(e.Message, NotificationLevel.Danger);
+            await ShowNotificationAsync(e.Message, NotificationLevel.Danger);
         }
 
         private async Task OnLaunchedOrActivatedAsync(IActivatedEventArgs e)
@@ -102,7 +103,10 @@ namespace Worktile
                             markdown = 1,
                             content = toastActivationArgs.UserInput["msg"].ToString()
                         };
-                        await MainPage.SendMessageAsync(SocketMessageType.Message, data);
+                        if (rootFrame.Content is MainPage mainPage)
+                        {
+                            await mainPage.SendMessageAsync(SocketMessageType.Message, data);
+                        }
                     }
                 }
                 // If we're loading the app for the first time, place the main page on
@@ -168,6 +172,26 @@ namespace Worktile
             viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             //viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
             viewTitleBar.ButtonForegroundColor = (Resources["ApplicationForegroundThemeBrush"] as SolidColorBrush).Color;
+        }
+
+        public async Task ShowNotificationAsync(string text, NotificationLevel level, int duration = 0)
+        {
+            if (Window.Current.Content is Frame rootFrame)
+            {
+                if (rootFrame.Content is MainPage mainPage)
+                {
+                    mainPage.ShowNotification(text, level, duration);
+                    return;
+                }
+            }
+            var dialog = new ContentDialog
+            {
+                PrimaryButtonText = "关闭",
+                DefaultButton = ContentDialogButton.Primary,
+                Title = "异常",
+                Content = text
+            };
+            await dialog.ShowAsync();
         }
     }
 }

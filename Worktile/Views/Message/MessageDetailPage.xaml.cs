@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Views.Message.NavigationParam;
 
 namespace Worktile.Views.Message
 {
@@ -26,6 +27,8 @@ namespace Worktile.Views.Message
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        ToMessageDetailPageParam _navParam;
 
         private Session _session;
         public Session Session
@@ -66,10 +69,11 @@ namespace Worktile.Views.Message
                     int index = Navs.IndexOf(value);
                     if (index == 0)
                     {
-                        ContentFrame.Navigate(typeof(ChatPage), new MessageDetailToChatNavParam
+                        ContentFrame.Navigate(typeof(ChatPage), new ToChatPageParam
                         {
                             Session = Session,
-                            Nav = value
+                            Nav = value,
+                            MainPage = _navParam.MainPage
                         });
                     }
                     else if (index == 1)
@@ -109,8 +113,8 @@ namespace Worktile.Views.Message
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
-            Session = e.Parameter as Session;
+            _navParam = e.Parameter as ToMessageDetailPageParam;
+            Session = _navParam.Session;
         }
     }
 }

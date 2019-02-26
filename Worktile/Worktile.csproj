@@ -322,7 +322,8 @@
     <Compile Include="Views\Message\MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\MessageDetailToChatNavParam.cs" />
+    <Compile Include="Views\Message\NavigationParam\ToChatPageParam.cs" />
+    <Compile Include="Views\Message\NavigationParam\ToMessageDetailPageParam.cs" />
     <Compile Include="Views\Message\MessageType.cs" />
     <Compile Include="Views\Message\PinnedPage.xaml.cs">
       <DependentUpon>PinnedPage.xaml</DependentUpon>

@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <Grid>
-            <ScrollViewer ViewChanged="ScrollViewer_ViewChanged" IsTabStop="False">
+            <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
                 <ItemsControl ItemsSource="{x:Bind Messages}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>

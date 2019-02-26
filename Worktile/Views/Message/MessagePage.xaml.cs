@@ -16,6 +16,7 @@ using Worktile.Common.WtRequestClient;
 using Windows.UI.Xaml.Input;
 using Worktile.Views.Message.Dialog;
 using Worktile.ApiModels;
+using Worktile.Views.Message.NavigationParam;
 
 namespace Worktile.Views.Message
 {
@@ -26,7 +27,10 @@ namespace Worktile.Views.Message
             InitializeComponent();
             Sessions = new ObservableCollection<Session>();
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        Worktile.MainPage _mainPage;
 
         private bool _isActive;
         public bool IsActive
@@ -54,7 +58,11 @@ namespace Worktile.Views.Message
                 {
                     _selectedSession = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSession)));
-                    ContentFrame.Navigate(typeof(MessageDetailPage), value);
+                    ContentFrame.Navigate(typeof(MessageDetailPage), new ToMessageDetailPageParam
+                    {
+                        Session = value,
+                        MainPage = _mainPage
+                    });
                 }
             }
         }
@@ -146,16 +154,21 @@ namespace Worktile.Views.Message
             }
             IsActive = false;
 
-            Worktile.MainPage.UnreadBadge += Sessions.Sum(s => s.UnRead);
-            Worktile.MainPage.OnMessageReceived += OnMessageReceived;
-            Worktile.MainPage.OnFeedReceived += OnFeedReceived;
+            _mainPage.UnreadBadge += Sessions.Sum(s => s.UnRead);
+            _mainPage.OnMessageReceived += OnMessageReceived;
+            _mainPage.OnFeedReceived += OnFeedReceived;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _mainPage = e.Parameter as Worktile.MainPage;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            Worktile.MainPage.OnMessageReceived -= OnMessageReceived;
-            Worktile.MainPage.OnFeedReceived -= OnFeedReceived;
+            _mainPage.OnMessageReceived -= OnMessageReceived;
+            _mainPage.OnFeedReceived -= OnFeedReceived;
         }
 
         private async void OnMessageReceived(Models.Message.Message apiMsg)
@@ -187,6 +200,7 @@ namespace Worktile.Views.Message
                             Type = SessionType.Session,
                             IsBot = data.Data.IsBot
                         };
+                        Sessions.Insert(0, session);
                     }
                     else if (apiMsg.Type == MessageType.Activity)
                     {
@@ -194,6 +208,7 @@ namespace Worktile.Views.Message
                         string url = $"/api/channels/{apiMsg.To.Id}";
                         var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
                         session = MessageHelper.GetSession(data.Data);
+                        Sessions.Insert(0, session);
                     }
                 }
                 else
@@ -202,9 +217,9 @@ namespace Worktile.Views.Message
                     {
                         session.UnRead += 1;
                         Sessions.Remove(session);
+                        Sessions.Insert(0, session);
                     }
                 }
-                Sessions.Insert(0, session);
             }));
         }
 

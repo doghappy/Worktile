@@ -26,6 +26,7 @@ using System.Net.Http;
 using Worktile.ApiModels.Upload;
 using Windows.Storage.AccessCache;
 using Worktile.ApiModels;
+using Worktile.Views.Message.NavigationParam;
 
 namespace Worktile.Views.Message
 {
@@ -55,7 +56,7 @@ namespace Worktile.Views.Message
             }
         }
 
-        private MessageDetailToChatNavParam _navParam;
+        private ToChatPageParam _navParam;
         private string _next;
         private string _latestId;
         private bool? _hasMore;
@@ -97,14 +98,14 @@ namespace Worktile.Views.Message
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            _navParam = e.Parameter as MessageDetailToChatNavParam;
-            Worktile.MainPage.OnMessageReceived += OnMessageReceived;
+            _navParam = e.Parameter as ToChatPageParam;
+            _navParam.MainPage.OnMessageReceived += OnMessageReceived;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            Worktile.MainPage.OnMessageReceived -= OnMessageReceived;
+            _navParam.MainPage.OnMessageReceived -= OnMessageReceived;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -128,7 +129,7 @@ namespace Worktile.Views.Message
                 var client = new WtHttpClient();
                 await client.PutAsync<object>(url);
             }
-            Worktile.MainPage.UnreadBadge -= _navParam.Session.UnRead;
+            _navParam.MainPage.UnreadBadge -= _navParam.Session.UnRead;
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _navParam.Session.UnRead = 0));
         }
 
@@ -309,7 +310,7 @@ namespace Worktile.Views.Message
                     markdown = 1,
                     content = msg
                 };
-                await Worktile.MainPage.SendMessageAsync(SocketMessageType.Message, data);
+                await _navParam.MainPage.SendMessageAsync(SocketMessageType.Message, data);
                 MsgTextBox.Text = string.Empty;
             }
         }
