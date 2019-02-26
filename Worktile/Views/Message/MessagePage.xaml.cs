@@ -287,6 +287,19 @@ namespace Worktile.Views.Message
         private async void JoinGroup_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new JoinGroupDialog();
+            dialog.OnSessionActived += session =>
+            {
+                var ss = Sessions.SingleOrDefault(s => s.Id == session.Id);
+                if (ss == null)
+                {
+                    Sessions.Insert(0, session);
+                }
+                else if (SelectedSession != ss && Sessions.IndexOf(ss) > 0)
+                {
+                    Sessions.Remove(ss);
+                    Sessions.Insert(0, ss);
+                }
+            };
             await dialog.ShowAsync();
         }
 

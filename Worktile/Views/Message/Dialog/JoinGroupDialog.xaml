@@ -83,6 +83,8 @@
 
                         <Button x:Name="SendMessageButton"
                                 x:Load="{x:Bind Joined}"
+                                Click="SendMessageButton_Click"
+                                DataContext="{x:Bind}"
                                 Grid.Column="2"
                                 Style="{ThemeResource TextBlockButtonStyle}">
                             <StackPanel Orientation="Horizontal">

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Worktile.Views.Message.Dialog
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event Action<Session> OnSessionActived;
 
         public ObservableCollection<Session> Sessions { get; }
 
@@ -86,6 +88,20 @@ namespace Worktile.Views.Message.Dialog
                         }
                     }
                 }
+            }
+        }
+
+        private async void SendMessageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var session = btn.DataContext as Session;
+            string url = $"/api/channels/{session.Id}/active";
+            var client = new WtHttpClient();
+            var data = await client.PutAsync<ApiDataResponse<object>>(url);
+            if (data.Code == 200)
+            {
+                OnSessionActived?.Invoke(session);
+                Hide();
             }
         }
     }
