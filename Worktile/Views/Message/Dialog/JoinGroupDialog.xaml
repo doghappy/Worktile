@@ -74,6 +74,8 @@
                         <Button x:Name="JoinButton"
                                 x:Load="{x:Bind Joined, Converter={StaticResource BooleanReserveConverter}}"
                                 Grid.Column="2"
+                                DataContext="{x:Bind}"
+                                Click="JoinButton_Click"
                                 Style="{ThemeResource TextBlockButtonStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <SymbolIcon Symbol="Add"/>

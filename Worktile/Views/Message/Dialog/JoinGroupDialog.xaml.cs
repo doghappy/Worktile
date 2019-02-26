@@ -21,7 +21,8 @@ namespace Worktile.Views.Message.Dialog
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event Action<Session> OnSessionActived;
+        public event Action<Session> OnActived;
+        public event Action<Session> OnJoined;
 
         public ObservableCollection<Session> Sessions { get; }
 
@@ -100,7 +101,21 @@ namespace Worktile.Views.Message.Dialog
             var data = await client.PutAsync<ApiDataResponse<object>>(url);
             if (data.Code == 200)
             {
-                OnSessionActived?.Invoke(session);
+                OnActived?.Invoke(session);
+                Hide();
+            }
+        }
+
+        private async void JoinButton_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var session = btn.DataContext as Session;
+            string url = $"/api/channels/{session.Id}/join";
+            var client = new WtHttpClient();
+            var data = await client.PutAsync<ApiDataResponse<bool>>(url);
+            if (data.Code == 200 && data.Data)
+            {
+                OnJoined?.Invoke(session);
                 Hide();
             }
         }
