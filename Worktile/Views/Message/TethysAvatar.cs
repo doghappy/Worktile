@@ -14,5 +14,6 @@ namespace Worktile.Views.Message
         public SolidColorBrush Foreground { get; set; }
         public FontFamily AvatarFont { get; set; }
         public IEnumerable<string> DisplayNamePinyin { get; set; }
+        public string Name { get; set; }
     }
 }

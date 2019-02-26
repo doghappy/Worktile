@@ -254,6 +254,9 @@
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
+    <Compile Include="Views\Message\Dialog\CreateChatDialog.xaml.cs">
+      <DependentUpon>CreateChatDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
       <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
     </Compile>
@@ -590,6 +593,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\Dialog\CreateChatDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

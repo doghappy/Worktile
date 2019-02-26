@@ -111,5 +111,18 @@ namespace Worktile.Common
                 Initials = GetInitials(member.DisplayName)
             };
         }
+
+        public static TethysAvatar GetAvatar(ApiModels.ApiTeam.Member member, AvatarSize size)
+        {
+            return new TethysAvatar
+            {
+                Id = member.Uid,
+                DisplayName = member.DisplayName,
+                Background = AvatarHelper.GetColorBrush(member.DisplayName),
+                Source = AvatarHelper.GetAvatarBitmap(member.Avatar, size, FromType.User),
+                DisplayNamePinyin = member.DisplayNamePinyin.Split(',').ToArray(),
+                Name = member.Name
+            };
+        }
     }
 }

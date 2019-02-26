@@ -124,14 +124,7 @@ namespace Worktile.Controls
                 {
                     if (item.Role != 5)
                     {
-                        UnSelectedAvatars.Add(new TethysAvatar
-                        {
-                            Id = item.Uid,
-                            DisplayName = item.DisplayName,
-                            Background = AvatarHelper.GetColorBrush(item.DisplayName),
-                            Source = AvatarHelper.GetAvatarBitmap(item.Avatar, AvatarSize.X40, FromType.User),
-                            DisplayNamePinyin = item.DisplayNamePinyin.Split(',').ToArray()
-                        });
+                        UnSelectedAvatars.Add(AvatarHelper.GetAvatar(item, AvatarSize.X40));
                     }
                 }
             }

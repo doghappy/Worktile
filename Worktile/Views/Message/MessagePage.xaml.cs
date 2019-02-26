@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Worktile.Views.Message.Dialog;
 using Worktile.ApiModels;
 using Worktile.Views.Message.NavigationParam;
+using Windows.System;
 
 namespace Worktile.Views.Message
 {
@@ -110,23 +111,7 @@ namespace Worktile.Views.Message
 
             foreach (var item in data.Data.Sessions)
             {
-                list.Add(new Session
-                {
-                    Id = item.Id,
-                    DisplayName = item.To.DisplayName,
-                    Initials = AvatarHelper.GetInitials(item.To.DisplayName),
-                    ProfilePicture = AvatarHelper.GetAvatarBitmap(item.To.Avatar, AvatarSize.X80, FromType.User),
-                    Background = AvatarHelper.GetColorBrush(item.To.DisplayName),
-                    Starred = item.Starred,
-                    LatestMessageAt = item.LatestMessageAt,
-                    Show = item.Show,
-                    UnRead = item.UnRead,
-                    //NamePinyin = item.To.DisplayName,
-                    Component = item.Component,
-                    Name = item.To.Name,
-                    Type = SessionType.Session,
-                    IsBot = item.IsBot
-                });
+                list.Add(MessageHelper.GetSession(item, AvatarSize.X80));
             }
             list.Sort((a, b) =>
             {
@@ -182,24 +167,8 @@ namespace Worktile.Views.Message
                     {
                         var client = new WtHttpClient();
                         var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
-
-                        session = new Session
-                        {
-                            Id = data.Data.Id,
-                            DisplayName = data.Data.To.DisplayName,
-                            Initials = AvatarHelper.GetInitials(data.Data.To.DisplayName),
-                            ProfilePicture = AvatarHelper.GetAvatarBitmap(data.Data.To.Avatar, AvatarSize.X80, FromType.User),
-                            Background = AvatarHelper.GetColorBrush(data.Data.To.DisplayName),
-                            Starred = data.Data.Starred,
-                            LatestMessageAt = data.Data.LatestMessageAt,
-                            Show = data.Data.Show,
-                            UnRead = 1,
-                            NamePinyin = data.Data.To.DisplayName,
-                            Component = data.Data.Component,
-                            Name = data.Data.To.Name,
-                            Type = SessionType.Session,
-                            IsBot = data.Data.IsBot
-                        };
+                        session = MessageHelper.GetSession(data.Data, AvatarSize.X80);
+                        session.UnRead = 1;
                         Sessions.Insert(0, session);
                     }
                     else if (apiMsg.Type == MessageType.Activity)
@@ -284,28 +253,43 @@ namespace Worktile.Views.Message
             await dialog.ShowAsync();
         }
 
+        private void CreateNewSession(Session session)
+        {
+            var ss = Sessions.SingleOrDefault(s => s.Id == session.Id);
+            if (ss == null)
+            {
+                Sessions.Insert(0, session);
+                SelectedSession = session;
+            }
+            else if (SelectedSession != ss)
+            {
+                Sessions.Remove(ss);
+                Sessions.Insert(0, ss);
+                SelectedSession = ss;
+            }
+        }
+
         private async void JoinGroup_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new JoinGroupDialog();
-            dialog.OnActived += session =>
-            {
-                var ss = Sessions.SingleOrDefault(s => s.Id == session.Id);
-                if (ss == null)
-                {
-                    Sessions.Insert(0, session);
-                }
-                else if (SelectedSession != ss && Sessions.IndexOf(ss) > 0)
-                {
-                    Sessions.Remove(ss);
-                    Sessions.Insert(0, ss);
-                    SelectedSession = ss;
-                }
-            };
+            dialog.OnActived += session => CreateNewSession(session);
             dialog.OnJoined += session =>
             {
                 Sessions.Insert(0, session);
                 SelectedSession = session;
             };
+            await dialog.ShowAsync();
+        }
+
+        private async void AddMember_Click(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri(DataSource.SubDomain+ "/console/members?add=true"));
+        }
+
+        private async void CreateChat_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CreateChatDialog();
+            dialog.OnSessionCreated += session => CreateNewSession(session);
             await dialog.ShowAsync();
         }
 

@@ -10,7 +10,6 @@ using Worktile.ApiModels;
 using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
-using Worktile.Enums;
 
 namespace Worktile.Views.Message.Dialog
 {

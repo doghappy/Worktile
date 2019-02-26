@@ -40,10 +40,6 @@ namespace Worktile.Views.Message.Dialog
             }
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
-
         List<Session> _sessions;
 
         private async void ContentDialog_Loaded(object sender, RoutedEventArgs e)

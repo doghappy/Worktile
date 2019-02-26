@@ -1,5 +1,6 @@
 ﻿using Windows.UI.Xaml.Media;
 using Worktile.ApiModels.ApiTeamChats;
+using Worktile.Enums;
 using Worktile.Views.Message;
 
 namespace Worktile.Common
@@ -40,6 +41,27 @@ namespace Worktile.Common
                 session.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
             }
             return session;
+        }
+
+        public static Views.Message.Session GetSession(ApiModels.ApiTeamChats.Session session, AvatarSize size)
+        {
+            return new Views.Message.Session
+            {
+                Id = session.Id,
+                DisplayName = session.To.DisplayName,
+                Initials = AvatarHelper.GetInitials(session.To.DisplayName),
+                ProfilePicture = AvatarHelper.GetAvatarBitmap(session.To.Avatar, size, FromType.User),
+                Background = AvatarHelper.GetColorBrush(session.To.DisplayName),
+                Starred = session.Starred,
+                LatestMessageAt = session.LatestMessageAt,
+                Show = session.Show,
+                UnRead = session.UnRead,
+                //NamePinyin = item.To.DisplayName,
+                Component = session.Component,
+                Name = session.To.Name,
+                Type = SessionType.Session,
+                IsBot = session.IsBot
+            };
         }
 
         public static string GetContent(Models.Message.Message msg)
