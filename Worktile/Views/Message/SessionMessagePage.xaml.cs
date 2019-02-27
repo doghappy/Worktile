@@ -37,18 +37,18 @@ namespace Worktile.Views.Message
             }
         }
 
-        private ToUnReadMsgPageParam _navParam;
+        private ToUnReadMsgPageParam _param;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _navParam = e.Parameter as ToUnReadMsgPageParam;
-            ViewModel = new SessionMessageViewModel(_navParam.Session);
-            _navParam.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
+            _param = e.Parameter as ToUnReadMsgPageParam;
+            ViewModel = new SessionMessageViewModel(_param.Session);
+            _param.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            _navParam.MainViewModel.OnMessageReceived -= ViewModel.OnMessageReceived;
+            _param.MainViewModel.OnMessageReceived -= ViewModel.OnMessageReceived;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -56,7 +56,7 @@ namespace Worktile.Views.Message
             await ViewModel.LoadMessagesAsync();
             if (MsgTextBox != null)
                 MsgTextBox.Focus(FocusState.Programmatic);
-            await ViewModel.ClearUnReadAsync(_navParam.MainViewModel);
+            await ViewModel.ClearUnReadAsync(_param.MainViewModel);
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

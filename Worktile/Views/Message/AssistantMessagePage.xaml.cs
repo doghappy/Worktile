@@ -6,7 +6,7 @@ using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.ViewModels.Message;
 
-namespace Worktile.Views.Message.Assistant
+namespace Worktile.Views.Message
 {
     public sealed partial class AssistantMessagePage : Page, INotifyPropertyChanged
     {
@@ -71,6 +71,7 @@ namespace Worktile.Views.Message.Assistant
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewModel.LoadMessagesAsync();
+            await ViewModel.ClearUnReadAsync(_param.MainViewModel);
         }
     }
 }

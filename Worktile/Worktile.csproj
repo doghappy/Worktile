@@ -259,7 +259,7 @@
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
     <Compile Include="ViewModels\Message\SessionMessageViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
-    <Compile Include="Views\Message\Assistant\AssistantMessagePage.xaml.cs">
+    <Compile Include="Views\Message\AssistantMessagePage.xaml.cs">
       <DependentUpon>AssistantMessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Dialog\CreateChatDialog.xaml.cs">
@@ -588,7 +588,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\Assistant\AssistantMessagePage.xaml">
+    <Page Include="Views\Message\AssistantMessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -772,7 +772,9 @@
       <Name>Worktile.Tethys</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Message\Assistant\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
