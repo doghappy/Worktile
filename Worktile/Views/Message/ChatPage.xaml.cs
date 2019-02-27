@@ -27,6 +27,7 @@ using Worktile.ApiModels.Upload;
 using Windows.Storage.AccessCache;
 using Worktile.ApiModels;
 using Worktile.Views.Message.NavigationParam;
+using Worktile.ViewModels.Message.Session;
 
 namespace Worktile.Views.Message
 {
@@ -35,239 +36,234 @@ namespace Worktile.Views.Message
         public ChatPage()
         {
             InitializeComponent();
-            Messages = new ObservableCollection<Message>();
+            //Messages = new ObservableCollection<Message>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Message> Messages { get; }
+        //public ObservableCollection<Message> Messages { get; }
 
-        private bool _isActive;
-        public bool IsActive
+        private SessionMessageViewModel _viewModel;
+        private SessionMessageViewModel ViewModel
         {
-            get => _isActive;
+            get => _viewModel;
             set
             {
-                if (_isActive != value)
+                if (_viewModel != value)
                 {
-                    _isActive = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                    _viewModel = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewModel)));
                 }
             }
         }
 
-        private ToChatPageParam _navParam;
-        private string _next;
-        private string _latestId;
-        private bool? _hasMore;
+        private ToUnReadMsgPageParam _navParam;
+        //private string _next;
+        //private string _latestId;
+        //private bool? _hasMore;
 
-        private string Url
-        {
-            get
-            {
-                if (_navParam.Session.IsAssistant)
-                {
-                    string component = null;
-                    if (_navParam.Session.Component.HasValue)
-                    {
-                        component = GetComponentByNumber(_navParam.Session.Component.Value);
-                    }
-                    string url = $"/api/pigeon/messages?ref_id={_navParam.Session.Id}&ref_type={_navParam.Session.RefType}&filter_type={_navParam.Nav.FilterType}&component={component}&size=20";
-                    if (!string.IsNullOrEmpty(_next))
-                    {
-                        url += "&next=" + _next;
-                    }
-                    return url;
-                }
-                else
-                {
-                    string url = "/api/messages?";
-                    if (_navParam.Nav.IsPin)
-                    {
-                        url += $"session_id={_navParam.Session.Id}&size=20";
-                    }
-                    else
-                    {
-                        url += $"ref_id={_navParam.Session.Id}&ref_type={_navParam.Session.RefType}&latest_id={_latestId}&size=20";
-                    }
-                    return url;
-                }
-            }
-        }
+        //private string Url
+        //{
+        //    get
+        //    {
+        //        if (_navParam.Session.IsAssistant)
+        //        {
+        //            string component = null;
+        //            if (_navParam.Session.Component.HasValue)
+        //            {
+        //                component = GetComponentByNumber(_navParam.Session.Component.Value);
+        //            }
+        //            string url = $"/api/pigeon/messages?ref_id={_navParam.Session.Id}&ref_type={_navParam.Session.RefType}&filter_type={_navParam.Nav.FilterType}&component={component}&size=20";
+        //            if (!string.IsNullOrEmpty(_next))
+        //            {
+        //                url += "&next=" + _next;
+        //            }
+        //            return url;
+        //        }
+        //        else
+        //        {
+        //            string url = "/api/messages?";
+        //            if (_navParam.Nav.IsPin)
+        //            {
+        //                url += $"session_id={_navParam.Session.Id}&size=20";
+        //            }
+        //            else
+        //            {
+        //                url += $"ref_id={_navParam.Session.Id}&ref_type={_navParam.Session.RefType}&latest_id={_latestId}&size=20";
+        //            }
+        //            return url;
+        //        }
+        //    }
+        //}
+
+        //private bool _isAssistant;
+        //public bool IsAssistant
+        //{
+        //    get => _isAssistant;
+        //    set
+        //    {
+        //        if (_isAssistant != value)
+        //        {
+        //            _isAssistant = value;
+        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAssistant)));
+        //        }
+        //    }
+        //}
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
-            _navParam = e.Parameter as ToChatPageParam;
-            _navParam.MainPage.OnMessageReceived += OnMessageReceived;
+            _navParam = e.Parameter as ToUnReadMsgPageParam;
+            ViewModel = new SessionMessageViewModel(_navParam.Session);
+            _navParam.MainPage.OnMessageReceived += ViewModel.OnMessageReceived;
+            //IsAssistant = _navParam.Session.IsAssistant;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            base.OnNavigatedFrom(e);
-            _navParam.MainPage.OnMessageReceived -= OnMessageReceived;
+            _navParam.MainPage.OnMessageReceived -= ViewModel.OnMessageReceived;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await LoadMessagesAsync();
-            MsgTextBox.Focus(FocusState.Programmatic);
-            await ClearUnReadAsync();
+            await ViewModel.LoadMessagesAsync();
+            if (MsgTextBox != null)
+                MsgTextBox.Focus(FocusState.Programmatic);
+            await ViewModel.ClearUnReadAsync();
         }
 
-        private async Task ClearUnReadAsync()
-        {
-            if (_navParam.Session.IsAssistant)
-            {
-                string url = $"/api/unreads/{_navParam.Session.Id}/messages-unreads?socket_id=";
-                var client = new WtHttpClient();
-                await client.PutAsync<object>(url);
-            }
-            else
-            {
-                string url = $"/api/messages/unread/clear?ref_id={_navParam.Session.Id}";
-                var client = new WtHttpClient();
-                await client.PutAsync<object>(url);
-            }
-            _navParam.MainPage.UnreadBadge -= _navParam.Session.UnRead;
-            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _navParam.Session.UnRead = 0));
-        }
+        //private async Task ClearUnReadAsync()
+        //{
+        //    if (_navParam.Session.IsAssistant)
+        //    {
+        //        string url = $"/api/unreads/{_navParam.Session.Id}/messages-unreads?socket_id=";
+        //        var client = new WtHttpClient();
+        //        await client.PutAsync<object>(url);
+        //    }
+        //    else
+        //    {
+        //        string url = $"/api/messages/unread/clear?ref_id={_navParam.Session.Id}";
+        //        var client = new WtHttpClient();
+        //        await client.PutAsync<object>(url);
+        //    }
+        //    _navParam.MainPage.UnreadBadge -= _navParam.Session.UnRead;
+        //    await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _navParam.Session.UnRead = 0));
+        //}
 
-        private async void OnMessageReceived(Models.Message.Message apiMsg)
-        {
-            if (apiMsg.To.Id == _navParam.Session.Id)
-            {
-                await Task.Run(async () =>
-                {
-                    await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
-                    {
-                        var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
-                        Messages.Add(new Message
-                        {
-                            Id = apiMsg.Id,
-                            Avatar = new TethysAvatar
-                            {
-                                DisplayName = member.DisplayName,
-                                Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
-                                Foreground = new SolidColorBrush(Colors.White),
-                                Background = AvatarHelper.GetColorBrush(member.DisplayName)
-                            },
-                            Content = MessageHelper.GetContent(apiMsg),
-                            Time = apiMsg.CreatedAt,
-                            IsPinned = false,
-                            Type = apiMsg.Type
-                        });
-                    });
-                });
-            }
-        }
+        //private async void OnMessageReceived(Models.Message.Message apiMsg)
+        //{
+        //    if (apiMsg.To.Id == _navParam.Session.Id)
+        //    {
+        //        await Task.Run(async () =>
+        //        {
+        //            await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+        //            {
+        //                var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
+        //                Messages.Add(new Message
+        //                {
+        //                    Id = apiMsg.Id,
+        //                    Avatar = new TethysAvatar
+        //                    {
+        //                        DisplayName = member.DisplayName,
+        //                        Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
+        //                        Foreground = new SolidColorBrush(Colors.White),
+        //                        Background = AvatarHelper.GetColorBrush(member.DisplayName)
+        //                    },
+        //                    Content = MessageHelper.GetContent(apiMsg),
+        //                    Time = apiMsg.CreatedAt,
+        //                    IsPinned = false,
+        //                    Type = apiMsg.Type
+        //                });
+        //            });
+        //        });
+        //    }
+        //}
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             var scrollViewer = sender as ScrollViewer;
-            if (_hasMore.HasValue && _hasMore.Value && !IsActive && scrollViewer.VerticalOffset <= 10)
+            if (ViewModel.HasMore.HasValue && ViewModel.HasMore.Value && !ViewModel.IsActive && scrollViewer.VerticalOffset <= 10)
             {
-                await LoadMessagesAsync();
+                await ViewModel.LoadMessagesAsync();
             }
         }
 
-        private string GetComponentByNumber(int c)
-        {
-            string component = null;
-            switch (c)
-            {
-                case 0: component = "message"; break;
-                case 1: component = "drive"; break;
-                case 2: component = "task"; break;
-                case 3: component = "calendar"; break;
-                case 4: component = "report"; break;
-                case 5: component = "crm"; break;
-                case 6: component = "approval"; break;
-                case 9: component = "leave"; break;
-                case 20: component = "bulletin"; break;
-                case 30: component = "appraisal"; break;
-                case 40: component = "okr"; break;
-                case 50: component = "portal"; break;
-                case 60: component = "mission"; break;
-            }
-            return component;
-        }
+        
 
-        private async Task LoadMessagesAsync()
-        {
-            IsActive = true;
-            var client = new WtHttpClient();
-            var data = await client.GetJTokenAsync(Url);
-            if (_navParam.Session.IsAssistant)
-                ReadApiPigeonMessage(data);
-            else
-                ReadApiMessage(data);
-            IsActive = false;
-        }
+        //private async Task LoadMessagesAsync()
+        //{
+        //    IsActive = true;
+        //    var client = new WtHttpClient();
+        //    var data = await client.GetJTokenAsync(Url);
+        //    if (_navParam.Session.IsAssistant)
+        //        ReadApiPigeonMessage(data);
+        //    else
+        //        ReadApiMessage(data);
+        //    IsActive = false;
+        //}
 
-        private void ReadApiPigeonMessage(JToken jToken)
-        {
-            var apiData = jToken.ToObject<ApiPigeonMessages>();
+        //private void ReadApiPigeonMessage(JToken jToken)
+        //{
+        //    var apiData = jToken.ToObject<ApiPigeonMessages>();
 
-            foreach (var item in apiData.Data.Messages)
-            {
-                Messages.Insert(0, new Message
-                {
-                    Id = item.Id,
-                    Avatar = new TethysAvatar
-                    {
-                        DisplayName = item.From.DisplayName,
-                        Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
-                        Background = AvatarHelper.GetColorBrush(item.From.DisplayName)
-                    },
-                    Content = MessageHelper.GetContent(item),
-                    Time = item.CreatedAt,
-                    Type = item.Type,
-                    IsPinned = item.IsPinned
-                });
-            }
-            _next = apiData.Data.Next;
-            _hasMore = apiData.Data.Next != null;
-        }
+        //    foreach (var item in apiData.Data.Messages)
+        //    {
+        //        Messages.Insert(0, new Message
+        //        {
+        //            Id = item.Id,
+        //            Avatar = new TethysAvatar
+        //            {
+        //                DisplayName = item.From.DisplayName,
+        //                Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
+        //                Background = AvatarHelper.GetColorBrush(item.From.DisplayName)
+        //            },
+        //            Content = MessageHelper.GetContent(item),
+        //            Time = item.CreatedAt,
+        //            Type = item.Type,
+        //            IsPinned = item.IsPinned
+        //        });
+        //    }
+        //    _next = apiData.Data.Next;
+        //    _hasMore = apiData.Data.Next != null;
+        //}
 
-        private void ReadApiMessage(JToken jToken)
-        {
-            var apiData = jToken.ToObject<ApiMessages>();
-            bool flag = false;
-            if (Messages.Any())
-            {
-                apiData.Data.Messages.Reverse();
-                flag = true;
-            }
-            foreach (var item in apiData.Data.Messages)
-            {
-                var msg = new Message
-                {
-                    Id = item.Id,
-                    Avatar = new TethysAvatar
-                    {
-                        DisplayName = item.From.DisplayName,
-                        Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
-                        Foreground = new SolidColorBrush(Colors.White)
-                    },
-                    Content = MessageHelper.GetContent(item),
-                    Time = item.CreatedAt,
-                    Type = item.Type,
-                    IsPinned = item.IsPinned
-                };
-                if (Path.GetExtension(item.From.Avatar).ToLower() == ".png")
-                    msg.Avatar.Background = new SolidColorBrush(Colors.White);
-                else
-                    msg.Avatar.Background = AvatarHelper.GetColorBrush(item.From.DisplayName);
+        //private void ReadApiMessage(JToken jToken)
+        //{
+        //    var apiData = jToken.ToObject<ApiMessages>();
+        //    bool flag = false;
+        //    if (Messages.Any())
+        //    {
+        //        apiData.Data.Messages.Reverse();
+        //        flag = true;
+        //    }
+        //    foreach (var item in apiData.Data.Messages)
+        //    {
+        //        var msg = new Message
+        //        {
+        //            Id = item.Id,
+        //            Avatar = new TethysAvatar
+        //            {
+        //                DisplayName = item.From.DisplayName,
+        //                Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
+        //                Foreground = new SolidColorBrush(Colors.White)
+        //            },
+        //            Content = MessageHelper.GetContent(item),
+        //            Time = item.CreatedAt,
+        //            Type = item.Type,
+        //            IsPinned = item.IsPinned
+        //        };
+        //        if (Path.GetExtension(item.From.Avatar).ToLower() == ".png")
+        //            msg.Avatar.Background = new SolidColorBrush(Colors.White);
+        //        else
+        //            msg.Avatar.Background = AvatarHelper.GetColorBrush(item.From.DisplayName);
 
-                if (flag)
-                    Messages.Insert(0, msg);
-                else
-                    Messages.Add(msg);
-            }
-            _latestId = apiData.Data.LatestId;
-            _hasMore = apiData.Data.More;
-        }
+        //        if (flag)
+        //            Messages.Insert(0, msg);
+        //        else
+        //            Messages.Add(msg);
+        //    }
+        //    _latestId = apiData.Data.LatestId;
+        //    _hasMore = apiData.Data.More;
+        //}
 
         private async void MsgTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
@@ -296,21 +292,7 @@ namespace Worktile.Views.Message
             string msg = MsgTextBox.Text.Trim();
             if (msg != string.Empty)
             {
-                int toType = 1;
-                if (_navParam.Session.Type == SessionType.Session)
-                    toType = 2;
-                var data = new
-                {
-                    fromType = 1,
-                    from = DataSource.ApiUserMeData.Me.Uid,
-                    to = _navParam.Session.Id,
-                    toType,
-                    messageType = 1,
-                    client = 1,
-                    markdown = 1,
-                    content = msg
-                };
-                await _navParam.MainPage.SendMessageAsync(SocketMessageType.Message, data);
+                await ViewModel.SendMessageAsync(msg);
                 MsgTextBox.Text = string.Empty;
             }
         }
@@ -331,62 +313,21 @@ namespace Worktile.Views.Message
             };
             picker.FileTypeFilter.Add("*");
             var files = await picker.PickMultipleFilesAsync();
-            if (files.Any())
-            {
-                var client = new WtHttpClient();
-                string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={_navParam.Session.Id}&ref_type={_navParam.Session.RefType}";
-                foreach (var file in files)
-                {
-                    StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);
-                    using (var stream = await file.OpenStreamForReadAsync())
-                    {
-                        string fileName = file.DisplayName + file.FileType;
-                        var content = new MultipartFormDataContent
-                        {
-                            { new StringContent(fileName), "name" },
-                            { new StreamContent(stream), "file", fileName }
-                        };
-                        await client.PostAsync<ApiEntitiesUpload>(url, content);
-                    }
-                }
-            }
+            await ViewModel.UploadFileAsync(files);
         }
 
         private async void Pin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Message;
-            string url = "/api/pinneds";
-            var client = new WtHttpClient();
-            var req = new
-            {
-                type = 1,
-                message_id = msg.Id,
-                session_id = _navParam.Session.Id
-            };
-            string json = JsonConvert.SerializeObject(req);
-            if (_navParam.Session.Type == SessionType.Channel)
-                json = json.Replace("session_id", "channel_id");
-            var response = await client.PostAsync<ApiResponse>(url, json);
-            if (response.Code == 200)
-            {
-                msg.IsPinned = true;
-            }
+            await ViewModel.PinMessageAsync(msg);
         }
-
-        string IdType => _navParam.Session.Type == SessionType.Channel ? "channel_id" : "session_id";
 
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Message;
-            string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={_navParam.Session.Id}";
-            var client = new WtHttpClient();
-            var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
-            if (response.Code == 200 && response.Data)
-            {
-                msg.IsPinned = false;
-            }
+            await ViewModel.UnPinMessageAsync(msg);
         }
     }
 }

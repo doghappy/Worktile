@@ -67,28 +67,35 @@ namespace Worktile.Views.Message
                 {
                     _selectedNav = value;
                     int index = Navs.IndexOf(value);
-                    if (index == 0)
+                    if (value.Name == "未读" || value.Name == "已读" || value.Name == "待处理")
                     {
-                        ContentFrame.Navigate(typeof(ChatPage), new ToChatPageParam
+                        ContentFrame.Navigate(typeof(Assistant.AssistantMessagePage), new ToUnReadMsgPageParam
                         {
                             Session = Session,
                             Nav = value,
                             MainPage = _navParam.MainPage
                         });
                     }
-                    else if (index == 1)
+                    else if (value.Name == "消息")
                     {
-                        if (value.Name == "文件")
+                        ContentFrame.Navigate(typeof(ChatPage), new ToUnReadMsgPageParam
                         {
-                            ContentFrame.Navigate(typeof(FilePage), Session);
-                        }
+                            Session = Session,
+                            Nav = value,
+                            MainPage = _navParam.MainPage
+                        });
                     }
-                    else if (index == 2)
+                    else if (value.Name == "文件")
                     {
-                        if (value.Name == "固定消息")
-                        {
-                            ContentFrame.Navigate(typeof(PinnedPage), Session);
-                        }
+                        ContentFrame.Navigate(typeof(FilePage), Session);
+                    }
+                    else if (value.Name == "固定消息")
+                    {
+                        ContentFrame.Navigate(typeof(PinnedPage), Session);
+                    }
+                    else if (value.Name == "已读")
+                    {
+
                     }
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
                 }

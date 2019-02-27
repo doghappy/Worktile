@@ -254,6 +254,14 @@
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
+    <Compile Include="ViewModels\Message\Assistant\AssistantMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\FileViewModel.cs" />
+    <Compile Include="ViewModels\Message\MessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\Session\SessionMessageViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\Message\Assistant\AssistantMessagePage.xaml.cs">
+      <DependentUpon>AssistantMessagePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\Dialog\CreateChatDialog.xaml.cs">
       <DependentUpon>CreateChatDialog.xaml</DependentUpon>
     </Compile>
@@ -325,7 +333,7 @@
     <Compile Include="Views\Message\MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\NavigationParam\ToChatPageParam.cs" />
+    <Compile Include="Views\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
     <Compile Include="Views\Message\NavigationParam\ToMessageDetailPageParam.cs" />
     <Compile Include="Views\Message\MessageType.cs" />
     <Compile Include="Views\Message\PinnedPage.xaml.cs">
@@ -592,6 +600,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Message\Assistant\AssistantMessagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Message\ChatPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -770,10 +782,6 @@
     <ProjectReference Include="..\Worktile.Tethys\Worktile.Tethys.csproj">
       <Project>{603175b4-99dc-4390-99f3-0f868d0c30e2}</Project>
       <Name>Worktile.Tethys</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.ViewModels\Worktile.ViewModels.csproj">
-      <Project>{44ad1759-2410-45bc-8692-b4c607a5e6dd}</Project>
-      <Name>Worktile.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

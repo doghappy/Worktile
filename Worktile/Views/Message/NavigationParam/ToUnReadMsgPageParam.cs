@@ -1,6 +1,6 @@
 ﻿namespace Worktile.Views.Message.NavigationParam
 {
-    class ToChatPageParam
+    class ToUnReadMsgPageParam
     {
         public Session Session { get; set; }
         public TopNav Nav { get; set; }

@@ -22,7 +22,7 @@
 
         <Grid>
             <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
-                <ItemsControl ItemsSource="{x:Bind Messages}">
+                <ItemsControl ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
@@ -48,8 +48,11 @@
                                                 <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}"
                                                                 Text="取消固定"
                                                                 DataContext="{x:Bind}"
-                                                                Icon="Pin"
-                                                                Click="UnPin_Click"/>
+                                                                Click="UnPin_Click">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE196;"/>
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
                                             </MenuFlyout>
                                         </Button.Flyout>
                                         <FontIcon FontSize="12" Glyph="&#xE10C;"/>
@@ -60,7 +63,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+            <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
         </Grid>
 
         <Grid Grid.Row="1">
