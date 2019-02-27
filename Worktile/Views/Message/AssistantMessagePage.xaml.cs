@@ -36,7 +36,7 @@ namespace Worktile.Views.Message
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _param = e.Parameter as ToUnReadMsgPageParam;
-            ViewModel = new AssistantMessageViewModel(_param.Session, _param.Nav);
+            ViewModel = new AssistantMessageViewModel(_param.Session, _param.MainViewModel, _param.Nav);
             _param.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
         }
 
@@ -71,7 +71,7 @@ namespace Worktile.Views.Message
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewModel.LoadMessagesAsync();
-            await ViewModel.ClearUnReadAsync(_param.MainViewModel);
+            await ViewModel.ClearUnReadAsync();
         }
     }
 }

@@ -86,7 +86,7 @@ namespace Worktile.ViewModels.Message
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        public async Task LoadSesionsAsync()
+        public async Task InitializeAsync()
         {
             IsActive = true;
             var client = new WtHttpClient();

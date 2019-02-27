@@ -16,9 +16,10 @@ namespace Worktile.ViewModels.Message
 {
     abstract class MessageViewModel : ViewModel
     {
-        public MessageViewModel(Session session)
+        public MessageViewModel(Session session, MainViewModel mainViewModel)
         {
             Session = session;
+            MainViewModel = mainViewModel;
             Messages = new ObservableCollection<ViewMessage>();
         }
 
@@ -26,6 +27,7 @@ namespace Worktile.ViewModels.Message
         protected abstract string Url { get; }
         public ObservableCollection<ViewMessage> Messages { get; }
         public bool? HasMore { get; protected set; }
+        protected MainViewModel MainViewModel { get; }
 
         protected abstract void ReadMessage(JToken jToken);
         public abstract Task PinMessageAsync(ViewMessage msg);
@@ -40,12 +42,12 @@ namespace Worktile.ViewModels.Message
             IsActive = false;
         }
 
-        public async Task ClearUnReadAsync(MainViewModel mainViewModel)
+        public async Task ClearUnReadAsync()
         {
             string url = $"/api/messages/unread/clear?ref_id={Session.Id}";
             var client = new WtHttpClient();
             await client.PutAsync<object>(url);
-            mainViewModel.UnreadBadge -= Session.UnRead;
+            MainViewModel.UnreadBadge -= Session.UnRead;
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Session.UnRead = 0));
         }
 

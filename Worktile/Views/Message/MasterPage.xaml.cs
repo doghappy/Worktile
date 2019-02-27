@@ -39,7 +39,7 @@ namespace Worktile.Views.Message
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel.LoadSesionsAsync();
+            await ViewModel.InitializeAsync();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

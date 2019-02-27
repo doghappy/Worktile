@@ -59,7 +59,7 @@ namespace Worktile.Views.Message
                     int index = Navs.IndexOf(value);
                     if (value.Name == "未读" || value.Name == "已读" || value.Name == "待处理")
                     {
-                        ContentFrame.Navigate(typeof(Assistant.AssistantMessagePage), new ToUnReadMsgPageParam
+                        ContentFrame.Navigate(typeof(AssistantMessagePage), new ToUnReadMsgPageParam
                         {
                             Session = Session,
                             Nav = value,

@@ -14,7 +14,7 @@ namespace Worktile.ViewModels.Message
 {
     class AssistantMessageViewModel : MessageViewModel, INotifyPropertyChanged
     {
-        public AssistantMessageViewModel(Session session, TopNav nav) : base(session)
+        public AssistantMessageViewModel(Session session, MainViewModel mainViewModel, TopNav nav) : base(session, mainViewModel)
         {
             _nav = nav;
         }

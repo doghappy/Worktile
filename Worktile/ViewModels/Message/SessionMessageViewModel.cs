@@ -18,12 +18,13 @@ using Worktile.ApiModels;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Worktile.Models;
 using Worktile.Models.Message;
+using Worktile.Domain.SocketMessageConverter;
 
 namespace Worktile.ViewModels.Message
 {
     class SessionMessageViewModel : MessageViewModel, INotifyPropertyChanged
     {
-        public SessionMessageViewModel(Models.Message.Session session) : base(session) { }
+        public SessionMessageViewModel(Session session, MainViewModel mainViewModel) : base(session, mainViewModel) { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -122,8 +123,7 @@ namespace Worktile.ViewModels.Message
                 markdown = 1,
                 content = msg
             };
-            //await _navParam.MainPage.SendMessageAsync(SocketMessageType.Message, data);
-            //MsgTextBox.Text = string.Empty;
+            await MainViewModel.SendMessageAsync(SocketMessageType.Message, data);
         }
 
         public async Task UploadFileAsync(IReadOnlyList<StorageFile> files)
