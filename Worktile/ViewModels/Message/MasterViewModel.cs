@@ -13,7 +13,9 @@ using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
 using Worktile.Views.Message;
-using Worktile.Views.Message.NavigationParam;
+using Worktile.Models.Message;
+using Worktile.Models.Message.NavigationParam;
+using Worktile.Enums.Message;
 
 namespace Worktile.ViewModels.Message
 {
@@ -23,17 +25,17 @@ namespace Worktile.ViewModels.Message
         {
             _contentFrame = contentFrame;
             _mainViewModel = mainViewModel;
-            Sessions = new ObservableCollection<Views.Message.Session>();
+            Sessions = new ObservableCollection<Models.Message.Session>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private Frame _contentFrame;
         private MainViewModel _mainViewModel;
 
-        public ObservableCollection<Views.Message.Session> Sessions { get; }
+        public ObservableCollection<Models.Message.Session> Sessions { get; }
 
-        private Views.Message.Session _selectedSession;
-        public Views.Message.Session SelectedSession
+        private Models.Message.Session _selectedSession;
+        public Models.Message.Session SelectedSession
         {
             get => _selectedSession;
             set
@@ -89,7 +91,7 @@ namespace Worktile.ViewModels.Message
             IsActive = true;
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeamChats>("/api/team/chats");
-            var list = new List<Views.Message.Session>();
+            var list = new List<Models.Message.Session>();
             var channels = data.Data.Channels.Concat(data.Data.Groups);
             foreach (var item in channels)
             {
@@ -199,7 +201,7 @@ namespace Worktile.ViewModels.Message
             }));
         }
 
-        public async Task DeleteSessionAsync(Views.Message.Session session)
+        public async Task DeleteSessionAsync(Models.Message.Session session)
         {
             string url = $"/api/sessions/{session.Id}";
             var client = new WtHttpClient();
@@ -210,7 +212,7 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        public async Task StarSessionAsync(Views.Message.Session session)
+        public async Task StarSessionAsync(Models.Message.Session session)
         {
             string sessionType = session.Type.ToString().ToLower();
             string url = $"/api/{sessionType}s/{session.Id}/star";
@@ -222,7 +224,7 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        public async Task UnStarSessionAsync(Views.Message.Session session)
+        public async Task UnStarSessionAsync(Models.Message.Session session)
         {
             string sessionType = session.Type.ToString().ToLower();
             string url = $"/api/{sessionType}s/{session.Id}/unstar";

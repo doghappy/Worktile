@@ -2,13 +2,12 @@
     x:Class="Worktile.Controls.MemberPickerEditor"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Worktile.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:message="using:Worktile.Views.Message"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:cvt="using:Worktile.Converters"
     xmlns:department="using:Worktile.Models.Department"
+    xmlns:models="using:Worktile.Models"
     mc:Ignorable="d"
     Loaded="UserControl_Loaded"
     d:DesignHeight="300"
@@ -59,7 +58,7 @@
                                         QuerySubmitted="AutoSuggestBox_QuerySubmitted"
                                         TextChanged="AutoSuggestBox_TextChanged">
                             <AutoSuggestBox.ItemTemplate>
-                                <DataTemplate x:DataType="message:TethysAvatar">
+                                <DataTemplate x:DataType="models:TethysAvatar">
                                     <StackPanel Orientation="Horizontal">
                                         <tethys:Avatar Size="30"
                                                        DisplayName="{x:Bind DisplayName}"
@@ -87,7 +86,7 @@
                             </ListView.Header>
 
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="message:TethysAvatar">
+                                <DataTemplate x:DataType="models:TethysAvatar">
                                     <StackPanel Orientation="Horizontal">
                                         <tethys:Avatar Size="30"
                                                        DisplayName="{x:Bind DisplayName}"
@@ -146,7 +145,7 @@
                     </ListBox.ItemContainerStyle>
 
                     <ListBox.ItemTemplate>
-                        <DataTemplate x:DataType="message:TethysAvatar">
+                        <DataTemplate x:DataType="models:TethysAvatar">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>

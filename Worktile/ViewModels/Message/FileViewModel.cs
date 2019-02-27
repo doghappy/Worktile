@@ -12,19 +12,20 @@ using Windows.Storage.AccessCache;
 using Worktile.ApiModels.Upload;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
+using Worktile.Models.Message;
 
 namespace Worktile.ViewModels.Message
 {
     class FileViewModel : ViewModel
     {
-        public FileViewModel(Views.Message.Session session)
+        public FileViewModel(Session session)
         {
             _session = session;
         }
 
-        private Views.Message.Session _session;
+        private Session _session;
 
-        public new event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {

@@ -1,4 +1,4 @@
-﻿namespace Worktile.Views.Message
+﻿namespace Worktile.Enums.Message
 {
     public enum MessageType
     {

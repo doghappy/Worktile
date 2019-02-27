@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Worktile.Views.Message
+namespace Worktile.Models.Message
 {
     class FileItem
     {

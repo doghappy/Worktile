@@ -6,8 +6,8 @@ using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.Enums;
+using Worktile.Enums.Message;
 using Worktile.Models;
-using Worktile.Views.Message;
 
 namespace Worktile.Common
 {

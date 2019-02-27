@@ -2,8 +2,9 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ViewModels.Message.Assistant;
-using Worktile.Views.Message.NavigationParam;
+using Worktile.Models.Message;
+using Worktile.Models.Message.NavigationParam;
+using Worktile.ViewModels.Message;
 
 namespace Worktile.Views.Message.Assistant
 {
@@ -56,14 +57,14 @@ namespace Worktile.Views.Message.Assistant
         private async void Pin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
-            var msg = flyoutItem.DataContext as Message;
+            var msg = flyoutItem.DataContext as ViewMessage;
             await ViewModel.PinMessageAsync(msg);
         }
 
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
-            var msg = flyoutItem.DataContext as Message;
+            var msg = flyoutItem.DataContext as ViewMessage;
             await ViewModel.UnPinMessageAsync(msg);
         }
 

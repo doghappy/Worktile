@@ -1,6 +1,6 @@
 ﻿using Worktile.ViewModels;
 
-namespace Worktile.Views.Message.NavigationParam
+namespace Worktile.Models.Message.NavigationParam
 {
     class ToMessageDetailPageParam
     {

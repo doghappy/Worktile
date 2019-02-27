@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Worktile.Enums;
 
-namespace Worktile.Views.Message
+namespace Worktile.Models.Message
 {
     public class Feed
     {

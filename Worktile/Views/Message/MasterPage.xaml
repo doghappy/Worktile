@@ -2,11 +2,11 @@
     x:Class="Worktile.Views.Message.MasterPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Worktile.Views.Message"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvt="using:Worktile.Converters"
     xmlns:tethys="using:Worktile.Tethys"
+    xmlns:message="using:Worktile.Models.Message"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
@@ -113,7 +113,7 @@
                     </ListView.ItemContainerStyle>
 
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Session">
+                        <DataTemplate x:DataType="message:Session">
                             <Grid>
                                 <Grid Padding="12 8" HorizontalAlignment="Stretch">
 

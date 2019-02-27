@@ -253,11 +253,11 @@
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\Message\Assistant\AssistantMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\AssistantMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\FileViewModel.cs" />
     <Compile Include="ViewModels\Message\MasterViewModel.cs" />
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\Session\SessionMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\SessionMessageViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Assistant\AssistantMessagePage.xaml.cs">
       <DependentUpon>AssistantMessagePage.xaml</DependentUpon>
@@ -271,10 +271,10 @@
     <Compile Include="Views\Message\Dialog\JoinGroupDialog.xaml.cs">
       <DependentUpon>JoinGroupDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\Feed.cs" />
-    <Compile Include="Views\Message\FeedType.cs" />
-    <Compile Include="Views\Message\FileItem.cs" />
-    <Compile Include="Views\Message\FromType.cs" />
+    <Compile Include="Models\Message\Feed.cs" />
+    <Compile Include="Enums\FeedType.cs" />
+    <Compile Include="Models\Message\FileItem.cs" />
+    <Compile Include="Enums\Message\FromType.cs" />
     <Compile Include="Enums\RoleType.cs" />
     <Compile Include="Enums\Visibility.cs" />
     <Compile Include="Enums\WtHttpResponseCode.cs" />
@@ -299,7 +299,6 @@
     <Compile Include="Models\Kanban\KanBanGroup.cs" />
     <Compile Include="Models\Kanban\KanBanItem.cs" />
     <Compile Include="Models\Kanban\KanbanItemProperty.cs" />
-    <Compile Include="Models\Main\NavApp.cs" />
     <Compile Include="Models\Mission\AnalyticInsight\TopNavItem.cs" />
     <Compile Include="Models\Mission\WorkloadEstimate.cs" />
     <Compile Include="Models\Mission\WorkloadValue.cs" />
@@ -317,28 +316,28 @@
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\ChatPage.xaml.cs">
-      <DependentUpon>ChatPage.xaml</DependentUpon>
+    <Compile Include="Views\Message\SessionMessagePage.xaml.cs">
+      <DependentUpon>SessionMessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\FilePage.xaml.cs">
       <DependentUpon>FilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\Message.cs" />
+    <Compile Include="Models\Message\ViewMessage.cs" />
     <Compile Include="Views\Message\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
-    <Compile Include="Views\Message\NavigationParam\ToMessageDetailPageParam.cs" />
-    <Compile Include="Views\Message\MessageType.cs" />
+    <Compile Include="Models\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
+    <Compile Include="Models\Message\NavigationParam\ToMessageDetailPageParam.cs" />
+    <Compile Include="Enums\Message\MessageType.cs" />
     <Compile Include="Views\Message\PinnedPage.xaml.cs">
       <DependentUpon>PinnedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\Session.cs" />
-    <Compile Include="Views\Message\TethysAvatar.cs" />
-    <Compile Include="Views\Message\TopNav.cs" />
+    <Compile Include="Models\Message\Session.cs" />
+    <Compile Include="Models\TethysAvatar.cs" />
+    <Compile Include="Models\Message\TopNav.cs" />
     <Compile Include="Views\Mission\AnalyticInsight\MemberDelayPage.xaml.cs">
       <DependentUpon>MemberDelayPage.xaml</DependentUpon>
     </Compile>
@@ -593,7 +592,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\ChatPage.xaml">
+    <Page Include="Views\Message\SessionMessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,12 +16,14 @@ using Worktile.Common.WtRequestClient;
 using Newtonsoft.Json;
 using Worktile.ApiModels;
 using Microsoft.Toolkit.Uwp.Helpers;
+using Worktile.Models;
+using Worktile.Models.Message;
 
-namespace Worktile.ViewModels.Message.Session
+namespace Worktile.ViewModels.Message
 {
     class SessionMessageViewModel : MessageViewModel, INotifyPropertyChanged
     {
-        public SessionMessageViewModel(Views.Message.Session session) : base(session) { }
+        public SessionMessageViewModel(Models.Message.Session session) : base(session) { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -45,7 +47,7 @@ namespace Worktile.ViewModels.Message.Session
             }
             foreach (var item in apiData.Data.Messages)
             {
-                var msg = new Views.Message.Message
+                var msg = new ViewMessage
                 {
                     Id = item.Id,
                     Avatar = new TethysAvatar
@@ -72,7 +74,7 @@ namespace Worktile.ViewModels.Message.Session
             HasMore = apiData.Data.More;
         }
 
-        public async override Task PinMessageAsync(Views.Message.Message msg)
+        public async override Task PinMessageAsync(ViewMessage msg)
         {
             string url = "/api/pinneds";
             var client = new WtHttpClient();
@@ -92,7 +94,7 @@ namespace Worktile.ViewModels.Message.Session
             }
         }
 
-        public async override Task UnPinMessageAsync(Views.Message.Message msg)
+        public async override Task UnPinMessageAsync(ViewMessage msg)
         {
             string idType = Session.Type == SessionType.Channel ? "channel_id" : "session_id";
             string url = $"/api/messages/{msg.Id}/unpinned?{idType}={Session.Id}";

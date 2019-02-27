@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace Worktile.Views.Message
+namespace Worktile.Models
 {
     public class TethysAvatar
     {

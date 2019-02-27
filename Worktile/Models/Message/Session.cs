@@ -2,9 +2,8 @@
 using System.ComponentModel;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Worktile.Models.Member;
 
-namespace Worktile.Views.Message
+namespace Worktile.Models.Message
 {
     public class Session : INotifyPropertyChanged
     {
@@ -58,7 +57,7 @@ namespace Worktile.Views.Message
         public string Uid { get; set; }
         public int RefType => Type == SessionType.Channel ? 1 : 2;
 
-        public Member CreatedBy { get; set; }
+        public Member.Member CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Joined { get; set; }
     }

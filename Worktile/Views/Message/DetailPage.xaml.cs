@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Views.Message.NavigationParam;
+using Worktile.Models.Message;
+using Worktile.Models.Message.NavigationParam;
 
 namespace Worktile.Views.Message
 {
@@ -78,7 +68,7 @@ namespace Worktile.Views.Message
                     }
                     else if (value.Name == "消息")
                     {
-                        ContentFrame.Navigate(typeof(ChatPage), new ToUnReadMsgPageParam
+                        ContentFrame.Navigate(typeof(SessionMessagePage), new ToUnReadMsgPageParam
                         {
                             Session = Session,
                             Nav = value,

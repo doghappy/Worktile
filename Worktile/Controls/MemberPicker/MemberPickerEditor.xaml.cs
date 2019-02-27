@@ -10,6 +10,8 @@ using Worktile.ApiModels;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
+using Worktile.Enums.Message;
+using Worktile.Models;
 using Worktile.Models.Department;
 using Worktile.Views.Message;
 

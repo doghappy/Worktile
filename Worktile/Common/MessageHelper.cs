@@ -1,15 +1,17 @@
 ﻿using Windows.UI.Xaml.Media;
 using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Enums;
+using Worktile.Enums.Message;
+using Worktile.Models.Message;
 using Worktile.Views.Message;
 
 namespace Worktile.Common
 {
     public static class MessageHelper
     {
-        public static Views.Message.Session GetSession(Channel channel)
+        public static Models.Message.Session GetSession(Channel channel)
         {
-            var session = new Views.Message.Session
+            var session = new Models.Message.Session
             {
                 Id = channel.Id,
                 DisplayName = channel.Name,
@@ -43,9 +45,9 @@ namespace Worktile.Common
             return session;
         }
 
-        public static Views.Message.Session GetSession(ApiModels.ApiTeamChats.Session session, AvatarSize size)
+        public static Models.Message.Session GetSession(ApiModels.ApiTeamChats.Session session, AvatarSize size)
         {
-            return new Views.Message.Session
+            return new Models.Message.Session
             {
                 Id = session.Id,
                 DisplayName = session.To.DisplayName,
@@ -64,7 +66,7 @@ namespace Worktile.Common
             };
         }
 
-        public static string GetContent(Models.Message.Message msg)
+        public static string GetContent(Message msg)
         {
             switch (msg.Type)
             {

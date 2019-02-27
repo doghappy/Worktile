@@ -7,13 +7,14 @@ using Worktile.ApiModels.Message.ApiPigeonMessages;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
-using Worktile.Views.Message;
+using Worktile.Models;
+using Worktile.Models.Message;
 
-namespace Worktile.ViewModels.Message.Assistant
+namespace Worktile.ViewModels.Message
 {
     class AssistantMessageViewModel : MessageViewModel, INotifyPropertyChanged
     {
-        public AssistantMessageViewModel(Views.Message.Session session, TopNav nav) : base(session)
+        public AssistantMessageViewModel(Session session, TopNav nav) : base(session)
         {
             _nav = nav;
         }
@@ -52,7 +53,7 @@ namespace Worktile.ViewModels.Message.Assistant
 
             foreach (var item in apiData.Data.Messages)
             {
-                Messages.Insert(0, new Views.Message.Message
+                Messages.Insert(0, new ViewMessage
                 {
                     Id = item.Id,
                     Avatar = new TethysAvatar
@@ -71,7 +72,7 @@ namespace Worktile.ViewModels.Message.Assistant
             HasMore = apiData.Data.Next != null;
         }
 
-        public async override Task PinMessageAsync(Views.Message.Message msg)
+        public async override Task PinMessageAsync(ViewMessage msg)
         {
             string url = $"/api/unreads/{Session.Id}/messages/{msg.Id}/pending";
             var client = new WtHttpClient();
@@ -82,7 +83,7 @@ namespace Worktile.ViewModels.Message.Assistant
             }
         }
 
-        public async override Task UnPinMessageAsync(Views.Message.Message msg)
+        public async override Task UnPinMessageAsync(ViewMessage msg)
         {
             string url = $"/api/unreads/{Session.Id}/messages/{msg.Id}/pending";
             var client = new WtHttpClient();

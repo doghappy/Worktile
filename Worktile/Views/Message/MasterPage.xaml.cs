@@ -10,6 +10,7 @@ using Worktile.Views.Message.Dialog;
 using Windows.System;
 using Worktile.ViewModels;
 using Worktile.ViewModels.Message;
+using Worktile.Models.Message;
 
 namespace Worktile.Views.Message
 {
@@ -64,13 +65,13 @@ namespace Worktile.Views.Message
             _rightTappedSession = ((FrameworkElement)e.OriginalSource).DataContext as Session;
             if (_rightTappedSession.Starred)
             {
-                ViewModel.StarVisibility = Windows.UI.Xaml.Visibility.Collapsed;
-                ViewModel.UnStarVisibility = Windows.UI.Xaml.Visibility.Visible;
+                ViewModel.StarVisibility = Visibility.Collapsed;
+                ViewModel.UnStarVisibility = Visibility.Visible;
             }
             else
             {
-                ViewModel.StarVisibility = Windows.UI.Xaml.Visibility.Visible;
-                ViewModel.UnStarVisibility = Windows.UI.Xaml.Visibility.Collapsed;
+                ViewModel.StarVisibility = Visibility.Visible;
+                ViewModel.UnStarVisibility = Visibility.Collapsed;
             }
         }
 

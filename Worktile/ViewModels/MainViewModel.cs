@@ -26,6 +26,7 @@ using Worktile.Common.WtRequestClient;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Domain.SocketMessageConverter.Converters;
 using Worktile.Enums;
+using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Views;
 using Worktile.Views.Message;
@@ -46,7 +47,7 @@ namespace Worktile.ViewModels
 
         private MessageWebSocket _socket;
         public event Action<Models.Message.Message> OnMessageReceived;
-        public event Action<Views.Message.Feed> OnFeedReceived;
+        public event Action<Models.Message.Feed> OnFeedReceived;
 
         private CoreDispatcher _dispatcher;
         private Frame _contentFrame;
@@ -267,7 +268,7 @@ namespace Worktile.ViewModels
 
         private void FeedReceived(string msg)
         {
-            var feed = JsonConvert.DeserializeObject<Views.Message.Feed>(msg);
+            var feed = JsonConvert.DeserializeObject<Models.Message.Feed>(msg);
             OnFeedReceived?.Invoke(feed);
         }
 

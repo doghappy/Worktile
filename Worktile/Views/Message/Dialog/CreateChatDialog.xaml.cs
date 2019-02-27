@@ -9,6 +9,8 @@ using Worktile.ApiModels;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
+using Worktile.Models;
+using Worktile.Models.Message;
 
 namespace Worktile.Views.Message.Dialog
 {

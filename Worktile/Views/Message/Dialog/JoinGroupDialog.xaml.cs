@@ -6,9 +6,9 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels;
-using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
+using Worktile.Models.Message;
 
 namespace Worktile.Views.Message.Dialog
 {
@@ -48,7 +48,7 @@ namespace Worktile.Views.Message.Dialog
             _sessions = new List<Session>();
             var client = new WtHttpClient();
             string url = "/api/channels?type=all&filter=all&status=ok";
-            var data = await client.GetAsync<ApiDataResponse<List<Channel>>>(url);
+            var data = await client.GetAsync<ApiDataResponse<List<ApiModels.ApiTeamChats.Channel>>>(url);
             foreach (var item in data.Data)
             {
                 var session = MessageHelper.GetSession(item);

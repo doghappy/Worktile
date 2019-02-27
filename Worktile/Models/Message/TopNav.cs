@@ -1,4 +1,4 @@
-﻿namespace Worktile.Views.Message
+﻿namespace Worktile.Models.Message
 {
     public class TopNav
     {

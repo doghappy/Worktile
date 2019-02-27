@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using Windows.UI.Xaml;
+using Worktile.Enums.Message;
+using Worktile.Models;
 
-namespace Worktile.Views.Message
+namespace Worktile.Models.Message
 {
-    public class Message : INotifyPropertyChanged
+    public class ViewMessage : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

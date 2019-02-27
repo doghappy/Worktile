@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Windows.UI;
+using Worktile.Enums.Message;
 using Worktile.Views.Message;
 
 namespace Worktile.Models.Message

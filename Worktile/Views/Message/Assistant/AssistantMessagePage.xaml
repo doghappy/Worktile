@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvt="using:Worktile.Converters"
-    xmlns:message="using:Worktile.Views.Message"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:message="using:Worktile.Models.Message"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
@@ -23,7 +23,7 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="message:Message">
+                    <DataTemplate x:DataType="message:ViewMessage">
                         <controls:MessageControl Message="{x:Bind}">
                             <controls:MessageControl.RightContent>
                                 <Button Visibility="{x:Bind IsShowPin, Converter={StaticResource BooleanVisibilityConverter}}"

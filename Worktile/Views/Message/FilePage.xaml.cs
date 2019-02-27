@@ -20,6 +20,9 @@ using Worktile.ApiModels.Upload;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
+using Worktile.Enums.Message;
+using Worktile.Models;
+using Worktile.Models.Message;
 
 namespace Worktile.Views.Message
 {
