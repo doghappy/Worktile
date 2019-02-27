@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using Worktile.Enums.Message;
 using Worktile.Views.Message;
 
 namespace Worktile.Models.Message

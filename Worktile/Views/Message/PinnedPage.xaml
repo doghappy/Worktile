@@ -6,12 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:message="using:Worktile.Models.Message"
     mc:Ignorable="d">
 
     <Grid>
         <ListView ItemsSource="{x:Bind Messages}" SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:Message">
+                <DataTemplate x:DataType="message:ViewMessage">
                     <controls:MessageControl Message="{x:Bind}">
                         <controls:MessageControl.RightContent>
                             <Button Style="{ThemeResource TextBlockButtonStyle}"

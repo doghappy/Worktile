@@ -1,126 +1,51 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using Windows.UI.Xaml.Controls;
-using Worktile.Models.Main;
-using Windows.UI.Xaml;
-using Worktile.ViewModels.Infrastructure;
-using Windows.UI.Xaml.Media.Imaging;
-using System;
-using Worktile.Views.Message;
-using Windows.Storage;
-using Worktile.Common.WtRequestClient;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using Worktile.ApiModels.ApiTeam;
 using Worktile.ApiModels.ApiUserMe;
+using Worktile.Models;
 using Worktile.Common;
+using Worktile.Views;
+using Worktile.Common.WtRequestClient;
+using Windows.UI.Xaml.Navigation;
+using Worktile.Views.Message;
+using Windows.Networking.Sockets;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Windows.Storage.Streams;
+using Worktile.Domain.SocketMessageConverter;
+using Worktile.Domain.SocketMessageConverter.Converters;
+using Windows.UI.Notifications;
+using Windows.Data.Xml.Dom;
+using Microsoft.Toolkit.Uwp.Notifications;
+using Newtonsoft.Json;
+using Worktile.Enums;
+using Windows.System.Threading;
+using Windows.UI.Core;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using Windows.UI.Xaml.Media;
+using Worktile.ViewModels;
 
 namespace Worktile.Views
 {
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class MainPage : Page
     {
         public MainPage()
         {
             InitializeComponent();
-            NavBackground = "#6f76fa";
-            var navbg = WtColorHelper.GetColor("#575df9");
-            NavList.Resources["ListViewItemBackgroundSelected"] = navbg;
-            NavList.Resources["ListViewItemBackgroundSelectedPressed"] = navbg;
-            NavList.Resources["ListViewItemBackgroundSelectedPointerOver"] = navbg;
-            NavList.Resources["ListViewItemBackgroundPointerOver"] = navbg;
-            NavList.Resources["ListViewItemBackgroundPressed"] = navbg;
-            AvatarUrl = "https://s3.cn-north-1.amazonaws.com.cn/lcavatar/7f79f351-408d-459f-b880-620eef734b65_80x80.png";
-            NavApps = new ObservableCollection<NavApp>
-            {
-                new NavApp
-                {
-                    Id = "message",
-                    Label = "消息",
-                    Glyph = "\ue618",
-                    SelectedGlyph = "\ue61e"
-                }
-            };
-            NavApp = NavApps.First();
-            BackgroundImage = new BitmapImage(new Uri("ms-appx:///Assets/Images/Background/desktop-4.jpg"));
+            ViewModel = new MainViewModel(Dispatcher, ContentFrame, InAppNotification);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public string NavBackground { get; }
-
-        private BitmapImage _logo;
-        public BitmapImage Logo
-        {
-            get => _logo;
-            set
-            {
-                if (_logo != value)
-                {
-                    _logo = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Logo)));
-                }
-            }
-        }
-
-        public string AvatarUrl { get; }
-
-        public ObservableCollection<NavApp> NavApps { get; }
-
-        private bool _isActive;
-        public bool IsActive
-        {
-            get => _isActive;
-            set
-            {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
-                }
-            }
-        }
-
-        private NavApp _navApp;
-        public NavApp NavApp
-        {
-            get => _navApp;
-            set
-            {
-                if (_navApp != value)
-                {
-                    if (_navApp != null)
-                    {
-                        _navApp.State1Visibility = Visibility.Visible;
-                        _navApp.State2Visibility = Visibility.Collapsed;
-                    }
-                    value.State1Visibility = Visibility.Collapsed;
-                    value.State2Visibility = Visibility.Visible;
-                    _navApp = value;
-                    switch (value.Id)
-                    {
-                        case "message":
-                            ContentFrame.Navigate(typeof(MessagePage));
-                            break;
-                    }
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NavApp)));
-                }
-            }
-        }
-
-        private BitmapImage _backgroundImage;
-        public BitmapImage BackgroundImage
-        {
-            get => _backgroundImage;
-            set
-            {
-                _backgroundImage = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BackgroundImage)));
-            }
-        }
+        public MainViewModel ViewModel { get; }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            IsActive = true;
+            ViewModel.IsActive = true;
             string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
             if (string.IsNullOrEmpty(cookie))
             {
@@ -130,62 +55,36 @@ namespace Worktile.Views
             {
                 WtHttpClient.SetBaseAddress(DataSource.SubDomain);
                 WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
-                Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
-                await RequestApiUserMeAsync();
-                await RequestApiTeamAsync();
+                ViewModel.Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
+                await ViewModel.RequestApiUserMeAsync();
+                await ViewModel.RequestApiTeamAsync();
             }
-            IsActive = false;
+            ViewModel.IsActive = false;
+            Window.Current.Activated += Window_Activated;
         }
 
-        private async Task RequestApiUserMeAsync()
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
-            var client = new WtHttpClient();
-            var me = await client.GetAsync<ApiUserMe>("/api/user/me");
-            DataSource.ApiUserMeData = me.Data;
-
-            string bgImg = DataSource.ApiUserMeData.Me.Preferences.BackgroundImage;
-            if (bgImg.StartsWith("desktop-") && bgImg.EndsWith(".jpg"))
-            {
-                BackgroundImage = new BitmapImage(new Uri("ms-appx:///Assets/Images/Background/" + bgImg));
-            }
-            else
-            {
-                string imgUriString = DataSource.ApiUserMeData.Config.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
-                byte[] buffer = await client.GetByteArrayAsync(imgUriString);
-                BackgroundImage = await ImageHelper.GetImageFromBytesAsync(buffer);
-            }
+            ViewModel.WindowActivationState = e.WindowActivationState;
         }
 
-        private async Task RequestApiTeamAsync()
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiTeam>("/api/team");
-            DataSource.Team = data.Data;
+            base.OnNavigatedFrom(e);
+            ViewModel.Dispose();
+            Window.Current.Activated -= Window_Activated;
+        }
 
-            for (int i = 0; i < 3; i++)
-            {
-                var item = DataSource.Apps.Single(a => a.Name == DataSource.Team.Apps[i].Name);
-                NavApps.Add(new NavApp
-                {
-                    Label = item.DisplayName,
-                    Glyph = item.Glyph,
-                    SelectedGlyph = item.GlyphO
-                });
-            }
-            NavApps.Add(new NavApp
-            {
-                Label = "应用",
-                Glyph = "\ue61b",
-                SelectedGlyph = "\ue61d"
-            });
-            NavApps.Add(new NavApp
-            {
-                Label = "通讯录",
-                Glyph = "\ue617",
-                SelectedGlyph = "\ue604"
-            });
+        private void Me_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            ViewModel.SelectedApp = null;
+            ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
+        }
 
-            Logo = new BitmapImage(new Uri(DataSource.ApiUserMeData.Config.Box.LogoUrl + DataSource.Team.Logo));
+        private void Setting_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            ViewModel.SelectedApp = null;
+            ContentFrame.Navigate(typeof(TestPage));
         }
     }
 }

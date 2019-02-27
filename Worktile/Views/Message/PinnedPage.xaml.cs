@@ -14,7 +14,9 @@ using Worktile.ApiModels.ApiPinnedMessages;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
+using Worktile.Enums.Message;
 using Worktile.Models;
+using Worktile.Models.Message;
 
 namespace Worktile.Views.Message
 {
@@ -23,7 +25,7 @@ namespace Worktile.Views.Message
         public PinnedPage()
         {
             InitializeComponent();
-            Messages = new IncrementalCollection<Message>(LoadMessagesAsync);
+            Messages = new IncrementalCollection<ViewMessage>(LoadMessagesAsync);
         }
 
         Session _session;
@@ -44,7 +46,7 @@ namespace Worktile.Views.Message
             }
         }
 
-        public IncrementalCollection<Message> Messages { get; }
+        public IncrementalCollection<ViewMessage> Messages { get; }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -55,11 +57,11 @@ namespace Worktile.Views.Message
 
         string IdType => _session.Type == SessionType.Channel ? "channel_id" : "session_id";
 
-        private async Task<IEnumerable<Message>> LoadMessagesAsync()
+        private async Task<IEnumerable<ViewMessage>> LoadMessagesAsync()
         {
             IsActive = true;
             const int SIZE = 10;
-            var list = new List<Message>();
+            var list = new List<ViewMessage>();
             string url = $"/api/pinneds?{IdType}={_session.Id}&anchor={_anchor}&size={SIZE}";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiPinnedMessages>(url);
@@ -77,7 +79,7 @@ namespace Worktile.Views.Message
                         member = DataSource.Team.Members.Single(m => m.Uid == item.Reference.From.Uid);
                     else if (item.Reference.From.Type == FromType.Service)
                         member = DataSource.Team.Services.Single(m => m.ServiceId == item.Reference.From.Uid);
-                    var msg = new Message
+                    var msg = new ViewMessage
                     {
                         Id = item.Reference.Id,
                         Avatar = new TethysAvatar
@@ -108,7 +110,7 @@ namespace Worktile.Views.Message
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            var msg = btn.DataContext as Message;
+            var msg = btn.DataContext as ViewMessage;
             string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={_session.Id}";
             var client = new WtHttpClient();
             var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);

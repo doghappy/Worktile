@@ -1,0 +1,108 @@
+﻿<Page
+    x:Class="Worktile.Views.Message.SessionMessagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Message"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Worktile.Controls"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:message="using:Worktile.Models.Message"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <cvt:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
+                <ItemsControl ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="message:ViewMessage">
+                            <controls:MessageControl Message="{x:Bind}">
+                                <controls:MessageControl.RightContent>
+                                    <Button Visibility="{x:Bind IsShowPin, Converter={StaticResource BooleanVisibilityConverter}}"
+                                                Style="{ThemeResource TextBlockButtonStyle}">
+                                        <Button.Flyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="固定"
+                                                                DataContext="{x:Bind}"
+                                                                Click="Pin_Click"
+                                                                Visibility="{x:Bind PinVisibility, Mode=OneWay}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE840;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+
+                                                <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}"
+                                                                Text="取消固定"
+                                                                DataContext="{x:Bind}"
+                                                                Click="UnPin_Click">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE196;"/>
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                        <FontIcon FontSize="12" Glyph="&#xE10C;"/>
+                                    </Button>
+                                </controls:MessageControl.RightContent>
+                            </controls:MessageControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="120"/>
+            </Grid.RowDefinitions>
+            <Grid Background="{ThemeResource NavigationViewTopPaneBackground}">
+                <CommandBar Background="Transparent" HorizontalAlignment="Left" DefaultLabelPosition="Right">
+                    <AppBarButton Label="表情">
+                        <AppBarButton.Flyout>
+                            <Flyout>
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style TargetType="FlyoutPresenter">
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="MaxWidth" Value="800"/>
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
+                                <controls:EmojiPicker Width="700" Height="360" OnEmojiSelected="EmojiPicker_OnEmojiSelected"/>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE170;"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton Label="附件" Icon="Attach" Click="AttachmentButton_Click"/>
+                </CommandBar>
+                <CommandBar Background="Transparent" HorizontalAlignment="Right" DefaultLabelPosition="Right">
+                    <AppBarButton Label="发送" Icon="Send" Click="SendButton_Click"/>
+                </CommandBar>
+            </Grid>
+
+            <TextBox x:Name="MsgTextBox"
+                     Grid.Row="1"
+                     TextWrapping="Wrap"
+                     KeyDown="MsgTextBox_KeyDown"
+                     PlaceholderText="Ctrl+Enter发送消息" />
+        </Grid>
+    </Grid>
+</Page>

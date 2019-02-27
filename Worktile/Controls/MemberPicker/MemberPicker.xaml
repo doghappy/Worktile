@@ -5,8 +5,8 @@
     xmlns:local="using:Worktile.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:message="using:Worktile.Views.Message"
     xmlns:tethys="using:Worktile.Tethys"
+    xmlns:models="using:Worktile.Models"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -14,7 +14,7 @@
     <Grid VerticalAlignment="Top">
         <GridView ItemsSource="{x:Bind SelectedAvatars}" SelectionMode="None">
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="message:TethysAvatar">
+                <DataTemplate x:DataType="models:TethysAvatar">
                     <tethys:Avatar Size="30" DisplayName="{x:Bind DisplayName}" Source="{x:Bind Source}" Background="{x:Bind Background}"/>
                 </DataTemplate>
             </GridView.ItemTemplate>

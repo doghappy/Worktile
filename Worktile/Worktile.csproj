@@ -217,9 +217,6 @@
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />
     <Compile Include="Converters\PercentageConverter.cs" />
-    <Compile Include="Design\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Domain\Mission\Info\DateSpanReader.cs" />
     <Compile Include="Domain\Mission\Info\TagReader.cs" />
     <Compile Include="Domain\Mission\Info\CheckBoxReader.cs" />
@@ -248,28 +245,42 @@
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="Enums\AvatarSize.cs" />
+    <Compile Include="Enums\NotificationLevel.cs" />
     <Compile Include="Models\Department\DepartmentNode.cs" />
     <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
     <Compile Include="Models\Department\DepartmentNodeType.cs" />
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Message\AssistantMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\FileViewModel.cs" />
+    <Compile Include="ViewModels\Message\MasterViewModel.cs" />
+    <Compile Include="ViewModels\Message\MessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\SessionMessageViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\Message\AssistantMessagePage.xaml.cs">
+      <DependentUpon>AssistantMessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Dialog\CreateChatDialog.xaml.cs">
+      <DependentUpon>CreateChatDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
       <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Dialog\JoinGroupDialog.xaml.cs">
       <DependentUpon>JoinGroupDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\Feed.cs" />
-    <Compile Include="Views\Message\FeedType.cs" />
-    <Compile Include="Views\Message\FileItem.cs" />
-    <Compile Include="Views\Message\FromType.cs" />
+    <Compile Include="Models\Message\Feed.cs" />
+    <Compile Include="Enums\FeedType.cs" />
+    <Compile Include="Models\Message\FileItem.cs" />
+    <Compile Include="Enums\Message\FromType.cs" />
     <Compile Include="Enums\RoleType.cs" />
     <Compile Include="Enums\Visibility.cs" />
     <Compile Include="Enums\WtHttpResponseCode.cs" />
     <Compile Include="Enums\WtTaskPropertyFrom.cs" />
     <Compile Include="Enums\WtTaskPropertyType.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Avatar.cs" />
@@ -288,7 +299,6 @@
     <Compile Include="Models\Kanban\KanBanGroup.cs" />
     <Compile Include="Models\Kanban\KanBanItem.cs" />
     <Compile Include="Models\Kanban\KanbanItemProperty.cs" />
-    <Compile Include="Models\Main\NavApp.cs" />
     <Compile Include="Models\Mission\AnalyticInsight\TopNavItem.cs" />
     <Compile Include="Models\Mission\WorkloadEstimate.cs" />
     <Compile Include="Models\Mission\WorkloadValue.cs" />
@@ -306,30 +316,28 @@
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Message\ChatPage.xaml.cs">
-      <DependentUpon>ChatPage.xaml</DependentUpon>
+    <Compile Include="Views\Message\SessionMessagePage.xaml.cs">
+      <DependentUpon>SessionMessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\FilePage.xaml.cs">
       <DependentUpon>FilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\Message.cs" />
-    <Compile Include="Views\Message\MessageDetailPage.xaml.cs">
-      <DependentUpon>MessageDetailPage.xaml</DependentUpon>
+    <Compile Include="Models\Message\ViewMessage.cs" />
+    <Compile Include="Views\Message\DetailPage.xaml.cs">
+      <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\MessagePage.xaml.cs">
-      <DependentUpon>MessagePage.xaml</DependentUpon>
+    <Compile Include="Views\Message\MasterPage.xaml.cs">
+      <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\MessageDetailToChatNavParam.cs" />
-    <Compile Include="Views\Message\MessageType.cs" />
+    <Compile Include="Models\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
+    <Compile Include="Models\Message\NavigationParam\ToMessageDetailPageParam.cs" />
+    <Compile Include="Enums\Message\MessageType.cs" />
     <Compile Include="Views\Message\PinnedPage.xaml.cs">
       <DependentUpon>PinnedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\Session.cs" />
-    <Compile Include="Views\Message\TethysAvatar.cs" />
-    <Compile Include="Views\Message\TopNav.cs" />
+    <Compile Include="Models\Message\Session.cs" />
+    <Compile Include="Models\TethysAvatar.cs" />
+    <Compile Include="Models\Message\TopNav.cs" />
     <Compile Include="Views\Mission\AnalyticInsight\MemberDelayPage.xaml.cs">
       <DependentUpon>MemberDelayPage.xaml</DependentUpon>
     </Compile>
@@ -568,11 +576,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Design\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -584,11 +588,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainPage.xaml">
+    <Page Include="Views\Message\AssistantMessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\ChatPage.xaml">
+    <Page Include="Views\Message\SessionMessagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\Dialog\CreateChatDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -604,11 +612,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\MessageDetailPage.xaml">
+    <Page Include="Views\Message\DetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\MessagePage.xaml">
+    <Page Include="Views\Message\MasterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -762,10 +770,6 @@
     <ProjectReference Include="..\Worktile.Tethys\Worktile.Tethys.csproj">
       <Project>{603175b4-99dc-4390-99f3-0f868d0c30e2}</Project>
       <Name>Worktile.Tethys</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Worktile.ViewModels\Worktile.ViewModels.csproj">
-      <Project>{44ad1759-2410-45bc-8692-b4c607a5e6dd}</Project>
-      <Name>Worktile.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="Worktile.Views.Message.DetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tethys="using:Worktile.Tethys"
+    xmlns:message="using:Worktile.Models.Message"
+    mc:Ignorable="d">
+
+    <Grid>
+        <NavigationView PaneDisplayMode="Top"
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="False"
+                        SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}"
+                        MenuItemsSource="{x:Bind Navs}">
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate x:DataType="message:TopNav">
+                    <NavigationViewItem Content="{x:Bind Name}" />
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
+
+            <NavigationView.PaneHeader>
+                <StackPanel Orientation="Horizontal">
+                    <tethys:Avatar Size="30"
+                                   Margin="16 0 8 0"
+                                   Foreground="White"
+                                   Source="{x:Bind Session.ProfilePicture, Mode=OneWay}"
+                                   DisplayName="{x:Bind Session.DisplayName, Mode=OneWay}"
+                                   BadgeIcon="{x:Bind Session.DefaultIcon, Mode=OneWay}"
+                                   Background="{x:Bind Session.Background, Mode=OneWay}"
+                                   BadgeIconFontFamily="{x:Bind Session.AvatarFont, Mode=OneWay}"/>
+                    <TextBlock Grid.Column="1"
+                               VerticalAlignment="Center"
+                               Foreground="{ThemeResource TopNavigationViewItemForegroundDisabled}"
+                               Text="{x:Bind Session.DisplayName, Mode=OneWay}"/>
+                </StackPanel>
+            </NavigationView.PaneHeader>
+
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>
+
+        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+    </Grid>
+</Page>

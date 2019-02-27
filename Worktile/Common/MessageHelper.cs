@@ -1,14 +1,17 @@
 ﻿using Windows.UI.Xaml.Media;
 using Worktile.ApiModels.ApiTeamChats;
+using Worktile.Enums;
+using Worktile.Enums.Message;
+using Worktile.Models.Message;
 using Worktile.Views.Message;
 
 namespace Worktile.Common
 {
     public static class MessageHelper
     {
-        public static Views.Message.Session GetSession(Channel channel)
+        public static Models.Message.Session GetSession(Channel channel)
         {
-            var session = new Views.Message.Session
+            var session = new Models.Message.Session
             {
                 Id = channel.Id,
                 DisplayName = channel.Name,
@@ -19,6 +22,7 @@ namespace Worktile.Common
                 UnRead = channel.UnRead,
                 NamePinyin = channel.NamePinyin,
                 Type = SessionType.Channel,
+                Joined = channel.Joined,
                 CreatedBy = new Models.Member.Member
                 {
                     DisplayName = channel.CreatedBy.DisplayName,
@@ -41,7 +45,28 @@ namespace Worktile.Common
             return session;
         }
 
-        public static string GetContent(Models.Message.Message msg)
+        public static Models.Message.Session GetSession(ApiModels.ApiTeamChats.Session session, AvatarSize size)
+        {
+            return new Models.Message.Session
+            {
+                Id = session.Id,
+                DisplayName = session.To.DisplayName,
+                Initials = AvatarHelper.GetInitials(session.To.DisplayName),
+                ProfilePicture = AvatarHelper.GetAvatarBitmap(session.To.Avatar, size, FromType.User),
+                Background = AvatarHelper.GetColorBrush(session.To.DisplayName),
+                Starred = session.Starred,
+                LatestMessageAt = session.LatestMessageAt,
+                Show = session.Show,
+                UnRead = session.UnRead,
+                //NamePinyin = item.To.DisplayName,
+                Component = session.Component,
+                Name = session.To.Name,
+                Type = SessionType.Session,
+                IsBot = session.IsBot
+            };
+        }
+
+        public static string GetContent(Message msg)
         {
             switch (msg.Type)
             {

@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Worktile.Views.Message;
+using Worktile.Models.Message;
 
 namespace Worktile.Controls
 {
@@ -23,13 +11,13 @@ namespace Worktile.Controls
             InitializeComponent();
         }
 
-        public Message Message
+        public ViewMessage Message
         {
-            get { return (Message)GetValue(MessageProperty); }
+            get { return (ViewMessage)GetValue(MessageProperty); }
             set { SetValue(MessageProperty, value); }
         }
         public static readonly DependencyProperty MessageProperty =
-            DependencyProperty.Register("Message", typeof(Message), typeof(MessageControl), new PropertyMetadata(default(Message)));
+            DependencyProperty.Register("Message", typeof(ViewMessage), typeof(MessageControl), new PropertyMetadata(default(ViewMessage)));
 
         public object RightContent
         {
