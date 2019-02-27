@@ -6,6 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:message="using:Worktile.Controls.Message"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -46,15 +48,31 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid Padding="12">
+                <Grid Padding="12 12 0 12">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                    <controls:MarkdownTextBlock x:Name="TextMsg"
+                                                x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"
+                                                Style="{ThemeResource MessageMarkdown}"
+                                                Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                                                SchemeList="worktile" UriPrefix="ms-appx://" />
+
+                    <TextBlock x:Name="ActivityMsg"
+                               x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"
+                               Text="{x:Bind Message.Body.Content, Mode=OneWay}"
                                TextWrapping="Wrap"
                                IsTextSelectionEnabled="True"/>
+
+                    <message:PageMessage x:Name="PageMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Page'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+                    
+                    <message:AttachmentMessage x:Name="AttachmentMsg"
+                                               x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Attachment'}"
+                                               Message="{x:Bind Message, Mode=OneWay}"/>
 
                     <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="{x:Bind Message.From.TethysAvatar.DisplayName, Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>

@@ -23,6 +23,7 @@
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="QuoteForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
                 <Setter Property="QuoteBorderBrush" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                <Setter Property="CodeBackground" Value="Transparent"/>
             </Style>
 
             <Style TargetType="TextBlock" x:Key="EmojiPickerItem">

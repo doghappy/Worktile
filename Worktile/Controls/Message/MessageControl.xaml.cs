@@ -1,6 +1,5 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Worktile.Models.Message;
 
 namespace Worktile.Controls
 {
@@ -11,13 +10,13 @@ namespace Worktile.Controls
             InitializeComponent();
         }
 
-        public Message Message
+        public Models.Message.Message Message
         {
-            get { return (Message)GetValue(MessageProperty); }
+            get { return (Models.Message.Message)GetValue(MessageProperty); }
             set { SetValue(MessageProperty, value); }
         }
         public static readonly DependencyProperty MessageProperty =
-            DependencyProperty.Register("Message", typeof(Message), typeof(MessageControl), new PropertyMetadata(default(Message)));
+            DependencyProperty.Register("Message", typeof(Models.Message.Message), typeof(MessageControl), new PropertyMetadata(default(Models.Message.Message)));
 
         public object RightContent
         {

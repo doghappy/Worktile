@@ -1,0 +1,75 @@
+﻿<UserControl
+    x:Class="Worktile.Controls.Message.AttachmentMessage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:message="using:Worktile.Models.Message"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <cvt:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
+        <Style TargetType="controls:MarkdownTextBlock">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <controls:MarkdownTextBlock x:Name="ContentMarkdown"
+                                    x:Load="{x:Bind Message.Body.Content, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}"
+                                    Style="{ThemeResource MessageMarkdown}"
+                                    Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                                    SchemeList="worktile"
+                                    UriPrefix="ms-appx://"
+                                    Margin="0 0 0 8"/>
+        
+        <controls:MarkdownTextBlock x:Name="PretextLabel"
+                   Grid.Row="1"
+                   Text="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay}"
+                   Margin="0 0 0 4"
+                   x:Load="{x:Bind Message.Body.InlineAttachment.Pretext, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}"/>
+
+        <StackPanel Grid.Row="2"
+                    Padding="20 10 18 10"
+                    BorderThickness="2 0 0 0"
+                    BorderBrush="{x:Bind Message.Body.InlineAttachment.Color, Mode=OneWay}">
+            <StackPanel>
+                <TextBlock x:Name="InlineAttachmentTitle"
+                           x:Load="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}"
+                           Text="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay}"
+                           IsTextSelectionEnabled="True"
+                           Margin="0 0 0 4"/>
+                <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"
+                           TextWrapping="Wrap"
+                           IsTextSelectionEnabled="True"
+                           Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+            </StackPanel>
+
+            <ItemsControl x:Name="MsgFields" ItemsSource="{x:Bind Message.Body.InlineAttachment.Fields, Mode=OneWay}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <controls:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="message:MessageField">
+                        <StackPanel Width="280" Margin="0 12 0 0">
+                            <TextBlock Text="{x:Bind Title}"/>
+                            <TextBlock Text="{x:Bind Value}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

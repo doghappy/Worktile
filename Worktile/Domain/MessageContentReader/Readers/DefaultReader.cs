@@ -14,7 +14,7 @@ namespace Worktile.Domain.MessageContentReader.Readers
             };
         }
 
-        public string ReadSummary(Message message) => WtMarkdown.FormatForMessage(message.Body.Content);
-        public string ReadDetail(Message message) => WtMarkdown.FormatForMessage(message.Body.Content);
+        public string ReadSummary(Message message) => message.Body.Content;
+        public string ReadDetail(Message message) => message.Body.Content;
     }
 }

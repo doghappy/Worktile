@@ -49,6 +49,7 @@ namespace Worktile.ViewModels.Message
             }
             foreach (var item in apiData.Data.Messages)
             {
+                item.ContentFormat();
                 item.From.TethysAvatar = new TethysAvatar
                 {
                     DisplayName = item.From.DisplayName,
