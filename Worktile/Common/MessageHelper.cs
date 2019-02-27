@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Media;
+﻿using System.Linq;
+using Windows.UI.Xaml.Media;
 using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Enums;
 using Worktile.Enums.Message;
@@ -64,17 +65,6 @@ namespace Worktile.Common
                 Type = SessionType.Session,
                 IsBot = session.IsBot
             };
-        }
-
-        public static string GetContent(Message msg)
-        {
-            switch (msg.Type)
-            {
-                case MessageType.Attachment:
-                case MessageType.Calendar:
-                    return msg.Body.InlineAttachment.Text;
-                default: return msg.Body.Content;
-            }
         }
     }
 }

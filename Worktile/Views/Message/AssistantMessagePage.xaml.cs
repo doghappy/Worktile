@@ -57,14 +57,14 @@ namespace Worktile.Views.Message
         private async void Pin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
-            var msg = flyoutItem.DataContext as ViewMessage;
+            var msg = flyoutItem.DataContext as Models.Message.Message;
             await ViewModel.PinMessageAsync(msg);
         }
 
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
-            var msg = flyoutItem.DataContext as ViewMessage;
+            var msg = flyoutItem.DataContext as Models.Message.Message;
             await ViewModel.UnPinMessageAsync(msg);
         }
 

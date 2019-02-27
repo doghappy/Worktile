@@ -23,6 +23,7 @@ using Worktile.ApiModels.ApiTeam;
 using Worktile.ApiModels.ApiUserMe;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
+using Worktile.Domain.MessageContentReader;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Domain.SocketMessageConverter.Converters;
 using Worktile.Enums;
@@ -316,7 +317,7 @@ namespace Worktile.ViewModels
                             },
                             new AdaptiveText()
                             {
-                                Text = MessageHelper.GetContent(apiMsg)
+                                Text = MessageContentReader.ReadSummary(apiMsg)
                             }
                         },
                         AppLogoOverride = new ToastGenericAppLogo()

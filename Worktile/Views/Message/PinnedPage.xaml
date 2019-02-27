@@ -12,7 +12,7 @@
     <Grid>
         <ListView ItemsSource="{x:Bind Messages}" SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="message:ViewMessage">
+                <DataTemplate x:DataType="message:Message">
                     <controls:MessageControl Message="{x:Bind}">
                         <controls:MessageControl.RightContent>
                             <Button Style="{ThemeResource TextBlockButtonStyle}"

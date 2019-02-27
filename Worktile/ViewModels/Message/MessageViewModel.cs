@@ -20,18 +20,18 @@ namespace Worktile.ViewModels.Message
         {
             Session = session;
             MainViewModel = mainViewModel;
-            Messages = new ObservableCollection<ViewMessage>();
+            Messages = new ObservableCollection<Models.Message.Message>();
         }
 
         protected Session Session { get; }
         protected abstract string Url { get; }
-        public ObservableCollection<ViewMessage> Messages { get; }
+        public ObservableCollection<Models.Message.Message> Messages { get; }
         public bool? HasMore { get; protected set; }
         protected MainViewModel MainViewModel { get; }
 
         protected abstract void ReadMessage(JToken jToken);
-        public abstract Task PinMessageAsync(ViewMessage msg);
-        public abstract Task UnPinMessageAsync(ViewMessage msg);
+        public abstract Task PinMessageAsync(Models.Message.Message msg);
+        public abstract Task UnPinMessageAsync(Models.Message.Message msg);
 
         public async Task LoadMessagesAsync()
         {
@@ -51,30 +51,23 @@ namespace Worktile.ViewModels.Message
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Session.UnRead = 0));
         }
 
-        public async void OnMessageReceived(Models.Message.Message apiMsg)
+        public async void OnMessageReceived(Models.Message.Message message)
         {
-            if (apiMsg.To.Id == Session.Id)
+            if (message.To.Id == Session.Id)
             {
                 await Task.Run(async () =>
                 {
                     await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                     {
-                        var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
-                        Messages.Add(new ViewMessage
+                        var member = DataSource.Team.Members.Single(m => m.Uid == message.From.Uid);
+                        message.From.TethysAvatar = new TethysAvatar
                         {
-                            Id = apiMsg.Id,
-                            Avatar = new TethysAvatar
-                            {
-                                DisplayName = member.DisplayName,
-                                Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
-                                Foreground = new SolidColorBrush(Colors.White),
-                                Background = AvatarHelper.GetColorBrush(member.DisplayName)
-                            },
-                            Content = MessageHelper.GetContent(apiMsg),
-                            Time = apiMsg.CreatedAt,
-                            IsPinned = false,
-                            Type = apiMsg.Type
-                        });
+                            DisplayName = member.DisplayName,
+                            Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
+                            Foreground = new SolidColorBrush(Colors.White),
+                            Background = AvatarHelper.GetColorBrush(member.DisplayName)
+                        };
+                        Messages.Add(message);
                     });
                 });
             }

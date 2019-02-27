@@ -6,6 +6,7 @@ using Worktile.ApiModels;
 using Worktile.ApiModels.Message.ApiPigeonMessages;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
+using Worktile.Domain.MessageContentReader;
 using Worktile.Enums;
 using Worktile.Models;
 using Worktile.Models.Message;
@@ -53,26 +54,19 @@ namespace Worktile.ViewModels.Message
 
             foreach (var item in apiData.Data.Messages)
             {
-                Messages.Insert(0, new ViewMessage
+                item.From.TethysAvatar = new TethysAvatar
                 {
-                    Id = item.Id,
-                    Avatar = new TethysAvatar
-                    {
-                        DisplayName = item.From.DisplayName,
-                        Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
-                        Background = AvatarHelper.GetColorBrush(item.From.DisplayName)
-                    },
-                    Content = MessageHelper.GetContent(item),
-                    Time = item.CreatedAt,
-                    Type = item.Type,
-                    IsPinned = item.IsPending
-                });
+                    DisplayName = item.From.DisplayName,
+                    Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
+                    Background = AvatarHelper.GetColorBrush(item.From.DisplayName)
+                };
+                Messages.Insert(0, item);
             }
             _next = apiData.Data.Next;
             HasMore = apiData.Data.Next != null;
         }
 
-        public async override Task PinMessageAsync(ViewMessage msg)
+        public async override Task PinMessageAsync(Models.Message.Message msg)
         {
             string url = $"/api/unreads/{Session.Id}/messages/{msg.Id}/pending";
             var client = new WtHttpClient();
@@ -83,7 +77,7 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        public async override Task UnPinMessageAsync(ViewMessage msg)
+        public async override Task UnPinMessageAsync(Models.Message.Message msg)
         {
             string url = $"/api/unreads/{Session.Id}/messages/{msg.Id}/pending";
             var client = new WtHttpClient();

@@ -19,7 +19,6 @@ namespace Worktile.Models.Message
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
 
-        public Color Background { get; set; }
-        public string Initials { get; set; }
+        public TethysAvatar TethysAvatar { get; set; }
     }
 }

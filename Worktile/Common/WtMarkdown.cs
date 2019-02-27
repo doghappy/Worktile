@@ -2,7 +2,7 @@
 
 namespace Worktile.Common
 {
-    public static class Markdown
+    public static class WtMarkdown
     {
         public static string FormatForMessage(string msg)
         {

@@ -19,6 +19,7 @@ using Microsoft.Toolkit.Uwp.Helpers;
 using Worktile.Models;
 using Worktile.Models.Message;
 using Worktile.Domain.SocketMessageConverter;
+using Worktile.Domain.MessageContentReader;
 
 namespace Worktile.ViewModels.Message
 {
@@ -48,34 +49,26 @@ namespace Worktile.ViewModels.Message
             }
             foreach (var item in apiData.Data.Messages)
             {
-                var msg = new ViewMessage
+                item.From.TethysAvatar = new TethysAvatar
                 {
-                    Id = item.Id,
-                    Avatar = new TethysAvatar
-                    {
-                        DisplayName = item.From.DisplayName,
-                        Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
-                        Foreground = new SolidColorBrush(Colors.White)
-                    },
-                    Content = MessageHelper.GetContent(item),
-                    Time = item.CreatedAt,
-                    Type = item.Type,
-                    IsPinned = item.IsPinned
+                    DisplayName = item.From.DisplayName,
+                    Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
+                    Foreground = new SolidColorBrush(Colors.White)
                 };
                 if (Path.GetExtension(item.From.Avatar).ToLower() == ".png")
-                    msg.Avatar.Background = new SolidColorBrush(Colors.White);
+                    item.From.TethysAvatar.Background = new SolidColorBrush(Colors.White);
                 else
-                    msg.Avatar.Background = AvatarHelper.GetColorBrush(item.From.DisplayName);
+                    item.From.TethysAvatar.Background = AvatarHelper.GetColorBrush(item.From.DisplayName);
                 if (flag)
-                    Messages.Insert(0, msg);
+                    Messages.Insert(0, item);
                 else
-                    Messages.Add(msg);
+                    Messages.Add(item);
             }
             _latestId = apiData.Data.LatestId;
             HasMore = apiData.Data.More;
         }
 
-        public async override Task PinMessageAsync(ViewMessage msg)
+        public async override Task PinMessageAsync(Models.Message.Message msg)
         {
             string url = "/api/pinneds";
             var client = new WtHttpClient();
@@ -95,7 +88,7 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        public async override Task UnPinMessageAsync(ViewMessage msg)
+        public async override Task UnPinMessageAsync(Models.Message.Message msg)
         {
             string idType = Session.Type == SessionType.Channel ? "channel_id" : "session_id";
             string url = $"/api/messages/{msg.Id}/unpinned?{idType}={Session.Id}";

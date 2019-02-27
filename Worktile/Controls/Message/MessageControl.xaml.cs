@@ -11,13 +11,13 @@ namespace Worktile.Controls
             InitializeComponent();
         }
 
-        public ViewMessage Message
+        public Message Message
         {
-            get { return (ViewMessage)GetValue(MessageProperty); }
+            get { return (Message)GetValue(MessageProperty); }
             set { SetValue(MessageProperty, value); }
         }
         public static readonly DependencyProperty MessageProperty =
-            DependencyProperty.Register("Message", typeof(ViewMessage), typeof(MessageControl), new PropertyMetadata(default(ViewMessage)));
+            DependencyProperty.Register("Message", typeof(Message), typeof(MessageControl), new PropertyMetadata(default(Message)));
 
         public object RightContent
         {

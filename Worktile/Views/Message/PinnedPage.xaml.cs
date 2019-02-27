@@ -13,6 +13,7 @@ using Worktile.ApiModels;
 using Worktile.ApiModels.ApiPinnedMessages;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
+using Worktile.Domain.MessageContentReader;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
@@ -25,7 +26,7 @@ namespace Worktile.Views.Message
         public PinnedPage()
         {
             InitializeComponent();
-            Messages = new IncrementalCollection<ViewMessage>(LoadMessagesAsync);
+            Messages = new IncrementalCollection<Models.Message.Message>(LoadMessagesAsync);
         }
 
         Session _session;
@@ -46,7 +47,7 @@ namespace Worktile.Views.Message
             }
         }
 
-        public IncrementalCollection<ViewMessage> Messages { get; }
+        public IncrementalCollection<Models.Message.Message> Messages { get; }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -57,11 +58,11 @@ namespace Worktile.Views.Message
 
         string IdType => _session.Type == SessionType.Channel ? "channel_id" : "session_id";
 
-        private async Task<IEnumerable<ViewMessage>> LoadMessagesAsync()
+        private async Task<IEnumerable<Models.Message.Message>> LoadMessagesAsync()
         {
             IsActive = true;
             const int SIZE = 10;
-            var list = new List<ViewMessage>();
+            var list = new List<Models.Message.Message>();
             string url = $"/api/pinneds?{IdType}={_session.Id}&anchor={_anchor}&size={SIZE}";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiPinnedMessages>(url);
@@ -79,24 +80,18 @@ namespace Worktile.Views.Message
                         member = DataSource.Team.Members.Single(m => m.Uid == item.Reference.From.Uid);
                     else if (item.Reference.From.Type == FromType.Service)
                         member = DataSource.Team.Services.Single(m => m.ServiceId == item.Reference.From.Uid);
-                    var msg = new ViewMessage
+
+                    item.Reference.From.TethysAvatar = new TethysAvatar
                     {
-                        Id = item.Reference.Id,
-                        Avatar = new TethysAvatar
-                        {
-                            DisplayName = member.DisplayName,
-                            Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, item.Reference.From.Type),
-                            Foreground = new SolidColorBrush(Colors.White)
-                        },
-                        Content = MessageHelper.GetContent(item.Reference),
-                        Time = item.Reference.CreatedAt,
-                        Type = item.Reference.Type
+                        DisplayName = member.DisplayName,
+                        Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, item.Reference.From.Type),
+                        Foreground = new SolidColorBrush(Colors.White)
                     };
                     if (Path.GetExtension(member.Avatar).ToLower() == ".png")
-                        msg.Avatar.Background = new SolidColorBrush(Colors.White);
+                        item.Reference.From.TethysAvatar.Background = new SolidColorBrush(Colors.White);
                     else
-                        msg.Avatar.Background = AvatarHelper.GetColorBrush(member.DisplayName);
-                    list.Add(msg);
+                        item.Reference.From.TethysAvatar.Background = AvatarHelper.GetColorBrush(member.DisplayName);
+                    list.Add(item.Reference);
                 }
             }
             else
@@ -110,7 +105,7 @@ namespace Worktile.Views.Message
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            var msg = btn.DataContext as ViewMessage;
+            var msg = btn.DataContext as Models.Message.Message;
             string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={_session.Id}";
             var client = new WtHttpClient();
             var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);

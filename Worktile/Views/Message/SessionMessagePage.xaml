@@ -30,7 +30,7 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="message:ViewMessage">
+                        <DataTemplate x:DataType="message:Message">
                             <controls:MessageControl Message="{x:Bind}">
                                 <controls:MessageControl.RightContent>
                                     <Button Visibility="{x:Bind IsShowPin, Converter={StaticResource BooleanVisibilityConverter}}"
