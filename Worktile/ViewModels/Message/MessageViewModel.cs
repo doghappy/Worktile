@@ -67,6 +67,7 @@ namespace Worktile.ViewModels.Message
                             Foreground = new SolidColorBrush(Colors.White),
                             Background = AvatarHelper.GetColorBrush(member.DisplayName)
                         };
+                        message.IsPinned = false;
                         Messages.Add(message);
                     });
                 });
