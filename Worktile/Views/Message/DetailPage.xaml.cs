@@ -18,9 +18,9 @@ using Worktile.Views.Message.NavigationParam;
 
 namespace Worktile.Views.Message
 {
-    public sealed partial class MessageDetailPage : Page, INotifyPropertyChanged
+    public sealed partial class DetailPage : Page, INotifyPropertyChanged
     {
-        public MessageDetailPage()
+        public DetailPage()
         {
             InitializeComponent();
             Navs = new ObservableCollection<TopNav>();
@@ -73,7 +73,7 @@ namespace Worktile.Views.Message
                         {
                             Session = Session,
                             Nav = value,
-                            MainPage = _navParam.MainPage
+                            MainViewModel = _navParam.MainViewModel
                         });
                     }
                     else if (value.Name == "消息")
@@ -82,7 +82,7 @@ namespace Worktile.Views.Message
                         {
                             Session = Session,
                             Nav = value,
-                            MainPage = _navParam.MainPage
+                            MainViewModel = _navParam.MainViewModel
                         });
                     }
                     else if (value.Name == "文件")

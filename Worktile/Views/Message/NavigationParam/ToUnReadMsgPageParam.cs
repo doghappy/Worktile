@@ -1,9 +1,11 @@
-﻿namespace Worktile.Views.Message.NavigationParam
+﻿using Worktile.ViewModels;
+
+namespace Worktile.Views.Message.NavigationParam
 {
-    class ToUnReadMsgPageParam
+    public class ToUnReadMsgPageParam
     {
         public Session Session { get; set; }
         public TopNav Nav { get; set; }
-        public Worktile.MainPage MainPage { get; set; }
+        public MainViewModel MainViewModel { get; set; }
     }
 }

@@ -36,12 +36,12 @@ namespace Worktile.Views.Message.Assistant
         {
             _param = e.Parameter as ToUnReadMsgPageParam;
             ViewModel = new AssistantMessageViewModel(_param.Session, _param.Nav);
-            _param.MainPage.OnMessageReceived += ViewModel.OnMessageReceived;
+            _param.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            _param.MainPage.OnMessageReceived -= ViewModel.OnMessageReceived;
+            _param.MainViewModel.OnMessageReceived -= ViewModel.OnMessageReceived;
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

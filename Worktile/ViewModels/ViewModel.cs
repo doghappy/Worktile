@@ -2,7 +2,7 @@
 
 namespace Worktile.ViewModels
 {
-    abstract class ViewModel
+    public abstract class ViewModel
     {
         private bool _isActive;
         public bool IsActive

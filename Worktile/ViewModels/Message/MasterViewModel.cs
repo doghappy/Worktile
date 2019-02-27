@@ -1,56 +1,39 @@
-﻿using System;
-using Microsoft.Toolkit.Uwp.Helpers;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Worktile.ApiModels;
 using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
-using Worktile.Enums;
 using Worktile.Common.WtRequestClient;
-using Windows.UI.Xaml.Input;
-using Worktile.Views.Message.Dialog;
-using Worktile.ApiModels;
+using Worktile.Enums;
+using Worktile.Views.Message;
 using Worktile.Views.Message.NavigationParam;
-using Windows.System;
 
-namespace Worktile.Views.Message
+namespace Worktile.ViewModels.Message
 {
-    public sealed partial class MessagePage : Page, INotifyPropertyChanged
+    class MasterViewModel : ViewModel, INotifyPropertyChanged, IDisposable
     {
-        public MessagePage()
+        public MasterViewModel(MainViewModel mainViewModel, Frame contentFrame)
         {
-            InitializeComponent();
-            Sessions = new ObservableCollection<Session>();
+            _contentFrame = contentFrame;
+            _mainViewModel = mainViewModel;
+            Sessions = new ObservableCollection<Views.Message.Session>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        private Frame _contentFrame;
+        private MainViewModel _mainViewModel;
 
-        Worktile.MainPage _mainPage;
+        public ObservableCollection<Views.Message.Session> Sessions { get; }
 
-        private bool _isActive;
-        public bool IsActive
-        {
-            get => _isActive;
-            set
-            {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
-                }
-            }
-        }
-
-        public ObservableCollection<Session> Sessions { get; }
-
-        private Session _selectedSession;
-        public Session SelectedSession
+        private Views.Message.Session _selectedSession;
+        public Views.Message.Session SelectedSession
         {
             get => _selectedSession;
             set
@@ -59,10 +42,10 @@ namespace Worktile.Views.Message
                 {
                     _selectedSession = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSession)));
-                    ContentFrame.Navigate(typeof(MessageDetailPage), new ToMessageDetailPageParam
+                    _contentFrame.Navigate(typeof(DetailPage), new ToMessageDetailPageParam
                     {
                         Session = value,
-                        MainPage = _mainPage
+                        MainViewModel = _mainViewModel
                     });
                 }
             }
@@ -77,7 +60,7 @@ namespace Worktile.Views.Message
                 if (_starVisibility != value)
                 {
                     _starVisibility = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StarVisibility)));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -91,17 +74,22 @@ namespace Worktile.Views.Message
                 if (_unStarVisibility != value)
                 {
                     _unStarVisibility = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnStarVisibility)));
+                    OnPropertyChanged();
                 }
             }
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnPropertyChanged([CallerMemberName] string prop = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public async Task LoadSesionsAsync()
         {
             IsActive = true;
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeamChats>("/api/team/chats");
-            var list = new List<Session>();
+            var list = new List<Views.Message.Session>();
             var channels = data.Data.Channels.Concat(data.Data.Groups);
             foreach (var item in channels)
             {
@@ -139,21 +127,9 @@ namespace Worktile.Views.Message
             }
             IsActive = false;
 
-            _mainPage.UnreadBadge += Sessions.Sum(s => s.UnRead);
-            _mainPage.OnMessageReceived += OnMessageReceived;
-            _mainPage.OnFeedReceived += OnFeedReceived;
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            _mainPage = e.Parameter as Worktile.MainPage;
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            _mainPage.OnMessageReceived -= OnMessageReceived;
-            _mainPage.OnFeedReceived -= OnFeedReceived;
+            _mainViewModel.UnreadBadge += Sessions.Sum(s => s.UnRead);
+            _mainViewModel.OnMessageReceived += OnMessageReceived;
+            _mainViewModel.OnFeedReceived += OnFeedReceived;
         }
 
         private async void OnMessageReceived(Models.Message.Message apiMsg)
@@ -223,109 +199,45 @@ namespace Worktile.Views.Message
             }));
         }
 
-        private Session _rightTappedSession;
-
-        private void ListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        public async Task DeleteSessionAsync(Views.Message.Session session)
         {
-            var listView = sender as ListView;
-            ListViewItemMenuFlyout.ShowAt(listView, e.GetPosition(listView));
-            _rightTappedSession = ((FrameworkElement)e.OriginalSource).DataContext as Session;
-            if (_rightTappedSession.Starred)
-            {
-                StarVisibility = Windows.UI.Xaml.Visibility.Collapsed;
-                UnStarVisibility = Windows.UI.Xaml.Visibility.Visible;
-            }
-            else
-            {
-                StarVisibility = Windows.UI.Xaml.Visibility.Visible;
-                UnStarVisibility = Windows.UI.Xaml.Visibility.Collapsed;
-            }
-        }
-
-        private async void CreateGroup_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new CreateGroupDialog();
-            dialog.OnCreateSuccess += channel =>
-            {
-                var session = MessageHelper.GetSession(channel);
-                Sessions.Insert(0, session);
-            };
-            await dialog.ShowAsync();
-        }
-
-        private void CreateNewSession(Session session)
-        {
-            var ss = Sessions.SingleOrDefault(s => s.Id == session.Id);
-            if (ss == null)
-            {
-                Sessions.Insert(0, session);
-                SelectedSession = session;
-            }
-            else if (SelectedSession != ss)
-            {
-                Sessions.Remove(ss);
-                Sessions.Insert(0, ss);
-                SelectedSession = ss;
-            }
-        }
-
-        private async void JoinGroup_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new JoinGroupDialog();
-            dialog.OnActived += session => CreateNewSession(session);
-            dialog.OnJoined += session =>
-            {
-                Sessions.Insert(0, session);
-                SelectedSession = session;
-            };
-            await dialog.ShowAsync();
-        }
-
-        private async void AddMember_Click(object sender, RoutedEventArgs e)
-        {
-            await Launcher.LaunchUriAsync(new Uri(DataSource.SubDomain+ "/console/members?add=true"));
-        }
-
-        private async void CreateChat_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new CreateChatDialog();
-            dialog.OnSessionCreated += session => CreateNewSession(session);
-            await dialog.ShowAsync();
-        }
-
-        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            string url = $"/api/sessions/{_rightTappedSession.Id}";
+            string url = $"/api/sessions/{session.Id}";
             var client = new WtHttpClient();
             var data = await client.DeleteAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
             {
-                Sessions.Remove(_rightTappedSession);
+                Sessions.Remove(session);
             }
         }
 
-        private async void StarButton_Click(object sender, RoutedEventArgs e)
+        public async Task StarSessionAsync(Views.Message.Session session)
         {
-            string sessionType = _rightTappedSession.Type.ToString().ToLower();
-            string url = $"/api/{sessionType}s/{_rightTappedSession.Id}/star";
+            string sessionType = session.Type.ToString().ToLower();
+            string url = $"/api/{sessionType}s/{session.Id}/star";
             var client = new WtHttpClient();
             var data = await client.PutAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
             {
-                _rightTappedSession.Starred = true;
+                session.Starred = true;
             }
         }
 
-        private async void UnStarButton_Click(object sender, RoutedEventArgs e)
+        public async Task UnStarSessionAsync(Views.Message.Session session)
         {
-            string sessionType = _rightTappedSession.Type.ToString().ToLower();
-            string url = $"/api/{sessionType}s/{_rightTappedSession.Id}/unstar";
+            string sessionType = session.Type.ToString().ToLower();
+            string url = $"/api/{sessionType}s/{session.Id}/unstar";
             var client = new WtHttpClient();
             var data = await client.PutAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
             {
-                _rightTappedSession.Starred = false;
+                session.Starred = false;
             }
+        }
+
+        public void Dispose()
+        {
+            _mainViewModel.OnMessageReceived -= OnMessageReceived;
+            _mainViewModel.OnFeedReceived -= OnFeedReceived;
         }
     }
 }

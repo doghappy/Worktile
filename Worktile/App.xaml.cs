@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Common;
 using System.Linq;
+using Worktile.Views;
+using Worktile.Enums;
 
 namespace Worktile
 {
@@ -105,7 +107,7 @@ namespace Worktile
                         };
                         if (rootFrame.Content is MainPage mainPage)
                         {
-                            await mainPage.SendMessageAsync(SocketMessageType.Message, data);
+                            await mainPage.ViewModel.SendMessageAsync(SocketMessageType.Message, data);
                         }
                     }
                 }
@@ -180,7 +182,7 @@ namespace Worktile
             {
                 if (rootFrame.Content is MainPage mainPage)
                 {
-                    mainPage.ShowNotification(text, level, duration);
+                    mainPage.ViewModel.ShowNotification(text, level, duration);
                     return;
                 }
             }

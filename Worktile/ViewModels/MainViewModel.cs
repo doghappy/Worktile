@@ -1,60 +1,79 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Windows.Storage;
+using Windows.Data.Xml.Dom;
+using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
+using Windows.System.Threading;
+using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.ApiModels.ApiTeam;
 using Worktile.ApiModels.ApiUserMe;
-using Worktile.Models;
 using Worktile.Common;
-using Worktile.Views;
 using Worktile.Common.WtRequestClient;
-using Windows.UI.Xaml.Navigation;
-using Worktile.Views.Message;
-using Windows.Networking.Sockets;
-using Microsoft.Toolkit.Uwp.Helpers;
-using Windows.Storage.Streams;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Domain.SocketMessageConverter.Converters;
-using Windows.UI.Notifications;
-using Windows.Data.Xml.Dom;
-using Microsoft.Toolkit.Uwp.Notifications;
-using Newtonsoft.Json;
 using Worktile.Enums;
-using Windows.System.Threading;
-using Windows.UI.Core;
-using Microsoft.Toolkit.Uwp.UI.Controls;
-using Windows.UI.Xaml.Media;
+using Worktile.Models;
+using Worktile.Views;
+using Worktile.Views.Message;
 
-namespace Worktile
+namespace Worktile.ViewModels
 {
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public class MainViewModel : ViewModel, INotifyPropertyChanged, IDisposable
     {
-        public MainPage()
+        public MainViewModel(CoreDispatcher dispatcher, Frame contentFrame, InAppNotification inAppNotification)
         {
-            InitializeComponent();
             Apps = new ObservableCollection<WtApp>();
+            _dispatcher = dispatcher;
+            _contentFrame = contentFrame;
+            _inAppNotification = inAppNotification;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        #region Property
-        public ObservableCollection<WtApp> Apps { get; }
+        private MessageWebSocket _socket;
+        public event Action<Models.Message.Message> OnMessageReceived;
+        public event Action<Views.Message.Feed> OnFeedReceived;
 
-        private bool _isActive;
-        public bool IsActive
+        private CoreDispatcher _dispatcher;
+        private Frame _contentFrame;
+        private InAppNotification _inAppNotification;
+
+        public string SocketId { get; private set; }
+
+        private int _unreadBadge;
+        public int UnreadBadge
         {
-            get => _isActive;
+            get => _unreadBadge;
             set
             {
-                _isActive = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                if (_unreadBadge != value || value == 0)
+                {
+                    _unreadBadge = value;
+                    if (value > 0)
+                        UpdateBadgeNumber(value);
+                    else
+                        BadgeUpdateManager.CreateBadgeUpdaterForApplication().Clear();
+                }
             }
         }
+
+        public CoreWindowActivationState WindowActivationState { get; set; }
+
+        public ObservableCollection<WtApp> Apps { get; }
 
         private string _displayName;
         public string DisplayName
@@ -63,7 +82,7 @@ namespace Worktile
             set
             {
                 _displayName = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayName)));
+                OnPropertyChanged();
             }
         }
 
@@ -74,7 +93,7 @@ namespace Worktile
             set
             {
                 _logo = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Logo)));
+                OnPropertyChanged();
             }
         }
 
@@ -85,7 +104,7 @@ namespace Worktile
             set
             {
                 _bgImage = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BgImage)));
+                OnPropertyChanged();
             }
         }
 
@@ -98,7 +117,7 @@ namespace Worktile
                 if (_selectedApp != value)
                 {
                     _selectedApp = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedApp)));
+                    OnPropertyChanged();
                     if (value != null)
                     {
                         ContentFrameNavigate(value.Name);
@@ -106,37 +125,13 @@ namespace Worktile
                 }
             }
         }
-        #endregion
 
-        #region Init
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {
-            IsActive = true;
-            string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
-            if (string.IsNullOrEmpty(cookie))
-            {
-                Frame.Navigate(typeof(SignInPage));
-            }
-            else
-            {
-                WtHttpClient.SetBaseAddress(DataSource.SubDomain);
-                WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
-                Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
-                await RequestApiUserMeAsync();
-                await RequestApiTeamAsync();
-            }
-            IsActive = false;
-            Window.Current.Activated += Window_Activated;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        private CoreWindowActivationState _windowActivationState;
-
-        private void Window_Activated(object sender, WindowActivatedEventArgs e)
-        {
-            _windowActivationState = e.WindowActivationState;
-        }
-
-        private async Task RequestApiUserMeAsync()
+        public async Task RequestApiUserMeAsync()
         {
             var client = new WtHttpClient();
             var me = await client.GetAsync<ApiUserMe>("/api/user/me");
@@ -158,7 +153,7 @@ namespace Worktile
             }
         }
 
-        private async Task RequestApiTeamAsync()
+        public async Task RequestApiTeamAsync()
         {
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeam>("/api/team");
@@ -172,22 +167,6 @@ namespace Worktile
             SelectedApp = Apps.First();
             Logo = new BitmapImage(new Uri(DataSource.ApiUserMeData.Config.Box.LogoUrl + DataSource.Team.Logo));
         }
-        #endregion
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-            _socket.MessageReceived -= Socket_MessageReceived;
-            _socket.Dispose();
-            Window.Current.Activated -= Window_Activated;
-        }
-
-        #region Socket
-        public string SocketId { get; private set; }
-
-        private MessageWebSocket _socket;
-        public event Action<Models.Message.Message> OnMessageReceived;
-        public event Action<Views.Message.Feed> OnFeedReceived;
 
         private async Task ConnectSocketAsync()
         {
@@ -213,26 +192,6 @@ namespace Worktile
                     KeepConnection();
                 });
             });
-        }
-
-        /// <summary>
-        /// 心跳机制，防止服务端断开连接。
-        /// </summary>
-        private void KeepConnection()
-        {
-            var timer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
-            {
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                {
-                    using (var dataWriter = new DataWriter(_socket.OutputStream))
-                    {
-                        dataWriter.WriteString("2");
-                        await dataWriter.StoreAsync();
-                        dataWriter.DetachStream();
-                    }
-                });
-
-            }, TimeSpan.FromSeconds(30));
         }
 
         private void Socket_MessageReceived(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
@@ -262,6 +221,26 @@ namespace Worktile
         }
 
         /// <summary>
+        /// 心跳机制，防止服务端断开连接。
+        /// </summary>
+        private void KeepConnection()
+        {
+            var timer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
+            {
+                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    using (var dataWriter = new DataWriter(_socket.OutputStream))
+                    {
+                        dataWriter.WriteString("2");
+                        await dataWriter.StoreAsync();
+                        dataWriter.DetachStream();
+                    }
+                });
+
+            }, TimeSpan.FromSeconds(30));
+        }
+
+        /// <summary>
         /// 接收解析到的消息，以提供Toast通知和Tile Badge功能
         /// </summary>
         /// <param name="msg"></param>
@@ -272,7 +251,7 @@ namespace Worktile
             if (apiMsg.From.Uid != DataSource.ApiUserMeData.Me.Uid)
             {
                 UnreadBadge += 1;
-                if (_windowActivationState == CoreWindowActivationState.Deactivated)
+                if (WindowActivationState == CoreWindowActivationState.Deactivated)
                 {
                     SendToast(apiMsg);
                 }
@@ -290,35 +269,6 @@ namespace Worktile
         {
             var feed = JsonConvert.DeserializeObject<Views.Message.Feed>(msg);
             OnFeedReceived?.Invoke(feed);
-        }
-
-        private int _unreadBadge;
-        public int UnreadBadge
-        {
-            get => _unreadBadge;
-            set
-            {
-                if (_unreadBadge != value || value == 0)
-                {
-                    _unreadBadge = value;
-                    if (value > 0)
-                        UpdateBadgeNumber(value);
-                    else
-                        BadgeUpdateManager.CreateBadgeUpdaterForApplication().Clear();
-                }
-            }
-        }
-
-
-        public async Task SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
-        {
-            string msg = SocketMessageConverter.Process(msgType, data);
-            using (var dataWriter = new DataWriter(_socket.OutputStream))
-            {
-                dataWriter.WriteString(msg);
-                await dataWriter.StoreAsync();
-                dataWriter.DetachStream();
-            }
         }
 
         public void UpdateBadgeNumber(int number)
@@ -408,72 +358,51 @@ namespace Worktile
             ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
         }
 
-        #endregion
-
-        #region Navigate
-        //private void Nav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-        //{
-        //    if (args.IsSettingsSelected)
-        //    {
-        //        ContentFrame.Navigate(typeof(TestPage));
-        //    }
-        //    else
-        //    {
-        //        var app = args.SelectedItem as WtApp;
-        //        SelectedApp = app;
-        //        ContentFrameNavigate(app.Name);
-        //    }
-        //}
-
         private void ContentFrameNavigate(string app)
         {
             switch (app)
             {
                 case "message":
-                    ContentFrame.Navigate(typeof(MessagePage), this);
+                    _contentFrame.Navigate(typeof(MasterPage), this);
                     break;
                 //case "mission":
                 //    ContentFrame.Navigate(typeof(MissionPage));
                 //    break;
                 default:
-                    ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
+                    _contentFrame.Navigate(typeof(WaitForDevelopmentPage));
                     break;
             }
         }
-        #endregion
 
-        private void Me_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        public async Task SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
         {
-            SelectedApp = null;
-            ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
-        }
-
-        private void Setting_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            SelectedApp = null;
-            ContentFrame.Navigate(typeof(TestPage));
+            string msg = SocketMessageConverter.Process(msgType, data);
+            using (var dataWriter = new DataWriter(_socket.OutputStream))
+            {
+                dataWriter.WriteString(msg);
+                await dataWriter.StoreAsync();
+                dataWriter.DetachStream();
+            }
         }
 
         public void ShowNotification(string text, NotificationLevel level, int duration = 0)
         {
             if (level == NotificationLevel.Default)
             {
-                InAppNotification.BorderBrush = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
+                _inAppNotification.BorderBrush = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
             }
             else
             {
                 string key = level.ToString() + "Brush";
-                InAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
+                _inAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
             }
-            InAppNotification.Show(text, duration);
+            _inAppNotification.Show(text, duration);
         }
-    }
 
-    public enum NotificationLevel
-    {
-        Default,
-        Success,
-        Warning,
-        Danger
+        public void Dispose()
+        {
+            _socket.MessageReceived -= Socket_MessageReceived;
+            _socket.Dispose();
+        }
     }
 }

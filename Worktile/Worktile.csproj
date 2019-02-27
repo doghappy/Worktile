@@ -217,9 +217,6 @@
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />
     <Compile Include="Converters\PercentageConverter.cs" />
-    <Compile Include="Design\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Domain\Mission\Info\DateSpanReader.cs" />
     <Compile Include="Domain\Mission\Info\TagReader.cs" />
     <Compile Include="Domain\Mission\Info\CheckBoxReader.cs" />
@@ -248,14 +245,17 @@
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="Enums\AvatarSize.cs" />
+    <Compile Include="Enums\NotificationLevel.cs" />
     <Compile Include="Models\Department\DepartmentNode.cs" />
     <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
     <Compile Include="Models\Department\DepartmentNodeType.cs" />
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Assistant\AssistantMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\FileViewModel.cs" />
+    <Compile Include="ViewModels\Message\MasterViewModel.cs" />
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Session\SessionMessageViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
@@ -280,7 +280,7 @@
     <Compile Include="Enums\WtHttpResponseCode.cs" />
     <Compile Include="Enums\WtTaskPropertyFrom.cs" />
     <Compile Include="Enums\WtTaskPropertyType.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Avatar.cs" />
@@ -317,9 +317,6 @@
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Message\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
     </Compile>
@@ -327,11 +324,11 @@
       <DependentUpon>FilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Message.cs" />
-    <Compile Include="Views\Message\MessageDetailPage.xaml.cs">
-      <DependentUpon>MessageDetailPage.xaml</DependentUpon>
+    <Compile Include="Views\Message\DetailPage.xaml.cs">
+      <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\MessagePage.xaml.cs">
-      <DependentUpon>MessagePage.xaml</DependentUpon>
+    <Compile Include="Views\Message\MasterPage.xaml.cs">
+      <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
     <Compile Include="Views\Message\NavigationParam\ToMessageDetailPageParam.cs" />
@@ -580,11 +577,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Design\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -593,10 +586,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EmptyPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -624,11 +613,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\MessageDetailPage.xaml">
+    <Page Include="Views\Message\DetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\MessagePage.xaml">
+    <Page Include="Views\Message\MasterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -114,13 +114,13 @@ namespace Worktile.Views.Message
         {
             _navParam = e.Parameter as ToUnReadMsgPageParam;
             ViewModel = new SessionMessageViewModel(_navParam.Session);
-            _navParam.MainPage.OnMessageReceived += ViewModel.OnMessageReceived;
+            _navParam.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
             //IsAssistant = _navParam.Session.IsAssistant;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            _navParam.MainPage.OnMessageReceived -= ViewModel.OnMessageReceived;
+            _navParam.MainViewModel.OnMessageReceived -= ViewModel.OnMessageReceived;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
