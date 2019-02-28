@@ -66,7 +66,6 @@
                                                 Text="{x:Bind Message.Body.Content, Mode=OneWay}"
                                                 SchemeList="worktile" UriPrefix="ms-appx://" />
 
-
                     <message:ArticleMessage x:Name="ArticleMsg"
                                           x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Article'}"
                                           Message="{x:Bind Message, Mode=OneWay}"/>
@@ -93,6 +92,14 @@
 
                     <message:TaskMessage x:Name="TaskMsg"
                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Task'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:BulletinMessage x:Name="BulletinNoticeMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='BulletinNotice'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:BulletinMessage x:Name="BulletinVoteNoticeMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='BulletinVoteNotice'}"
                                          Message="{x:Bind Message, Mode=OneWay}"/>
 
                     <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">

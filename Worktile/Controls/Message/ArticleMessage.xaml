@@ -12,7 +12,6 @@
     d:DesignWidth="640">
 
     <UserControl.Resources>
-        <local:CalendarBackgroundConverter x:Key="CalendarBackgroundConverter"/>
         <cvt:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
     </UserControl.Resources>
 

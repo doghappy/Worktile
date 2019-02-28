@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Worktile.Controls.Message.TaskMessage"
+    x:Class="Worktile.Controls.Message.BulletinMessage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Worktile.Controls.Message"
@@ -36,8 +36,8 @@
                     </Grid.ColumnDefinitions>
 
                     <FontIcon Style="{StaticResource WtfIcon}"
-                          Glyph="&#xE614;"
-                          Foreground="{StaticResource DefaultThemeBrush}"
+                          Glyph="&#xE60b;"
+                          Foreground="{StaticResource DangerBrush}"
                           Margin="0 0 8 0"
                           VerticalAlignment="Top"/>
 
@@ -79,7 +79,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Grid>
-                <Rectangle Fill="{StaticResource DefaultThemeBrush}" Width="2" HorizontalAlignment="Left"/>
+                <Rectangle Fill="{StaticResource DangerBrush}" Width="2" HorizontalAlignment="Left"/>
             </Grid>
         </Button>
     </StackPanel>
