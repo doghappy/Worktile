@@ -2,24 +2,16 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Worktile.Views.Message;
 using Newtonsoft.Json.Linq;
 using Worktile.ApiModels.Message.ApiMessages;
 using Worktile.Common;
-using Worktile.Enums;
-using Windows.UI.Xaml.Media;
-using Windows.UI;
-using System.IO;
 using Windows.Storage;
 using System.Collections.Generic;
 using Worktile.Common.WtRequestClient;
 using Newtonsoft.Json;
 using Worktile.ApiModels;
-using Microsoft.Toolkit.Uwp.Helpers;
-using Worktile.Models;
 using Worktile.Models.Message;
 using Worktile.Domain.SocketMessageConverter;
-using Worktile.Domain.MessageContentReader;
 
 namespace Worktile.ViewModels.Message
 {
@@ -50,16 +42,7 @@ namespace Worktile.ViewModels.Message
             foreach (var item in apiData.Data.Messages)
             {
                 item.ContentFormat();
-                item.From.TethysAvatar = new TethysAvatar
-                {
-                    DisplayName = item.From.DisplayName,
-                    Source = AvatarHelper.GetAvatarBitmap(item.From.Avatar, AvatarSize.X80, item.From.Type),
-                    Foreground = new SolidColorBrush(Colors.White)
-                };
-                if (Path.GetExtension(item.From.Avatar).ToLower() == ".png")
-                    item.From.TethysAvatar.Background = new SolidColorBrush(Colors.White);
-                else
-                    item.From.TethysAvatar.Background = AvatarHelper.GetColorBrush(item.From.DisplayName);
+                MessageHelper.SetAvatar(item);
                 if (flag)
                     Messages.Insert(0, item);
                 else

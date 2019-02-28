@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System.IO;
+using Windows.UI;
 using Windows.UI.Xaml.Media;
 using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Enums;
 using Worktile.Enums.Message;
+using Worktile.Models;
 using Worktile.Models.Message;
-using Worktile.Views.Message;
 
 namespace Worktile.Common
 {
@@ -65,6 +66,20 @@ namespace Worktile.Common
                 Type = SessionType.Session,
                 IsBot = session.IsBot
             };
+        }
+
+        public static void SetAvatar(Message message)
+        {
+            message.From.TethysAvatar = new TethysAvatar
+            {
+                DisplayName = message.From.DisplayName,
+                Source = AvatarHelper.GetAvatarBitmap(message.From.Avatar, AvatarSize.X80, message.From.Type),
+                Foreground = new SolidColorBrush(Colors.White)
+            };
+            if (message.From.Avatar != "default.png" && Path.GetExtension(message.From.Avatar).ToLower() == ".png")
+                message.From.TethysAvatar.Background = new SolidColorBrush(Colors.White);
+            else
+                message.From.TethysAvatar.Background = AvatarHelper.GetColorBrush(message.From.DisplayName);
         }
     }
 }

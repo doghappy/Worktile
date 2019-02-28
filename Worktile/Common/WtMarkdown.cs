@@ -31,7 +31,18 @@ namespace Worktile.Common
             switch (msg.Type)
             {
                 case MessageType.Attachment:
-                    msg.Body.InlineAttachment.Pretext = LinkFormat(msg.Body.InlineAttachment.Pretext);
+                    {
+                        msg.Body.InlineAttachment.Pretext = LinkFormat(msg.Body.InlineAttachment.Pretext);
+                        msg.Body.InlineAttachment.Text = LinkFormat(msg.Body.InlineAttachment.Text);
+                        foreach (var item in msg.Body.InlineAttachment.Fields)
+                        {
+                            if (!string.IsNullOrWhiteSpace(item.Value))
+                            {
+                                item.Value = Regex.Replace(item.Value, @"\[([a-zA-z]+?://[^\s]+?)\|(.*?)\]",
+                                    match => match.Groups[2].Value);
+                            }
+                        }
+                    }
                     break;
                 case MessageType.LeaveApplication:
                 case MessageType.CrmContract:

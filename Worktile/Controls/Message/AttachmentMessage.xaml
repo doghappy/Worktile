@@ -49,10 +49,8 @@
                            Text="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay}"
                            IsTextSelectionEnabled="True"
                            Margin="0 0 0 4"/>
-                <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"
-                           TextWrapping="Wrap"
-                           IsTextSelectionEnabled="True"
-                           Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                
+                <controls:MarkdownTextBlock Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}" TextWrapping="Wrap"/>
             </StackPanel>
 
             <ItemsControl x:Name="MsgFields" ItemsSource="{x:Bind Message.Body.InlineAttachment.Fields, Mode=OneWay}">
