@@ -69,7 +69,11 @@
                     <message:PageMessage x:Name="PageMsg"
                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Page'}"
                                          Message="{x:Bind Message, Mode=OneWay}"/>
-                    
+
+                    <message:FileMessage x:Name="FileMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='File'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
                     <message:AttachmentMessage x:Name="AttachmentMsg"
                                                x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Attachment'}"
                                                Message="{x:Bind Message, Mode=OneWay}"/>

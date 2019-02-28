@@ -74,7 +74,7 @@ namespace Worktile.Views.Message
                 list.Add(new FileItem
                 {
                     Id = item.Id,
-                    Icon = GetIcon(item.Addition.Ext),
+                    Icon = WtFileHelper.GetFileIcon(item.Addition.Ext),
                     FileName = item.Addition.Title,
                     Size = GetFriendlySize(item.Addition.Size),
                     Avatar = new TethysAvatar
@@ -91,117 +91,6 @@ namespace Worktile.Views.Message
 
             IsActive = false;
             return list;
-        }
-
-        private string GetIcon(string ext)
-        {
-            string name = "default";
-            switch (ext)
-            {
-                case "doc":
-                case "docx":
-                    name = "doc";
-                    break;
-                case "ppt":
-                case "pptx":
-                    name = "ppt";
-                    break;
-                case "xls":
-                case "xlsx":
-                    name = "xls";
-                    break;
-                case "pdf":
-                    name = "pdf";
-                    break;
-                case "txt":
-                    name = "txt";
-                    break;
-                case "apk":
-                    name = "apk";
-                    break;
-                case "bak":
-                    name = "bak";
-                    break;
-                case "cs":
-                    name = "cs";
-                    break;
-                case "csv":
-                    name = "csv";
-                    break;
-                case "exe":
-                    name = "exe";
-                    break;
-                case "fla":
-                    name = "fla";
-                    break;
-                case "html":
-                    name = "html";
-                    break;
-                case "ipa":
-                    name = "ipa";
-                    break;
-                case "java":
-                    name = "java";
-                    break;
-                case "js":
-                    name = "js";
-                    break;
-                case "mp3":
-                    name = "mp3";
-                    break;
-                case "mp4":
-                    name = "mp4";
-                    break;
-                case "php":
-                    name = "php";
-                    break;
-                case "rar":
-                    name = "rar";
-                    break;
-                case "swf":
-                    name = "swf";
-                    break;
-                case "ttf":
-                    name = "ttf";
-                    break;
-                case "vss":
-                    name = "vss";
-                    break;
-                case "xsd":
-                    name = "xsd";
-                    break;
-                case "zip":
-                    name = "zip";
-                    break;
-                case "youdaonote":
-                    name = "youdaonote";
-                    break;
-                case "evernote":
-                    name = "evernote";
-                    break;
-                case "yinxiang":
-                    name = "yinxiang";
-                    break;
-                case "quip":
-                    name = "quip";
-                    break;
-                case "onenote":
-                    name = "onenote";
-                    break;
-                case "onedrive":
-                    name = "onedrive";
-                    break;
-                case "box":
-                    name = "box";
-                    break;
-                case "shimo":
-                    name = "shimo";
-                    break;
-                case "processon":
-                    name = "processon";
-                    break;
-            }
-            return $"{DataSource.ApiUserMeData.Config.CdnRoot}image/icons/{name}.png";
         }
 
         private string GetFriendlySize(int size)

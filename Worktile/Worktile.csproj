@@ -132,6 +132,7 @@
     <Compile Include="Common\IncrementalCollection.cs" />
     <Compile Include="Common\JTokenHelper.cs" />
     <Compile Include="Common\KanbanPageHelper.cs" />
+    <Compile Include="Common\WtFileHelper.cs" />
     <Compile Include="Common\WtMarkdown.cs" />
     <Compile Include="Common\MessageHelper.cs" />
     <Compile Include="Common\TestHelper.cs" />
@@ -201,6 +202,9 @@
     </Compile>
     <Compile Include="Controls\Message\MessageControl.xaml.cs">
       <DependentUpon>MessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\FileMessage.xaml.cs">
+      <DependentUpon>FileMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Message\PageMessage.xaml.cs">
       <DependentUpon>PageMessage.xaml</DependentUpon>
@@ -587,6 +591,10 @@
     <Page Include="Controls\Message\MessageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Message\FileMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Message\PageMessage.xaml">
       <SubType>Designer</SubType>

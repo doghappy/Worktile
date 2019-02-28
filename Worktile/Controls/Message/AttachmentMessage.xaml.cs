@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
+using Worktile.Enums.Message;
 
 namespace Worktile.Controls.Message
 {
@@ -18,7 +19,7 @@ namespace Worktile.Controls.Message
             get => _message;
             set
             {
-                if (_message != value)
+                if (_message != value && value.Type == MessageType.Attachment)
                 {
                     _message = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
