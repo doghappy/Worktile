@@ -4,9 +4,9 @@ using Worktile.Enums.Message;
 
 namespace Worktile.Controls.Message
 {
-    public sealed partial class PageMessage : UserControl, INotifyPropertyChanged
+    public sealed partial class SnippetMessage : UserControl, INotifyPropertyChanged
     {
-        public PageMessage()
+        public SnippetMessage()
         {
             InitializeComponent();
         }
@@ -19,7 +19,7 @@ namespace Worktile.Controls.Message
             get => _message;
             set
             {
-                if (_message != value && value.Type == MessageType.Page)
+                if (_message != value && value.Type == MessageType.Snippet)
                 {
                     _message = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));

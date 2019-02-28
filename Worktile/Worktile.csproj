@@ -206,6 +206,9 @@
     <Compile Include="Controls\Message\ApprovalMessage.xaml.cs">
       <DependentUpon>ApprovalMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Message\SnippetMessage.xaml.cs">
+      <DependentUpon>SnippetMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\ReportMessage.xaml.cs">
       <DependentUpon>ReportMessage.xaml</DependentUpon>
     </Compile>
@@ -621,6 +624,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Message\ApprovalMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\SnippetMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

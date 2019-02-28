@@ -78,6 +78,10 @@
                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Page'}"
                                          Message="{x:Bind Message, Mode=OneWay}"/>
 
+                    <message:SnippetMessage x:Name="SnippetMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Snippet'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
                     <message:FileMessage x:Name="FileMsg"
                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='File'}"
                                          Message="{x:Bind Message, Mode=OneWay}"/>
