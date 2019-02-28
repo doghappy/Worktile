@@ -200,6 +200,9 @@
     <Compile Include="Controls\Message\AttachmentMessage.xaml.cs">
       <DependentUpon>AttachmentMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Message\CalendarMessage.xaml.cs">
+      <DependentUpon>CalendarMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\ImageMessage.xaml.cs">
       <DependentUpon>ImageMessage.xaml</DependentUpon>
     </Compile>
@@ -589,6 +592,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Message\AttachmentMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\CalendarMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
