@@ -18,6 +18,10 @@ namespace Worktile.Common
                 msg.Body.Content = Regex.Replace(msg.Body.Content, @"\[#([a-z]+)-([a-z\d]{24})\|(.+?)\]",
                     match => $"[{match.Groups[3].Value}](worktile://{match.Groups[1].Value}/{match.Groups[2].Value})");
 
+                // task/project
+                msg.Body.Content = Regex.Replace(msg.Body.Content, @"\[/tasks/projects/([a-z\d]{24})\|(.+?)\]",
+                    match => $"[{match.Groups[2].Value}](worktile://task/project/{match.Groups[1].Value})");
+
                 // link
                 msg.Body.Content = LinkFormat(msg.Body.Content);
 

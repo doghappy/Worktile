@@ -49,10 +49,6 @@ namespace Worktile.ViewModels.Message
             }
             foreach (var item in apiData.Data.Messages)
             {
-                if (item.Type == Enums.Message.MessageType.File)
-                {
-
-                }
                 item.ContentFormat();
                 item.From.TethysAvatar = new TethysAvatar
                 {
