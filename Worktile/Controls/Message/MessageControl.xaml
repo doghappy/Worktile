@@ -65,6 +65,10 @@
                                Text="{x:Bind Message.Body.Content, Mode=OneWay}"
                                TextWrapping="Wrap"
                                IsTextSelectionEnabled="True"/>
+                    
+                    <message:ImageMessage x:Name="ImageMsg"
+                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Image'}"
+                                          Message="{x:Bind Message, Mode=OneWay}"/>
 
                     <message:PageMessage x:Name="PageMsg"
                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Page'}"

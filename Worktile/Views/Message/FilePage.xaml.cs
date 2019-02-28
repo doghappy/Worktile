@@ -159,7 +159,7 @@ namespace Worktile.Views.Message
             var storageFile = await picker.PickSaveFileAsync();
             if (storageFile != null)
             {
-                string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/{file.Id}/from-s3?team_id={DataSource.Team.Id}";
+                string url = WtFileHelper.GetS3FileUrl(file.Id);
                 var client = new WtHttpClient();
                 var buffer = await client.GetByteArrayAsync(url);
                 await FileIO.WriteBytesAsync(storageFile, buffer);

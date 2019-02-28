@@ -9,22 +9,11 @@
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:message="using:Worktile.Controls.Message"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32">
-        <controls:MemberPicker/>
-
-        <winui:TreeView ItemsSource="{x:Bind SampleDatas}" SelectionMode="Multiple">
-            <winui:TreeView.ItemTemplate>
-                <DataTemplate x:DataType="local:SampleData">
-                    <winui:TreeViewItem ItemsSource="{x:Bind Chidren}"
-                                Content="{x:Bind Name}"
-                                IsExpanded="True"
-                                IsSelected="{x:Bind IsChecked}"/>
-                </DataTemplate>
-            </winui:TreeView.ItemTemplate>
-        </winui:TreeView>
-        <Polygon Points="0,0 8,0 0,8" Fill="{ThemeResource SystemAccentColor}" VerticalAlignment="Top"/>
+        <message:ImageMessage/>
     </StackPanel>
 </Page>
