@@ -45,11 +45,15 @@
                                TextWrapping="Wrap"
                                Margin="0 0 0 12"/>
 
-                    <StackPanel x:Name="Text"
-                            Orientation="Horizontal"
+                    <Grid x:Name="Text"
                             Grid.Row="1"
                             Grid.Column="1"
                             x:Load="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
                         <fa:FontAwesome Icon="QuoteLeft"
                                     FontSize="26"
                                     VerticalAlignment="Top"
@@ -57,10 +61,11 @@
                                     Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
                         
                         <controls:MarkdownTextBlock Style="{ThemeResource MessageMarkdown}"
+                                                    Grid.Column="1"
                                                     TextWrapping="Wrap"
                                                     Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"
                                                     SchemeList="worktile" UriPrefix="ms-appx://" />
-                    </StackPanel>
+                    </Grid>
 
                     <ItemsControl x:Name="MsgFields"
                               Grid.Row="1"

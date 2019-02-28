@@ -48,19 +48,24 @@
                                Text="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay}"
                                TextWrapping="Wrap"
                                Margin="0 0 0 12"/>
-
-                    <StackPanel x:Name="Text"
-                            Orientation="Horizontal"
+                    
+                    <Grid x:Name="Text"
                             Grid.Row="1"
                             Grid.Column="1"
                             x:Load="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
                         <fa:FontAwesome Icon="QuoteLeft"
                                     FontSize="26"
                                     VerticalAlignment="Top"
                                     Margin="0 0 8 0"
                                     Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
-                        <TextBlock Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"/>
-                    </StackPanel>
+                        <TextBlock Grid.Column="1"
+                                   TextWrapping="Wrap"
+                                   Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"/>
+                    </Grid>
 
                     <ItemsControl x:Name="MsgFields"
                               Grid.Row="1"
