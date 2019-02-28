@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel;
 using Windows.UI.Xaml;
+using Worktile.Common;
 using Worktile.Enums.Message;
 using Worktile.Views.Message;
 
@@ -31,7 +32,7 @@ namespace Worktile.Models.Message
         public int Client { get; set; }
 
         [JsonProperty("created_at")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
+        [JsonConverter(typeof(SafeUnixDateTimeConverter))]
         public DateTime CreatedAt { get; set; }
 
         [JsonProperty("component")]

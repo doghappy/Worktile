@@ -4,9 +4,9 @@ using Worktile.Enums.Message;
 
 namespace Worktile.Controls.Message
 {
-    public sealed partial class CrmMessage : UserControl, INotifyPropertyChanged
+    public sealed partial class ReportMessage : UserControl, INotifyPropertyChanged
     {
-        public CrmMessage()
+        public ReportMessage()
         {
             InitializeComponent();
         }
@@ -19,12 +19,14 @@ namespace Worktile.Controls.Message
             get => _message;
             set
             {
-                if (_message != value && (value.Type == MessageType.Crm || value.Type == MessageType.CrmContract))
+                if (_message != value && value.Type == MessageType.Report)
                 {
                     _message = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Models.Message.Message)));
                 }
             }
         }
+
+
     }
 }

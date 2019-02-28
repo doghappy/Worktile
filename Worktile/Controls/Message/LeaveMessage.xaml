@@ -57,6 +57,7 @@
                                     Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
                         
                         <controls:MarkdownTextBlock Style="{ThemeResource MessageMarkdown}"
+                                                    TextWrapping="Wrap"
                                                     Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"
                                                     SchemeList="worktile" UriPrefix="ms-appx://" />
                     </StackPanel>

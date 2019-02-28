@@ -14,8 +14,7 @@ namespace Worktile.Common
                 msg.Body.Content = AtFormat(msg.Body.Content);
 
                 // task
-                msg.Body.Content = Regex.Replace(msg.Body.Content, @"\[#([a-z]+)-([a-z\d]{24})\|(.+?)\]",
-                    match => $"[{match.Groups[3].Value}](worktile://{match.Groups[1].Value}/{match.Groups[2].Value})");
+                msg.Body.Content = WtLinkFormat(msg.Body.Content);
 
                 // task/project
                 msg.Body.Content = Regex.Replace(msg.Body.Content, @"\[/tasks/projects/([a-z\d]{24})\|(.+?)\]",
@@ -29,13 +28,18 @@ namespace Worktile.Common
                     match => match.Groups[1].Value);
             }
 
-            if (msg.Type == MessageType.Attachment)
+            switch (msg.Type)
             {
-                msg.Body.InlineAttachment.Pretext = LinkFormat(msg.Body.InlineAttachment.Pretext);
-            }
-            else if (msg.Type == MessageType.LeaveApplication)
-            {
-                msg.Body.InlineAttachment.Text = AtFormat(msg.Body.InlineAttachment.Text);
+                case MessageType.Attachment:
+                    msg.Body.InlineAttachment.Pretext = LinkFormat(msg.Body.InlineAttachment.Pretext);
+                    break;
+                case MessageType.LeaveApplication:
+                case MessageType.CrmContract:
+                    {
+                        msg.Body.InlineAttachment.Text = AtFormat(msg.Body.InlineAttachment.Text);
+                        msg.Body.InlineAttachment.Text = WtLinkFormat(msg.Body.InlineAttachment.Text);
+                    }
+                    break;
             }
         }
 
@@ -57,6 +61,16 @@ namespace Worktile.Common
             {
                 text = Regex.Replace(text, @"\[@([a-z\d]{32})\|(.+?)\]",
                     match => $"[@{match.Groups[2].Value}](worktile://message/{match.Groups[1].Value})");
+            }
+            return text;
+        }
+
+        private static string WtLinkFormat(string text)
+        {
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                text = Regex.Replace(text, @"\[#([a-z]+)-([a-z\d]{24})\|(.+?)\]",
+                    match => $"[{match.Groups[3].Value}](worktile://{match.Groups[1].Value}/{match.Groups[2].Value})");
             }
             return text;
         }
