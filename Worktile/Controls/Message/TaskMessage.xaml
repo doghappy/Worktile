@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    xmlns:msg="using:Worktile.Models.IM.Message"
     xmlns:cvt="using:Worktile.Converters"
     xmlns:fa="using:FontAwesome.UWP"
     xmlns:message="using:Worktile.Models.Message"
@@ -26,7 +25,6 @@
         <Button Padding="0" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0">
             <Grid Width="640">
                 <Grid Padding="18 10"
-                  Background="{x:Bind Message.IsUnread, Mode=OneWay, Converter={StaticResource CalendarBackgroundConverter}}"
                   BorderThickness="1"
                   BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}">
                     <Grid.RowDefinitions>

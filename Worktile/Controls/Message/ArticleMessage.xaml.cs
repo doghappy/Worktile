@@ -4,9 +4,9 @@ using Worktile.Enums.Message;
 
 namespace Worktile.Controls.Message
 {
-    public sealed partial class TaskMessage : UserControl, INotifyPropertyChanged
+    public sealed partial class ArticleMessage : UserControl, INotifyPropertyChanged
     {
-        public TaskMessage()
+        public ArticleMessage()
         {
             InitializeComponent();
         }
@@ -19,7 +19,7 @@ namespace Worktile.Controls.Message
             get => _message;
             set
             {
-                if (_message != value && value.Type == MessageType.Task)
+                if (_message != value && value.Type == MessageType.Article)
                 {
                     _message = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Models.Message.Message)));

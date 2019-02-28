@@ -60,12 +60,17 @@
                                                 Text="{x:Bind Message.Body.Content, Mode=OneWay}"
                                                 SchemeList="worktile" UriPrefix="ms-appx://" />
 
-                    <TextBlock x:Name="ActivityMsg"
-                               x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"
-                               Text="{x:Bind Message.Body.Content, Mode=OneWay}"
-                               TextWrapping="Wrap"
-                               IsTextSelectionEnabled="True"/>
-                    
+                    <controls:MarkdownTextBlock x:Name="ActivityMsg"
+                                                x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"
+                                                Style="{ThemeResource MessageMarkdown}"
+                                                Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                                                SchemeList="worktile" UriPrefix="ms-appx://" />
+
+
+                    <message:ArticleMessage x:Name="ArticleMsg"
+                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Article'}"
+                                          Message="{x:Bind Message, Mode=OneWay}"/>
+
                     <message:ImageMessage x:Name="ImageMsg"
                                           x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Image'}"
                                           Message="{x:Bind Message, Mode=OneWay}"/>
