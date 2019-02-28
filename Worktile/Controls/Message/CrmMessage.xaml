@@ -24,8 +24,8 @@
         <Button Padding="0" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0">
             <Grid Width="640">
                 <Grid Padding="18 10"
-                  BorderThickness="1"
-                  BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}">
+                      BorderThickness="1"
+                      BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
@@ -36,31 +36,35 @@
                     </Grid.ColumnDefinitions>
 
                     <FontIcon Style="{StaticResource WtfIcon}"
-                          Glyph="&#xE605;"
-                          Foreground="{StaticResource DefaultThemeBrush}"
-                          Margin="0 0 8 0"
-                          VerticalAlignment="Top"/>
+                              Glyph="&#xE605;"
+                              Foreground="{StaticResource DefaultThemeBrush}"
+                              Margin="0 0 8 0"
+                              VerticalAlignment="Top"/>
 
                     <TextBlock Grid.Column="1"
                                Text="{x:Bind Message.Body.InlineAttachment.Title, Mode=OneWay}"
                                TextWrapping="Wrap"
                                Margin="0 0 0 12"/>
 
-                    <StackPanel x:Name="Text"
-                            Orientation="Horizontal"
+                    <Grid x:Name="Text"
                             Grid.Row="1"
                             Grid.Column="1"
                             x:Load="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay, Converter={StaticResource IsNullOrEmptyConverter}, ConverterParameter='!'}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
                         <fa:FontAwesome Icon="QuoteLeft"
                                     FontSize="26"
                                     VerticalAlignment="Top"
                                     Margin="0 0 8 0"
                                     Foreground="{ThemeResource SystemControlForegroundBaseLowBrush}"/>
                         <controls:MarkdownTextBlock Style="{ThemeResource MessageMarkdown}"
+                                                    Grid.Column="1"
                                                     Text="{x:Bind Message.Body.InlineAttachment.Text, Mode=OneWay}"
                                                     TextWrapping="Wrap"
                                                     SchemeList="worktile" UriPrefix="ms-appx://" />
-                    </StackPanel>
+                    </Grid>
 
                     <ItemsControl x:Name="MsgFields"
                               Grid.Row="1"

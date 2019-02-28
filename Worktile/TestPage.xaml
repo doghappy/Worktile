@@ -8,12 +8,15 @@
     xmlns:mission="using:Worktile.WtControls.Mission"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
-    xmlns:controls="using:Worktile.Controls"
     xmlns:message="using:Worktile.Controls.Message"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32">
-        <message:ImageMessage/>
+        <controls:MarkdownTextBlock Style="{ThemeResource MessageMarkdown}"
+                                    Text="> sdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsd"
+                                    TextWrapping="Wrap"
+                                    SchemeList="worktile" UriPrefix="ms-appx://" />
     </StackPanel>
 </Page>
