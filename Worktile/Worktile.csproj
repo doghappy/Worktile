@@ -197,6 +197,9 @@
     <Compile Include="Controls\MemberPicker\MemberPickerEditor.xaml.cs">
       <DependentUpon>MemberPickerEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Message\AppraisalMessage.xaml.cs">
+      <DependentUpon>AppraisalMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\OkrMessage.xaml.cs">
       <DependentUpon>OkrMessage.xaml</DependentUpon>
     </Compile>
@@ -617,6 +620,10 @@
     <Page Include="Controls\MemberPicker\MemberPickerEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Message\AppraisalMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Message\OkrMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
