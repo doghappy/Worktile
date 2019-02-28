@@ -203,6 +203,9 @@
     <Compile Include="Controls\Message\ArticleMessage.xaml.cs">
       <DependentUpon>ArticleMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Message\LeaveMessage.xaml.cs">
+      <DependentUpon>LeaveMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\BulletinMessage.xaml.cs">
       <DependentUpon>BulletinMessage.xaml</DependentUpon>
     </Compile>
@@ -605,6 +608,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Message\ArticleMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\LeaveMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

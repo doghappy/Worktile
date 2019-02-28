@@ -26,4 +26,5 @@
     <SolidColorBrush x:Key="BrightPurpleThemeBrush" Color="#4e8afa"/>
 
     <SolidColorBrush x:Key="ProjectBrush" Color="#F76CAA"/>
+    <SolidColorBrush x:Key="LeaveBrush" Color="#FFD234"/>
 </ResourceDictionary>

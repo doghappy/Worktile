@@ -11,8 +11,7 @@ namespace Worktile.Common
             if (!string.IsNullOrWhiteSpace(msg.Body.Content))
             {
                 // @
-                msg.Body.Content = Regex.Replace(msg.Body.Content, @"\[@([a-z\d]{32})\|(.+?)\]",
-                    match => $"[@{match.Groups[2].Value}](worktile://message/{match.Groups[1].Value})");
+                msg.Body.Content = AtFormat(msg.Body.Content);
 
                 // task
                 msg.Body.Content = Regex.Replace(msg.Body.Content, @"\[#([a-z]+)-([a-z\d]{24})\|(.+?)\]",
@@ -34,6 +33,10 @@ namespace Worktile.Common
             {
                 msg.Body.InlineAttachment.Pretext = LinkFormat(msg.Body.InlineAttachment.Pretext);
             }
+            else if (msg.Type == MessageType.LeaveApplication)
+            {
+                msg.Body.InlineAttachment.Text = AtFormat(msg.Body.InlineAttachment.Text);
+            }
         }
 
         private static string LinkFormat(string text)
@@ -44,6 +47,16 @@ namespace Worktile.Common
                     match => string.IsNullOrEmpty(match.Groups[2].Value)
                         ? match.Groups[1].Value
                         : $"[{match.Groups[2].Value}]({match.Groups[1].Value})");
+            }
+            return text;
+        }
+
+        private static string AtFormat(string text)
+        {
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                text = Regex.Replace(text, @"\[@([a-z\d]{32})\|(.+?)\]",
+                    match => $"[@{match.Groups[2].Value}](worktile://message/{match.Groups[1].Value})");
             }
             return text;
         }
