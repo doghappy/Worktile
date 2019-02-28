@@ -20,6 +20,10 @@ namespace Worktile.Common
                 msg.Body.Content = Regex.Replace(msg.Body.Content, @"\[/tasks/projects/([a-z\d]{24})\|(.+?)\]",
                     match => $"[{match.Groups[2].Value}](worktile://task/project/{match.Groups[1].Value})");
 
+                //[/drive/5850c79484279c729a2eaed5|法律文件]
+                msg.Body.Content = Regex.Replace(msg.Body.Content, @"\[/drive/([a-z\d]{24})\|(.+?)\]",
+                    match => $"[{match.Groups[2].Value}](worktile://drive/{match.Groups[1].Value})");
+
                 // link
                 msg.Body.Content = LinkFormat(msg.Body.Content);
 
