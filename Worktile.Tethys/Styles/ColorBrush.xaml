@@ -28,4 +28,5 @@
     <SolidColorBrush x:Key="ProjectBrush" Color="#F76CAA"/>
     <SolidColorBrush x:Key="LeaveBrush" Color="#FFD234"/>
     <SolidColorBrush x:Key="ApprovalBrush" Color="#99D75A"/>
+    <SolidColorBrush x:Key="OkrBrush" Color="#4E8AF9"/>
 </ResourceDictionary>

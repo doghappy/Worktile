@@ -126,6 +126,10 @@
                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Approval'}"
                                          Message="{x:Bind Message, Mode=OneWay}"/>
 
+                    <message:OkrMessage x:Name="OkrMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Okr'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
                     <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="{x:Bind Message.From.TethysAvatar.DisplayName, Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                         <TextBlock Text="{x:Bind Message.CreatedAt, Mode=OneWay}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
