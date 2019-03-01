@@ -14,9 +14,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32">
-        <controls:MarkdownTextBlock Style="{ThemeResource MessageMarkdown}"
-                                    Text="> sdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsdsdfsd"
-                                    TextWrapping="Wrap"
-                                    SchemeList="worktile" UriPrefix="ms-appx://" />
+        <Button Content="Dialog" Click="Button_Click"/>
     </StackPanel>
 </Page>

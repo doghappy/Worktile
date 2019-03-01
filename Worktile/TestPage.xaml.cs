@@ -23,38 +23,15 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Worktile
 {
-public sealed partial class TestPage : Page, INotifyPropertyChanged
-{
-    public TestPage()
+    public sealed partial class TestPage : Page
     {
-        InitializeComponent();
-        SampleDatas = new List<SampleData>
-    {
-        new SampleData { Name = "Google", IsChecked = true },
-        new SampleData {
-            Name = "Microsoft",
-            IsChecked = true,
-            Chidren = new List<SampleData>
-            {
-                new SampleData { Name = ".Net", IsChecked = true },
-                new SampleData { Name = "Office", IsChecked = false },
-                new SampleData { Name = "Windows", IsChecked = true }
-            }
-        },
-        new SampleData { Name = "Apple", IsChecked = true }
-    };
+        public TestPage()
+        {
+            InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+        }
     }
-
-    List<SampleData> SampleDatas { get; }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-}
-
-class SampleData
-{
-    public string Name { get; set; }
-    public bool IsChecked { get; set; }
-
-    public List<SampleData> Chidren { get; set; }
-}
 }
