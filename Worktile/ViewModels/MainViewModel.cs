@@ -1,9 +1,9 @@
-﻿using Microsoft.Toolkit.Uwp.Helpers;
+﻿using Microsoft.Toolkit.Uwp.Connectivity;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -42,6 +42,27 @@ namespace Worktile.ViewModels
             _dispatcher = dispatcher;
             _contentFrame = contentFrame;
             _inAppNotification = inAppNotification;
+            NetworkHelper.Instance.NetworkChanged += NetworkChanged;
+        }
+
+        private async void NetworkChanged(object sender, EventArgs e)
+        {
+            await Task.Run(async () =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    var helper = sender as NetworkHelper;
+                    if (helper.ConnectionInformation.IsInternetAvailable)
+                    {
+                        ShowNotification("网络已恢复，正在重新连接……", NotificationLevel.Warning, 4000);
+                    }
+                    else
+                    {
+                        ShowNotification("网络已断开，正在重新连接……", NotificationLevel.Danger, 4000);
+                        ReConnect();
+                    }
+                });
+            });
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -53,6 +74,9 @@ namespace Worktile.ViewModels
         private CoreDispatcher _dispatcher;
         private Frame _contentFrame;
         private InAppNotification _inAppNotification;
+        private ThreadPoolTimer _timer;
+        private ThreadPoolTimer _reconnectTimer;
+        public bool _showConnSuccessNoti;
 
         public string SocketId { get; private set; }
 
@@ -140,8 +164,6 @@ namespace Worktile.ViewModels
             DataSource.ApiUserMeData = me.Data;
             DisplayName = DataSource.ApiUserMeData.Me.DisplayName;
 
-            await ConnectSocketAsync();
-
             string bgImg = DataSource.ApiUserMeData.Me.Preferences.BackgroundImage;
             if (bgImg.StartsWith("desktop-") && bgImg.EndsWith(".jpg"))
             {
@@ -153,6 +175,8 @@ namespace Worktile.ViewModels
                 byte[] buffer = await client.GetByteArrayAsync(imgUriString);
                 BgImage = await ImageHelper.GetImageFromBytesAsync(buffer);
             }
+
+            await ConnectSocketAsync();
         }
 
         public async Task RequestApiTeamAsync()
@@ -176,50 +200,103 @@ namespace Worktile.ViewModels
             {
                 await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
-                    _socket = new MessageWebSocket();
-                    _socket.Control.MessageType = Windows.Networking.Sockets.SocketMessageType.Utf8;
-                    _socket.MessageReceived += Socket_MessageReceived;
-
-                    Uri uri = new Uri($"wss://im.worktile.com/socket.io/?token={DataSource.ApiUserMeData.Me.ImToken}&uid={DataSource.ApiUserMeData.Me.Uid}&client=web&EIO=3&transport=websocket");
-                    await _socket.ConnectAsync(uri);
-
-                    using (var dataWriter = new DataWriter(_socket.OutputStream))
+                    try
                     {
-                        string msg = $"40/message?token={DataSource.ApiUserMeData.Me.ImToken}&uid={DataSource.ApiUserMeData.Me.Uid}&client=web";
-                        dataWriter.WriteString(msg);
-                        await dataWriter.StoreAsync();
-                        dataWriter.DetachStream();
-                    }
+                        _socket = new MessageWebSocket();
+                        _socket.Control.MessageType = Windows.Networking.Sockets.SocketMessageType.Utf8;
+                        _socket.MessageReceived += Socket_MessageReceived;
+                        _socket.Closed += Socket_Closed;
 
-                    KeepConnection();
+                        Uri uri = new Uri($"wss://im.worktile.com/socket.io/?token={DataSource.ApiUserMeData.Me.ImToken}&uid={DataSource.ApiUserMeData.Me.Uid}&client=web&EIO=3&transport=websocket");
+                        try
+                        {
+                            await _socket.ConnectAsync(uri);
+                            if (_showConnSuccessNoti)
+                            {
+                                ShowNotification("网络已恢复，已经重新连接到消息服务了。", NotificationLevel.Success, 4000);
+                            }
+                        }
+                        catch(Exception e)
+                        {
+                            ShowNotification("与消息服务器断开连接，正在重新连接……", NotificationLevel.Danger, 4000);
+                            if (_reconnectTimer == null)
+                            {
+                                ReConnect();
+                            }
+                            throw e;
+                        }
+
+                        using (var dataWriter = new DataWriter(_socket.OutputStream))
+                        {
+                            string msg = $"40/message?token={DataSource.ApiUserMeData.Me.ImToken}&uid={DataSource.ApiUserMeData.Me.Uid}&client=web";
+                            dataWriter.WriteString(msg);
+                            await dataWriter.StoreAsync();
+                            dataWriter.DetachStream();
+                        }
+                        KeepConnection();
+                        if (_reconnectTimer != null)
+                        {
+                            _reconnectTimer.Cancel();
+                            _reconnectTimer = null;
+                        }
+                    }
+                    catch { }
                 });
             });
         }
 
+        private void ReConnect()
+        {
+            _timer.Cancel();
+            _timer = null;
+            _socket = null;
+            if (_reconnectTimer == null)
+            {
+                _showConnSuccessNoti = true;
+                _reconnectTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
+                {
+                    await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        await ConnectSocketAsync();
+                    });
+
+                }, TimeSpan.FromSeconds(5));
+            }
+        }
+
+        private void Socket_Closed(IWebSocket sender, WebSocketClosedEventArgs args)
+        {
+            ReConnect();
+        }
+
         private void Socket_MessageReceived(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
         {
-            using (DataReader dataReader = args.GetDataReader())
+            try
             {
-                dataReader.UnicodeEncoding = UnicodeEncoding.Utf8;
-                string rawMsg = dataReader.ReadString(dataReader.UnconsumedBufferLength);
-                var (msg, cvt) = SocketMessageConverter.Read(rawMsg);
-                if (cvt != null)
+                using (DataReader dataReader = args.GetDataReader())
                 {
-                    var cvtType = cvt.GetType();
-                    switch (cvtType.Name)
+                    dataReader.UnicodeEncoding = UnicodeEncoding.Utf8;
+                    string rawMsg = dataReader.ReadString(dataReader.UnconsumedBufferLength);
+                    var (msg, cvt) = SocketMessageConverter.Read(rawMsg);
+                    if (cvt != null)
                     {
-                        case nameof(OpenConverter):
-                            SocketId = msg;
-                            break;
-                        case nameof(MessageConverter):
-                            MessageReceived(msg);
-                            break;
-                        case nameof(FeedConverter):
-                            FeedReceived(msg);
-                            break;
+                        var cvtType = cvt.GetType();
+                        switch (cvtType.Name)
+                        {
+                            case nameof(OpenConverter):
+                                SocketId = msg;
+                                break;
+                            case nameof(MessageConverter):
+                                MessageReceived(msg);
+                                break;
+                            case nameof(FeedConverter):
+                                FeedReceived(msg);
+                                break;
+                        }
                     }
                 }
             }
+            catch { }
         }
 
         /// <summary>
@@ -227,19 +304,26 @@ namespace Worktile.ViewModels
         /// </summary>
         private void KeepConnection()
         {
-            var timer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
+            if (_timer == null)
             {
-                await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                _timer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
                 {
-                    using (var dataWriter = new DataWriter(_socket.OutputStream))
+                    await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
-                        dataWriter.WriteString("2");
-                        await dataWriter.StoreAsync();
-                        dataWriter.DetachStream();
-                    }
-                });
+                        using (var dataWriter = new DataWriter(_socket.OutputStream))
+                        {
+                            dataWriter.WriteString("2");
+                            try
+                            {
+                                await dataWriter.StoreAsync();
+                                dataWriter.DetachStream();
+                            }
+                            catch { }
+                        }
+                    });
 
-            }, TimeSpan.FromSeconds(30));
+                }, TimeSpan.FromSeconds(30));
+            }
         }
 
         /// <summary>
@@ -382,8 +466,12 @@ namespace Worktile.ViewModels
             using (var dataWriter = new DataWriter(_socket.OutputStream))
             {
                 dataWriter.WriteString(msg);
-                await dataWriter.StoreAsync();
-                dataWriter.DetachStream();
+                try
+                {
+                    await dataWriter.StoreAsync();
+                    dataWriter.DetachStream();
+                }
+                catch { }
             }
         }
 
@@ -403,7 +491,9 @@ namespace Worktile.ViewModels
 
         public void Dispose()
         {
+            _timer.Cancel();
             _socket.MessageReceived -= Socket_MessageReceived;
+            _socket.Closed -= Socket_Closed;
             _socket.Dispose();
         }
     }

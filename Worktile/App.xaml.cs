@@ -178,7 +178,7 @@ namespace Worktile
 
         public async Task ShowNotificationAsync(string text, NotificationLevel level, int duration = 0)
         {
-            if (Window.Current.Content is Frame rootFrame)
+            if (Window.Current != null && Window.Current.Content is Frame rootFrame)
             {
                 if (rootFrame.Content is MainPage mainPage)
                 {
