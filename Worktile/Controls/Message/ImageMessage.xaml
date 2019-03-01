@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Button Background="Transparent" BorderThickness="0">
+    <Button Background="Transparent" BorderThickness="0" Click="Button_Click">
         <Button.Resources>
             <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
             <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>

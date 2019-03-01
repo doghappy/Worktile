@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using Windows.System;
 using Windows.UI.Xaml.Controls;
 using Worktile.Common;
 using Worktile.Enums.Message;
@@ -56,6 +58,13 @@ namespace Worktile.Controls.Message
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
                 }
             }
+        }
+
+        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            string fileName = @"C:\Users\HeroWong\Downloads\img.png";
+            var uri = new Uri("ms-photos:viewer?fileName=" + fileName);
+            await Launcher.LaunchUriAsync(uri);
         }
     }
 }
