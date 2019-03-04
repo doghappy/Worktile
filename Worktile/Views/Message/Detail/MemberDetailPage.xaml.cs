@@ -34,10 +34,7 @@ namespace Worktile.Views.Message.Detail
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navParam = e.Parameter as ToMessageDetailPageParam;
-            ViewModel = new MemberDetailViewModel(ContentFrame, _navParam.MainViewModel)
-            {
-                Session = _navParam.Session
-            };
+            ViewModel = new MemberDetailViewModel(_navParam.Session, ContentFrame, _navParam.MainViewModel);
         }
 
         private async void ContactInfo_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

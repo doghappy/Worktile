@@ -11,11 +11,12 @@ namespace Worktile.ViewModels.Message
 {
     class MemberDetailViewModel : SessionDetailViewModel, INotifyPropertyChanged
     {
-        public MemberDetailViewModel(Frame contentFrame, MainViewModel mainViewModel) : base(contentFrame, mainViewModel) { }
+        public MemberDetailViewModel(ISession session, Frame contentFrame, MainViewModel mainViewModel)
+            : base(session, contentFrame, mainViewModel) { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public override ObservableCollection<TopNav> Navs { get; }
+        public override ObservableCollection<TopNav> Navs { get; protected set; }
 
         public override string PaneTitle => "成员";
 

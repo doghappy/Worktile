@@ -7,8 +7,9 @@ namespace Worktile.ViewModels.Message
 {
     abstract class DetailViewModel : ViewModel
     {
-        public DetailViewModel(Frame contentFrame, MainViewModel mainViewModel)
+        public DetailViewModel(ISession session, Frame contentFrame, MainViewModel mainViewModel)
         {
+            Session = session;
             ContentFrame = contentFrame;
             MainViewModel = mainViewModel;
         }
@@ -16,7 +17,7 @@ namespace Worktile.ViewModels.Message
         protected Frame ContentFrame { get; }
         protected MainViewModel MainViewModel { get; }
 
-        public abstract ObservableCollection<TopNav> Navs { get; }
+        public abstract ObservableCollection<TopNav> Navs { get; protected set; }
         public abstract TopNav SelectedNav { get; set; }
 
         private ISession _session;

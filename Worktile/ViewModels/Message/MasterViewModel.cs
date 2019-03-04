@@ -17,7 +17,7 @@ using Worktile.Models.Message.NavigationParam;
 using Worktile.Enums.Message;
 using Worktile.Models.Message.Session;
 using Worktile.Common.Extensions;
-using Worktile.Views.Message.Detail.Content;
+using Worktile.Views.Message.Detail;
 
 namespace Worktile.ViewModels.Message
 {
@@ -140,13 +140,13 @@ namespace Worktile.ViewModels.Message
             switch (session.PageType)
             {
                 case PageType.Assistant:
-                    type = typeof(AssistantMessagePage);
+                    type = typeof(AssistantDetailPage);
                     break;
                 case PageType.Member:
-                    type = typeof(MemberMessagePage);
+                    type = typeof(MemberDetailPage);
                     break;
                 case PageType.Channel:
-                    type = typeof(ChannelMessagePage);
+                    type = typeof(ChannelDetailPage);
                     break;
             }
             _contentFrame.Navigate(type, new ToMessageDetailPageParam

@@ -4,17 +4,19 @@ using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
+using Worktile.Models.Message.Session;
 using Worktile.Views.Message.Detail.Content;
 
 namespace Worktile.ViewModels.Message
 {
     class ChannelDetailViewModel : SessionDetailViewModel, INotifyPropertyChanged
     {
-        public ChannelDetailViewModel(Frame contentFrame, MainViewModel mainViewModel) : base(contentFrame, mainViewModel) { }
+        public ChannelDetailViewModel(ISession session, Frame contentFrame, MainViewModel mainViewModel)
+            : base(session, contentFrame, mainViewModel) { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public override ObservableCollection<TopNav> Navs { get; }
+        public override ObservableCollection<TopNav> Navs { get; protected set; }
 
         public override string PaneTitle => "群组成员";
 

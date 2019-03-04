@@ -34,10 +34,7 @@ namespace Worktile.Views.Message.Detail
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navParam = e.Parameter as ToMessageDetailPageParam;
-            ViewModel = new AssistantDetailViewModel(ContentFrame, _navParam.MainViewModel)
-            {
-                Session = _navParam.Session
-            };
+            ViewModel = new AssistantDetailViewModel(_navParam.Session, ContentFrame, _navParam.MainViewModel);
         }
     }
 }

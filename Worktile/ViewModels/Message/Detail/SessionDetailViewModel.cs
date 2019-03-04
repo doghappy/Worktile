@@ -1,18 +1,15 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 using Worktile.Models.Message;
-using Worktile.Models.Message.NavigationParam;
-using Worktile.Views.Message.Detail.Content;
+using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message
 {
     abstract class SessionDetailViewModel : DetailViewModel
     {
-        public SessionDetailViewModel(Frame contentFrame, MainViewModel mainViewModel)
-            : base(contentFrame, mainViewModel)
+        public SessionDetailViewModel(ISession session, Frame contentFrame, MainViewModel mainViewModel)
+            : base(session, contentFrame, mainViewModel)
         {
             Navs = new ObservableCollection<TopNav>
             {
@@ -25,7 +22,7 @@ namespace Worktile.ViewModels.Message
 
         public abstract string PaneTitle { get; }
 
-        public override ObservableCollection<TopNav> Navs { get; }
+        public override ObservableCollection<TopNav> Navs { get; protected set; }
 
         //private void ContentFrameNavigate(TopNav nav)
         //{
