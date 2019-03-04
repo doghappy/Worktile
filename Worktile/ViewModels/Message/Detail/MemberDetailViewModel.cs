@@ -42,7 +42,7 @@ namespace Worktile.ViewModels.Message
                             ContentFrame.Navigate(typeof(MemberMessagePage), param);
                             break;
                         case 1:
-                            ContentFrame.Navigate(typeof(FilePage), param);
+                            ContentFrame.Navigate(typeof(FilePage), Session);
                             break;
                         case 2:
                             ContentFrame.Navigate(typeof(PinnedPage), param);

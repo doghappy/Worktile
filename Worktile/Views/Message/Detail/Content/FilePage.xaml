@@ -28,7 +28,7 @@
             </StackPanel>
         </Button>
 
-        <ListView Grid.Row="1" ItemsSource="{x:Bind Files}">
+        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.Files}">
             <ListView.Resources>
                 <Style TargetType="TextBlock" x:Key="ListViewItemTextBlock">
                     <Setter Property="VerticalAlignment" Value="Center"/>
@@ -144,6 +144,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>
