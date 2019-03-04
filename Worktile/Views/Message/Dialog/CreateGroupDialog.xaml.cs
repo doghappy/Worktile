@@ -7,10 +7,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Worktile.ApiModels;
-using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
+using Worktile.Enums;
 using Worktile.Models;
+using Worktile.Models.Message.Session;
 
 namespace Worktile.Views.Message.Dialog
 {
@@ -20,26 +21,26 @@ namespace Worktile.Views.Message.Dialog
         {
             InitializeComponent();
             SelectedAvatars = new ObservableCollection<TethysAvatar>();
-            WtVisibilities = new List<WtVisibility>
+            Visibilities = new List<VisibilityItem>
             {
-                new WtVisibility
+                new VisibilityItem
                 {
-                    Visibility = Enums.Visibility.Private,
+                    Visibility = WtVisibility.Private,
                     Text = "私有：只有加入的成员才能看见此群组",
                 },
-                new WtVisibility
+                new VisibilityItem
                 {
-                    Visibility = Enums.Visibility.Public,
+                    Visibility = WtVisibility.Public,
                     Text = "公开：企业所有成员都可以看见此群组",
                 }
             };
-            SelectedVisibility = WtVisibilities.First();
+            SelectedVisibility = Visibilities.First();
             Color = WtColorHelper.Map.First().NewColor;
-            MessageVisibility = Windows.UI.Xaml.Visibility.Collapsed;
+            MessageVisibility = Visibility.Collapsed;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event Action<Channel> OnCreateSuccess;
+        public event Action<ChannelSession> OnCreateSuccess;
 
         private string _color;
         public string Color
@@ -83,12 +84,12 @@ namespace Worktile.Views.Message.Dialog
             }
         }
 
-        List<WtVisibility> WtVisibilities { get; }
+        List<VisibilityItem> Visibilities { get; }
 
         public ObservableCollection<TethysAvatar> SelectedAvatars { get; }
 
-        WtVisibility _selectedVisibility;
-        WtVisibility SelectedVisibility
+        VisibilityItem _selectedVisibility;
+        VisibilityItem SelectedVisibility
         {
             get => _selectedVisibility;
             set
@@ -115,8 +116,8 @@ namespace Worktile.Views.Message.Dialog
             }
         }
 
-        private Windows.UI.Xaml.Visibility _messageVisibility;
-        public Windows.UI.Xaml.Visibility MessageVisibility
+        private Visibility _messageVisibility;
+        public Visibility MessageVisibility
         {
             get => _messageVisibility;
             set
@@ -153,12 +154,12 @@ namespace Worktile.Views.Message.Dialog
                 args.Cancel = true;
                 Message = "请输入群组名称";
                 MessageColor = Application.Current.Resources["WarningBrush"] as SolidColorBrush;
-                MessageVisibility = Windows.UI.Xaml.Visibility.Visible;
+                MessageVisibility = Visibility.Visible;
                 return;
             }
             else
             {
-                MessageVisibility = Windows.UI.Xaml.Visibility.Collapsed;
+                MessageVisibility = Visibility.Collapsed;
             }
 
             var reqData = new
@@ -170,7 +171,7 @@ namespace Worktile.Views.Message.Dialog
                 visibility = SelectedVisibility.Visibility
             };
             var client = new WtHttpClient();
-            var data = await client.PostAsync<ApiDataResponse<Channel>>("/api/channel", reqData);
+            var data = await client.PostAsync<ApiDataResponse<ChannelSession>>("/api/channel", reqData);
             if (data.Code == 200)
             {
                 OnCreateSuccess?.Invoke(data.Data);
@@ -182,9 +183,9 @@ namespace Worktile.Views.Message.Dialog
         }
     }
 
-    class WtVisibility
+    class VisibilityItem
     {
-        public Enums.Visibility Visibility { get; set; }
+        public WtVisibility Visibility { get; set; }
         public string Text { get; set; }
     }
 }

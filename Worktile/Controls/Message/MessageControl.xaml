@@ -28,7 +28,6 @@
                        Margin="16 0 8 0"
                        VerticalAlignment="Top"
                        DisplayName="{x:Bind Message.From.TethysAvatar.DisplayName, Mode=OneWay}"
-                       Foreground="{x:Bind Message.From.TethysAvatar.Foreground, Mode=OneWay}"
                        Background="{x:Bind Message.From.TethysAvatar.Background, Mode=OneWay}"
                        Source="{x:Bind Message.From.TethysAvatar.Source, Mode=OneWay}"/>
 

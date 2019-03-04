@@ -165,7 +165,7 @@ namespace Worktile.ApiModels.ApiMissionVnextTask
         public string Color { get; set; }
 
         [JsonProperty("visibility")]
-        public Visibility Visibility { get; set; }
+        public WtVisibility Visibility { get; set; }
 
         [JsonProperty("identifier")]
         public string Identifier { get; set; }

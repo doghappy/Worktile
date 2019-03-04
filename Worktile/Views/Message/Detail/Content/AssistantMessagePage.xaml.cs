@@ -2,11 +2,12 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
+using Worktile.Models.Message.Session;
 using Worktile.ViewModels.Message;
+using Worktile.ViewModels.Message.Detail.Content;
 
-namespace Worktile.Views.Message
+namespace Worktile.Views.Message.Detail.Content
 {
     public sealed partial class AssistantMessagePage : Page, INotifyPropertyChanged
     {
@@ -36,7 +37,8 @@ namespace Worktile.Views.Message
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _param = e.Parameter as ToUnReadMsgPageParam;
-            ViewModel = new AssistantMessageViewModel(_param.Session, _param.MainViewModel, _param.Nav);
+            var session = _param.Session as MemberSession;
+            ViewModel = new AssistantMessageViewModel(session, _param.MainViewModel, _param.Nav);
             _param.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
         }
 

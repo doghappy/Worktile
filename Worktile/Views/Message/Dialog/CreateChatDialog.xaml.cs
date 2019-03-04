@@ -7,10 +7,12 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels;
 using Worktile.Common;
+using Worktile.Common.Extensions;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
 using Worktile.Models;
 using Worktile.Models.Message;
+using Worktile.Models.Message.Session;
 
 namespace Worktile.Views.Message.Dialog
 {
@@ -23,7 +25,7 @@ namespace Worktile.Views.Message.Dialog
             AddAllMember();
         }
 
-        public event Action<Session> OnSessionCreated;
+        public event Action<MemberSession> OnSessionCreated;
 
         public ObservableCollection<TethysAvatar> Avatars { get; }
 
@@ -32,10 +34,11 @@ namespace Worktile.Views.Message.Dialog
             var btn = sender as Button;
             var avatar = btn.DataContext as TethysAvatar;
             var client = new WtHttpClient();
-            var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = avatar.Id });
+            var data = await client.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid = avatar.Id });
             if (data.Code == 200)
             {
-                OnSessionCreated?.Invoke(MessageHelper.GetSession(data.Data, AvatarSize.X80));
+                data.Data.ForShowAvatar(AvatarSize.X80);
+                OnSessionCreated?.Invoke(data.Data);
                 Hide();
             }
         }

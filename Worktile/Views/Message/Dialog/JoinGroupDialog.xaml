@@ -4,9 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:message="using:Worktile.Models.Message"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:session="using:Worktile.Models.Message.Session"
     mc:Ignorable="d"
     Title="加入群组"
     PrimaryButtonText="关闭"
@@ -39,7 +39,7 @@
             </ListView.ItemContainerStyle>
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="message:Session">
+                <DataTemplate x:DataType="session:ChannelSession">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -49,11 +49,11 @@
 
                         <tethys:Avatar Size="40"
                                        Foreground="White"
-                                       Source="{x:Bind ProfilePicture}"
-                                       DisplayName="{x:Bind DisplayName}"
-                                       BadgeIcon="{x:Bind DefaultIcon}"
-                                       Background="{x:Bind Background}"
-                                       BadgeIconFontFamily="{x:Bind AvatarFont}"/>
+                                       Source="{x:Bind TethysAvatar.Source}"
+                                       DisplayName="{x:Bind TethysAvatar.DisplayName}"
+                                       BadgeIcon="{x:Bind TethysAvatar.Icon}"
+                                       Background="{x:Bind TethysAvatar.Background}"
+                                       BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
 
                         <Grid Grid.Column="1" Padding="8 0 0 0">
                             <Grid.RowDefinitions>
@@ -61,7 +61,7 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="{x:Bind DisplayName}"/>
+                            <TextBlock Text="{x:Bind TethysAvatar.DisplayName}"/>
                             <TextBlock Grid.Row="1" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
                                 <Run Text="{x:Bind CreatedBy.DisplayName}"/>
                                 <Run Text="创建于"/>

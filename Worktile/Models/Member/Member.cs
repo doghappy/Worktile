@@ -42,5 +42,11 @@ namespace Worktile.Models.Member
 
         [JsonProperty("preferences")]
         public Preference Preferences { get; set; }
+
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("department_name")]
+        public string DepartmentName { get; set; }
     }
 }

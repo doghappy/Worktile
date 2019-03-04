@@ -8,23 +8,23 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Windows.Storage.Pickers;
-using Worktile.ViewModels.Message;
 using Worktile.Models.Message.NavigationParam;
-using Worktile.Models.Message;
+using Worktile.ViewModels.Message.Detail.Content;
+using Worktile.Models.Message.Session;
 
-namespace Worktile.Views.Message
+namespace Worktile.Views.Message.Detail.Content
 {
-    public sealed partial class SessionMessagePage : Page, INotifyPropertyChanged
+    public sealed partial class MemberMessagePage : Page, INotifyPropertyChanged
     {
-        public SessionMessagePage()
+        public MemberMessagePage()
         {
             InitializeComponent();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private SessionMessageViewModel _viewModel;
-        private SessionMessageViewModel ViewModel
+        private MemberMessageViewModel _viewModel;
+        private MemberMessageViewModel ViewModel
         {
             get => _viewModel;
             set
@@ -42,7 +42,8 @@ namespace Worktile.Views.Message
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _param = e.Parameter as ToUnReadMsgPageParam;
-            ViewModel = new SessionMessageViewModel(_param.Session, _param.MainViewModel);
+            var session = _param.Session as MemberSession;
+            ViewModel = new MemberMessageViewModel(session, _param.MainViewModel);
             _param.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
         }
 

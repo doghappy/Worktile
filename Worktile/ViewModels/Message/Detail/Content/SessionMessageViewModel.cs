@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Worktile.ApiModels.Message.ApiMessages;
@@ -8,27 +6,24 @@ using Worktile.Common;
 using Windows.Storage;
 using System.Collections.Generic;
 using Worktile.Common.WtRequestClient;
-using Newtonsoft.Json;
 using Worktile.ApiModels;
-using Worktile.Models.Message;
 using Worktile.Domain.SocketMessageConverter;
+using Worktile.Models.Message.Session;
+using Newtonsoft.Json;
 
-namespace Worktile.ViewModels.Message
+namespace Worktile.ViewModels.Message.Detail.Content
 {
-    class SessionMessageViewModel : MessageViewModel, INotifyPropertyChanged
+    abstract class SessionMessageViewModel<S> : MessageViewModel<S>
+          where S : ISession
     {
-        public SessionMessageViewModel(Session session, MainViewModel mainViewModel) : base(session, mainViewModel) { }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public SessionMessageViewModel(S session, MainViewModel mainViewModel) : base(session, mainViewModel) { }
 
         string _latestId;
 
-        protected override string Url => $"/api/messages?ref_id={Session.Id}&ref_type={Session.RefType}&latest_id={_latestId}&size=20";
+        protected override string Url => $"/api/messages?ref_id={Session.Id}&ref_type={RefType}&latest_id={_latestId}&size=20";
 
-        protected override void OnPropertyChanged([CallerMemberName] string prop = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
+        protected abstract string IdType { get; }
+        protected abstract int ToType { get; }
 
         protected override void ReadMessage(JToken jToken)
         {
@@ -60,11 +55,10 @@ namespace Worktile.ViewModels.Message
             {
                 type = 1,
                 message_id = msg.Id,
-                session_id = Session.Id
+                worktile = Session.Id
             };
             string json = JsonConvert.SerializeObject(req);
-            if (Session.Type == SessionType.Channel)
-                json = json.Replace("session_id", "channel_id");
+            json = json.Replace("worktile", IdType);
             var response = await client.PostAsync<ApiResponse>(url, json);
             if (response.Code == 200)
             {
@@ -74,8 +68,7 @@ namespace Worktile.ViewModels.Message
 
         public async override Task UnPinMessageAsync(Models.Message.Message msg)
         {
-            string idType = Session.Type == SessionType.Channel ? "channel_id" : "session_id";
-            string url = $"/api/messages/{msg.Id}/unpinned?{idType}={Session.Id}";
+            string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={Session.Id}";
             var client = new WtHttpClient();
             var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
             if (response.Code == 200 && response.Data)
@@ -86,15 +79,12 @@ namespace Worktile.ViewModels.Message
 
         public async Task<bool> SendMessageAsync(string msg)
         {
-            int toType = 1;
-            if (Session.Type == SessionType.Session)
-                toType = 2;
             var data = new
             {
                 fromType = 1,
                 from = DataSource.ApiUserMeData.Me.Uid,
                 to = Session.Id,
-                toType,
+                toType = ToType,
                 messageType = 1,
                 client = 1,
                 markdown = 1,

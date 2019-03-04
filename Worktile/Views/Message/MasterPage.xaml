@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvt="using:Worktile.Converters"
     xmlns:tethys="using:Worktile.Tethys"
-    xmlns:message="using:Worktile.Models.Message"
+    xmlns:session="using:Worktile.Models.Message.Session"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
@@ -113,7 +113,7 @@
                     </ListView.ItemContainerStyle>
 
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="message:Session">
+                        <DataTemplate x:DataType="session:ISession">
                             <Grid>
                                 <Grid Padding="12 8" HorizontalAlignment="Stretch">
 
@@ -124,13 +124,17 @@
 
                                     <tethys:Avatar Size="30"
                                                    Foreground="White"
-                                                   Source="{x:Bind ProfilePicture}"
-                                                   DisplayName="{x:Bind DisplayName}"
-                                                   BadgeIcon="{x:Bind DefaultIcon}"
-                                                   Background="{x:Bind Background}"
-                                                   BadgeIconFontFamily="{x:Bind AvatarFont}"/>
+                                                   Source="{x:Bind TethysAvatar.Source}"
+                                                   DisplayName="{x:Bind TethysAvatar.DisplayName}"
+                                                   BadgeIcon="{x:Bind TethysAvatar.Icon}"
+                                                   Background="{x:Bind TethysAvatar.Background}"
+                                                   BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
 
-                                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8 0 0 0" Text="{x:Bind DisplayName}"/>
+                                    <TextBlock Grid.Column="1"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"
+                                               Margin="8 0 0 0"
+                                               Text="{x:Bind TethysAvatar.DisplayName}"/>
                                     <Border Grid.Column="1"
                                         Visibility="{x:Bind UnRead, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter='!'}"
                                         Padding="8 0"

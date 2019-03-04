@@ -40,10 +40,10 @@
             <ComboBox Grid.Row="3"
                       Margin="0 12"
                       Header="可见范围"
-                      ItemsSource="{x:Bind WtVisibilities}"
+                      ItemsSource="{x:Bind Visibilities}"
                       SelectedItem="{x:Bind SelectedVisibility, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
-                    <DataTemplate x:DataType="local:WtVisibility">
+                    <DataTemplate x:DataType="local:VisibilityItem">
                         <TextBlock Text="{x:Bind Text}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>

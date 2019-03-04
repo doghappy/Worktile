@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
-using Windows.System;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,8 +22,9 @@ using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Models.Message;
+using Worktile.Models.Message.Session;
 
-namespace Worktile.Views.Message
+namespace Worktile.Views.Message.Detail.Content
 {
     public sealed partial class FilePage : Page, INotifyPropertyChanged
     {
@@ -34,7 +34,7 @@ namespace Worktile.Views.Message
             Files = new IncrementalCollection<FileItem>(LoadFilesAsync);
         }
 
-        Session _session;
+        ISession _session;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -56,8 +56,10 @@ namespace Worktile.Views.Message
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _session = e.Parameter as Session;
+            _session = e.Parameter as ISession;
         }
+
+        private int RefType => _session.PageType == PageType.Channel ? 1 : 2;
 
         int _page = 1;
 
@@ -65,7 +67,7 @@ namespace Worktile.Views.Message
         {
             IsActive = true;
             var list = new List<FileItem>();
-            string url = $"/api/entities?page={_page}&size=20&ref_type={_session.RefType}&ref_id={_session.Id}";
+            string url = $"/api/entities?page={_page}&size=20&ref_type={RefType}&ref_id={_session.Id}";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMessageFiles>(url);
             Files.HasMoreItems = Files.Count + data.Data.Entities.Count < data.Data.Total;
@@ -125,7 +127,7 @@ namespace Worktile.Views.Message
             if (files.Any())
             {
                 var client = new WtHttpClient();
-                string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={_session.Id}&ref_type={_session.RefType}";
+                string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={_session.Id}&ref_type={RefType}";
                 foreach (var file in files)
                 {
                     StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);

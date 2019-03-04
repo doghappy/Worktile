@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Common\AvatarHelper.cs" />
     <Compile Include="Common\DataSource.cs" />
+    <Compile Include="Common\Extensions\WorktileExtension.cs" />
     <Compile Include="Common\HashEncryptor.cs" />
     <Compile Include="Common\ImageHelper.cs" />
     <Compile Include="Common\IncrementalCollection.cs" />
@@ -302,6 +303,8 @@
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="Enums\AvatarSize.cs" />
+    <Compile Include="Enums\Message\PageType.cs" />
+    <Compile Include="Enums\Message\SessionType.cs" />
     <Compile Include="Enums\Message\MessageAction.cs" />
     <Compile Include="Enums\NotificationLevel.cs" />
     <Compile Include="Models\Department\DepartmentNode.cs" />
@@ -310,15 +313,31 @@
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
+    <Compile Include="Models\Message\Session\MemberSession.cs" />
+    <Compile Include="Models\Message\Session\ChannelSession.cs" />
+    <Compile Include="Models\Message\Session\ISession.cs" />
     <Compile Include="Models\Message\MessageContent.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\Message\AssistantMessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\FileViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\SessionDetailViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\MemberDetailViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\AssistantMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\AssistantDetailViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\FileViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\DetailViewModel.cs" />
     <Compile Include="ViewModels\Message\MasterViewModel.cs" />
-    <Compile Include="ViewModels\Message\MessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\SessionMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\ChannelMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\SessionMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\MessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\MemberMessageViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
-    <Compile Include="Views\Message\AssistantMessagePage.xaml.cs">
+    <Compile Include="Views\Message\Detail\AssistantDetailPage.xaml.cs">
+      <DependentUpon>AssistantDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Detail\MemberDetailPage.xaml.cs">
+      <DependentUpon>MemberDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Detail\Content\AssistantMessagePage.xaml.cs">
       <DependentUpon>AssistantMessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Dialog\CreateChatDialog.xaml.cs">
@@ -335,7 +354,7 @@
     <Compile Include="Models\Message\FileItem.cs" />
     <Compile Include="Enums\Message\FromType.cs" />
     <Compile Include="Enums\RoleType.cs" />
-    <Compile Include="Enums\Visibility.cs" />
+    <Compile Include="Enums\WtVisibility.cs" />
     <Compile Include="Enums\WtHttpResponseCode.cs" />
     <Compile Include="Enums\WtTaskPropertyFrom.cs" />
     <Compile Include="Enums\WtTaskPropertyType.cs" />
@@ -375,14 +394,17 @@
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\SessionMessagePage.xaml.cs">
-      <DependentUpon>SessionMessagePage.xaml</DependentUpon>
+    <Compile Include="Views\Message\Detail\Content\ChannelMessagePage.xaml.cs">
+      <DependentUpon>ChannelMessagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\FilePage.xaml.cs">
+    <Compile Include="Views\Message\Detail\Content\MemberMessagePage.xaml.cs">
+      <DependentUpon>MemberMessagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Detail\Content\FilePage.xaml.cs">
       <DependentUpon>FilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\DetailPage.xaml.cs">
-      <DependentUpon>DetailPage.xaml</DependentUpon>
+    <Compile Include="Views\Message\Detail\ChannelDetailPage.xaml.cs">
+      <DependentUpon>ChannelDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
@@ -390,10 +412,9 @@
     <Compile Include="Models\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
     <Compile Include="Models\Message\NavigationParam\ToMessageDetailPageParam.cs" />
     <Compile Include="Enums\Message\MessageType.cs" />
-    <Compile Include="Views\Message\PinnedPage.xaml.cs">
+    <Compile Include="Views\Message\Detail\Content\PinnedPage.xaml.cs">
       <DependentUpon>PinnedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Message\Session.cs" />
     <Compile Include="Models\TethysAvatar.cs" />
     <Compile Include="Models\Message\TopNav.cs" />
     <Compile Include="Views\Mission\AnalyticInsight\MemberDelayPage.xaml.cs">
@@ -752,11 +773,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\AssistantMessagePage.xaml">
+    <Page Include="Views\Message\Detail\AssistantDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Message\Detail\MemberDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Message\Detail\Content\AssistantMessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\SessionMessagePage.xaml">
+    <Page Include="Views\Message\Detail\Content\ChannelMessagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Message\Detail\Content\MemberMessagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -772,11 +805,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\FilePage.xaml">
+    <Page Include="Views\Message\Detail\Content\FilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\DetailPage.xaml">
+    <Page Include="Views\Message\Detail\ChannelDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -784,7 +817,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\PinnedPage.xaml">
+    <Page Include="Views\Message\Detail\Content\PinnedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

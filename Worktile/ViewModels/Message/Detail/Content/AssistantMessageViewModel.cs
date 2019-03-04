@@ -10,12 +10,14 @@ using Worktile.Domain.MessageContentReader;
 using Worktile.Enums;
 using Worktile.Models;
 using Worktile.Models.Message;
+using Worktile.Models.Message.Session;
 
-namespace Worktile.ViewModels.Message
+namespace Worktile.ViewModels.Message.Detail.Content
 {
-    class AssistantMessageViewModel : MessageViewModel, INotifyPropertyChanged
+    class AssistantMessageViewModel : MessageViewModel<MemberSession>, INotifyPropertyChanged
     {
-        public AssistantMessageViewModel(Session session, MainViewModel mainViewModel, TopNav nav) : base(session, mainViewModel)
+        public AssistantMessageViewModel(MemberSession session, MainViewModel mainViewModel, TopNav nav)
+            : base(session, mainViewModel)
         {
             _nav = nav;
         }
@@ -29,12 +31,8 @@ namespace Worktile.ViewModels.Message
         {
             get
             {
-                string component = null;
-                if (Session.Component.HasValue)
-                {
-                    component = GetComponentByNumber(Session.Component.Value);
-                }
-                string url = $"/api/pigeon/messages?ref_id={Session.Id}&ref_type={Session.RefType}&filter_type={_nav.FilterType}&component={component}&size=20";
+                string component = GetComponentByNumber(Session.Component.Value);
+                string url = $"/api/pigeon/messages?ref_id={Session.Id}&ref_type={RefType}&filter_type={_nav.FilterType}&component={component}&size=20";
                 if (!string.IsNullOrEmpty(_next))
                 {
                     url += "&next=" + _next;

@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
+using Worktile.Models.Message.Session;
 
 namespace Worktile.Common
 {
@@ -118,10 +119,45 @@ namespace Worktile.Common
             {
                 Id = member.Uid,
                 DisplayName = member.DisplayName,
-                Background = AvatarHelper.GetColorBrush(member.DisplayName),
-                Source = AvatarHelper.GetAvatarBitmap(member.Avatar, size, FromType.User),
+                Background = GetColorBrush(member.DisplayName),
+                Source = GetAvatarBitmap(member.Avatar, size, FromType.User),
                 DisplayNamePinyin = member.DisplayNamePinyin.Split(',').ToArray(),
                 Name = member.Name
+            };
+        }
+
+        public static TethysAvatar GetAvatar(ChannelSession session)
+        {
+            var avatar = new TethysAvatar
+            {
+                Id = session.Id,
+                DisplayName = session.Name,
+                Background = WtColorHelper.GetNewBrush(session.Color),
+                DisplayNamePinyin = session.NamePinyin.Split(',').ToArray()
+            };
+            if (session.Visibility == WtVisibility.Public)
+            {
+                avatar.Icon = "\uE64E";
+                avatar.AvatarFont = new FontFamily("ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont");
+            }
+            else
+            {
+                avatar.Icon = "\uE748";
+                avatar.AvatarFont = new FontFamily("ms-appx:///Worktile.Tethys/Assets/Fonts/iconfont.ttf#wtf");
+            }
+            return avatar;
+        }
+
+        public static TethysAvatar GetAvatar(MemberSession session, AvatarSize size)
+        {
+            return new TethysAvatar
+            {
+                Id = session.Id,
+                DisplayName = session.To.DisplayName,
+                Background = AvatarHelper.GetColorBrush(session.To.DisplayName),
+                DisplayNamePinyin = session.To.DisplayNamePinyin.Split(',').ToArray(),
+                Name = session.To.Name,
+                Source = GetAvatarBitmap(session.To.Avatar, size, FromType.User)
             };
         }
     }

@@ -82,7 +82,7 @@ namespace Worktile.ApiModels.ApiMissionVnextProjectNav
         public string Color { get; set; }
 
         [JsonProperty("visibility")]
-        public Visibility Visibility { get; set; }
+        public WtVisibility Visibility { get; set; }
 
         [JsonProperty("created_by")]
         public string CreatedBy { get; set; }

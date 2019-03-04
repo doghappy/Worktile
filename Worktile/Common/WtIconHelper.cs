@@ -329,12 +329,12 @@ namespace Worktile.ViewModels.Infrastructure
             return Icons.Single(i => i.Class == @class).Glyph;
         }
 
-        public static string GetGlyph(Visibility visibility)
+        public static string GetGlyph(WtVisibility visibility)
         {
             switch (visibility)
             {
-                case Visibility.Public: return "\ue70c";
-                case Visibility.Private: return "\ue667";
+                case WtVisibility.Public: return "\ue70c";
+                case WtVisibility.Private: return "\ue667";
             }
             return null;
         }

@@ -3,31 +3,30 @@ using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
-using Worktile.Models.Message;
+using Worktile.Models.Message.Session;
 
-namespace Worktile.ViewModels.Message
+namespace Worktile.ViewModels.Message.Detail.Content
 {
-    abstract class MessageViewModel : ViewModel
+    abstract class MessageViewModel<S> : ViewModel where S : ISession
     {
-        public MessageViewModel(Session session, MainViewModel mainViewModel)
+        public MessageViewModel(S session, MainViewModel mainViewModel)
         {
             Session = session;
             MainViewModel = mainViewModel;
             Messages = new ObservableCollection<Models.Message.Message>();
         }
 
-        protected Session Session { get; }
+        protected S Session { get; }
         protected abstract string Url { get; }
         public ObservableCollection<Models.Message.Message> Messages { get; }
         public bool? HasMore { get; protected set; }
         protected MainViewModel MainViewModel { get; }
+        protected int RefType => Session.PageType == PageType.Channel ? 1 : 2;
 
         protected abstract void ReadMessage(JToken jToken);
         public abstract Task PinMessageAsync(Models.Message.Message msg);
@@ -64,7 +63,6 @@ namespace Worktile.ViewModels.Message
                         {
                             DisplayName = member.DisplayName,
                             Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
-                            Foreground = new SolidColorBrush(Colors.White),
                             Background = AvatarHelper.GetColorBrush(member.DisplayName)
                         };
                         message.IsPinned = false;

@@ -11,6 +11,7 @@ using Windows.System;
 using Worktile.ViewModels;
 using Worktile.ViewModels.Message;
 using Worktile.Models.Message;
+using Worktile.Models.Message.Session;
 
 namespace Worktile.Views.Message
 {
@@ -56,13 +57,13 @@ namespace Worktile.Views.Message
 
 
 
-        private Session _rightTappedSession;
+        private ISession _rightTappedSession;
 
         private void ListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             var listView = sender as ListView;
             ListViewItemMenuFlyout.ShowAt(listView, e.GetPosition(listView));
-            _rightTappedSession = ((FrameworkElement)e.OriginalSource).DataContext as Session;
+            _rightTappedSession = ((FrameworkElement)e.OriginalSource).DataContext as ISession;
             if (_rightTappedSession.Starred)
             {
                 ViewModel.StarVisibility = Visibility.Collapsed;
@@ -78,15 +79,14 @@ namespace Worktile.Views.Message
         private async void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new CreateGroupDialog();
-            dialog.OnCreateSuccess += channel =>
+            dialog.OnCreateSuccess += session =>
             {
-                var session = MessageHelper.GetSession(channel);
                 ViewModel.Sessions.Insert(0, session);
             };
             await dialog.ShowAsync();
         }
 
-        private void CreateNewSession(Session session)
+        private void CreateNewSession(ISession session)
         {
             var ss = ViewModel.Sessions.SingleOrDefault(s => s.Id == session.Id);
             if (ss == null)

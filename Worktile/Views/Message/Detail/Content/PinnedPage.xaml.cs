@@ -18,8 +18,9 @@ using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Models.Message;
+using Worktile.Models.Message.Session;
 
-namespace Worktile.Views.Message
+namespace Worktile.Views.Message.Detail.Content
 {
     public sealed partial class PinnedPage : Page, INotifyPropertyChanged
     {
@@ -29,7 +30,7 @@ namespace Worktile.Views.Message
             Messages = new IncrementalCollection<Models.Message.Message>(LoadMessagesAsync);
         }
 
-        Session _session;
+        ISession _session;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -51,12 +52,12 @@ namespace Worktile.Views.Message
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _session = e.Parameter as Session;
+            _session = e.Parameter as ISession;
         }
 
         string _anchor;
 
-        string IdType => _session.Type == SessionType.Channel ? "channel_id" : "session_id";
+        string IdType => _session.PageType == PageType.Channel ? "channel_id" : "session_id";
 
         private async Task<IEnumerable<Models.Message.Message>> LoadMessagesAsync()
         {
@@ -84,8 +85,7 @@ namespace Worktile.Views.Message
                     item.Reference.From.TethysAvatar = new TethysAvatar
                     {
                         DisplayName = member.DisplayName,
-                        Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, item.Reference.From.Type),
-                        Foreground = new SolidColorBrush(Colors.White)
+                        Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, item.Reference.From.Type)
                     };
                     if (Path.GetExtension(member.Avatar).ToLower() == ".png")
                         item.Reference.From.TethysAvatar.Background = new SolidColorBrush(Colors.White);

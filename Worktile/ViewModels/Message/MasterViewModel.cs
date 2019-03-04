@@ -12,10 +12,12 @@ using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
-using Worktile.Views.Message;
 using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Enums.Message;
+using Worktile.Models.Message.Session;
+using Worktile.Common.Extensions;
+using Worktile.Views.Message.Detail.Content;
 
 namespace Worktile.ViewModels.Message
 {
@@ -25,17 +27,17 @@ namespace Worktile.ViewModels.Message
         {
             _contentFrame = contentFrame;
             _mainViewModel = mainViewModel;
-            Sessions = new ObservableCollection<Models.Message.Session>();
+            Sessions = new ObservableCollection<ISession>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private Frame _contentFrame;
         private MainViewModel _mainViewModel;
 
-        public ObservableCollection<Models.Message.Session> Sessions { get; }
+        public ObservableCollection<ISession> Sessions { get; }
 
-        private Models.Message.Session _selectedSession;
-        public Models.Message.Session SelectedSession
+        private ISession _selectedSession;
+        public ISession SelectedSession
         {
             get => _selectedSession;
             set
@@ -44,11 +46,7 @@ namespace Worktile.ViewModels.Message
                 {
                     _selectedSession = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSession)));
-                    _contentFrame.Navigate(typeof(DetailPage), new ToMessageDetailPageParam
-                    {
-                        Session = value,
-                        MainViewModel = _mainViewModel
-                    });
+                    ContentFrameNavigate(value);
                 }
             }
         }
@@ -91,17 +89,19 @@ namespace Worktile.ViewModels.Message
             IsActive = true;
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiTeamChats>("/api/team/chats");
-            var list = new List<Models.Message.Session>();
+            var list = new List<ISession>();
             var channels = data.Data.Channels.Concat(data.Data.Groups);
             foreach (var item in channels)
             {
-                var session = MessageHelper.GetSession(item);
-                list.Add(session);
+                item.TethysAvatar = AvatarHelper.GetAvatar(item);
+                list.Add(item);
             }
 
             foreach (var item in data.Data.Sessions)
             {
-                list.Add(MessageHelper.GetSession(item, AvatarSize.X80));
+                item.NamePinyin = item.To.DisplayNamePinyin;
+                item.TethysAvatar = AvatarHelper.GetAvatar(item, AvatarSize.X80);
+                list.Add(item);
             }
             list.Sort((a, b) =>
             {
@@ -134,6 +134,28 @@ namespace Worktile.ViewModels.Message
             _mainViewModel.OnFeedReceived += OnFeedReceived;
         }
 
+        private void ContentFrameNavigate(ISession session)
+        {
+            Type type = null;
+            switch (session.PageType)
+            {
+                case PageType.Assistant:
+                    type = typeof(AssistantMessagePage);
+                    break;
+                case PageType.Member:
+                    type = typeof(MemberMessagePage);
+                    break;
+                case PageType.Channel:
+                    type = typeof(ChannelMessagePage);
+                    break;
+            }
+            _contentFrame.Navigate(type, new ToMessageDetailPageParam
+            {
+                Session = session,
+                MainViewModel = _mainViewModel
+            });
+        }
+
         private async void OnMessageReceived(Models.Message.Message apiMsg)
         {
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
@@ -144,17 +166,17 @@ namespace Worktile.ViewModels.Message
                     if (apiMsg.Body.At != null && apiMsg.Body.At.Count == 1)
                     {
                         var client = new WtHttpClient();
-                        var data = await client.PostAsync<ApiDataResponse<ApiModels.ApiTeamChats.Session>>("/api/session", new { uid = apiMsg.From.Uid });
-                        session = MessageHelper.GetSession(data.Data, AvatarSize.X80);
-                        session.UnRead = 1;
+                        var data = await client.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid = apiMsg.From.Uid });
+                        data.Data.ForShowAvatar(AvatarSize.X80);
+                        data.Data.UnRead = 1;
                         Sessions.Insert(0, session);
                     }
                     else if (apiMsg.Type == MessageType.Activity)
                     {
                         var client = new WtHttpClient();
                         string url = $"/api/channels/{apiMsg.To.Id}";
-                        var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
-                        session = MessageHelper.GetSession(data.Data);
+                        var data = await client.GetAsync<ApiDataResponse<ChannelSession>>(url);
+                        data.Data.ForShowAvatar();
                         Sessions.Insert(0, session);
                     }
                 }
@@ -178,9 +200,9 @@ namespace Worktile.ViewModels.Message
                 {
                     string url = $"/api/channels/{feed.ChannelId}";
                     var client = new WtHttpClient();
-                    var data = await client.GetAsync<ApiDataResponse<Channel>>(url);
-                    var session = MessageHelper.GetSession(data.Data);
-                    Sessions.Insert(0, session);
+                    var data = await client.GetAsync<ApiDataResponse<ChannelSession>>(url);
+                    data.Data.ForShowAvatar();
+                    Sessions.Insert(0, data.Data);
                 }
                 else if (feed.Type == FeedType.RemoveChannel)
                 {
@@ -201,7 +223,7 @@ namespace Worktile.ViewModels.Message
             }));
         }
 
-        public async Task DeleteSessionAsync(Models.Message.Session session)
+        public async Task DeleteSessionAsync(ISession session)
         {
             string url = $"/api/sessions/{session.Id}";
             var client = new WtHttpClient();
@@ -212,10 +234,10 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        public async Task StarSessionAsync(Models.Message.Session session)
+        public async Task StarSessionAsync(ISession session)
         {
-            string sessionType = session.Type.ToString().ToLower();
-            string url = $"/api/{sessionType}s/{session.Id}/star";
+            string sessionType = session.GetType() == typeof(ChannelSession) ? "channels" : "sessions";
+            string url = $"/api/{sessionType}/{session.Id}/star";
             var client = new WtHttpClient();
             var data = await client.PutAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
@@ -224,10 +246,10 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        public async Task UnStarSessionAsync(Models.Message.Session session)
+        public async Task UnStarSessionAsync(ISession session)
         {
-            string sessionType = session.Type.ToString().ToLower();
-            string url = $"/api/{sessionType}s/{session.Id}/unstar";
+            string sessionType = session.GetType() == typeof(ChannelSession) ? "channels" : "sessions";
+            string url = $"/api/{sessionType}/{session.Id}/unstar";
             var client = new WtHttpClient();
             var data = await client.PutAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
