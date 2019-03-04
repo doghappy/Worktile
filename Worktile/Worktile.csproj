@@ -230,6 +230,9 @@
     <Compile Include="Controls\Message\CrmMessage.xaml.cs">
       <DependentUpon>CrmMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Message\MissionMessage.xaml.cs">
+      <DependentUpon>MissionMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\TaskMessage.xaml.cs">
       <DependentUpon>TaskMessage.xaml</DependentUpon>
     </Compile>
@@ -702,6 +705,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Message\CrmMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\MissionMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
