@@ -22,7 +22,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
 
         protected override string Url => $"/api/messages?ref_id={Session.Id}&ref_type={RefType}&latest_id={_latestId}&size=20";
 
-        protected abstract string IdType { get; }
         protected abstract int ToType { get; }
 
         protected override void ReadMessage(JToken jToken)

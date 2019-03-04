@@ -1,73 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels;
 using Worktile.ApiModels.ApiPinnedMessages;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
-using Worktile.Domain.MessageContentReader;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
-using Worktile.Models.Message;
 using Worktile.Models.Message.Session;
 
-namespace Worktile.Views.Message.Detail.Content
+namespace Worktile.ViewModels.Message.Detail.Content.Pin
 {
-    public sealed partial class PinnedPage : Page, INotifyPropertyChanged
+    abstract class PinnedViewModel<S> : MessageBaseViewModel<S> where S : ISession
     {
-        public PinnedPage()
+        public PinnedViewModel(S session) : base(session)
         {
-            InitializeComponent();
             Messages = new IncrementalCollection<Models.Message.Message>(LoadMessagesAsync);
         }
 
-        ISession _session;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private bool _isActive;
-        public bool IsActive
-        {
-            get => _isActive;
-            set
-            {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
-                }
-            }
-        }
+        private string _anchor;
 
         public IncrementalCollection<Models.Message.Message> Messages { get; }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            _session = e.Parameter as ISession;
-        }
-
-        string _anchor;
-
-        string IdType => _session.PageType == PageType.Channel ? "channel_id" : "session_id";
 
         private async Task<IEnumerable<Models.Message.Message>> LoadMessagesAsync()
         {
             IsActive = true;
             const int SIZE = 10;
             var list = new List<Models.Message.Message>();
-            string url = $"/api/pinneds?{IdType}={_session.Id}&anchor={_anchor}&size={SIZE}";
+            string url = $"/api/pinneds?{IdType}={Session.Id}&anchor={_anchor}&size={SIZE}";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiPinnedMessages>(url);
-            if (data.Data.Pinneds.Any())
+            if (data.Code == 200 && data.Data.Pinneds.Any())
             {
                 _anchor = data.Data.Pinneds.Last().Id;
                 if (data.Data.Batch < SIZE)
@@ -102,11 +70,9 @@ namespace Worktile.Views.Message.Detail.Content
             return list;
         }
 
-        private async void UnPin_Click(object sender, RoutedEventArgs e)
+        public async Task UnPinAsync(Models.Message.Message msg)
         {
-            var btn = sender as Button;
-            var msg = btn.DataContext as Models.Message.Message;
-            string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={_session.Id}";
+            string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={Session.Id}";
             var client = new WtHttpClient();
             var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
             if (response.Code == 200 && response.Data)

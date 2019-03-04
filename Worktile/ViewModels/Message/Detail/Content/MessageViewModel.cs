@@ -12,21 +12,18 @@ using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    abstract class MessageViewModel<S> : ViewModel where S : ISession
+    abstract class MessageViewModel<S> : MessageBaseViewModel<S> where S : ISession
     {
-        public MessageViewModel(S session, MainViewModel mainViewModel)
+        public MessageViewModel(S session, MainViewModel mainViewModel):base(session)
         {
-            Session = session;
             MainViewModel = mainViewModel;
             Messages = new ObservableCollection<Models.Message.Message>();
         }
 
-        protected S Session { get; }
         protected abstract string Url { get; }
         public ObservableCollection<Models.Message.Message> Messages { get; }
         public bool? HasMore { get; protected set; }
         protected MainViewModel MainViewModel { get; }
-        protected int RefType => Session.PageType == PageType.Channel ? 1 : 2;
 
         protected abstract void ReadMessage(JToken jToken);
         public abstract Task PinMessageAsync(Models.Message.Message msg);

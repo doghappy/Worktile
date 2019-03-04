@@ -27,6 +27,8 @@ namespace Worktile.ViewModels.Message.Detail.Content
         TopNav _nav;
         string _next;
 
+        protected override string IdType { get; }
+
         protected override string Url
         {
             get

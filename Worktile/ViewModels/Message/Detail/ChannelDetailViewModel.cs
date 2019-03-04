@@ -6,6 +6,7 @@ using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
 using Worktile.Views.Message.Detail.Content;
+using Worktile.Views.Message.Detail.Content.Pin;
 
 namespace Worktile.ViewModels.Message
 {
@@ -30,22 +31,21 @@ namespace Worktile.ViewModels.Message
                 {
                     _selectedNav = value;
                     int index = Navs.IndexOf(value);
-                    var param = new ToUnReadMsgPageParam
-                    {
-                        Session = Session,
-                        Nav = value,
-                        MainViewModel = MainViewModel
-                    };
                     switch (index)
                     {
                         case 0:
-                            ContentFrame.Navigate(typeof(ChannelMessagePage), param);
+                            ContentFrame.Navigate(typeof(ChannelMessagePage), new ToUnReadMsgPageParam
+                            {
+                                Session = Session,
+                                Nav = value,
+                                MainViewModel = MainViewModel
+                            });
                             break;
                         case 1:
-                            ContentFrame.Navigate(typeof(FilePage), param);
+                            ContentFrame.Navigate(typeof(FilePage), Session);
                             break;
                         case 2:
-                            ContentFrame.Navigate(typeof(PinnedPage), param);
+                            ContentFrame.Navigate(typeof(ChannelPinnedPage), Session);
                             break;
                     }
                     OnPropertyChanged();

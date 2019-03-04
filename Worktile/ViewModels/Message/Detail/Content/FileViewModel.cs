@@ -21,22 +21,20 @@ using Worktile.ApiModels;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    class FileViewModel : ViewModel
+    class FileViewModel : MessageBaseViewModel<ISession>
     {
-        public FileViewModel(ISession session)
+        public FileViewModel(ISession session) : base(session)
         {
-            _session = session;
             Files = new IncrementalCollection<FileItem>(LoadFilesAsync);
         }
 
-        private ISession _session;
         int _page = 1;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public IncrementalCollection<FileItem> Files { get; }
 
-        private int RefType => _session.PageType == PageType.Channel ? 1 : 2;
+        protected override string IdType { get; }
 
         protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {
@@ -47,7 +45,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
         {
             IsActive = true;
             var list = new List<FileItem>();
-            string url = $"/api/entities?page={_page}&size=20&ref_type={RefType}&ref_id={_session.Id}";
+            string url = $"/api/entities?page={_page}&size=20&ref_type={RefType}&ref_id={Session.Id}";
             var client = new WtHttpClient();
             var data = await client.GetAsync<ApiMessageFiles>(url);
             Files.HasMoreItems = Files.Count + data.Data.Entities.Count < data.Data.Total;
@@ -100,7 +98,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
             if (files.Any())
             {
                 var client = new WtHttpClient();
-                string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={_session.Id}&ref_type={RefType}";
+                string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={Session.Id}&ref_type={RefType}";
                 foreach (var file in files)
                 {
                     StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);

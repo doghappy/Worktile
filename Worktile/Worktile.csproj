@@ -319,6 +319,10 @@
     <Compile Include="Models\Message\MessageContent.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\MessageBaseViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\Pin\MemberPinnedViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\Pin\PinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\SessionDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\MemberDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\AssistantMessageViewModel.cs" />
@@ -333,6 +337,9 @@
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Detail\AssistantDetailPage.xaml.cs">
       <DependentUpon>AssistantDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Detail\Content\Pin\ChannelPinnedPage.xaml.cs">
+      <DependentUpon>ChannelPinnedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Detail\MemberDetailPage.xaml.cs">
       <DependentUpon>MemberDetailPage.xaml</DependentUpon>
@@ -412,8 +419,8 @@
     <Compile Include="Models\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
     <Compile Include="Models\Message\NavigationParam\ToMessageDetailPageParam.cs" />
     <Compile Include="Enums\Message\MessageType.cs" />
-    <Compile Include="Views\Message\Detail\Content\PinnedPage.xaml.cs">
-      <DependentUpon>PinnedPage.xaml</DependentUpon>
+    <Compile Include="Views\Message\Detail\Content\Pin\MemberPinnedPage.xaml.cs">
+      <DependentUpon>MemberPinnedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\TethysAvatar.cs" />
     <Compile Include="Models\Message\TopNav.cs" />
@@ -777,6 +784,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Message\Detail\Content\Pin\ChannelPinnedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Message\Detail\MemberDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -817,7 +828,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\Detail\Content\PinnedPage.xaml">
+    <Page Include="Views\Message\Detail\Content\Pin\MemberPinnedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
