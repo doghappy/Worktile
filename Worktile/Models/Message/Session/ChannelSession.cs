@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 
@@ -24,6 +25,7 @@ namespace Worktile.Models.Message.Session
         public bool Starred { get; set; }
 
         [JsonProperty("latest_message_at")]
+        [JsonConverter(typeof(SafeUnixDateTimeConverter))]
         public DateTime LatestMessageAt { get; set; }
 
         [JsonProperty("show")]
