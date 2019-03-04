@@ -95,8 +95,11 @@ namespace Worktile.Views.Message
             string msg = MsgTextBox.Text.Trim();
             if (msg != string.Empty)
             {
-                await ViewModel.SendMessageAsync(msg);
-                MsgTextBox.Text = string.Empty;
+                var result = await ViewModel.SendMessageAsync(msg);
+                if (result)
+                {
+                    MsgTextBox.Text = string.Empty;
+                }
             }
         }
 

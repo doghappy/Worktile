@@ -84,7 +84,7 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        public async Task SendMessageAsync(string msg)
+        public async Task<bool> SendMessageAsync(string msg)
         {
             int toType = 1;
             if (Session.Type == SessionType.Session)
@@ -100,7 +100,7 @@ namespace Worktile.ViewModels.Message
                 markdown = 1,
                 content = msg
             };
-            await MainViewModel.SendMessageAsync(SocketMessageType.Message, data);
+            return await MainViewModel.SendMessageAsync(SocketMessageType.Message, data);
         }
 
         public async Task UploadFileAsync(IReadOnlyList<StorageFile> files)

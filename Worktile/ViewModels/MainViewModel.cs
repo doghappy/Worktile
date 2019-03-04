@@ -216,7 +216,7 @@ namespace Worktile.ViewModels
                                 ShowNotification("网络已恢复，已经重新连接到消息服务了。", NotificationLevel.Success, 4000);
                             }
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             ShowNotification("与消息服务器断开连接，正在重新连接……", NotificationLevel.Danger, 4000);
                             if (_reconnectTimer == null)
@@ -460,19 +460,24 @@ namespace Worktile.ViewModels
             }
         }
 
-        public async Task SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
+        public async Task<bool> SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
         {
-            string msg = SocketMessageConverter.Process(msgType, data);
-            using (var dataWriter = new DataWriter(_socket.OutputStream))
+            if (_socket != null)
             {
-                dataWriter.WriteString(msg);
-                try
+                string msg = SocketMessageConverter.Process(msgType, data);
+                using (var dataWriter = new DataWriter(_socket.OutputStream))
                 {
-                    await dataWriter.StoreAsync();
-                    dataWriter.DetachStream();
+                    dataWriter.WriteString(msg);
+                    try
+                    {
+                        await dataWriter.StoreAsync();
+                        dataWriter.DetachStream();
+                        return true;
+                    }
+                    catch { }
                 }
-                catch { }
             }
+            return false;
         }
 
         public void ShowNotification(string text, NotificationLevel level, int duration = 0)
