@@ -19,5 +19,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
         // 1. 将 ViewModel 和 Views 放置到 Read 和 UnRead 文件夹
         // 2. 写一个中间类 FileMessageViewModel，派生自此 MessageBaseViewModel
         // MessageViewModel 和 FileViewModel 类继承 FileMessageViewModel
+        // 提供文件下载和上传功能，因为在聊天界面和文件界面都可以下载和上传文件。
     }
 }
