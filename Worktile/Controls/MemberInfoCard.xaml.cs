@@ -1,25 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Worktile.Models.Member;
+using Worktile.Common.Extensions;
+using Worktile.Enums;
 
 namespace Worktile.Controls
 {
-    public sealed partial class MemberInfoCard : UserControl
+    public sealed partial class MemberInfoCard : UserControl, INotifyPropertyChanged
     {
         public MemberInfoCard()
         {
             InitializeComponent();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private Member _member;
+        public Member Member
+        {
+            get => _member;
+            set
+            {
+                if (_member != value)
+                {
+                    if (value.TethysAvatar == null)
+                    {
+                        value.ForShowAvatar(AvatarSize.X80);
+                    }
+                    _member = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Member)));
+                }
+            }
         }
     }
 }

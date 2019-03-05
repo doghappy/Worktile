@@ -4,12 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    
     d:DesignWidth="400">
 
-    <Grid Width="400" VerticalAlignment="Top" Padding="0 30" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+    <UserControl.Resources>
+        <cvt:AtNameConverter x:Key="AtNameConverter"/>
+    </UserControl.Resources>
+
+    <Grid Width="400" VerticalAlignment="Top" Padding="0 30">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
@@ -22,16 +27,21 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Ellipse Width="68" Height="68" Fill="Red"/>
+            <tethys:Avatar Size="68"
+                           DisplayName="{x:Bind Member.TethysAvatar.DisplayName, Mode=OneWay}"
+                           Source="{x:Bind Member.TethysAvatar.Source, Mode=OneWay}"
+                           Background="{x:Bind Member.TethysAvatar.Background, Mode=OneWay}"/>
 
             <TextBlock Grid.Row="1"
-                       Text="会军"
+                       Text="{x:Bind Member.DisplayName, Mode=OneWay}"
                        HorizontalAlignment="Center"
+                       IsTextSelectionEnabled="True"
                        Margin="0 16 0 0"
                        Style="{ThemeResource SubtitleTextBlockStyle}"/>
             <TextBlock Grid.Row="2"
-                       Text="@terry"
+                       Text="{x:Bind Member.Name, Mode=OneWay, Converter={StaticResource AtNameConverter}}"
                        FontSize="12"
+                       IsTextSelectionEnabled="True"
                        HorizontalAlignment="Center"
                        Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </Grid>
@@ -51,7 +61,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="部门" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                <TextBlock Grid.Column="1" Text="客户研发部"/>
+                <TextBlock Grid.Column="1" Text="{x:Bind Member.DepartmentName, Mode=OneWay}" IsTextSelectionEnabled="True"/>
             </Grid>
 
             <Grid Grid.Row="1" Margin="0 16 0 0">
@@ -61,7 +71,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="职位" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                <TextBlock Grid.Column="1" Text=".Net开发工程师"/>
+                <TextBlock Grid.Column="1" Text="{x:Bind Member.Title, Mode=OneWay}" IsTextSelectionEnabled="True"/>
             </Grid>
 
             <Grid Grid.Row="2" Margin="0 16 0 0">
@@ -71,7 +81,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="手机" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                <TextBlock Grid.Column="1" Text="11111111111111111"/>
+                <TextBlock Grid.Column="1" Text="{x:Bind Member.Mobile, Mode=OneWay}" IsTextSelectionEnabled="True"/>
             </Grid>
 
             <Grid Grid.Row="3" Margin="0 16 0 0">
@@ -81,7 +91,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="邮箱" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                <TextBlock Grid.Column="1" Text="@123ssss.xcsdf"/>
+                <TextBlock Grid.Column="1" Text="{x:Bind Member.Email, Mode=OneWay}" IsTextSelectionEnabled="True"/>
             </Grid>
         </Grid>
     </Grid>

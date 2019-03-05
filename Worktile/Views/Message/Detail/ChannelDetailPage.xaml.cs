@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
 using Worktile.ViewModels.Message;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml;
+using Worktile.Models.Member;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -39,10 +43,23 @@ namespace Worktile.Views.Message.Detail
             ViewModel = new ChannelDetailViewModel(session, ContentFrame, _navParam.MainViewModel);
         }
 
-        private void ContactInfo_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void ContactInfo_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.IsPaneOpen = true;
             ViewModel.LoadMembersAvatar();
+        }
+
+        private void ListView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var listView = sender as ListView;
+            var position = e.GetPosition(listView);
+            position.X = -2;
+            MemberCard.Member = ((FrameworkElement)e.OriginalSource).DataContext as Member;
+            MemberCardFlyout.ShowAt(listView, new FlyoutShowOptions
+            {
+                Position = position,
+                Placement = FlyoutPlacementMode.Left
+            });
         }
     }
 }

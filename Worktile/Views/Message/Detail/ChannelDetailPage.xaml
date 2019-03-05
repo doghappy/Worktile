@@ -7,6 +7,7 @@
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:message="using:Worktile.Models.Message"
     xmlns:member="using:Worktile.Models.Member"
+    xmlns:controls="using:Worktile.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -84,8 +85,20 @@
 
                         <ListView Grid.Row="1"
                                   SelectionMode="None"
-                                  IsItemClickEnabled="True"
+                                  Tapped="ListView_Tapped"
                                   ItemsSource="{x:Bind ViewModel.Session.Members}">
+
+                            <ListView.Resources>
+                                <Flyout x:Name="MemberCardFlyout">
+                                    <Flyout.FlyoutPresenterStyle>
+                                        <Style TargetType="FlyoutPresenter">
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </Flyout.FlyoutPresenterStyle>
+                                    <controls:MemberInfoCard x:Name="MemberCard"/>
+                                </Flyout>
+                            </ListView.Resources>
+                            
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="member:Member">
                                     <StackPanel Orientation="Horizontal">
