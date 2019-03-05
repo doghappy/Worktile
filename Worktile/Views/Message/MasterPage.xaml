@@ -7,6 +7,7 @@
     xmlns:cvt="using:Worktile.Converters"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:session="using:Worktile.Models.Message.Session"
+    xmlns:selectors="using:Worktile.Selectors"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
@@ -98,17 +99,8 @@
                                 </MenuFlyoutItem>
                             </MenuFlyout.Items>
                         </MenuFlyout>
-                    </ListView.Resources>
-
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Padding" Value="0"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="session:ISession">
+                        
+                        <DataTemplate x:Key="ChannelSessionDataTemplate" x:DataType="session:ChannelSession">
                             <Grid>
                                 <Grid Padding="12 8" HorizontalAlignment="Stretch">
 
@@ -124,7 +116,7 @@
                                                    BadgeIcon="{x:Bind TethysAvatar.Icon}"
                                                    Background="{x:Bind TethysAvatar.Background}"
                                                    BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>-->
-                                    <TextBlock Text="{x:Bind Starred, Mode=OneWay}"/>
+                                    <TextBlock Text="{x:Bind Starred, Mode=OneWay}" Foreground="Red"/>
 
                                     <TextBlock Grid.Column="1"
                                                HorizontalAlignment="Left"
@@ -148,7 +140,60 @@
                                          VerticalAlignment="Top"/>
                             </Grid>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
+                        
+                        <DataTemplate x:Key="MemberSessionDataTemplate" x:DataType="session:MemberSession">
+                            <Grid>
+                                <Grid Padding="12 8" HorizontalAlignment="Stretch">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--<tethys:Avatar Size="30"
+                                                   Foreground="White"
+                                                   Source="{x:Bind TethysAvatar.Source}"
+                                                   DisplayName="{x:Bind TethysAvatar.DisplayName}"
+                                                   BadgeIcon="{x:Bind TethysAvatar.Icon}"
+                                                   Background="{x:Bind TethysAvatar.Background}"
+                                                   BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>-->
+                                    <TextBlock Text="{x:Bind Starred, Mode=OneWay}" Foreground="Blue"/>
+
+                                    <TextBlock Grid.Column="1"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"
+                                               Margin="8 0 0 0"
+                                               Text="{x:Bind TethysAvatar.DisplayName}"/>
+                                    <Border Grid.Column="1"
+                                        Visibility="{x:Bind UnRead, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter='!'}"
+                                        Padding="8 0"
+                                        Background="{StaticResource DangerBrush}"
+                                        CornerRadius="8"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right">
+                                        <TextBlock Text="{x:Bind UnRead, Mode=OneWay}" FontSize="12" Foreground="White"/>
+                                    </Border>
+                                </Grid>
+                                <Polygon x:Name="StarredPolygon"
+                                         x:Load="{x:Bind Starred, Mode=OneWay}"
+                                         Points="0,0 8,0 0,8"
+                                         Fill="{ThemeResource SystemAccentColor}"
+                                         VerticalAlignment="Top"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.Resources>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplateSelector>
+                        <selectors:SessionDataTemplateSelector ChannelTemplate="{StaticResource ChannelSessionDataTemplate}"
+                                                               MemberTemplate="{StaticResource MemberSessionDataTemplate}"/>
+                    </ListView.ItemTemplateSelector>
                 </ListView>
             </Grid>
 

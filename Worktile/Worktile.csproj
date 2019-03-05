@@ -320,6 +320,7 @@
     <Compile Include="Models\Message\Session\ChannelSession.cs" />
     <Compile Include="Models\Message\Session\ISession.cs" />
     <Compile Include="Models\Message\MessageContent.cs" />
+    <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\BaseFileViewModel.cs" />

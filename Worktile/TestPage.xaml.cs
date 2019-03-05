@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -28,10 +29,82 @@ namespace Worktile
         public TestPage()
         {
             InitializeComponent();
+            Persons = new ObservableCollection<IPerson>
+            {
+                new APerson { Name = "Actor" },
+                new BPerson { Name = "Bctor" }
+            };
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        ObservableCollection<IPerson> Persons { get; }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var item in Persons)
+            {
+                item.Name = "foreach";
+            }
+        }
+    }
+
+    public interface IPerson
+    {
+        string Name { get; set; }
+    }
+
+    public class APerson : IPerson, INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+                }
+            }
+        }
+    }
+
+    public class BPerson : IPerson, INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+                }
+            }
+        }
+    }
+
+    public class PersonDataTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate APersonTemplate { get; set; }
+        public DataTemplate BPersonTemplate { get; set; }
+
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+        {
+            if (item.GetType() == typeof(APerson))
+            {
+                return APersonTemplate;
+            }
+            else
+            {
+                return BPersonTemplate;
+            }
         }
     }
 }
