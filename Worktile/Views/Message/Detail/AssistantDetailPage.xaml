@@ -43,12 +43,7 @@
                     <FontIcon Glyph="&#xE183;"/>
                 </StackPanel>-->
                 <CommandBar DefaultLabelPosition="Collapsed" Background="Transparent">
-                    <AppBarButton Icon="ContactInfo"/>
-                    <AppBarButton>
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE183;"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                    <AppBarButton Icon="Setting"/>
                 </CommandBar>
             </NavigationView.PaneFooter>
 

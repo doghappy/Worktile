@@ -77,11 +77,6 @@
                     <ListView.Resources>
                         <MenuFlyout x:Name="ListViewItemMenuFlyout">
                             <MenuFlyout.Items>
-                                <MenuFlyoutItem Text="成员资料">
-                                    <MenuFlyoutItem.Icon>
-                                        <FontIcon Glyph="&#xE136;"/>
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
                                 <MenuFlyoutItem Text="置顶"
                                                 Visibility="{x:Bind ViewModel.StarVisibility, Mode=OneWay}"
                                                 Click="StarButton_Click">

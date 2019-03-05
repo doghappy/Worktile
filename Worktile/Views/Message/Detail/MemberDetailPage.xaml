@@ -43,17 +43,8 @@
             </NavigationView.PaneHeader>
 
             <NavigationView.PaneFooter>
-                <!--<StackPanel Orientation="Horizontal">
-                    <SymbolIcon Symbol="ContactInfo"/>
-                    <FontIcon Glyph="&#xE183;"/>
-                </StackPanel>-->
                 <CommandBar DefaultLabelPosition="Collapsed" Background="Transparent">
                     <AppBarButton Icon="ContactInfo" Click="ContactInfo_Click"/>
-                    <AppBarButton>
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE183;"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
                 </CommandBar>
             </NavigationView.PaneFooter>
 
@@ -108,9 +99,12 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Text="{x:Bind ViewModel.Member.DisplayName, Mode=OneWay}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{x:Bind ViewModel.Member.DisplayName, Mode=OneWay}"
+                                               IsTextSelectionEnabled="True"
+                                               FontWeight="SemiBold"/>
                                     <TextBlock Grid.Row="1"
                                                FontSize="12"
+                                               IsTextSelectionEnabled="True"
                                                Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
                                                Text="{x:Bind ViewModel.Member.Name, Mode=OneWay, Converter={StaticResource AtNameConverter}}" />
                                 </Grid>
@@ -123,7 +117,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="手机" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Member.Mobile, Mode=OneWay}"/>
+                                <TextBlock Grid.Column="1"
+                                           IsTextSelectionEnabled="True"
+                                           Text="{x:Bind ViewModel.Member.Mobile, Mode=OneWay}"/>
                             </Grid>
 
                             <Grid Grid.Row="2" Margin="0 16 0 0">
@@ -133,7 +129,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="邮箱" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Member.Email, Mode=OneWay}"/>
+                                <TextBlock Grid.Column="1"
+                                           IsTextSelectionEnabled="True"
+                                           Text="{x:Bind ViewModel.Member.Email, Mode=OneWay}"/>
                             </Grid>
 
                             <Grid Grid.Row="3" Margin="0 16 0 0">
@@ -143,7 +141,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="职位" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Member.Title, Mode=OneWay}"/>
+                                <TextBlock Grid.Column="1"
+                                           IsTextSelectionEnabled="True"
+                                           Text="{x:Bind ViewModel.Member.Title, Mode=OneWay}"/>
                             </Grid>
 
                             <Grid Grid.Row="4" Margin="0 16 0 0">
@@ -153,7 +153,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="部门" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Member.DepartmentName, Mode=OneWay}"/>
+                                <TextBlock Grid.Column="1"
+                                           IsTextSelectionEnabled="True"
+                                           Text="{x:Bind ViewModel.Member.DepartmentName, Mode=OneWay}"/>
                             </Grid>
                         </Grid>
                     </Grid>

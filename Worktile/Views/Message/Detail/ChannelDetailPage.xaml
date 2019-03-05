@@ -40,23 +40,13 @@
             </NavigationView.PaneHeader>
 
             <NavigationView.PaneFooter>
-                <!--<StackPanel Orientation="Horizontal">
-                    <SymbolIcon Symbol="ContactInfo"/>
-                    <FontIcon Glyph="&#xE183;"/>
-                </StackPanel>-->
                 <CommandBar DefaultLabelPosition="Collapsed" Background="Transparent">
                     <AppBarButton Icon="ContactInfo" Click="ContactInfo_Click"/>
-                    <AppBarButton>
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE183;"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
                 </CommandBar>
             </NavigationView.PaneFooter>
 
             <SplitView DisplayMode="Overlay"
                        PanePlacement="Right"
-                       PaneBackground="{ThemeResource CustomAcrylicBrush}"
                        IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
                     <Grid>
