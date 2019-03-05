@@ -12,7 +12,7 @@ using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    abstract class MessageViewModel<S> : MessageBaseViewModel<S> where S : ISession
+    abstract class MessageViewModel<S> : BaseFileViewModel<S> where S : ISession
     {
         public MessageViewModel(S session, MainViewModel mainViewModel):base(session)
         {

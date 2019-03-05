@@ -319,6 +319,7 @@
     <Compile Include="Models\Message\MessageContent.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\BaseFileViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\MessageBaseViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\MemberPinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs" />

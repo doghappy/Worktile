@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Worktile.ApiModels.Message.ApiMessages;
 using Worktile.Common;
-using Windows.Storage;
-using System.Collections.Generic;
 using Worktile.Common.WtRequestClient;
 using Worktile.ApiModels;
 using Worktile.Domain.SocketMessageConverter;
@@ -90,12 +88,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
                 content = msg
             };
             return await MainViewModel.SendMessageAsync(SocketMessageType.Message, data);
-        }
-
-        public async Task UploadFileAsync(IReadOnlyList<StorageFile> files)
-        {
-            var fileViewModel = new FileViewModel(Session);
-            await fileViewModel.UploadFileAsync(files);
         }
     }
 }

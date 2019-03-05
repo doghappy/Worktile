@@ -21,7 +21,7 @@ using Worktile.ApiModels;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    class FileViewModel : MessageBaseViewModel<ISession>
+    class FileViewModel : BaseFileViewModel<ISession>
     {
         public FileViewModel(ISession session) : base(session)
         {
@@ -91,37 +91,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
                 }
                 return cursor.ToString("0.00").Replace(".00", string.Empty) + " " + units[index];
             }
-        }
-
-        public async Task UploadFileAsync(IReadOnlyList<StorageFile> files)
-        {
-            if (files.Any())
-            {
-                var client = new WtHttpClient();
-                string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={Session.Id}&ref_type={RefType}";
-                foreach (var file in files)
-                {
-                    StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);
-                    using (var stream = await file.OpenStreamForReadAsync())
-                    {
-                        string fileName = file.DisplayName + file.FileType;
-                        var content = new MultipartFormDataContent
-                        {
-                            { new StringContent(fileName), "name" },
-                            { new StreamContent(stream), "file", fileName }
-                        };
-                        await client.PostAsync<ApiEntitiesUpload>(url, content);
-                    }
-                }
-            }
-        }
-
-        public async Task DownloadFileAsync(StorageFile storageFile, string fileId)
-        {
-            string url = WtFileHelper.GetS3FileUrl(fileId);
-            var client = new WtHttpClient();
-            var buffer = await client.GetByteArrayAsync(url);
-            await FileIO.WriteBytesAsync(storageFile, buffer);
         }
 
         public async Task<bool> DeleteFileAsync(string fileId)
