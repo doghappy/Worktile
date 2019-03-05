@@ -10,9 +10,9 @@ using Worktile.Views.Message.Detail.Content.Pin;
 
 namespace Worktile.ViewModels.Message
 {
-    class ChannelDetailViewModel : SessionDetailViewModel, INotifyPropertyChanged
+    class ChannelDetailViewModel : SessionDetailViewModel<ChannelSession>, INotifyPropertyChanged
     {
-        public ChannelDetailViewModel(ISession session, Frame contentFrame, MainViewModel mainViewModel)
+        public ChannelDetailViewModel(ChannelSession session, Frame contentFrame, MainViewModel mainViewModel)
             : base(session, contentFrame, mainViewModel) { }
 
         public event PropertyChangedEventHandler PropertyChanged;

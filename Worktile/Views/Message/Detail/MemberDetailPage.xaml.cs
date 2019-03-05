@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Models.Message.NavigationParam;
+using Worktile.Models.Message.Session;
 using Worktile.ViewModels.Message;
 
 namespace Worktile.Views.Message.Detail
@@ -34,13 +35,14 @@ namespace Worktile.Views.Message.Detail
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _navParam = e.Parameter as ToMessageDetailPageParam;
-            ViewModel = new MemberDetailViewModel(_navParam.Session, ContentFrame, _navParam.MainViewModel);
+            var session = _navParam.Session as MemberSession;
+            ViewModel = new MemberDetailViewModel(session, ContentFrame, _navParam.MainViewModel);
         }
 
         private async void ContactInfo_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ViewModel.IsPaneOpen = true;
-            //await ViewModel.LoadMemberInfoAsync();
+            await ViewModel.LoadMemberInfoAsync();
         }
     }
 }

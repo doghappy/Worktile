@@ -6,7 +6,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:message="using:Worktile.Models.Message"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <cvt:AtNameConverter x:Key="AtNameConverter"/>
+    </Page.Resources>
 
     <Grid>
         <NavigationView PaneDisplayMode="Top"
@@ -52,44 +57,109 @@
                 </CommandBar>
             </NavigationView.PaneFooter>
 
-            <!--<Frame x:Name="ContentFrame">
-                <Frame.ContentTransitions>
-                    <TransitionCollection>
-                        <NavigationThemeTransition/>
-                    </TransitionCollection>
-                </Frame.ContentTransitions>
-            </Frame>-->
             <SplitView DisplayMode="Overlay"
                        PanePlacement="Right"
-                       PaneBackground="{ThemeResource CustomAcrylicBrush}"
                        IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
                     <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Grid BorderBrush="{ThemeResource AppBarSeparatorForegroundThemeBrush}"
+                        <Grid BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+                              Padding="20 12"
                               BorderThickness="0 0 0 1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="{x:Bind ViewModel.PaneTitle, Mode=OneWay}"
-                                       Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                            <TextBlock Text="{x:Bind ViewModel.PaneTitle, Mode=OneWay}"/>
+                        </Grid>
 
-                            <Button Grid.Column="2"
-                                    Style="{ThemeResource TextBlockButtonStyle}">
-                                <SymbolIcon Symbol="Cancel"/>
-                            </Button>
+                        <Grid Grid.Row="1" Padding="30 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Padding="0 24">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <tethys:Avatar Size="68"
+                                               Foreground="White"
+                                               Source="{x:Bind ViewModel.Session.TethysAvatar.Source, Mode=OneWay}"
+                                               DisplayName="{x:Bind ViewModel.Session.TethysAvatar.DisplayName, Mode=OneWay}"
+                                               BadgeIcon="{x:Bind ViewModel.Session.TethysAvatar.Icon, Mode=OneWay}"
+                                               Background="{x:Bind ViewModel.Session.TethysAvatar.Background, Mode=OneWay}"
+                                               BadgeIconFontFamily="{x:Bind ViewModel.Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
+
+                                <Grid Grid.Column="1" Margin="16 0 0 0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="{x:Bind ViewModel.Member.DisplayName, Mode=OneWay}" FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Row="1"
+                                               FontSize="12"
+                                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                               Text="{x:Bind ViewModel.Member.Name, Mode=OneWay, Converter={StaticResource AtNameConverter}}" />
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="手机" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Member.Mobile, Mode=OneWay}"/>
+                            </Grid>
+
+                            <Grid Grid.Row="2" Margin="0 16 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="邮箱" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Member.Email, Mode=OneWay}"/>
+                            </Grid>
+
+                            <Grid Grid.Row="3" Margin="0 16 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="职位" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Member.Title, Mode=OneWay}"/>
+                            </Grid>
+
+                            <Grid Grid.Row="4" Margin="0 16 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="部门" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <TextBlock Grid.Column="1" Text="{x:Bind ViewModel.Member.DepartmentName, Mode=OneWay}"/>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </SplitView.Pane>

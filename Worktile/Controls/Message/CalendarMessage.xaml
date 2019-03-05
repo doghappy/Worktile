@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    xmlns:msg="using:Worktile.Models.IM.Message"
     xmlns:cvt="using:Worktile.Converters"
     xmlns:fa="using:FontAwesome.UWP"
     xmlns:message="using:Worktile.Models.Message"

@@ -6,9 +6,9 @@ using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message
 {
-    abstract class SessionDetailViewModel : DetailViewModel
+    abstract class SessionDetailViewModel<S> : DetailViewModel<S> where S : ISession
     {
-        public SessionDetailViewModel(ISession session, Frame contentFrame, MainViewModel mainViewModel)
+        public SessionDetailViewModel(S session, Frame contentFrame, MainViewModel mainViewModel)
             : base(session, contentFrame, mainViewModel)
         {
             Navs = new ObservableCollection<TopNav>
@@ -24,97 +24,6 @@ namespace Worktile.ViewModels.Message
 
         public override ObservableCollection<TopNav> Navs { get; protected set; }
 
-        //private void ContentFrameNavigate(TopNav nav)
-        //{
-        //    int index = Navs.IndexOf(nav);
-        //    if (index == 0)
-        //    {
-        //        ContentFrame.Navigate(typeof(SessionMessagePage), new ToUnReadMsgPageParam
-        //        {
-        //            Session = Session,
-        //            Nav = value,
-        //            MainViewModel = _mainViewModel
-        //        });
-        //    }
-        //    else if (value.Name == "文件")
-        //    {
-        //        _contentFrame.Navigate(typeof(FilePage), Session);
-        //    }
-        //    else if (value.Name == "固定消息")
-        //    {
-        //        _contentFrame.Navigate(typeof(PinnedPage), Session);
-        //    }
-        //    else if (value.Name == "已读")
-        //    {
-
-        //    }
-        //}
-
-        //private readonly Frame _contentFrame;
-        //private readonly MainViewModel _mainViewModel;
-
-        //private ISession _session;
-        //public ISession Session
-        //{
-        //    get => _session;
-        //    set
-        //    {
-        //        if (_session != value)
-        //        {
-        //            _session = value;
-        //            LoadTopNavs(value);
-        //            SelectedNav = Navs.First();
-        //            SetPaneTitle(value);
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Session)));
-        //        }
-        //    }
-        //}
-
-        //private TopNav _selectedNav;
-        //public TopNav SelectedNav
-        //{
-        //    get => _selectedNav;
-        //    set
-        //    {
-        //        if (_selectedNav != value)
-        //        {
-        //            _selectedNav = value;
-        //            int index = Navs.IndexOf(value);
-        //            if (value.Name == "未读" || value.Name == "已读" || value.Name == "待处理")
-        //            {
-        //                _contentFrame.Navigate(typeof(AssistantMessagePage), new ToUnReadMsgPageParam
-        //                {
-        //                    Session = Session,
-        //                    Nav = value,
-        //                    MainViewModel = _mainViewModel
-        //                });
-        //            }
-        //            else if (value.Name == "消息")
-        //            {
-        //                _contentFrame.Navigate(typeof(SessionMessagePage), new ToUnReadMsgPageParam
-        //                {
-        //                    Session = Session,
-        //                    Nav = value,
-        //                    MainViewModel = _mainViewModel
-        //                });
-        //            }
-        //            else if (value.Name == "文件")
-        //            {
-        //                _contentFrame.Navigate(typeof(FilePage), Session);
-        //            }
-        //            else if (value.Name == "固定消息")
-        //            {
-        //                _contentFrame.Navigate(typeof(PinnedPage), Session);
-        //            }
-        //            else if (value.Name == "已读")
-        //            {
-
-        //            }
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
-        //        }
-        //    }
-        //}
-
         private bool _isPaneOpen;
         public bool IsPaneOpen
         {
@@ -128,67 +37,5 @@ namespace Worktile.ViewModels.Message
                 }
             }
         }
-
-
-        //public ObservableCollection<TopNav> Navs { get; }
-
-        //private Member _member;
-        //public Member Member
-        //{
-        //    get => _member;
-        //    set
-        //    {
-        //        if (_member != value)
-        //        {
-        //            _member = value;
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Member)));
-        //        }
-        //    }
-        //}
-
-        //public override ObservableCollection<TopNav> Navs => throw new System.NotImplementedException();
-
-
-
-        //private void SetPaneTitle(ISession session)
-        //{
-        //    if (session.GetType() == typeof(MemberSession))
-        //    {
-        //        PaneTitle = "成员";
-        //    }
-        //    else
-        //    {
-        //        PaneTitle = "群组成员";
-        //    }
-        //}
-
-        //private void LoadTopNavs(ISession session)
-        //{
-        //    if (session.GetType() == typeof(MemberSession))
-        //    {
-        //        Navs.Add(new TopNav { Name = "消息" });
-        //        Navs.Add(new TopNav { Name = "文件" });
-        //        Navs.Add(new TopNav { Name = "固定消息", IsPin = true });
-        //    }
-        //    else
-        //    {
-        //        Navs.Add(new TopNav { Name = "未读", FilterType = 2 });
-        //        Navs.Add(new TopNav { Name = "已读", FilterType = 4 });
-        //        Navs.Add(new TopNav { Name = "待处理", FilterType = 3 });
-        //    }
-        //}
-
-        //public async Task LoadMemberInfoAsync()
-        //{
-        //    if (Member == null)
-        //    {
-        //        IsActive = true;
-        //        string url = $"/api/users/{Session}/basic";
-        //        var client = new WtHttpClient();
-        //        var data = await client.GetAsync<ApiDataResponse<Member>>(url);
-        //        Member = data.Data;
-        //        IsActive = false;
-        //    }
-        //}
     }
 }

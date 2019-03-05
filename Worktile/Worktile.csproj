@@ -256,6 +256,7 @@
       <DependentUpon>WtColorPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanReserveConverter.cs" />
+    <Compile Include="Converters\AtNameConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
     <Compile Include="Converters\CountVisibilityConverter.cs" />

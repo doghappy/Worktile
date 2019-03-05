@@ -10,9 +10,9 @@ using Worktile.Views.Message.Detail.Content;
 
 namespace Worktile.ViewModels.Message
 {
-    class AssistantDetailViewModel : DetailViewModel, INotifyPropertyChanged
+    class AssistantDetailViewModel : DetailViewModel<MemberSession>, INotifyPropertyChanged
     {
-        public AssistantDetailViewModel(ISession session, Frame contentFrame, MainViewModel mainViewModel)
+        public AssistantDetailViewModel(MemberSession session, Frame contentFrame, MainViewModel mainViewModel)
             : base(session, contentFrame, mainViewModel)
         {
             Navs = new ObservableCollection<TopNav>
