@@ -14,7 +14,6 @@
 
     <Page.Resources>
         <converters:EnumVisibilityConverter x:Key="EnumVisibilityConverter"/>
-        <converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
         <converters:BooleanReserveConverter x:Key="BooleanReserveConverter"/>
     </Page.Resources>
 
@@ -64,7 +63,7 @@
                              Margin="0 0 0 16"/>
                     <TextBlock Text="你输入的企业域名不存在。"
                                Foreground="{StaticResource DangerBrush}"
-                               Visibility="{x:Bind DomainDisable, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"
+                               Visibility="{x:Bind DomainDisable, Mode=OneWay}"
                                Margin="0 0 0 16"/>
                     <Button x:Name="NextStep"
                             Click="NextStep_Click"
@@ -103,7 +102,7 @@
                                  Margin="0 0 0 16"/>
                     <TextBlock Text="用户名或密码错误。"
                                Foreground="{StaticResource DangerBrush}"
-                               Visibility="{x:Bind PasswordIsError, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"
+                               Visibility="{x:Bind PasswordIsError, Mode=OneWay}"
                                Margin="0 0 0 16"/>
                     <Button x:Name="SignIn"
                             Click="SignIn_Click"

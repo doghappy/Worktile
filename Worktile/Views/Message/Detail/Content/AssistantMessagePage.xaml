@@ -10,10 +10,6 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
-    <Page.Resources>
-        <cvt:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
-    </Page.Resources>
-
     <Grid>
         <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
             <ItemsControl ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
@@ -26,8 +22,7 @@
                     <DataTemplate x:DataType="message:Message">
                         <controls:MessageControl Message="{x:Bind}">
                             <controls:MessageControl.RightContent>
-                                <Button Visibility="{x:Bind IsShowPin, Converter={StaticResource BooleanVisibilityConverter}}"
-                                                Style="{ThemeResource TextBlockButtonStyle}">
+                                <Button Visibility="{x:Bind IsShowPin}" Style="{ThemeResource TextBlockButtonStyle}">
                                     <Button.Flyout>
                                         <MenuFlyout>
                                             <MenuFlyoutItem Text="固定"

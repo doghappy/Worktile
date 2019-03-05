@@ -117,13 +117,14 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <tethys:Avatar Size="30"
+                                    <!--<tethys:Avatar Size="30"
                                                    Foreground="White"
                                                    Source="{x:Bind TethysAvatar.Source}"
                                                    DisplayName="{x:Bind TethysAvatar.DisplayName}"
                                                    BadgeIcon="{x:Bind TethysAvatar.Icon}"
                                                    Background="{x:Bind TethysAvatar.Background}"
-                                                   BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
+                                                   BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>-->
+                                    <TextBlock Text="{x:Bind Starred, Mode=OneWay}"/>
 
                                     <TextBlock Grid.Column="1"
                                                HorizontalAlignment="Left"

@@ -269,7 +269,6 @@
     <Compile Include="Converters\IsNullOrEmptyConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
-    <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\EnumVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />

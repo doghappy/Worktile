@@ -11,13 +11,6 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
     <Grid>
         <Button Background="{x:Bind State.Background, Mode=OneWay}"
                 CornerRadius="4"

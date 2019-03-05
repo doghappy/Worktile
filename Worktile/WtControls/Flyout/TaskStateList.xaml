@@ -11,12 +11,6 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
     <Grid>
         <ListView ItemsSource="{x:Bind AllStates, Mode=OneWay}" SelectedItem="{x:Bind State, Mode=TwoWay}">
             <ListView.ItemTemplate>
@@ -31,7 +25,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ProgressBar IsIndeterminate="{x:Bind IsActive, Mode=OneWay}"
-                     Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"/>
+        <ProgressBar IsIndeterminate="{x:Bind IsActive, Mode=OneWay}" Visibility="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </UserControl>

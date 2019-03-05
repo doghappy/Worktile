@@ -18,6 +18,7 @@ using Worktile.Enums.Message;
 using Worktile.Models.Message.Session;
 using Worktile.Common.Extensions;
 using Worktile.Views.Message.Detail;
+using Windows.UI.Xaml;
 
 namespace Worktile.ViewModels.Message
 {
@@ -51,8 +52,8 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        private Windows.UI.Xaml.Visibility _starVisibility;
-        public Windows.UI.Xaml.Visibility StarVisibility
+        private Visibility _starVisibility;
+        public Visibility StarVisibility
         {
             get => _starVisibility;
             set
@@ -65,8 +66,8 @@ namespace Worktile.ViewModels.Message
             }
         }
 
-        private Windows.UI.Xaml.Visibility _unStarVisibility;
-        public Windows.UI.Xaml.Visibility UnStarVisibility
+        private Visibility _unStarVisibility;
+        public Visibility UnStarVisibility
         {
             get => _unStarVisibility;
             set
