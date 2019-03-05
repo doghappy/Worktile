@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
+using Worktile.Models.Member;
 using Worktile.Models.Message.Session;
 
 namespace Worktile.Common
@@ -113,7 +114,7 @@ namespace Worktile.Common
             };
         }
 
-        public static TethysAvatar GetAvatar(ApiModels.ApiTeam.Member member, AvatarSize size)
+        public static TethysAvatar GetAvatar(Member member, AvatarSize size)
         {
             return new TethysAvatar
             {

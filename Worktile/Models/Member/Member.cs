@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace Worktile.Models.Member
 {
-    public class Member
+    public class Member : IMemberBase,INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         [JsonProperty("team")]
         public string Team { get; set; }
 
@@ -48,5 +51,19 @@ namespace Worktile.Models.Member
 
         [JsonProperty("department_name")]
         public string DepartmentName { get; set; }
+
+        private TethysAvatar _tethysAvatar;
+        public TethysAvatar TethysAvatar
+        {
+            get => _tethysAvatar;
+            set
+            {
+                if (_tethysAvatar!=value)
+                {
+                    _tethysAvatar = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TethysAvatar)));
+                }
+            }
+        }
     }
 }

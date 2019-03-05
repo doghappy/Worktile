@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Worktile.Models;
+using Worktile.Models.Member;
 
 namespace Worktile.ApiModels.ApiTeam
 {
@@ -173,55 +174,6 @@ namespace Worktile.ApiModels.ApiTeam
 
         [JsonProperty("country")]
         public string Country { get; set; }
-    }
-
-    public class Member : IMemberBase
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("email")]
-        public string Email { get; set; }
-
-        public string Team { get; set; }
-
-        [JsonProperty("uid")]
-        public string Uid { get; set; }
-
-        [JsonProperty("preferences")]
-        public MemberPreferences Preferences { get; set; }
-
-        [JsonProperty("status")]
-        public long Status { get; set; }
-
-        [JsonProperty("role")]
-        public int Role { get; set; }
-
-        [JsonProperty("mobile")]
-        public string Mobile { get; set; }
-
-        [JsonProperty("mobile_area")]
-        public string MobileArea { get; set; }
-
-        [JsonProperty("desc")]
-        public string Desc { get; set; }
-
-        [JsonProperty("short_code")]
-        public string ShortCode { get; set; }
-
-        [JsonProperty("display_name")]
-        public string DisplayName { get; set; }
-
-        [JsonProperty("avatar")]
-        public string Avatar { get; set; }
-
-        [JsonProperty("display_name_pinyin")]
-        public string DisplayNamePinyin { get; set; }
-    }
-
-    public class MemberPreferences
-    {
-        public string Locale { get; set; }
     }
 
     public class Modules

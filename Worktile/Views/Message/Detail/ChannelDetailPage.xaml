@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:message="using:Worktile.Models.Message"
+    xmlns:member="using:Worktile.Models.Member"
     mc:Ignorable="d">
 
     <Grid>
@@ -52,13 +53,6 @@
                 </CommandBar>
             </NavigationView.PaneFooter>
 
-            <!--<Frame x:Name="ContentFrame">
-                <Frame.ContentTransitions>
-                    <TransitionCollection>
-                        <NavigationThemeTransition/>
-                    </TransitionCollection>
-                </Frame.ContentTransitions>
-            </Frame>-->
             <SplitView DisplayMode="Overlay"
                        PanePlacement="Right"
                        PaneBackground="{ThemeResource CustomAcrylicBrush}"
@@ -67,30 +61,43 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Grid BorderBrush="{ThemeResource AppBarSeparatorForegroundThemeBrush}"
+                        <Grid BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+                              Padding="20 12"
                               BorderThickness="0 0 0 1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="{x:Bind ViewModel.PaneTitle, Mode=OneWay}"
-                                       Style="{ThemeResource SubtitleTextBlockStyle}"/>
-
-                            <Button Grid.Column="2"
-                                    Style="{ThemeResource TextBlockButtonStyle}">
-                                <SymbolIcon Symbol="Cancel"/>
-                            </Button>
+                            <TextBlock Text="{x:Bind ViewModel.PaneTitle}"/>
+                            <TextBlock Grid.Column="1"
+                                       Margin="8 0 0 0"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+                                <Run Text="("/>
+                                <Run Text="{x:Bind ViewModel.Session.Members.Count}"/>
+                                <Run Text=")"/>
+                            </TextBlock>
                         </Grid>
+
+                        <ListView Grid.Row="1"
+                                  SelectionMode="None"
+                                  IsItemClickEnabled="True"
+                                  ItemsSource="{x:Bind ViewModel.Session.Members}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="member:Member">
+                                    <StackPanel Orientation="Horizontal">
+                                        <tethys:Avatar Size="30"
+                                                       DisplayName="{x:Bind TethysAvatar.DisplayName, Mode=OneWay}"
+                                                       Source="{x:Bind TethysAvatar.Source, Mode=OneWay}"
+                                                       Background="{x:Bind TethysAvatar.Background, Mode=OneWay}"/>
+                                        <TextBlock Text="{x:Bind DisplayName}" VerticalAlignment="Center" Margin="4 0 0 0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </SplitView.Pane>
                 <Frame x:Name="ContentFrame">

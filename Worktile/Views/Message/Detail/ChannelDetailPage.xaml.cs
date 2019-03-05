@@ -39,10 +39,10 @@ namespace Worktile.Views.Message.Detail
             ViewModel = new ChannelDetailViewModel(session, ContentFrame, _navParam.MainViewModel);
         }
 
-        private async void ContactInfo_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void ContactInfo_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ViewModel.IsPaneOpen = true;
-            //await ViewModel.LoadMemberInfoAsync();
+            ViewModel.LoadMembersAvatar();
         }
     }
 }
