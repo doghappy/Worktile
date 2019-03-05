@@ -38,10 +38,6 @@
             </NavigationView.PaneHeader>
 
             <NavigationView.PaneFooter>
-                <!--<StackPanel Orientation="Horizontal">
-                    <SymbolIcon Symbol="ContactInfo"/>
-                    <FontIcon Glyph="&#xE183;"/>
-                </StackPanel>-->
                 <CommandBar DefaultLabelPosition="Collapsed" Background="Transparent">
                     <AppBarButton Icon="Setting"/>
                 </CommandBar>
