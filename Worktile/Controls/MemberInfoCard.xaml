@@ -1,0 +1,88 @@
+﻿<UserControl
+    x:Class="Worktile.Controls.MemberInfoCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    
+    d:DesignWidth="400">
+
+    <Grid Width="400" VerticalAlignment="Top" Padding="0 30" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid BorderThickness="0 0 1 0" BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Ellipse Width="68" Height="68" Fill="Red"/>
+
+            <TextBlock Grid.Row="1"
+                       Text="会军"
+                       HorizontalAlignment="Center"
+                       Margin="0 16 0 0"
+                       Style="{ThemeResource SubtitleTextBlockStyle}"/>
+            <TextBlock Grid.Row="2"
+                       Text="@terry"
+                       FontSize="12"
+                       HorizontalAlignment="Center"
+                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Padding="20 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="部门" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <TextBlock Grid.Column="1" Text="客户研发部"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="0 16 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="职位" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <TextBlock Grid.Column="1" Text=".Net开发工程师"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="0 16 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="手机" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <TextBlock Grid.Column="1" Text="11111111111111111"/>
+            </Grid>
+
+            <Grid Grid.Row="3" Margin="0 16 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="邮箱" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                <TextBlock Grid.Column="1" Text="@123ssss.xcsdf"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
