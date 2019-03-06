@@ -312,6 +312,7 @@
     <Compile Include="Enums\Message\SessionType.cs" />
     <Compile Include="Enums\Message\MessageAction.cs" />
     <Compile Include="Enums\NotificationLevel.cs" />
+    <Compile Include="Enums\Privileges\AdminPrivilege.cs" />
     <Compile Include="Models\Department\DepartmentNode.cs" />
     <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
     <Compile Include="Models\Department\DepartmentNodeType.cs" />

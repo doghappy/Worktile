@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Models.Message.NavigationParam;
@@ -39,10 +40,20 @@ namespace Worktile.Views.Message.Detail
             ViewModel = new MemberDetailViewModel(session, ContentFrame, _navParam.MainViewModel);
         }
 
-        private async void ContactInfo_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void ContactInfo_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.IsPaneOpen = true;
             await ViewModel.LoadMemberInfoAsync();
+        }
+
+        private async void StarButton_Click(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.StarSessionAsync(ViewModel.Session);
+        }
+
+        private async void UnStarButton_Click(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.UnStarSessionAsync(ViewModel.Session);
         }
     }
 }

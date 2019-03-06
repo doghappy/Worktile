@@ -11,6 +11,7 @@
 
     <Page.Resources>
         <cvt:AtNameConverter x:Key="AtNameConverter"/>
+        <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -44,7 +45,23 @@
 
             <NavigationView.PaneFooter>
                 <CommandBar DefaultLabelPosition="Collapsed" Background="Transparent">
-                    <AppBarButton Icon="ContactInfo" Click="ContactInfo_Click"/>
+                    <AppBarButton Icon="ContactInfo" Click="ContactInfo_Click" ToolTipService.ToolTip="成员信息"/>
+                    <AppBarButton ToolTipService.ToolTip="置顶"
+                                  x:Name="StarButton"
+                                  Click="StarButton_Click"
+                                  x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE183;"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton ToolTipService.ToolTip="取消置顶"
+                                  x:Name="UnStarButton"
+                                  Click="UnStarButton_Click"
+                                  x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE845;"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                 </CommandBar>
             </NavigationView.PaneFooter>
 
@@ -58,7 +75,7 @@
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                             </Style>
                         </Grid.Resources>
-                        
+
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition />

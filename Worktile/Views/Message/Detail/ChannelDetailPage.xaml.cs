@@ -61,5 +61,15 @@ namespace Worktile.Views.Message.Detail
                 Placement = FlyoutPlacementMode.Left
             });
         }
+
+        private async void StarButton_Click(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.StarSessionAsync(ViewModel.Session);
+        }
+
+        private async void UnStarButton_Click(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.UnStarSessionAsync(ViewModel.Session);
+        }
     }
 }

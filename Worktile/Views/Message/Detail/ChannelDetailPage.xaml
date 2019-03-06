@@ -8,7 +8,12 @@
     xmlns:message="using:Worktile.Models.Message"
     xmlns:member="using:Worktile.Models.Member"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
+    </Page.Resources>
 
     <Grid>
         <NavigationView PaneDisplayMode="Top"
@@ -42,6 +47,41 @@
             <NavigationView.PaneFooter>
                 <CommandBar DefaultLabelPosition="Collapsed" Background="Transparent">
                     <AppBarButton Icon="ContactInfo" Click="ContactInfo_Click"/>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton Label="置顶"
+                                      x:Name="StarButton"
+                                      Click="StarButton_Click"
+                                      x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE183;"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton Label="取消置顶"
+                                      x:Name="UnStarButton"
+                                      Click="UnStarButton_Click"
+                                      x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE845;"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton Label="添加服务集成">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE61C;" Style="{StaticResource LcIcon}"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton Icon="AddFriend" Label="添加群组成员"/>
+                        <AppBarButton Icon="Setting" Label="群组设置"/>
+                        <AppBarButton Label="消息通知设置">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xEA8F;"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton Label="退出群组">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE656;" Style="{StaticResource LcIcon}"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>
                 </CommandBar>
             </NavigationView.PaneFooter>
 
@@ -88,7 +128,7 @@
                                     <controls:MemberInfoCard x:Name="MemberCard"/>
                                 </Flyout>
                             </ListView.Resources>
-                            
+
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="member:Member">
                                     <StackPanel Orientation="Horizontal">
