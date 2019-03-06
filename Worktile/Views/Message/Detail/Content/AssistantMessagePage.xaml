@@ -22,30 +22,20 @@
                     <DataTemplate x:DataType="message:Message">
                         <controls:MessageControl Message="{x:Bind}">
                             <controls:MessageControl.RightContent>
-                                <Button Visibility="{x:Bind IsShowPin}" Style="{ThemeResource TextBlockButtonStyle}">
-                                    <Button.Flyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Text="固定"
-                                                                DataContext="{x:Bind}"
-                                                                Click="Pin_Click"
-                                                                Visibility="{x:Bind PinVisibility, Mode=OneWay}">
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE840;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}"
-                                                                Text="取消固定"
-                                                                DataContext="{x:Bind}"
-                                                                Click="UnPin_Click">
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE196;"/>
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </Button.Flyout>
-                                    <FontIcon FontSize="12" Glyph="&#xE10C;"/>
-                                </Button>
+                                <Grid Visibility="{x:Bind IsShowPin}">
+                                    <Button Style="{ThemeResource TextBlockButtonStyle}"
+                                            x:Name="PinButton"
+                                            Click="Pin_Click"
+                                            x:Load="{x:Bind IsPending, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}">
+                                        <FontIcon Glyph="&#xE7C1;" />
+                                    </Button>
+                                    <Button Style="{ThemeResource TextBlockButtonStyle}"
+                                            x:Name="UnPinButton"
+                                            Click="UnPin_Click"
+                                            x:Load="{x:Bind IsPending, Mode=OneWay}">
+                                        <FontIcon Glyph="&#xE77A;" />
+                                    </Button>
+                                </Grid>
                             </controls:MessageControl.RightContent>
                         </controls:MessageControl>
                     </DataTemplate>

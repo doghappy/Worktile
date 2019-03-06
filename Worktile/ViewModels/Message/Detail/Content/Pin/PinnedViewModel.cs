@@ -16,7 +16,7 @@ using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message.Detail.Content.Pin
 {
-    abstract class PinnedViewModel<S> : MessageBaseViewModel<S> where S : ISession
+    abstract class PinnedViewModel<S> : MessageViewModel<S> where S : ISession
     {
         public PinnedViewModel(S session) : base(session)
         {
@@ -26,6 +26,16 @@ namespace Worktile.ViewModels.Message.Detail.Content.Pin
         private string _anchor;
 
         public IncrementalCollection<Models.Message.Message> Messages { get; }
+
+        public override async Task<bool> UnPinAsync(Models.Message.Message msg)
+        {
+            bool result = await base.UnPinAsync(msg);
+            if (result)
+            {
+                Messages.Remove(msg);
+            }
+            return result;
+        }
 
         private async Task<IEnumerable<Models.Message.Message>> LoadMessagesAsync()
         {
@@ -68,17 +78,6 @@ namespace Worktile.ViewModels.Message.Detail.Content.Pin
             }
             IsActive = false;
             return list;
-        }
-
-        public async Task UnPinAsync(Models.Message.Message msg)
-        {
-            string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={Session.Id}";
-            var client = new WtHttpClient();
-            var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
-            if (response.Code == 200 && response.Data)
-            {
-                Messages.Remove(msg);
-            }
         }
     }
 }

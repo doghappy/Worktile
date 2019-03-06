@@ -14,7 +14,7 @@
 
     <Page.Resources>
         <converters:EnumVisibilityConverter x:Key="EnumVisibilityConverter"/>
-        <converters:BooleanReserveConverter x:Key="BooleanReserveConverter"/>
+        <converters:BooleanReverseConverter x:Key="BooleanReserveConverter"/>
     </Page.Resources>
 
     <Grid>

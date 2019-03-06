@@ -258,7 +258,9 @@
     <Compile Include="Controls\WtColorPicker.xaml.cs">
       <DependentUpon>WtColorPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BooleanReserveConverter.cs" />
+    <Compile Include="Converters\BooleanReverseVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanReverseConverter.cs" />
     <Compile Include="Converters\AtNameConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
@@ -323,8 +325,8 @@
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\BaseFileViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\MessageBaseViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\SessionMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\FileMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\MemberPinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\PinnedViewModel.cs" />
@@ -336,9 +338,10 @@
     <Compile Include="ViewModels\Message\Detail\DetailViewModel.cs" />
     <Compile Include="ViewModels\Message\MasterViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\ChannelMessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\SessionMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\Content\BaseSessionMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\MessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\MemberMessageViewModel.cs" />
+    <Compile Include="ViewModels\Message\MessageViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Detail\AssistantDetailPage.xaml.cs">
       <DependentUpon>AssistantDetailPage.xaml</DependentUpon>
@@ -520,6 +523,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Assets\Fonts\lc-iconfont.ttf" />
+    <None Include="ViewModels\ViewModel.cd" />
     <None Include="Worktile_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

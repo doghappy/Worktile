@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Worktile.ViewModels.MainViewModel" Collapsed="true">
+    <Position X="1.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAAEwEAQOgoAUAAJAEBpCQEgBAAggAASAAgQAAEEgg=</HashCode>
+      <FileName>ViewModels\MainViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.ViewModel" Collapsed="true">
+    <Position X="13.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAMIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.AssistantDetailViewModel" Collapsed="true">
+    <Position X="3.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAIAAAAAIQgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\AssistantDetailViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.ChannelDetailViewModel" Collapsed="true">
+    <Position X="6" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAJAAAAAIQgQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\ChannelDetailViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.DetailViewModel&lt;S&gt;" Collapsed="true">
+    <Position X="6" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAEAAAAQAAAAAAACAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\DetailViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.MemberDetailViewModel" Collapsed="true">
+    <Position X="8.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAQAAAAAIAAAAAIQgQAIAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\MemberDetailViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.SessionDetailViewModel&lt;S&gt;" Collapsed="true">
+    <Position X="7.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAQAQAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\SessionDetailViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.MasterViewModel" Collapsed="true">
+    <Position X="10.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAIAACAAQAAAICABAABAgAAACgAEAAQCCAAAAgg=</HashCode>
+      <FileName>ViewModels\Message\MasterViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.MessageViewModel" Collapsed="true">
+    <Position X="7.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\MessageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.AssistantMessageViewModel" Collapsed="true">
+    <Position X="17.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAABAgCAAAAAgCAAAAABAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\AssistantMessageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.BaseSessionMessageViewModel&lt;S&gt;" Collapsed="true">
+    <Position X="19.25" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAgAAAAAAAAAACBAABAAAAAQCAAAAQAAAgA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\BaseSessionMessageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.ChannelMessageViewModel" Collapsed="true">
+    <Position X="19.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAIAAAAAAEgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\ChannelMessageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.FileMessageViewModel&lt;S&gt;" Collapsed="true">
+    <Position X="18.75" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAIAIAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\FileMessageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.FileViewModel" Collapsed="true">
+    <Position X="24" Y="6.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAIAAAAAABgAAAIAAAAAAAAAAAIIA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\FileViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.MemberMessageViewModel" Collapsed="true">
+    <Position X="21.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAIAAAAAAEgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\MemberMessageViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.MessageViewModel&lt;S&gt;" Collapsed="true">
+    <Position X="16.75" Y="6.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\MessageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.SessionMessageViewModel&lt;S&gt;" Collapsed="true">
+    <Position X="20.25" Y="9" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAABEAAAAAAgACAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\SessionMessageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.Pin.ChannelPinnedViewModel" Collapsed="true">
+    <Position X="12.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.Pin.MemberPinnedViewModel" Collapsed="true">
+    <Position X="15" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\Pin\MemberPinnedViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Worktile.ViewModels.Message.Detail.Content.Pin.PinnedViewModel&lt;S&gt;" Collapsed="true">
+    <Position X="14" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAIAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>ViewModels\Message\Detail\Content\Pin\PinnedViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

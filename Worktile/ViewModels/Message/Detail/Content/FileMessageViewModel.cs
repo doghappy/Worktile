@@ -9,13 +9,20 @@ using Windows.Storage.AccessCache;
 using Worktile.ApiModels.Upload;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
+using Worktile.Enums.Message;
 using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    abstract class BaseFileViewModel<S> : MessageBaseViewModel<S> where S : ISession
+    abstract class FileMessageViewModel<S> : ViewModel where S : ISession
     {
-        protected BaseFileViewModel(S session) : base(session) { }
+        protected FileMessageViewModel(S session)
+        {
+            Session = session;
+        }
+
+        protected S Session { get; }
+        protected int RefType => Session.PageType == PageType.Channel ? 1 : 2;
 
         public async Task UploadFileAsync(IReadOnlyList<StorageFile> files)
         {

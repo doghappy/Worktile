@@ -1,72 +1,26 @@
-﻿using Microsoft.Toolkit.Uwp.Helpers;
-using Newtonsoft.Json.Linq;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Worktile.Common;
+﻿using System.Threading.Tasks;
+using Worktile.ApiModels;
 using Worktile.Common.WtRequestClient;
-using Worktile.Enums;
-using Worktile.Enums.Message;
-using Worktile.Models;
 using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    abstract class MessageViewModel<S> : BaseFileViewModel<S> where S : ISession
+    abstract class MessageViewModel<S> : FileMessageViewModel<S> where S : ISession
     {
-        public MessageViewModel(S session, MainViewModel mainViewModel):base(session)
+        public MessageViewModel(S session) : base(session) { }
+
+        protected virtual string IdType { get; }
+
+        public async virtual Task<bool> UnPinAsync(Models.Message.Message msg)
         {
-            MainViewModel = mainViewModel;
-            Messages = new ObservableCollection<Models.Message.Message>();
-        }
-
-        protected abstract string Url { get; }
-        public ObservableCollection<Models.Message.Message> Messages { get; }
-        public bool? HasMore { get; protected set; }
-        protected MainViewModel MainViewModel { get; }
-
-        protected abstract void ReadMessage(JToken jToken);
-        public abstract Task PinMessageAsync(Models.Message.Message msg);
-        public abstract Task UnPinMessageAsync(Models.Message.Message msg);
-
-        public async Task LoadMessagesAsync()
-        {
-            IsActive = true;
+            string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={Session.Id}";
             var client = new WtHttpClient();
-            var data = await client.GetJTokenAsync(Url);
-            ReadMessage(data);
-            IsActive = false;
-        }
-
-        public async Task ClearUnReadAsync()
-        {
-            string url = $"/api/messages/unread/clear?ref_id={Session.Id}";
-            var client = new WtHttpClient();
-            await client.PutAsync<object>(url);
-            MainViewModel.UnreadBadge -= Session.UnRead;
-            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Session.UnRead = 0));
-        }
-
-        public async void OnMessageReceived(Models.Message.Message message)
-        {
-            if (message.To.Id == Session.Id)
+            var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+            if (response.Code == 200 && response.Data)
             {
-                await Task.Run(async () =>
-                {
-                    await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
-                    {
-                        var member = DataSource.Team.Members.Single(m => m.Uid == message.From.Uid);
-                        message.From.TethysAvatar = new TethysAvatar
-                        {
-                            DisplayName = member.DisplayName,
-                            Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
-                            Background = AvatarHelper.GetColorBrush(member.DisplayName)
-                        };
-                        message.IsPinned = false;
-                        Messages.Add(message);
-                    });
-                });
+                return true;
             }
+            return false;
         }
     }
 }

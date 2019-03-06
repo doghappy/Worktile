@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel;
-using Windows.UI.Xaml;
 using Worktile.Common;
 using Worktile.Enums.Message;
-using Worktile.Views.Message;
 
 namespace Worktile.Models.Message
 {
@@ -47,8 +44,21 @@ namespace Worktile.Models.Message
         [JsonProperty("team")]
         public string Team { get; set; }
 
+        private bool _isStar;
         [JsonProperty("is_star")]
-        public bool IsStar { get; set; }
+        public bool IsStar
+        {
+            get => _isStar;
+            set
+            {
+                if (_isStar != value)
+                {
+                    _isStar = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStar)));
+                }
+            }
+        }
+
 
         private bool _isPinned;
         [JsonProperty("is_pinned")]
@@ -57,16 +67,6 @@ namespace Worktile.Models.Message
             get => _isPinned;
             set
             {
-                if (value)
-                {
-                    PinVisibility = Visibility.Collapsed;
-                    UnPinVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    PinVisibility = Visibility.Visible;
-                    UnPinVisibility = Visibility.Collapsed;
-                }
                 if (_isPinned != value)
                 {
                     _isPinned = value;
@@ -75,40 +75,24 @@ namespace Worktile.Models.Message
             }
         }
 
+        private bool _isPending;
         [JsonProperty("is_pending")]
-        public bool IsPending { get; set; }
+        public bool IsPending
+        {
+            get => _isPending;
+            set
+            {
+                if (_isPending != value)
+                {
+                    _isPending = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPending)));
+                }
+            }
+        }
 
         [JsonProperty("is_unread")]
         public bool IsUnread { get; set; }
 
         public bool IsShowPin => Type != MessageType.Activity;
-
-        Visibility _pinVisibility;
-        public Visibility PinVisibility
-        {
-            get => _pinVisibility;
-            set
-            {
-                if (_pinVisibility != value)
-                {
-                    _pinVisibility = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PinVisibility)));
-                }
-            }
-        }
-
-        Visibility _unPinVisibility;
-        public Visibility UnPinVisibility
-        {
-            get => _unPinVisibility;
-            set
-            {
-                if (_unPinVisibility != value)
-                {
-                    _unPinVisibility = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UnPinVisibility)));
-                }
-            }
-        }
     }
 }

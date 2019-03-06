@@ -2,11 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Worktile.ApiModels;
 using Worktile.ApiModels.Message.ApiPigeonMessages;
 using Worktile.Common;
-using Worktile.Common.WtRequestClient;
-using Worktile.Domain.MessageContentReader;
 using Worktile.Enums;
 using Worktile.Models;
 using Worktile.Models.Message;
@@ -14,7 +11,7 @@ using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    class AssistantMessageViewModel : MessageViewModel<MemberSession>, INotifyPropertyChanged
+    class AssistantMessageViewModel : BaseSessionMessageViewModel<MemberSession>, INotifyPropertyChanged
     {
         public AssistantMessageViewModel(MemberSession session, MainViewModel mainViewModel, TopNav nav)
             : base(session, mainViewModel)
@@ -26,8 +23,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
 
         TopNav _nav;
         string _next;
-
-        protected override string IdType { get; }
 
         protected override string Url
         {
@@ -67,26 +62,24 @@ namespace Worktile.ViewModels.Message.Detail.Content
             HasMore = apiData.Data.Next != null;
         }
 
-        public async override Task PinMessageAsync(Models.Message.Message msg)
+        public async override Task<bool> PinAsync(Models.Message.Message msg)
         {
-            string url = $"/api/unreads/{Session.Id}/messages/{msg.Id}/pending";
-            var client = new WtHttpClient();
-            var response = await client.PostAsync<ApiDataResponse<bool>>(url);
-            if (response.Code == 200 && response.Data)
+            bool result = await base.PinAsync(msg);
+            if (result)
             {
-                msg.IsPinned = true;
+                msg.IsPending = true;
             }
+            return result;
         }
 
-        public async override Task UnPinMessageAsync(Models.Message.Message msg)
+        public async override Task<bool> UnPinAsync(Models.Message.Message msg)
         {
-            string url = $"/api/unreads/{Session.Id}/messages/{msg.Id}/pending";
-            var client = new WtHttpClient();
-            var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
-            if (response.Code == 200 && response.Data)
+            bool result = await base.UnPinAsync(msg);
+            if (result)
             {
-                msg.IsPinned = false;
+                msg.IsPending = false;
             }
+            return result;
         }
 
         private string GetComponentByNumber(int c)

@@ -10,6 +10,11 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
+    <Page.Resources>
+        <cvt:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+        <cvt:BooleanReverseVisibilityConverter x:Key="BooleanReverseVisibilityConverter"/>
+    </Page.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -34,16 +39,16 @@
                                                 <MenuFlyoutItem Text="固定"
                                                                 DataContext="{x:Bind}"
                                                                 Click="Pin_Click"
-                                                                Visibility="{x:Bind PinVisibility, Mode=OneWay}">
+                                                                Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanReverseVisibilityConverter}}">
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE840;" />
                                                     </MenuFlyoutItem.Icon>
                                                 </MenuFlyoutItem>
 
-                                                <MenuFlyoutItem Visibility="{x:Bind UnPinVisibility, Mode=OneWay}"
-                                                                Text="取消固定"
+                                                <MenuFlyoutItem Text="取消固定"
                                                                 DataContext="{x:Bind}"
-                                                                Click="UnPin_Click">
+                                                                Click="UnPin_Click"
+                                                                Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}">
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE196;"/>
                                                     </MenuFlyoutItem.Icon>

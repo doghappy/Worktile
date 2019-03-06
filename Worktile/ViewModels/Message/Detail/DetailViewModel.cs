@@ -5,7 +5,7 @@ using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message
 {
-    abstract class DetailViewModel<S> : ViewModel where S : ISession
+    abstract class DetailViewModel<S> : MessageViewModel where S : ISession
     {
         public DetailViewModel(S session, Frame contentFrame, MainViewModel mainViewModel)
         {
@@ -20,19 +20,5 @@ namespace Worktile.ViewModels.Message
 
         public abstract ObservableCollection<TopNav> Navs { get; protected set; }
         public abstract TopNav SelectedNav { get; set; }
-
-        //private S _session;
-        //public S Session
-        //{
-        //    get => _session;
-        //    set
-        //    {
-        //        if (_session != value)
-        //        {
-        //            _session = value;
-        //            OnPropertyChanged();
-        //        }
-        //    }
-        //}
     }
 }

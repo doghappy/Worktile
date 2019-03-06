@@ -1,15 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System;
-using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Windows.Storage;
-using Windows.Storage.AccessCache;
 using Worktile.ApiModels.Message.ApiMessageFiles;
-using Worktile.ApiModels.Upload;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.Enums;
@@ -21,7 +14,7 @@ using Worktile.ApiModels;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    class FileViewModel : BaseFileViewModel<ISession>
+    class FileViewModel : FileMessageViewModel<ISession>
     {
         public FileViewModel(ISession session) : base(session)
         {
@@ -33,8 +26,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
         public event PropertyChangedEventHandler PropertyChanged;
 
         public IncrementalCollection<FileItem> Files { get; }
-
-        protected override string IdType { get; }
 
         protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {

@@ -127,14 +127,14 @@ namespace Worktile.Views.Message.Detail.Content
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Models.Message.Message;
-            await ViewModel.PinMessageAsync(msg);
+            await ViewModel.PinAsync(msg);
         }
 
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Models.Message.Message;
-            await ViewModel.UnPinMessageAsync(msg);
+            await ViewModel.UnPinAsync(msg);
         }
     }
 }
