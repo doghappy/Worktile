@@ -8,6 +8,9 @@ using Worktile.ViewModels.Message;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml;
 using Worktile.Models.Member;
+using Windows.System;
+using System;
+using Worktile.Common;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -70,6 +73,12 @@ namespace Worktile.Views.Message.Detail
         private async void UnStarButton_Click(object sender, RoutedEventArgs e)
         {
             await ViewModel.UnStarSessionAsync(ViewModel.Session);
+        }
+
+        private async void AddServiceButton_Click(object sender, RoutedEventArgs e)
+        {
+            Uri uri = new Uri(DataSource.SubDomain + "/console/services");
+            await Launcher.LaunchUriAsync(uri);
         }
     }
 }

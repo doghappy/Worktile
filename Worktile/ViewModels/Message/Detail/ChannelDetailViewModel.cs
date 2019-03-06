@@ -11,19 +11,26 @@ using Worktile.Views.Message.Detail.Content;
 using Worktile.Views.Message.Detail.Content.Pin;
 using Worktile.Common.Extensions;
 using Worktile.Enums;
+using Worktile.Common;
+using System;
 
 namespace Worktile.ViewModels.Message
 {
     class ChannelDetailViewModel : SessionDetailViewModel<ChannelSession>, INotifyPropertyChanged
     {
         public ChannelDetailViewModel(ChannelSession session, Frame contentFrame, MainViewModel mainViewModel)
-            : base(session, contentFrame, mainViewModel) { }
+            : base(session, contentFrame, mainViewModel)
+        {
+            Privilege = Convert.ToInt32(DataSource.Team.Privileges.Admin.Value, 2);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public override ObservableCollection<TopNav> Navs { get; protected set; }
 
         public override string PaneTitle => "群组成员";
+
+        public int Privilege { get; }
 
         private TopNav _selectedNav;
         public override TopNav SelectedNav

@@ -5,56 +5,56 @@
         /// <summary>
         /// admin_members
         /// </summary>
-        Member,
+        Member = 1,
 
         /// <summary>
         /// admin_role
         /// </summary>
-        Role = 2 ^ 1,
+        Role = 2,
 
         /// <summary>
         /// admin_applications
         /// </summary>
-        Application = 2 ^ 2,
+        Application = 4,
 
         /// <summary>
         /// admin_services
         /// </summary>
-        Service = 2 ^ 3,
+        Service = 8,
 
         /// <summary>
         /// admin_data
         /// </summary>
-        Data = 2 ^ 4,
+        Data = 16,
 
         /// <summary>
         /// admin_security
         /// </summary>
-        Security = 2 ^ 5,
+        Security = 32,
 
         /// <summary>
         /// admin_billing
         /// </summary>
-        Billing = 2 ^ 6,
+        Billing = 64,
 
         /// <summary>
         /// admin_data_stats
         /// </summary>
-        DataState = 2 ^ 7,
+        DataState = 128,
 
         /// <summary>
         /// admin_basic_setting
         /// </summary>
-        BasicSetting = 2 ^ 8,
+        BasicSetting = 256,
 
         /// <summary>
         /// admin_logo_setting
         /// </summary>
-        LogoSetting = 2 ^ 9,
+        LogoSetting = 512,
 
         /// <summary>
         /// admin_loadings_setting
         /// </summary>
-        LoadingSetting = 2 ^ 10
+        LoadingSetting = 1024
     }
 }

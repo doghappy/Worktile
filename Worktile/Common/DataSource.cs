@@ -8,7 +8,7 @@ using System;
 
 namespace Worktile.Common
 {
-    public static class DataSource
+    static class DataSource
     {
         public static string SubDomain
         {

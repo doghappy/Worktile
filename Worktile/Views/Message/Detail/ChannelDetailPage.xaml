@@ -9,10 +9,12 @@
     xmlns:member="using:Worktile.Models.Member"
     xmlns:controls="using:Worktile.Controls"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:privilege="using:Worktile.Converters.Privileges"
     mc:Ignorable="d">
 
     <Page.Resources>
         <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
+        <privilege:AdminPrivilegeConverter x:Key="AdminPrivilegeConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -51,7 +53,7 @@
                         <AppBarButton Label="置顶"
                                       x:Name="StarButton"
                                       Click="StarButton_Click"
-                                      x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}">
+                                      x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE183;"/>
                             </AppBarButton.Icon>
@@ -64,7 +66,10 @@
                                 <FontIcon Glyph="&#xE845;"/>
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <AppBarButton Label="添加服务集成">
+                        <AppBarButton Label="添加服务集成"
+                                      Click="AddServiceButton_Click"
+                                      x:Name="AddServiceButton"
+                                      x:Load="{x:Bind ViewModel.Privilege, Converter={StaticResource AdminPrivilegeConverter}, ConverterParameter=Service}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE61C;" Style="{StaticResource LcIcon}"/>
                             </AppBarButton.Icon>

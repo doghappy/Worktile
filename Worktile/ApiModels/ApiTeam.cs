@@ -2,10 +2,11 @@
 using Newtonsoft.Json;
 using Worktile.Models;
 using Worktile.Models.Member;
+using Worktile.Models.Privilege;
 
 namespace Worktile.ApiModels.ApiTeam
 {
-    public class ApiTeam
+    class ApiTeam
     {
         [JsonProperty("data")]
         public Data Data { get; set; }
@@ -14,7 +15,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long Code { get; set; }
     }
 
-    public class Data
+    class Data
     {
         [JsonProperty("_id")]
         public string Id { get; set; }
@@ -110,7 +111,7 @@ namespace Worktile.ApiModels.ApiTeam
         public List<App> Apps { get; set; }
 
         [JsonProperty("privileges")]
-        public Privileges Privileges { get; set; }
+        public Privilege Privileges { get; set; }
 
         [JsonProperty("team_permission")]
         public long TeamPermission { get; set; }
@@ -125,7 +126,7 @@ namespace Worktile.ApiModels.ApiTeam
         public Modules Modules { get; set; }
     }
 
-    public class App
+    class App
     {
         [JsonProperty("_id")]
         public string Id { get; set; }
@@ -143,7 +144,7 @@ namespace Worktile.ApiModels.ApiTeam
         public Bulletin Privileges { get; set; }
     }
 
-    public class Bulletin
+    class Bulletin
     {
         [JsonProperty("value")]
         public string Value { get; set; }
@@ -152,7 +153,7 @@ namespace Worktile.ApiModels.ApiTeam
         public BulletinScope Scope { get; set; }
     }
 
-    public class BulletinScope
+    class BulletinScope
     {
         [JsonProperty("view")]
         public long? View { get; set; }
@@ -161,7 +162,7 @@ namespace Worktile.ApiModels.ApiTeam
         public List<long> Manage { get; set; }
     }
 
-    public class Location
+    class Location
     {
         [JsonProperty("district")]
         public string District { get; set; }
@@ -176,7 +177,7 @@ namespace Worktile.ApiModels.ApiTeam
         public string Country { get; set; }
     }
 
-    public class Modules
+    class Modules
     {
         [JsonProperty("chat")]
         public Chat Chat { get; set; }
@@ -200,13 +201,13 @@ namespace Worktile.ApiModels.ApiTeam
         public Okr Okr { get; set; }
     }
 
-    public class CalendarClass
+    class CalendarClass
     {
         [JsonProperty("permission")]
         public long Permission { get; set; }
     }
 
-    public class Chat
+    class Chat
     {
         [JsonProperty("permission")]
         public long Permission { get; set; }
@@ -215,7 +216,7 @@ namespace Worktile.ApiModels.ApiTeam
         public ChatPermissions Permissions { get; set; }
     }
 
-    public class ChatPermissions
+    class ChatPermissions
     {
         [JsonProperty("message_post_general")]
         public long MessagePostGeneral { get; set; }
@@ -227,7 +228,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long MessageDeleting { get; set; }
     }
 
-    public class Drive
+    class Drive
     {
         [JsonProperty("permission")]
         public long Permission { get; set; }
@@ -236,7 +237,7 @@ namespace Worktile.ApiModels.ApiTeam
         public DrivePermissions Permissions { get; set; }
     }
 
-    public class DrivePermissions
+    class DrivePermissions
     {
         [JsonProperty("team_root_permission")]
         public long TeamRootPermission { get; set; }
@@ -245,13 +246,13 @@ namespace Worktile.ApiModels.ApiTeam
         public long PersonalRootPermission { get; set; }
     }
 
-    public class Mission
+    class Mission
     {
         [JsonProperty("permissions")]
         public MissionPermissions Permissions { get; set; }
     }
 
-    public class MissionPermissions
+    class MissionPermissions
     {
         [JsonProperty("is_workload_enabled")]
         public bool IsWorkloadEnabled { get; set; }
@@ -260,7 +261,7 @@ namespace Worktile.ApiModels.ApiTeam
         public bool IsGanttEnabled { get; set; }
     }
 
-    public class Okr
+    class Okr
     {
         [JsonProperty("limits")]
         public Limits Limits { get; set; }
@@ -269,7 +270,7 @@ namespace Worktile.ApiModels.ApiTeam
         public double OperationObjectiveDifferential { get; set; }
     }
 
-    public class Limits
+    class Limits
     {
         [JsonProperty("company_objective")]
         public long CompanyObjective { get; set; }
@@ -284,7 +285,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long KeyResult { get; set; }
     }
 
-    public class DataPreferences
+    class DataPreferences
     {
         [JsonProperty("project_nav_mode")]
         public long ProjectNavMode { get; set; }
@@ -314,7 +315,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long AllowSelfEditJob { get; set; }
     }
 
-    public class PricingSetting
+    class PricingSetting
     {
         [JsonProperty("has_trail_experience")]
         public long HasTrailExperience { get; set; }
@@ -323,80 +324,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long HasTrailNotice { get; set; }
     }
 
-    public class Privileges
-    {
-        [JsonProperty("admin")]
-        public Admin Admin { get; set; }
-
-        [JsonProperty("message")]
-        public Admin Message { get; set; }
-
-        [JsonProperty("mission")]
-        public Admin Mission { get; set; }
-
-        [JsonProperty("calendar")]
-        public Admin Calendar { get; set; }
-
-        [JsonProperty("drive")]
-        public Admin Drive { get; set; }
-
-        [JsonProperty("report")]
-        public LeaveClass Report { get; set; }
-
-        [JsonProperty("crm")]
-        public Bulletin Crm { get; set; }
-
-        [JsonProperty("approval")]
-        public LeaveClass Approval { get; set; }
-
-        [JsonProperty("leave")]
-        public LeaveClass Leave { get; set; }
-
-        [JsonProperty("appraisal")]
-        public Admin Appraisal { get; set; }
-
-        [JsonProperty("bulletin")]
-        public Bulletin Bulletin { get; set; }
-
-        [JsonProperty("okr")]
-        public Bulletin Okr { get; set; }
-
-        [JsonProperty("portal")]
-        public Admin Portal { get; set; }
-
-        [JsonProperty("mission_vnext")]
-        public Admin MissionVnext { get; set; }
-    }
-
-    public class Admin
-    {
-        [JsonProperty("value")]
-        public string Value { get; set; }
-
-        [JsonProperty("scope")]
-        public AdminScope Scope { get; set; }
-    }
-
-    public class AdminScope
-    {
-    }
-
-    public class LeaveClass
-    {
-        [JsonProperty("value")]
-        public long Value { get; set; }
-
-        [JsonProperty("scope")]
-        public ApprovalScope Scope { get; set; }
-    }
-
-    public class ApprovalScope
-    {
-        [JsonProperty("view")]
-        public long View { get; set; }
-    }
-
-    public class Security
+    class Security
     {
         [JsonProperty("min_length")]
         public long MinLength { get; set; }
@@ -405,7 +333,7 @@ namespace Worktile.ApiModels.ApiTeam
         public long Level { get; set; }
     }
 
-    public class Service : IMemberBase
+    class Service : IMemberBase
     {
         [JsonProperty("service_id")]
         public string ServiceId { get; set; }
@@ -432,7 +360,7 @@ namespace Worktile.ApiModels.ApiTeam
         public string AdditionId { get; set; }
     }
 
-    public class Reference
+    class Reference
     {
         [JsonProperty("type")]
         public long Type { get; set; }

@@ -275,6 +275,7 @@
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />
     <Compile Include="Converters\PercentageConverter.cs" />
+    <Compile Include="Converters\Privileges\AdminPrivilegeConverter.cs" />
     <Compile Include="Domain\MessageContentReader\Readers\MissionVNextReader.cs" />
     <Compile Include="Domain\MessageContentReader\Readers\AttachmentReader.cs" />
     <Compile Include="Domain\MessageContentReader\Readers\DefaultReader.cs" />
@@ -323,6 +324,9 @@
     <Compile Include="Models\Message\Session\ChannelSession.cs" />
     <Compile Include="Models\Message\Session\ISession.cs" />
     <Compile Include="Models\Message\MessageContent.cs" />
+    <Compile Include="Models\Privilege\Privilege.cs" />
+    <Compile Include="Models\Privilege\PrivilegeObject.cs" />
+    <Compile Include="Models\Privilege\PrivilegeScope.cs" />
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
