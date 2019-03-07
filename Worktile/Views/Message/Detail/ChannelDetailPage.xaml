@@ -9,12 +9,10 @@
     xmlns:member="using:Worktile.Models.Member"
     xmlns:controls="using:Worktile.Controls"
     xmlns:cvt="using:Worktile.Converters"
-    xmlns:privilege="using:Worktile.Converters.Privileges"
     mc:Ignorable="d">
 
     <Page.Resources>
         <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
-        <privilege:AdminPrivilegeConverter x:Key="AdminPrivilegeConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -69,18 +67,24 @@
                         <AppBarButton Label="添加服务集成"
                                       Click="AddServiceButton_Click"
                                       x:Name="AddServiceButton"
-                                      x:Load="{x:Bind ViewModel.Privilege, Converter={StaticResource AdminPrivilegeConverter}, ConverterParameter=Service}">
+                                      x:Load="{x:Bind ViewModel.CanAddService}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE61C;" Style="{StaticResource LcIcon}"/>
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <AppBarButton Icon="AddFriend" Label="添加群组成员"/>
-                        <AppBarButton Icon="Setting" Label="群组设置"/>
+                        <AppBarButton Icon="AddFriend"
+                                      Label="添加群组成员"
+                                      x:Name="AddMemberButton"
+                                      x:Load="{x:Bind ViewModel.CanAddMember}"/>
                         <AppBarButton Label="消息通知设置">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xEA8F;"/>
                             </AppBarButton.Icon>
                         </AppBarButton>
+                        <AppBarButton Icon="Setting"
+                                      Label="群组设置"
+                                      x:Name="ChannelSettingButton"
+                                      x:Load="{x:Bind ViewModel.CanAdminChannel}"/>
                         <AppBarButton Label="退出群组">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE656;" Style="{StaticResource LcIcon}"/>

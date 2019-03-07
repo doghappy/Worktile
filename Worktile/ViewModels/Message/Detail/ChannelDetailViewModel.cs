@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
@@ -13,6 +12,7 @@ using Worktile.Common.Extensions;
 using Worktile.Enums;
 using Worktile.Common;
 using System;
+using Worktile.Enums.Privileges;
 
 namespace Worktile.ViewModels.Message
 {
@@ -21,7 +21,7 @@ namespace Worktile.ViewModels.Message
         public ChannelDetailViewModel(ChannelSession session, Frame contentFrame, MainViewModel mainViewModel)
             : base(session, contentFrame, mainViewModel)
         {
-            Privilege = Convert.ToInt32(DataSource.Team.Privileges.Admin.Value, 2);
+            SetPermission();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -30,7 +30,9 @@ namespace Worktile.ViewModels.Message
 
         public override string PaneTitle => "群组成员";
 
-        public int Privilege { get; }
+        public bool CanAddService { get; private set; }
+        public bool CanAddMember { get; private set; }
+        public bool CanAdminChannel { get; private set; }
 
         private TopNav _selectedNav;
         public override TopNav SelectedNav
@@ -81,6 +83,16 @@ namespace Worktile.ViewModels.Message
                 }
             }
             IsActive = false;
+        }
+
+        private void SetPermission()
+        {
+            int adminPermission = Convert.ToInt32(DataSource.Team.Privileges.Admin.Value, 2);
+            CanAddService = (adminPermission & (int)AdminPrivilege.Service) != 0;
+
+            int messagePermission = Convert.ToInt32(DataSource.Team.Privileges.Message.Value, 2);
+            CanAddMember = Session.Visibility == WtVisibility.Private || (((int)MessagePrivilege.AdminPublicChannel & messagePermission) != 0 && !Session.IsSystem);
+            CanAdminChannel = Session.Visibility == WtVisibility.Private || (!Session.IsSystem && ((int)MessagePrivilege.AdminPublicChannel & messagePermission) != 0);
         }
     }
 }

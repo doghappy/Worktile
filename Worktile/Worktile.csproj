@@ -275,7 +275,6 @@
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NumberVisibilityConverter.cs" />
     <Compile Include="Converters\PercentageConverter.cs" />
-    <Compile Include="Converters\Privileges\AdminPrivilegeConverter.cs" />
     <Compile Include="Domain\MessageContentReader\Readers\MissionVNextReader.cs" />
     <Compile Include="Domain\MessageContentReader\Readers\AttachmentReader.cs" />
     <Compile Include="Domain\MessageContentReader\Readers\DefaultReader.cs" />
@@ -313,6 +312,10 @@
     <Compile Include="Enums\Message\SessionType.cs" />
     <Compile Include="Enums\Message\MessageAction.cs" />
     <Compile Include="Enums\NotificationLevel.cs" />
+    <Compile Include="Enums\Privileges\DrivePrivilege.cs" />
+    <Compile Include="Enums\Privileges\MissionVNextPrivilege.cs" />
+    <Compile Include="Enums\Privileges\MissionPrivilege.cs" />
+    <Compile Include="Enums\Privileges\MessagePrivilege.cs" />
     <Compile Include="Enums\Privileges\AdminPrivilege.cs" />
     <Compile Include="Models\Department\DepartmentNode.cs" />
     <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
