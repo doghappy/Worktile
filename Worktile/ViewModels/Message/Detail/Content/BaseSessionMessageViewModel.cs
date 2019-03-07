@@ -72,10 +72,10 @@ namespace Worktile.ViewModels.Message.Detail.Content
         {
             if (message.To.Id == Session.Id)
             {
-                await Task.Run(async () =>
-                {
-                    await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
-                    {
+                //await Task.Run(async () =>
+                //{
+                //    await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                //    {
                         var member = DataSource.Team.Members.Single(m => m.Uid == message.From.Uid);
                         message.From.TethysAvatar = new TethysAvatar
                         {
@@ -85,8 +85,8 @@ namespace Worktile.ViewModels.Message.Detail.Content
                         };
                         message.IsPinned = false;
                         Messages.Add(message);
-                    });
-                });
+                //    });
+                //});
             }
         }
     }

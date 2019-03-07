@@ -177,8 +177,11 @@ namespace Worktile.ViewModels.Message
                         var client = new WtHttpClient();
                         string url = $"/api/channels/{apiMsg.To.Id}";
                         var data = await client.GetAsync<ApiDataResponse<ChannelSession>>(url);
-                        data.Data.ForShowAvatar();
-                        Sessions.Insert(0, session);
+                        if (!Sessions.Any(s => s.Id == data.Data.Id))
+                        {
+                            data.Data.ForShowAvatar();
+                            Sessions.Insert(0, data.Data);
+                        }
                     }
                 }
                 else
@@ -234,8 +237,6 @@ namespace Worktile.ViewModels.Message
                 Sessions.Remove(session);
             }
         }
-
-       
 
         public void Dispose()
         {

@@ -40,7 +40,6 @@ namespace Worktile.Views.Message.Dialog
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event Action<ChannelSession> OnCreateSuccess;
 
         private string _color;
         public string Color
@@ -172,11 +171,7 @@ namespace Worktile.Views.Message.Dialog
             };
             var client = new WtHttpClient();
             var data = await client.PostAsync<ApiDataResponse<ChannelSession>>("/api/channel", reqData);
-            if (data.Code == 200)
-            {
-                OnCreateSuccess?.Invoke(data.Data);
-            }
-            else
+            if (data.Code != 200)
             {
                 args.Cancel = true;
             }

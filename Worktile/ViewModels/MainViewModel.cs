@@ -200,6 +200,7 @@ namespace Worktile.ViewModels
             {
                 await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
+                    var aaa = System.Threading.Thread.CurrentThread.ManagedThreadId;
                     try
                     {
                         _socket = new MessageWebSocket();
@@ -496,7 +497,7 @@ namespace Worktile.ViewModels
 
         public void Dispose()
         {
-            _timer.Cancel();
+            //_timer.Cancel();
             _socket.MessageReceived -= Socket_MessageReceived;
             _socket.Closed -= Socket_Closed;
             _socket.Dispose();

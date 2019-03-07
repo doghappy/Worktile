@@ -351,6 +351,9 @@
     <Compile Include="Views\Message\Detail\AssistantDetailPage.xaml.cs">
       <DependentUpon>AssistantDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Message\Detail\Content\AddMemberToChannelDialog.xaml.cs">
+      <DependentUpon>AddMemberToChannelDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\Detail\Content\Pin\ChannelPinnedPage.xaml.cs">
       <DependentUpon>ChannelPinnedPage.xaml</DependentUpon>
     </Compile>
@@ -801,6 +804,10 @@
     <Page Include="Views\Message\Detail\AssistantDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Message\Detail\Content\AddMemberToChannelDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\Detail\Content\Pin\ChannelPinnedPage.xaml">
       <Generator>MSBuild:Compile</Generator>

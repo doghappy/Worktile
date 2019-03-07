@@ -53,7 +53,7 @@
                         <AppBarButton Label="置顶"
                                       x:Name="StarButton"
                                       Click="StarButton_Click"
-                                      x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay}">
+                                      x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE183;"/>
                             </AppBarButton.Icon>

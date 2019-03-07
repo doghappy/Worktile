@@ -10,7 +10,6 @@ using Worktile.Views.Message.Dialog;
 using Windows.System;
 using Worktile.ViewModels;
 using Worktile.ViewModels.Message;
-using Worktile.Models.Message;
 using Worktile.Models.Message.Session;
 
 namespace Worktile.Views.Message
@@ -79,10 +78,6 @@ namespace Worktile.Views.Message
         private async void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new CreateGroupDialog();
-            dialog.OnCreateSuccess += session =>
-            {
-                ViewModel.Sessions.Insert(0, session);
-            };
             await dialog.ShowAsync();
         }
 
