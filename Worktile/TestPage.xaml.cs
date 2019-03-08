@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Repository;
 
 namespace Worktile
 {
@@ -38,11 +40,22 @@ namespace Worktile
 
         ObservableCollection<IPerson> Persons { get; }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             foreach (var item in Persons)
             {
                 item.Name = "foreach";
+            }
+            using (var db = new WorktileDbContext())
+            {
+                //await db.SignInfos.AddAsync(new Repository.Entities.SignInfo
+                //{
+                //    Domain = "at",
+                //    UserName = "test",
+                //    Password = "pwd"
+                //});
+                //await db.SaveChangesAsync();
+                var data = await db.SignInfos.ToListAsync();
             }
         }
     }

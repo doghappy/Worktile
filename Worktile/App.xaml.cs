@@ -13,10 +13,11 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Domain.SocketMessageConverter;
-using Worktile.Common;
 using System.Linq;
 using Worktile.Views;
 using Worktile.Enums;
+using Worktile.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Worktile
 {
@@ -34,6 +35,11 @@ namespace Worktile
             InitializeComponent();
             Suspending += OnSuspending;
             UnhandledException += App_UnhandledException;
+
+            using (var db = new WorktileDbContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         private async void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
