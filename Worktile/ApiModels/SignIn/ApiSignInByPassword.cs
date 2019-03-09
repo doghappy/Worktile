@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Worktile.Models.Team;
 
-namespace Worktile.ApiModels.SignIn.SignInByPassword
+namespace Worktile.ApiModels.SignIn.ApiSignInByPassword
 {
-    public class SignInByPassword
+    public class ApiSignInByPassword
     {
         [JsonProperty("oid")]
-        public Guid Oid { get; set; }
+        public string Oid { get; set; }
 
         [JsonProperty("code")]
-        public long Code { get; set; }
+        public int Code { get; set; }
 
         [JsonProperty("data")]
         public Data Data { get; set; }

@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Worktile.ApiModels;
+using Worktile.ApiModels.SignIn.ApiSignInByPassword;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Worktile.PageModels;
@@ -88,7 +89,7 @@ namespace Worktile.ViewModels.SignIn
                 password = HashEncryptor.ComputeMd5(Password)
             };
             var client = new WtHttpClient();
-            var res = await client.PostAsync<ApiResponse>(url, req);
+            var res = await client.PostAsync<ApiSignInByPassword>(url, req);
             if (res.Code == 200)
             {
 

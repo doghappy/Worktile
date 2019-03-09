@@ -120,6 +120,7 @@
     <Compile Include="ApiModels\Message\ApiPigeonMessages.cs" />
     <Compile Include="ApiModels\Message\ApiPinnedMessages.cs" />
     <Compile Include="ApiModels\ProjectJoin.cs" />
+    <Compile Include="ApiModels\SignIn\ApiSignInByPassword.cs" />
     <Compile Include="ApiModels\Upload\ApiEntitiesUpload.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -367,7 +368,6 @@
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
     <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />
     <Compile Include="ViewModels\SignIn\PasswordSignInViewModel.cs" />
-    <Compile Include="ViewModels\SignIn\SignInByPassword.cs" />
     <Compile Include="ViewModels\SignIn\VerifyCodeSignInViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Detail\AssistantDetailPage.xaml.cs">
@@ -1060,9 +1060,7 @@
       <Name>Worktile.Repository</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ApiModels\SignIn\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
