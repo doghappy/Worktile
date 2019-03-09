@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
-using Worktile.ApiModels;
+using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels.SignIn.ApiSignInByPassword;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
-using Worktile.PageModels;
+using Worktile.NavigateModels.SignIn;
+using Worktile.Views.SignIn;
 
 namespace Worktile.ViewModels.SignIn
 {
     class PasswordSignInViewModel : ViewModel, INotifyPropertyChanged
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Frame Frame { get; set; }
 
         private bool _showError;
         public bool ShowError
@@ -82,6 +80,7 @@ namespace Worktile.ViewModels.SignIn
 
         public async Task SignInAsync()
         {
+            IsActive = true;
             string url = "https://worktile.com/api/account/security/exchange/pass-token/by-password";
             var req = new
             {
@@ -92,7 +91,19 @@ namespace Worktile.ViewModels.SignIn
             var res = await client.PostAsync<ApiSignInByPassword>(url, req);
             if (res.Code == 200)
             {
-
+                if (res.Data.Teams.Count == 1)
+                {
+                    //直接登录
+                }
+                else if (res.Data.Teams.Count > 1)
+                {
+                    var param = new ToChooseTeamParam
+                    {
+                        PassToken = res.Data.PassToken,
+                        Teams = res.Data.Teams
+                    };
+                    Frame.Navigate(typeof(ChooseTeamPage), param);
+                }
             }
             else if (res.Code == 4000005)
             {
@@ -104,6 +115,7 @@ namespace Worktile.ViewModels.SignIn
                 ErrorText = "请输入正确的手机号或邮箱";
                 ShowError = true;
             }
+            IsActive = false;
         }
     }
 }

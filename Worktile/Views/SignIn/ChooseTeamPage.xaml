@@ -1,0 +1,82 @@
+﻿<Page
+    x:Class="Worktile.Views.SignIn.ChooseTeamPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:team="using:Worktile.Models.Team"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/SignIn/signup-bg.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Image Source="/Assets/Images/Logo/logo-default.png"
+               Height="47"
+               Width="276"
+               Margin="0 60"/>
+
+        <Grid Grid.Row="1"
+              Padding="40"
+              Width="480"
+              HorizontalAlignment="Center"
+              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+              BorderThickness="1"
+              BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="登录"
+                       HorizontalAlignment="Center"
+                       Margin="0 0 0 32"
+                       Style="{ThemeResource SubheaderTextBlockStyle}"/>
+            
+            <TextBlock Grid.Row="1" Margin="0 0 0 16">
+                <Run Text="您的帐号已加入以下"/>
+                <Run Text="{x:Bind Teams.Count}" Foreground="{StaticResource PrimaryBrush}"/>
+                <Run Text="个企业，点击可直接进入。"/>
+            </TextBlock>
+
+            <ListView Grid.Row="2"
+                      ItemsSource="{x:Bind Teams}"
+                      SelectionMode="None"
+                      Margin="0 0 0 16"
+                      IsItemClickEnabled="True"
+                      ItemClick="ListView_ItemClick">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="team:Team">
+                        <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="{x:Bind Domain}">
+                            <Image Source="{x:Bind Logo}" Width="32" Height="32"/>
+                            <TextBlock Text="{x:Bind Name}" Margin="4 0 0 0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ProgressRing Grid.Row="2" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+
+            <StackPanel Grid.Row="3"
+                        Orientation="Horizontal"
+                        Margin="0 0 0 16">
+                <TextBlock Text="没有您的企业？"/>
+                <Button Content="登录其他账号"
+                        Foreground="{StaticResource PrimaryBrush}"
+                        Style="{ThemeResource TextBlockButtonStyle}"
+                        Padding="0"
+                        Click="HomeButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

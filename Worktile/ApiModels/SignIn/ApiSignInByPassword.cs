@@ -20,7 +20,7 @@ namespace Worktile.ApiModels.SignIn.ApiSignInByPassword
     public class Data
     {
         [JsonProperty("pass_token")]
-        public Guid PassToken { get; set; }
+        public string PassToken { get; set; }
 
         [JsonProperty("teams")]
         public List<Team> Teams { get; set; }

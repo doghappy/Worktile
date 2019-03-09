@@ -29,6 +29,7 @@ namespace Worktile.Views.SignIn
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            ViewModel.Frame = Frame;
             AccountTextBox.Focus(FocusState.Programmatic);
         }
 
@@ -63,6 +64,7 @@ namespace Worktile.Views.SignIn
             if (e.Key == VirtualKey.Enter)
             {
                 SignInButton.Focus(FocusState.Programmatic);
+                PasswordControl.Focus(FocusState.Programmatic);
                 SignInButton_Click(sender, e);
             }
         }

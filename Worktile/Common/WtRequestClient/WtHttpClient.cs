@@ -54,6 +54,8 @@ namespace Worktile.Common.WtRequestClient
 
         public static Cookie GetCookieByString(string value)
         {
+            //var container = new CookieContainer();
+            //container.Add()
             string[] arr = value.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             string[] name = arr[0].Split('=');
             string[] domain = arr[1].Split('=');

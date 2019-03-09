@@ -345,6 +345,7 @@
     <Compile Include="Models\Team\TeamSecurity.cs" />
     <Compile Include="Models\Team\TeamService.cs" />
     <Compile Include="Models\Team\TeamServiceReference.cs" />
+    <Compile Include="NavigateModels\SignIn\ToChooseTeamParam.cs" />
     <Compile Include="PageModels\WtKeyValue.cs" />
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -368,6 +369,7 @@
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
     <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />
     <Compile Include="ViewModels\SignIn\PasswordSignInViewModel.cs" />
+    <Compile Include="ViewModels\SignIn\ChooseTeamViewModel.cs" />
     <Compile Include="ViewModels\SignIn\VerifyCodeSignInViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Detail\AssistantDetailPage.xaml.cs">
@@ -529,6 +531,9 @@
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Domain\SocketMessageConverter\SocketMessageType.cs" />
+    <Compile Include="Views\SignIn\ChooseTeamPage.xaml.cs">
+      <DependentUpon>ChooseTeamPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SignIn\VerifyCodeSignInPage.xaml.cs">
       <DependentUpon>VerifyCodeSignInPage.xaml</DependentUpon>
     </Compile>
@@ -972,6 +977,10 @@
     <Page Include="Views\Profile\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SignIn\ChooseTeamPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SignIn\VerifyCodeSignInPage.xaml">
       <Generator>MSBuild:Compile</Generator>
