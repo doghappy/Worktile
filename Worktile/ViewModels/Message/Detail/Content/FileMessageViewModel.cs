@@ -28,7 +28,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
         {
             if (files.Any())
             {
-                var client = new WtHttpClient();
                 string url = $"{DataSource.ApiUserMeData.Config.Box.BaseUrl}entities/upload?team_id={DataSource.Team.Id}&ref_id={Session.Id}&ref_type={RefType}";
                 foreach (var file in files)
                 {
@@ -41,7 +40,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
                             { new StringContent(fileName), "name" },
                             { new StreamContent(stream), "file", fileName }
                         };
-                        await client.PostAsync<ApiEntitiesUpload>(url, content);
+                        await WtHttpClient.PostAsync<ApiEntitiesUpload>(url, content);
                     }
                 }
             }
@@ -50,8 +49,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
         public async Task DownloadFileAsync(StorageFile storageFile, string fileId)
         {
             string url = WtFileHelper.GetS3FileUrl(fileId);
-            var client = new WtHttpClient();
-            var buffer = await client.GetByteArrayAsync(url);
+            var buffer = await WtHttpClient.GetByteArrayAsync(url);
             await FileIO.WriteBytesAsync(storageFile, buffer);
         }
     }

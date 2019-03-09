@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.Web.Http;
+using System;
 
 namespace Worktile.Common.WtRequestClient
 {

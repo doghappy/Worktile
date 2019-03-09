@@ -45,9 +45,8 @@ namespace Worktile.Views.Message.Dialog
         {
             IsActive = true;
             _sessions = new List<ChannelSession>();
-            var client = new WtHttpClient();
             string url = "/api/channels?type=all&filter=all&status=ok";
-            var data = await client.GetAsync<ApiDataResponse<List<ChannelSession>>>(url);
+            var data = await WtHttpClient.GetAsync<ApiDataResponse<List<ChannelSession>>>(url);
             foreach (var item in data.Data)
             {
                 item.ForShowAvatar();
@@ -92,8 +91,7 @@ namespace Worktile.Views.Message.Dialog
             var btn = sender as Button;
             var session = btn.DataContext as ChannelSession;
             string url = $"/api/channels/{session.Id}/active";
-            var client = new WtHttpClient();
-            var data = await client.PutAsync<ApiDataResponse<object>>(url);
+            var data = await WtHttpClient.PutAsync<ApiDataResponse<object>>(url);
             if (data.Code == 200)
             {
                 OnActived?.Invoke(session);
@@ -106,8 +104,7 @@ namespace Worktile.Views.Message.Dialog
             var btn = sender as Button;
             var session = btn.DataContext as ChannelSession;
             string url = $"/api/channels/{session.Id}/join";
-            var client = new WtHttpClient();
-            var data = await client.PutAsync<ApiDataResponse<bool>>(url);
+            var data = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
             {
                 OnJoined?.Invoke(session);

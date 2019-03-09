@@ -132,8 +132,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
         private async Task<IEnumerable<ProjectProgressItem>> ProjectItemsAsync()
         {
             string uri = $"/api/mission-vnext/work/analytic-insight/{_navId}/{_subNavId}/content?fpids=&fuids=&from=&to=&pi={_pageIndex}&ps={PageSize}";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkAnalyticInsightProjectProgress>(uri);
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextWorkAnalyticInsightProjectProgress>(uri);
             if (!_totalPages.HasValue)
             {
                 _totalPages = Convert.ToInt32(Math.Ceiling(data.Data.Value.Total * 1.0 / PageSize)) - 1;

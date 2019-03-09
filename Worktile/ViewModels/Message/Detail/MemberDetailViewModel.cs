@@ -82,8 +82,7 @@ namespace Worktile.ViewModels.Message
             {
                 IsActive = true;
                 string url = $"/api/users/{Session.To.Uid}/basic";
-                var client = new WtHttpClient();
-                var data = await client.GetAsync<ApiDataResponse<Member>>(url);
+                var data = await WtHttpClient.GetAsync<ApiDataResponse<Member>>(url);
                 Member = data.Data;
                 IsActive = false;
             }

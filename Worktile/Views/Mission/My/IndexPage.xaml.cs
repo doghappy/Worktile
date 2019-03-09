@@ -120,8 +120,7 @@ namespace Worktile.Views.Mission.My
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             string uri = $"/api/mission-vnext/work-addons/{_navItem.Key}/groups";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkAddonsKeyGroups>(uri);
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextWorkAddonsKeyGroups>(uri);
             foreach (var item in data.Data.Value)
             {
                 TopNavItems.Add(new TopNavItem

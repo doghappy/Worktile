@@ -209,8 +209,7 @@ namespace Worktile.Views.Mission.Project.Detail
 
             IsActive = true;
             string uri = $"/api/mission-vnext/tasks/{TaskId}";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextTask>(uri);
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextTask>(uri);
             _task = data.Data;
             TaskTitle = _task.Value.Title;
 

@@ -26,15 +26,15 @@ namespace Worktile.Views
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.IsActive = true;
-            string cookie = ApplicationData.Current.LocalSettings.Values["AuthCookie"]?.ToString();
-            if (string.IsNullOrEmpty(cookie))
+            WtHttpClient.Test();
+            string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
+            if (string.IsNullOrEmpty(domain))
             {
                 Frame.Navigate(typeof(PasswordSignInPage));
             }
             else
             {
-                WtHttpClient.SetBaseAddress(DataSource.SubDomain);
-                WtHttpClient.AddDefaultRequestHeaders("Cookie", cookie);
+                WtHttpClient.Domain = domain;
                 ViewModel.Logo = new BitmapImage(new Uri("ms-appx:///Assets/StoreLogo.scale-200.png"));
                 await ViewModel.RequestApiUserMeAsync();
                 await ViewModel.RequestApiTeamAsync();

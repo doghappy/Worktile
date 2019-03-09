@@ -88,12 +88,11 @@ namespace Worktile.Domain.Mission.Info
 
         public void LoadOptions(string taskId, IEnumerable<PropertyItem> properties, CoreDispatcher dispatcher)
         {
-            var client = new WtHttpClient();
             var hasOptionsProps = properties.Where(p => _hasOptionControls.Contains(p.Control));
             Parallel.ForEach(hasOptionsProps, async property =>
             {
                 string uri = $"api/mission-vnext/tasks/{taskId}/properties/{property.PropertyId}/options";
-                var data = await client.GetAsync<ApiMissionVnexTaskProperties>(uri);
+                var data = await WtHttpClient.GetAsync<ApiMissionVnexTaskProperties>(uri);
                 var dataSource = new List<DropdownItem>();
                 IPropertyReader reader = null;
                 switch (property.Control)

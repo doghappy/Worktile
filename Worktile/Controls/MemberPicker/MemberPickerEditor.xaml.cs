@@ -134,8 +134,7 @@ namespace Worktile.Controls
             if (!DepartmentNodes.Any())
             {
                 string url = $"/api/departments/tree?async=false";
-                var client = new WtHttpClient();
-                var data = await client.GetAsync<ApiDataResponse<List<DepartmentNode>>>(url);
+                var data = await WtHttpClient.GetAsync<ApiDataResponse<List<DepartmentNode>>>(url);
                 _departmentNodeList = new List<DepartmentNode>();
                 foreach (var item in data.Data)
                 {

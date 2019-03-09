@@ -71,8 +71,7 @@ namespace Worktile.Views.Mission.Project
         private async Task RequestContentAsync()
         {
             string uri = $"/api/mission-vnext/kanban/{_addonId}/views/{_viewId}/content";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextKanbanContent>(uri);
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextKanbanContent>(uri);
 
             var reader = new KanbanDataReader();
             KanbanGroups = reader.GetData(data);

@@ -128,8 +128,7 @@ namespace Worktile.Views.Mission
 
         private async Task RequestApiMissionVnextWorkAddon()
         {
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkAddon>("/api/mission-vnext/work-addons");
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextWorkAddon>("/api/mission-vnext/work-addons");
             _workAddons = data.Data.Value;
             foreach (var item in data.Data.Value)
             {
@@ -143,8 +142,7 @@ namespace Worktile.Views.Mission
 
         private async Task RequestApiMissionVnextProjectNav()
         {
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextProjectNav>("/api/mission-vnext/project-nav");
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextProjectNav>("/api/mission-vnext/project-nav");
             foreach (var item in data.Data.ProjectNav.Favorites)
             {
                 var project = data.Data.Projects.Single(p => p.Id == item);

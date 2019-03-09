@@ -93,9 +93,8 @@ namespace Worktile.Controls.Message
             StorageFile file;
             if (fileItem == null)
             {
-                var client = new WtHttpClient();
                 string url = WtFileHelper.GetS3FileUrl(Message.Body.Attachment.Id);
-                byte[] buffer = await client.GetByteArrayAsync(url);
+                byte[] buffer = await WtHttpClient.GetByteArrayAsync(url);
                 file = await folder.CreateFileAsync(fileName);
                 await FileIO.WriteBytesAsync(file, buffer);
             }

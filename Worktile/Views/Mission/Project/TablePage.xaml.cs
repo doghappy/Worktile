@@ -79,8 +79,7 @@ namespace Worktile.Views.Mission.Project
         {
             IsActive = true;
             var list = new List<GridItem>();
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextTableContent>(Uri);
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextTableContent>(Uri);
             int i = GridItems.Count;
             foreach (var item in data.Data.Value)
             {

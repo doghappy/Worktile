@@ -138,8 +138,7 @@ namespace Worktile.Views.Mission.AnalyticInsight
         private async Task RequestApiMissionVnextWorkAnalyticInsightGroups()
         {
             string uri = "/api/mission-vnext/work/analytic-insight/groups";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkAnalyticInsightGroups>(uri);
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextWorkAnalyticInsightGroups>(uri);
             foreach (var item in data.Data.Value)
             {
                 var tni = new TopNavItem

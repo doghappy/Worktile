@@ -160,8 +160,7 @@ namespace Worktile.ViewModels
 
         public async Task RequestApiUserMeAsync()
         {
-            var client = new WtHttpClient();
-            var me = await client.GetAsync<ApiUserMe>("/api/user/me");
+            var me = await WtHttpClient.GetAsync<ApiUserMe>("/api/user/me");
             DataSource.ApiUserMeData = me.Data;
             DisplayName = DataSource.ApiUserMeData.Me.DisplayName;
 
@@ -173,7 +172,7 @@ namespace Worktile.ViewModels
             else
             {
                 string imgUriString = DataSource.ApiUserMeData.Config.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
-                byte[] buffer = await client.GetByteArrayAsync(imgUriString);
+                byte[] buffer = await WtHttpClient.GetByteArrayAsync(imgUriString);
                 BgImage = await ImageHelper.GetImageFromBytesAsync(buffer);
             }
 
@@ -182,8 +181,7 @@ namespace Worktile.ViewModels
 
         public async Task RequestApiTeamAsync()
         {
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiDataResponse<Team>>("/api/team");
+            var data = await WtHttpClient.GetAsync<ApiDataResponse<Team>>("/api/team");
             DataSource.Team = data.Data;
             Apps.Add(new WtApp
             {

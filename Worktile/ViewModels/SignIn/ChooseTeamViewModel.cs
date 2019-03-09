@@ -6,6 +6,7 @@ using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels;
 using Worktile.Common.WtRequestClient;
+using Worktile.Models.Team;
 using Worktile.Views;
 
 namespace Worktile.ViewModels.SignIn
@@ -27,28 +28,23 @@ namespace Worktile.ViewModels.SignIn
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        public async Task SignInAsync(string teamId)
+        public async Task SignInAsync(Team team)
         {
             IsActive = true;
             string url = "https://worktile.com/api/account/user/signin";
             var req = new
             {
                 pass_token = _passToken,
-                team_id = teamId
+                team_id = team.Id
             };
-            var client = new WtHttpClient();
-            client.OnSuccessStatusCode += resMsg =>
+            var res = await WtHttpClient.PostAsync<ApiResponse>(url, req);
+            if (res.Code == 200)
             {
-                string cookieString = resMsg.Headers.GetValues("Set-Cookie").First();
-                var cookie = WtHttpClient.GetCookieByString(cookieString);
-                cookie.Expires = cookie.Expires.AddYears(20);
-                cookieString = WtHttpClient.GetStringByCookie(cookie);
-                ApplicationData.Current.LocalSettings.Values["AuthCookie"] = cookieString;
-                WtHttpClient.AddDefaultRequestHeaders("Cookie", cookieString);
-            };
-            var res = await client.PostAsync<ApiResponse>(url, req);
-            IsActive = false;
-            _frame.Navigate(typeof(MainPage));
+                IsActive = false;
+                _frame.Navigate(typeof(MainPage));
+                WtHttpClient.Domain = team.Domain;
+                ApplicationData.Current.LocalSettings.Values["Domain"] = team.Domain;
+            }
         }
     }
 }

@@ -14,8 +14,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
         public async virtual Task<bool> UnPinAsync(Models.Message.Message msg)
         {
             string url = $"/api/messages/{msg.Id}/unpinned?{IdType}={Session.Id}";
-            var client = new WtHttpClient();
-            var response = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+            var response = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
             if (response.Code == 200 && response.Data)
             {
                 return true;

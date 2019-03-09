@@ -169,8 +169,7 @@ namespace Worktile.Views.Message.Dialog
                 default_uids = string.Join(',', uids),
                 visibility = SelectedVisibility.Visibility
             };
-            var client = new WtHttpClient();
-            var data = await client.PostAsync<ApiDataResponse<ChannelSession>>("/api/channel", reqData);
+            var data = await WtHttpClient.PostAsync<ApiDataResponse<ChannelSession>>("/api/channel", reqData);
             if (data.Code != 200)
             {
                 args.Cancel = true;

@@ -75,8 +75,7 @@ namespace Worktile.WtControls.Flyout
             {
                 IsActive = true;
                 string uri = $"/api/mission-vnext/tasks/{TaskId}/states";
-                var clicent = new WtHttpClient();
-                var data = await clicent.GetAsync<ApiMissionVnextTasksIdstates>(uri);
+                var data = await WtHttpClient.GetAsync<ApiMissionVnextTasksIdstates>(uri);
                 AllStates = data.Data.Value.Select(i => new Models.TaskState
                 {
                     Id = i.Id,

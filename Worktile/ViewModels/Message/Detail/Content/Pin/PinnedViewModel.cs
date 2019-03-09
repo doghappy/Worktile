@@ -43,8 +43,7 @@ namespace Worktile.ViewModels.Message.Detail.Content.Pin
             const int SIZE = 10;
             var list = new List<Models.Message.Message>();
             string url = $"/api/pinneds?{IdType}={Session.Id}&anchor={_anchor}&size={SIZE}";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiPinnedMessages>(url);
+            var data = await WtHttpClient.GetAsync<ApiPinnedMessages>(url);
             if (data.Code == 200 && data.Data.Pinneds.Any())
             {
                 _anchor = data.Data.Pinneds.Last().Id;

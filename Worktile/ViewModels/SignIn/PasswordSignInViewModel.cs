@@ -87,13 +87,13 @@ namespace Worktile.ViewModels.SignIn
                 signin_name = Account.Trim(),
                 password = HashEncryptor.ComputeMd5(Password)
             };
-            var client = new WtHttpClient();
-            var res = await client.PostAsync<ApiSignInByPassword>(url, req);
+            var res = await WtHttpClient.PostAsync<ApiSignInByPassword>(url, req);
             if (res.Code == 200)
             {
                 if (res.Data.Teams.Count == 1)
                 {
                     //直接登录
+                    throw new System.NotImplementedException();
                 }
                 else if (res.Data.Teams.Count > 1)
                 {

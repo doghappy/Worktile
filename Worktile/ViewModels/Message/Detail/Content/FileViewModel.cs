@@ -37,8 +37,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
             IsActive = true;
             var list = new List<FileItem>();
             string url = $"/api/entities?page={_page}&size=20&ref_type={RefType}&ref_id={Session.Id}";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMessageFiles>(url);
+            var data = await WtHttpClient.GetAsync<ApiMessageFiles>(url);
             Files.HasMoreItems = Files.Count + data.Data.Entities.Count < data.Data.Total;
             foreach (var item in data.Data.Entities)
             {
@@ -88,8 +87,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
         {
             IsActive = true;
             string url = $"/api/entities/{fileId}";
-            var client = new WtHttpClient();
-            var res = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+            var res = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
             IsActive = false;
             return res.Code == 200 && res.Data;
         }

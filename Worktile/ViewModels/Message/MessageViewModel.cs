@@ -11,8 +11,7 @@ namespace Worktile.ViewModels.Message
         {
             string sessionType = session.GetType() == typeof(ChannelSession) ? "channels" : "sessions";
             string url = $"/api/{sessionType}/{session.Id}/star";
-            var client = new WtHttpClient();
-            var data = await client.PutAsync<ApiDataResponse<bool>>(url);
+            var data = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
             {
                 session.Starred = true;
@@ -23,8 +22,7 @@ namespace Worktile.ViewModels.Message
         {
             string sessionType = session.GetType() == typeof(ChannelSession) ? "channels" : "sessions";
             string url = $"/api/{sessionType}/{session.Id}/unstar";
-            var client = new WtHttpClient();
-            var data = await client.PutAsync<ApiDataResponse<bool>>(url);
+            var data = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
             {
                 session.Starred = false;

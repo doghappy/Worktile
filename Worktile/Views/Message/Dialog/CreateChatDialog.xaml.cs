@@ -33,8 +33,7 @@ namespace Worktile.Views.Message.Dialog
         {
             var btn = sender as Button;
             var avatar = btn.DataContext as TethysAvatar;
-            var client = new WtHttpClient();
-            var data = await client.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid = avatar.Id });
+            var data = await WtHttpClient.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid = avatar.Id });
             if (data.Code == 200)
             {
                 data.Data.ForShowAvatar(AvatarSize.X80);

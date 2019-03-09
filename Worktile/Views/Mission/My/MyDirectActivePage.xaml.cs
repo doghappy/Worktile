@@ -50,8 +50,7 @@ namespace Worktile.Views.Mission.My
         private async Task RequestIndexDataAsync()
         {
             string uri = "/api/mission-vnext/work/my/directed/active";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextWorkMyDirectedActive>(uri);
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextWorkMyDirectedActive>(uri);
 
             foreach (var item in data.Data.References.Groups)
             {

@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
+using Worktile.Common.WtRequestClient;
 using Worktile.Models.Team;
 using Worktile.NavigateModels.SignIn;
 using Worktile.ViewModels.SignIn;
@@ -64,7 +65,7 @@ namespace Worktile.Views.SignIn
             var lv = sender as ListView;
             lv.IsItemClickEnabled = false;
             var team = e.ClickedItem as Team;
-            await ViewModel.SignInAsync(team.Id);
+            await ViewModel.SignInAsync(team);
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)

@@ -87,8 +87,8 @@ namespace Worktile
                         // 当导航堆栈尚未还原时，导航到第一页，
                         // 并通过将所需信息作为导航参数传入来配置
                         // 参数
-                        rootFrame.Navigate(typeof(Views.SignIn.PasswordSignInPage), args.Arguments);
-                        //rootFrame.Navigate(typeof(MainPage), args.Arguments);
+                        //rootFrame.Navigate(typeof(Views.SignIn.PasswordSignInPage), args.Arguments);
+                        rootFrame.Navigate(typeof(MainPage), args.Arguments);
                     }
                 }
             }

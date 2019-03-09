@@ -132,8 +132,7 @@ namespace Worktile.Views.Mission.Project
         private async Task RequestApiMissionVnextProjectsDetail()
         {
             string uri = $"/api/mission-vnext/projects/{_navId}?members=true&addons=true";
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiMissionVnextProjectsDetail>(uri);
+            var data = await WtHttpClient.GetAsync<ApiMissionVnextProjectsDetail>(uri);
             if (data.Code == 200)
             {
                 _taskIdentifierPrefix = data.Data.Value.TaskIdentifierPrefix;
@@ -190,8 +189,7 @@ namespace Worktile.Views.Mission.Project
         private async Task JoinAsync()
         {
             string uri = $"/api/mission-vnext/projects/{_navId}/join";
-            var client = new WtHttpClient();
-            var data = await client.PutAsync<ApiProjectJoin>(uri);
+            var data = await WtHttpClient.PutAsync<ApiProjectJoin>(uri);
             if (data.Data.Value)
             {
                 Page_Loaded(null, null);

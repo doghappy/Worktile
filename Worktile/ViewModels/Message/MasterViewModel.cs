@@ -88,8 +88,7 @@ namespace Worktile.ViewModels.Message
         public async Task InitializeAsync()
         {
             IsActive = true;
-            var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiTeamChats>("/api/team/chats");
+            var data = await WtHttpClient.GetAsync<ApiTeamChats>("/api/team/chats");
             var list = new List<ISession>();
             var channels = data.Data.Channels.Concat(data.Data.Groups);
             foreach (var item in channels)
@@ -166,17 +165,15 @@ namespace Worktile.ViewModels.Message
                 {
                     if (apiMsg.Body.At != null && apiMsg.Body.At.Count == 1)
                     {
-                        var client = new WtHttpClient();
-                        var data = await client.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid = apiMsg.From.Uid });
+                        var data = await WtHttpClient.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid = apiMsg.From.Uid });
                         data.Data.ForShowAvatar(AvatarSize.X80);
                         data.Data.UnRead = 1;
                         Sessions.Insert(0, session);
                     }
                     else if (apiMsg.Type == MessageType.Activity)
                     {
-                        var client = new WtHttpClient();
                         string url = $"/api/channels/{apiMsg.To.Id}";
-                        var data = await client.GetAsync<ApiDataResponse<ChannelSession>>(url);
+                        var data = await WtHttpClient.GetAsync<ApiDataResponse<ChannelSession>>(url);
                         if (!Sessions.Any(s => s.Id == data.Data.Id))
                         {
                             data.Data.ForShowAvatar();
@@ -203,8 +200,7 @@ namespace Worktile.ViewModels.Message
                 if (feed.Type == FeedType.NewChannel)
                 {
                     string url = $"/api/channels/{feed.ChannelId}";
-                    var client = new WtHttpClient();
-                    var data = await client.GetAsync<ApiDataResponse<ChannelSession>>(url);
+                    var data = await WtHttpClient.GetAsync<ApiDataResponse<ChannelSession>>(url);
                     data.Data.ForShowAvatar();
                     Sessions.Insert(0, data.Data);
                 }
@@ -230,8 +226,7 @@ namespace Worktile.ViewModels.Message
         public async Task DeleteSessionAsync(ISession session)
         {
             string url = $"/api/sessions/{session.Id}";
-            var client = new WtHttpClient();
-            var data = await client.DeleteAsync<ApiDataResponse<bool>>(url);
+            var data = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
             if (data.Code == 200 && data.Data)
             {
                 Sessions.Remove(session);

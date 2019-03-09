@@ -33,8 +33,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
         public async Task LoadMessagesAsync()
         {
             IsActive = true;
-            var client = new WtHttpClient();
-            var data = await client.GetJTokenAsync(Url);
+            var data = await WtHttpClient.GetJTokenAsync(Url);
             ReadMessage(data);
             IsActive = false;
         }
@@ -42,8 +41,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
         public async Task ClearUnReadAsync()
         {
             string url = $"/api/messages/unread/clear?ref_id={Session.Id}";
-            var client = new WtHttpClient();
-            await client.PutAsync<object>(url);
+            await WtHttpClient.PutAsync<object>(url);
             MainViewModel.UnreadBadge -= Session.UnRead;
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Session.UnRead = 0));
         }
@@ -51,7 +49,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
         public async virtual Task<bool> PinAsync(Models.Message.Message msg)
         {
             string url = "/api/pinneds";
-            var client = new WtHttpClient();
             var req = new
             {
                 type = 1,
@@ -60,7 +57,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
             };
             string json = JsonConvert.SerializeObject(req);
             json = json.Replace("worktile", IdType);
-            var response = await client.PostAsync<ApiResponse>(url, json);
+            var response = await WtHttpClient.PostAsync<ApiResponse>(url, json);
             if (response.Code == 200)
             {
                 return true;
