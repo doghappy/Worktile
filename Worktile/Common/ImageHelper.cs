@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
@@ -8,12 +7,12 @@ namespace Worktile.Common
 {
     public static class ImageHelper
     {
-        public async static Task<BitmapImage> GetImageFromBytesAsync(byte[] bytes)
+        public async static Task<BitmapImage> GetImageAsync(IBuffer buffer)
         {
             var img = new BitmapImage();
             using (var stream = new InMemoryRandomAccessStream())
             {
-                await stream.WriteAsync(bytes.AsBuffer());
+                await stream.WriteAsync(buffer);
                 stream.Seek(0);
                 await img.SetSourceAsync(stream);
             }

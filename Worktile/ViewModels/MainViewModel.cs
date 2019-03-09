@@ -172,8 +172,9 @@ namespace Worktile.ViewModels
             else
             {
                 string imgUriString = DataSource.ApiUserMeData.Config.Box.BaseUrl + "background-image/" + bgImg + "/from-s3";
-                byte[] buffer = await WtHttpClient.GetByteArrayAsync(imgUriString);
-                BgImage = await ImageHelper.GetImageFromBytesAsync(buffer);
+                var buffer = await WtHttpClient.GetByteBufferAsync(imgUriString);
+
+                BgImage = await ImageHelper.GetImageAsync(buffer);
             }
 
             await ConnectSocketAsync();

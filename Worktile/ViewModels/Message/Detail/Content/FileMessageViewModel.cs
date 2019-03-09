@@ -49,8 +49,8 @@ namespace Worktile.ViewModels.Message.Detail.Content
         public async Task DownloadFileAsync(StorageFile storageFile, string fileId)
         {
             string url = WtFileHelper.GetS3FileUrl(fileId);
-            var buffer = await WtHttpClient.GetByteArrayAsync(url);
-            await FileIO.WriteBytesAsync(storageFile, buffer);
+            var buffer = await WtHttpClient.GetByteBufferAsync(url);
+            await FileIO.WriteBufferAsync(storageFile, buffer);
         }
     }
 }

@@ -5,6 +5,7 @@ using Windows.Web.Http;
 using Windows.Storage.Streams;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Windows.Web.Http.Filters;
 
 namespace Worktile.Common.WtRequestClient
 {
@@ -12,7 +13,7 @@ namespace Worktile.Common.WtRequestClient
     {
         static WtHttpClient()
         {
-            _client = new HttpClient();
+            _client = new HttpClient(new HttpBaseProtocolFilter());
         }
 
         readonly static HttpClient _client;
@@ -38,17 +39,9 @@ namespace Worktile.Common.WtRequestClient
             }
         }
 
-        public static void Reset() => throw new NotImplementedException();
-
-        public static void Test()
+        public static async Task<IBuffer> GetByteBufferAsync(string url)
         {
-            var ccc = _client.DefaultRequestHeaders.Cookie;
-        }
-
-
-        public static async Task<byte[]> GetByteArrayAsync(string url)
-        {
-            throw new NotImplementedException();
+            return await _client.GetBufferAsync(GetUri(url));
         }
 
         public static async Task<T> GetAsync<T>(string url)
