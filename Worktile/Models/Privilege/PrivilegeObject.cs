@@ -2,7 +2,7 @@
 
 namespace Worktile.Models.Privilege
 {
-    class PrivilegeObject
+   public class PrivilegeObject
     {
         [JsonProperty("value")]
         public string Value { get; set; }

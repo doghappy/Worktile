@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Worktile.Models.Privilege
 {
-    class PrivilegeScope
+    public class PrivilegeScope
     {
         [JsonProperty("view")]
         public int View { get; set; }

@@ -7,7 +7,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightProjectDelay;
 using Worktile.Common;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Mission.AnalyticInsight

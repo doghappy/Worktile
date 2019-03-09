@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
-using Worktile.Common;
 using Worktile.Models.Kanban;
 
-namespace Worktile.ViewModels.Infrastructure
+namespace Worktile.Common
 {
     public static class KanbanPageHelper
     {

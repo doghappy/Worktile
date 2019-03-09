@@ -124,7 +124,7 @@ namespace Worktile.Controls
             {
                 foreach (var item in DataSource.Team.Members)
                 {
-                    if (item.Role != 5)
+                    if (item.Role != RoleType.Bot)
                     {
                         UnSelectedAvatars.Add(AvatarHelper.GetAvatar(item, AvatarSize.X40));
                     }

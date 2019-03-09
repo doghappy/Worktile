@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Windows.UI.Core;
 using System.Threading.Tasks;
 using System;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.Common;
 
 namespace Worktile.Domain.Mission.Info

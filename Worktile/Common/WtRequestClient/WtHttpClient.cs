@@ -78,6 +78,8 @@ namespace Worktile.Common.WtRequestClient
                 + "Expires=" + cookie.Expires.ToString("r");
         }
 
+        public static void Reset() => _httpClient = null;
+
         public async Task<byte[]> GetByteArrayAsync(string url)
         {
             return await HttpClient.GetByteArrayAsync(url);

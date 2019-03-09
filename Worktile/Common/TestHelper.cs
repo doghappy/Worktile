@@ -1,7 +1,5 @@
 ﻿using System;
 using Windows.Storage;
-using Worktile.ViewModels.Infrastructure;
-using Worktile.Views;
 using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Common
@@ -10,7 +8,7 @@ namespace Worktile.Common
     {
         public static void SignIn()
         {
-            string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
+            string cookie = ApplicationData.Current.LocalSettings.Values["AuthCookie"]?.ToString();
             if (string.IsNullOrEmpty(cookie))
             {
                 throw new ArgumentNullException("cookie");

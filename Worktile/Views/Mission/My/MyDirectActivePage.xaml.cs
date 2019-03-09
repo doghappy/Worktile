@@ -9,7 +9,6 @@ using Worktile.Models.Kanban;
 using Worktile.Common.WtRequestClient;
 using System.Collections.Generic;
 using System;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.Enums;
 using Worktile.Common;
 

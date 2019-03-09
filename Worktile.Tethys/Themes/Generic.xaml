@@ -1,8 +1,0 @@
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Label/Label.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Worktile.Tethys/IconTextBlock/IconTextBlock.xaml"/>
-        <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Avatar/Avatar.xaml"/>
-    </ResourceDictionary.MergedDictionaries>
-</ResourceDictionary>

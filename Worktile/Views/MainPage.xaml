@@ -25,7 +25,7 @@
                 <DataTemplate x:DataType="models:WtApp">
                     <NavigationViewItem Tag="{x:Bind Name}" Content="{x:Bind DisplayName}">
                         <NavigationViewItem.Icon>
-                            <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Glyph}"/>
+                            <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Icon}"/>
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
                 </DataTemplate>

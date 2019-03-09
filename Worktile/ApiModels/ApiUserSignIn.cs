@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using Worktile.ApiModels.ApiTeam;
 
 namespace Worktile.ApiModels.ApiUserSignIn
 {

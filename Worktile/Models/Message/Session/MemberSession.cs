@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel;
 using Worktile.Common;
+using Worktile.Enums;
 using Worktile.Enums.Message;
 
 namespace Worktile.Models.Message.Session
@@ -74,6 +75,6 @@ namespace Worktile.Models.Message.Session
         [JsonProperty("component")]
         public int? Component { get; set; }
 
-        public PageType PageType => IsBot ? PageType.Assistant : PageType.Member;
+        public PageType PageType => IsBot && To.Role == RoleType.Bot ? PageType.Assistant : PageType.Member;
     }
 }

@@ -1,0 +1,101 @@
+﻿<Page
+    x:Class="Worktile.Views.SignIn.VerifyCodeSignInPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.SignIn"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/Images/SignIn/signup-bg.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Image Source="/Assets/Images/Logo/logo-default.png"
+               Height="47"
+               Width="276"
+               Margin="0 60"/>
+
+        <Grid Grid.Row="1"
+              Padding="40"
+              Width="480"
+              HorizontalAlignment="Center"
+              Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+              BorderThickness="1"
+              BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="登录"
+                       HorizontalAlignment="Center"
+                       Margin="0 0 0 32"
+                       Style="{ThemeResource SubheaderTextBlockStyle}"/>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 16">
+                <TextBlock Text="通过您的手机验证码登录企业，或"/>
+                <Button Content="账号密码"
+                        Padding="0"
+                        Click="PasswordSignIn_Click"
+                        Style="{ThemeResource TextBlockButtonStyle}"
+                        Foreground="{StaticResource PrimaryBrush}"/>
+            </StackPanel>
+
+            <!--<TextBox Grid.Row="2" PlaceholderText="请输入手机号/邮箱" Margin="0 0 0 16"/>-->
+            <Grid Grid.Row="2" Margin="0 0 0 16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <ComboBox ItemsSource="{x:Bind ViewModel.Areas}"
+                          DisplayMemberPath="Key"
+                          SelectedItem="{x:Bind ViewModel.SelectedArea, Mode=TwoWay}"/>
+                <TextBox Grid.Column="1"
+                         x:Name="MobileTextBox"
+                         Margin="4 0 0 0"/>
+            </Grid>
+
+            <PasswordBox Grid.Row="3" PlaceholderText="请输入密码" Margin="0 0 0 16"/>
+
+            <HyperlinkButton Grid.Row="4"
+                             Content="忘记密码？"
+                             Foreground="{StaticResource PrimaryBrush}"
+                             HorizontalAlignment="Right"
+                             Padding="0"
+                             Margin="0 0 0 16"/>
+
+            <Button Grid.Row="5"
+                    Content="登录"
+                    HorizontalAlignment="Stretch"
+                    Foreground="White"
+                    Background="{StaticResource PrimaryBrush}"
+                    Style="{ThemeResource ButtonRevealStyle}"
+                    Margin="0 0 0 16"
+                    Padding="26 6"/>
+
+            <StackPanel Grid.Row="6"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <TextBlock Text="或"/>
+                <HyperlinkButton Content="注册企业"
+                                 Padding="0"
+                                 Foreground="{StaticResource PrimaryBrush}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

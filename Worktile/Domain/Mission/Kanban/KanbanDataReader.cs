@@ -4,7 +4,6 @@ using Worktile.ApiModels.ApiMissionVnextKanbanContent;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Models.Kanban;
-using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.Domain.Mission.Kanban
 {

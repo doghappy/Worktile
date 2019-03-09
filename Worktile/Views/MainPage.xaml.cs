@@ -8,6 +8,8 @@ using Worktile.Common.WtRequestClient;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
 using Worktile.ViewModels;
+using Worktile.Views.Profile;
+using Worktile.Views.SignIn;
 
 namespace Worktile.Views
 {
@@ -24,10 +26,10 @@ namespace Worktile.Views
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.IsActive = true;
-            string cookie = ApplicationData.Current.LocalSettings.Values[SignInPage.AuthCookie]?.ToString();
+            string cookie = ApplicationData.Current.LocalSettings.Values["AuthCookie"]?.ToString();
             if (string.IsNullOrEmpty(cookie))
             {
-                Frame.Navigate(typeof(SignInPage));
+                Frame.Navigate(typeof(PasswordSignInPage));
             }
             else
             {
@@ -37,8 +39,8 @@ namespace Worktile.Views
                 await ViewModel.RequestApiUserMeAsync();
                 await ViewModel.RequestApiTeamAsync();
             }
-            ViewModel.IsActive = false;
             Window.Current.Activated += Window_Activated;
+            ViewModel.IsActive = false;
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
@@ -56,7 +58,7 @@ namespace Worktile.Views
         private void Me_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             ViewModel.SelectedApp = null;
-            ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
+            ContentFrame.Navigate(typeof(ProfilePage));
         }
 
         private void Setting_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

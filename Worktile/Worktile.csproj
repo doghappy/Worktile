@@ -110,7 +110,6 @@
     <Compile Include="ApiModels\ApiMissionVnextWorkMyGeneric.cs" />
     <Compile Include="ApiModels\ApiDataResponse.cs" />
     <Compile Include="ApiModels\ApiResponse.cs" />
-    <Compile Include="ApiModels\ApiTeam.cs" />
     <Compile Include="ApiModels\ApiTeamChats.cs" />
     <Compile Include="ApiModels\ApiTeamDomainCheck.cs" />
     <Compile Include="ApiModels\ApiTeamLite.cs" />
@@ -317,6 +316,7 @@
     <Compile Include="Enums\Privileges\MissionPrivilege.cs" />
     <Compile Include="Enums\Privileges\MessagePrivilege.cs" />
     <Compile Include="Enums\Privileges\AdminPrivilege.cs" />
+    <Compile Include="Enums\WorktileVersion.cs" />
     <Compile Include="Models\Department\DepartmentNode.cs" />
     <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
     <Compile Include="Models\Department\DepartmentNodeType.cs" />
@@ -330,6 +330,21 @@
     <Compile Include="Models\Privilege\Privilege.cs" />
     <Compile Include="Models\Privilege\PrivilegeObject.cs" />
     <Compile Include="Models\Privilege\PrivilegeScope.cs" />
+    <Compile Include="Models\Team\Team.cs" />
+    <Compile Include="Models\Team\TeamLocation.cs" />
+    <Compile Include="Models\Team\TeamModule.cs" />
+    <Compile Include="Models\Team\TeamModuleOkrPermissionLimit.cs" />
+    <Compile Include="Models\Team\TeamModuleOkrPermission.cs" />
+    <Compile Include="Models\Team\TeamModuleDrivePermission.cs" />
+    <Compile Include="Models\Team\TeamModuleMissionPermission.cs" />
+    <Compile Include="Models\Team\TeamModuleChatPermission.cs" />
+    <Compile Include="Models\Team\TeamModulePermission.cs" />
+    <Compile Include="Models\Team\TeamPreference.cs" />
+    <Compile Include="Models\Team\TeamPricingSetting.cs" />
+    <Compile Include="Models\Team\TeamSecurity.cs" />
+    <Compile Include="Models\Team\TeamService.cs" />
+    <Compile Include="Models\Team\TeamServiceReference.cs" />
+    <Compile Include="PageModels\WtKeyValue.cs" />
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
@@ -350,6 +365,10 @@
     <Compile Include="ViewModels\Message\Detail\Content\MessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\MemberMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
+    <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\SignIn\PasswordSignInViewModel.cs" />
+    <Compile Include="ViewModels\SignIn\SignInByPassword.cs" />
+    <Compile Include="ViewModels\SignIn\VerifyCodeSignInViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Detail\AssistantDetailPage.xaml.cs">
       <DependentUpon>AssistantDetailPage.xaml</DependentUpon>
@@ -506,10 +525,16 @@
     <Compile Include="Views\Mission\Project\WorkloadPage.xaml.cs">
       <DependentUpon>WorkloadPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SignInPage.xaml.cs">
-      <DependentUpon>SignInPage.xaml</DependentUpon>
+    <Compile Include="Views\Profile\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Domain\SocketMessageConverter\SocketMessageType.cs" />
+    <Compile Include="Views\SignIn\VerifyCodeSignInPage.xaml.cs">
+      <DependentUpon>VerifyCodeSignInPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SignIn\PasswordSignInPage.xaml.cs">
+      <DependentUpon>PasswordSignInPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WaitForDevelopmentPage.xaml.cs">
       <DependentUpon>WaitForDevelopmentPage.xaml</DependentUpon>
     </Compile>
@@ -584,7 +609,7 @@
     <Content Include="Assets\Images\Icons\yinxiang.png" />
     <Content Include="Assets\Images\Icons\youdaonote.png" />
     <Content Include="Assets\Images\Icons\zip.png" />
-    <Content Include="Assets\Images\Logo\worktile logo-横版.png" />
+    <Content Include="Assets\Images\Logo\logo-default.png" />
     <Content Include="Assets\Images\SignIn\signup-bg.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
@@ -944,7 +969,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SignInPage.xaml">
+    <Page Include="Views\Profile\ProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SignIn\VerifyCodeSignInPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SignIn\PasswordSignInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -974,6 +1007,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Enums.NET">
+      <Version>2.3.2</Version>
+    </PackageReference>
     <PackageReference Include="FontAwesome.UWP">
       <Version>4.7.0.9</Version>
     </PackageReference>
@@ -1015,16 +1051,18 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\uwp-tethys\Worktile.Tethys\Worktile.Tethys.csproj">
+      <Project>{603175b4-99dc-4390-99f3-0f868d0c30e2}</Project>
+      <Name>Worktile.Tethys</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Worktile.Repository\Worktile.Repository.csproj">
       <Project>{BB1EF942-2AFB-49E0-BCFB-9EB4478C1834}</Project>
       <Name>Worktile.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Worktile.Tethys\Worktile.Tethys.csproj">
-      <Project>{603175b4-99dc-4390-99f3-0f868d0c30e2}</Project>
-      <Name>Worktile.Tethys</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ApiModels\SignIn\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

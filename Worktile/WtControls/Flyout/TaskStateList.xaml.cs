@@ -6,7 +6,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels.ApiMissionVnextTasksIdstates;
 using Worktile.Common;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.Common.WtRequestClient;
 
 namespace Worktile.WtControls.Flyout

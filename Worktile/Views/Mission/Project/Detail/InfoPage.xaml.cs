@@ -11,7 +11,6 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.ApiMissionVnextTask;
 using Worktile.Common;
 using Worktile.Domain.Mission.Info;
-using Worktile.ViewModels.Infrastructure;
 
 namespace Worktile.Views.Mission.Project.Detail
 {

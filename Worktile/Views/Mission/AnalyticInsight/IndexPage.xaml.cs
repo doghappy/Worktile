@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Worktile.Common.WtRequestClient;
 using Worktile.ApiModels.ApiMissionVnextWorkAnalyticInsightGroups;
 using System.Collections.ObjectModel;
-using Worktile.ViewModels.Infrastructure;
+using Worktile.Common;
 
 namespace Worktile.Views.Mission.AnalyticInsight
 {

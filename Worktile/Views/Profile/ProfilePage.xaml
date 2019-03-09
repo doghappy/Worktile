@@ -1,0 +1,73 @@
+﻿<Page
+    x:Class="Worktile.Views.Profile.ProfilePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Profile"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tethys="using:Worktile.Tethys"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Padding="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="登录信息" Style="{ThemeResource SubheaderTextBlockStyle}"/>
+
+
+        <Grid Grid.Row="1" Margin="0 16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source="{x:Bind ViewModel.TeamAvatar}" Width="160" Height="160"/>
+
+            <StackPanel Grid.Column="1" Margin="16 0">
+                <TextBlock Text="{x:Bind ViewModel.TeamName}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind ViewModel.Version}"
+                           Foreground="{StaticResource PrimaryBrush}"
+                           Style="{ThemeResource TitleTextBlockStyle}"/>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+                    <Run Text="购买帐号总数："/>
+                    <Run Text="{x:Bind ViewModel.UserLimit}"/>
+                </TextBlock>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+                    <Run Text="已开通使用数："/>
+                    <Run Text="{x:Bind ViewModel.MemberCount}"/>
+                </TextBlock>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+                    <Run Text="到期日期："/>
+                    <Run Text="{x:Bind ViewModel.ExpiredAt}"/>
+                </TextBlock>
+            </StackPanel>
+
+            <tethys:Avatar Grid.Column="2"
+                           Size="160"
+                           Margin="32 0 0 0"
+                           DisplayName="{x:Bind ViewModel.UserAvatar.DisplayName}"
+                           Background="{x:Bind ViewModel.UserAvatar.Background}"
+                           Source="{x:Bind ViewModel.UserAvatar.Source}"/>
+
+            <StackPanel Grid.Column="3" Margin="16 0">
+                <TextBlock Text="{x:Bind ViewModel.UserAvatar.DisplayName}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind ViewModel.MemberTitle}"/>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind ViewModel.MemberMobile}"/>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind ViewModel.MemberEmail}"/>
+            </StackPanel>
+
+            <Button Grid.Column="4"
+                    Content="注销"
+                    Background="Red"
+                    Foreground="White"
+                    Click="SignOut_Click"
+                    Style="{ThemeResource ButtonRevealStyle}"/>
+        </Grid>
+    </Grid>
+</Page>

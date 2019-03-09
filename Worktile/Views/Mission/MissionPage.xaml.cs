@@ -10,7 +10,6 @@ using Worktile.ApiModels.ApiMissionVnextProjectNav;
 using Worktile.ApiModels.ApiMissionVnextWorkAddon;
 using Worktile.Common.WtRequestClient;
 using System;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.Common;
 
 namespace Worktile.Views.Mission

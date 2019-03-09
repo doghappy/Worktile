@@ -47,7 +47,7 @@ namespace Worktile.Views.Message.Dialog
         {
             foreach (var item in DataSource.Team.Members)
             {
-                if (item.Role != 5)
+                if (item.Role != RoleType.Bot)
                     Avatars.Add(AvatarHelper.GetAvatar(item, AvatarSize.X40));
             }
         }
@@ -68,7 +68,7 @@ namespace Worktile.Views.Message.Dialog
                     {
                         if (item.DisplayName.ToLower().Contains(text) || item.DisplayNamePinyin.Contains(text))
                         {
-                            if (item.Role != 5)
+                            if (item.Role != RoleType.Bot)
                                 Avatars.Add(AvatarHelper.GetAvatar(item, AvatarSize.X40));
                         }
                     }

@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.ApiMissionVnextTask;
 using Worktile.Common;
-using Worktile.ViewModels.Infrastructure;
 using Worktile.Common.WtRequestClient;
 
 namespace Worktile.Views.Mission.Project.Detail

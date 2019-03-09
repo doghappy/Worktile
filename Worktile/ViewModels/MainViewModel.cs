@@ -19,7 +19,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Worktile.ApiModels.ApiTeam;
 using Worktile.ApiModels.ApiUserMe;
 using Worktile.Common;
 using Worktile.Common.WtRequestClient;
@@ -31,6 +30,8 @@ using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Views;
 using Worktile.Views.Message;
+using Worktile.ApiModels;
+using Worktile.Models.Team;
 
 namespace Worktile.ViewModels
 {
@@ -182,13 +183,17 @@ namespace Worktile.ViewModels
         public async Task RequestApiTeamAsync()
         {
             var client = new WtHttpClient();
-            var data = await client.GetAsync<ApiTeam>("/api/team");
+            var data = await client.GetAsync<ApiDataResponse<Team>>("/api/team");
             DataSource.Team = data.Data;
-            Apps.Add(DataSource.Apps.SingleOrDefault(a => a.Name == "message"));
+            Apps.Add(new WtApp
+            {
+                Name = "message",
+                DisplayName = "消息"
+            });
             DataSource.Team.Apps.ForEach(app =>
             {
-                var item = DataSource.Apps.Single(a => a.Name == app.Name);
-                Apps.Add(item);
+                app.Icon = WtIconHelper.GetAppIcon(app.Name);
+                Apps.Add(app);
             });
             SelectedApp = Apps.First();
             Logo = new BitmapImage(new Uri(DataSource.ApiUserMeData.Config.Box.LogoUrl + DataSource.Team.Logo));
@@ -497,10 +502,13 @@ namespace Worktile.ViewModels
 
         public void Dispose()
         {
-            //_timer.Cancel();
-            _socket.MessageReceived -= Socket_MessageReceived;
-            _socket.Closed -= Socket_Closed;
-            _socket.Dispose();
+            _timer?.Cancel();
+            if (_socket != null)
+            {
+                _socket.MessageReceived -= Socket_MessageReceived;
+                _socket.Closed -= Socket_Closed;
+                _socket.Dispose();
+            }
         }
     }
 }
