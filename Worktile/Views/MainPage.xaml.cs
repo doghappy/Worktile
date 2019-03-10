@@ -3,7 +3,6 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
-using Worktile.Common;
 using Worktile.Common.WtRequestClient;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
@@ -26,7 +25,6 @@ namespace Worktile.Views
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.IsActive = true;
-            WtHttpClient.Test();
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
             if (string.IsNullOrEmpty(domain))
             {

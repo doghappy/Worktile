@@ -504,9 +504,8 @@ namespace Worktile.ViewModels
             _timer?.Cancel();
             if (_socket != null)
             {
-                _socket.MessageReceived -= Socket_MessageReceived;
-                _socket.Closed -= Socket_Closed;
                 _socket.Dispose();
+                _socket = null;
             }
         }
     }

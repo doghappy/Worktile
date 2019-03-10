@@ -14,20 +14,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32">
-        <Button Content="Change" Click="Button_Click"/>
-        <ListView ItemsSource="{x:Bind Persons}">
-            <ListView.Resources>
-                <DataTemplate x:Key="APersonTemplate" x:DataType="local:APerson">
-                    <TextBlock Text="{x:Bind Name, Mode=OneWay}" Foreground="Red"/>
-                </DataTemplate>
-                <DataTemplate x:Key="BPersonTemplate" x:DataType="local:BPerson">
-                    <TextBlock Text="{x:Bind Name, Mode=OneWay}" Foreground="Blue"/>
-                </DataTemplate>
-            </ListView.Resources>
-
-            <ListView.ItemTemplateSelector>
-                <local:PersonDataTemplateSelector APersonTemplate="{StaticResource APersonTemplate}" BPersonTemplate="{StaticResource BPersonTemplate}"/>
-            </ListView.ItemTemplateSelector>
-        </ListView>
+        <Button Content="Change"/>
+      
     </StackPanel>
 </Page>
