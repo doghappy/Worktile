@@ -187,6 +187,7 @@ namespace Worktile.ViewModels
             Apps.Add(new WtApp
             {
                 Name = "message",
+                Icon = WtIconHelper.GetAppIcon("message"),
                 DisplayName = "消息"
             });
             DataSource.Team.Apps.ForEach(app =>

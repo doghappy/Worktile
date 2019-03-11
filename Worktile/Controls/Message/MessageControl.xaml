@@ -117,7 +117,7 @@
                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Crm'}"
                                          Message="{x:Bind Message, Mode=OneWay}"/>
 
-                    <message:CrmMessage x:Name="CCrmContractMsg"
+                    <message:CrmMessage x:Name="CrmContractMsg"
                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='CrmContract'}"
                                          Message="{x:Bind Message, Mode=OneWay}"/>
 

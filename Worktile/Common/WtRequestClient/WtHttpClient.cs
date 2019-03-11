@@ -18,6 +18,8 @@ namespace Worktile.Common.WtRequestClient
 
         readonly static HttpClient _client;
 
+        public static HttpClient Client => _client;
+
         const string ApplicationJson = "application/json";
 
         public static string Domain { get; set; }
@@ -93,10 +95,22 @@ namespace Worktile.Common.WtRequestClient
             return await PostAsync<T>(url, json);
         }
 
+        public static async Task<JObject> RawPostAsync(string url, object data)
+        {
+            string json = JsonConvert.SerializeObject(data);
+            return await RawPostAsync(url, json);
+        }
+
         public static async Task<T> PostAsync<T>(string url, string json)
         {
             var content = new HttpStringContent(json, UnicodeEncoding.Utf8, ApplicationJson);
             return await PostAsync<T>(url, content);
+        }
+
+        public static async Task<JObject> RawPostAsync(string url, string json)
+        {
+            var content = new HttpStringContent(json, UnicodeEncoding.Utf8, ApplicationJson);
+            return await RawPostAsync(url, content);
         }
 
         public static async Task<T> PostAsync<T>(string url, IHttpContent content)
@@ -109,6 +123,20 @@ namespace Worktile.Common.WtRequestClient
             else
             {
                 return default(T);
+            }
+        }
+
+        public static async Task<JObject> RawPostAsync(string url, IHttpContent content)
+        {
+            var resMsg = await _client.PostAsync(GetUri(url), content);
+            if (resMsg.IsSuccessStatusCode)
+            {
+                var json = await resMsg.Content.ReadAsStringAsync();
+                return JObject.Parse(json);
+            }
+            else
+            {
+                return default(JObject);
             }
         }
 

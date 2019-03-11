@@ -75,6 +75,6 @@ namespace Worktile.Models.Message.Session
         [JsonProperty("component")]
         public int? Component { get; set; }
 
-        public PageType PageType => IsBot && To.Role == RoleType.Bot ? PageType.Assistant : PageType.Member;
+        public PageType PageType => Component.HasValue ? PageType.Assistant : PageType.Member;
     }
 }

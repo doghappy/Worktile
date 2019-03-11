@@ -37,7 +37,7 @@
 
                     <FontIcon Style="{StaticResource WtfIcon}"
                           Glyph="&#xE614;"
-                          Foreground="{StaticResource DefaultThemeBrush}"
+                          Foreground="{StaticResource PrimaryBrush}"
                           Margin="0 0 8 0"
                           VerticalAlignment="Top"/>
 
@@ -86,7 +86,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Grid>
-                <Rectangle Fill="{StaticResource DefaultThemeBrush}" Width="2" HorizontalAlignment="Left"/>
+                <Rectangle Fill="{StaticResource PrimaryBrush}" Width="2" HorizontalAlignment="Left"/>
             </Grid>
         </Button>
     </StackPanel>

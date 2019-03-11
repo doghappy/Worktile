@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Common;
-using Worktile.Common.WtRequestClient;
 using Worktile.Models.Team;
 using Worktile.NavigateModels.SignIn;
 using Worktile.ViewModels.SignIn;
@@ -52,7 +39,7 @@ namespace Worktile.Views.SignIn
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             _param = e.Parameter as ToChooseTeamParam;
-            ViewModel = new ChooseTeamViewModel(Frame, _param.PassToken);
+            ViewModel = new ChooseTeamViewModel(Frame);
             Teams = _param.Teams;
             foreach (var item in Teams)
             {
@@ -65,7 +52,7 @@ namespace Worktile.Views.SignIn
             var lv = sender as ListView;
             lv.IsItemClickEnabled = false;
             var team = e.ClickedItem as Team;
-            await ViewModel.SignInAsync(team);
+            await ViewModel.SignInAsync(team.Id, team.Domain, _param.PassToken);
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)

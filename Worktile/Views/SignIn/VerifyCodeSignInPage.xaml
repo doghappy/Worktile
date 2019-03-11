@@ -5,9 +5,16 @@
     xmlns:local="using:Worktile.Views.SignIn"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tethys="using:Worktile.Tethys"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.Background>
@@ -39,6 +46,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock Text="登录"
@@ -55,7 +64,6 @@
                         Foreground="{StaticResource PrimaryBrush}"/>
             </StackPanel>
 
-            <!--<TextBox Grid.Row="2" PlaceholderText="请输入手机号/邮箱" Margin="0 0 0 16"/>-->
             <Grid Grid.Row="2" Margin="0 0 0 16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -67,33 +75,95 @@
                           SelectedItem="{x:Bind ViewModel.SelectedArea, Mode=TwoWay}"/>
                 <TextBox Grid.Column="1"
                          x:Name="MobileTextBox"
+                         Text="{x:Bind ViewModel.Mobile, Mode=TwoWay}"
+                         PlaceholderText="请输入手机号"
                          Margin="4 0 0 0"/>
             </Grid>
 
-            <PasswordBox Grid.Row="3" PlaceholderText="请输入密码" Margin="0 0 0 16"/>
+            <Grid Grid.Row="3" Margin="0 0 0 16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <HyperlinkButton Grid.Row="4"
-                             Content="忘记密码？"
-                             Foreground="{StaticResource PrimaryBrush}"
-                             HorizontalAlignment="Right"
-                             Padding="0"
-                             Margin="0 0 0 16"/>
+                <TextBox PlaceholderText="请输入右侧验证码"
+                         x:Name="ImageCodeTextBox"
+                         Text="{x:Bind ViewModel.ImageCode, Mode=TwoWay}"/>
 
-            <Button Grid.Row="5"
-                    Content="登录"
+                <Button Grid.Column="1"
+                        x:Name="ImageButton"
+                        Margin="4 0 0 0"
+                        Width="100"
+                        extensions:Mouse.Cursor="Hand"
+                        Style="{ThemeResource TextBlockButtonStyle}"
+                        Click="ImageButton_Click"
+                        Padding="0">
+                    <Image Source="https://worktile.com/captcha/code/generate"
+                           Height="30"
+                           Width="100"
+                           Stretch="Fill"/>
+                </Button>
+            </Grid>
+
+            <Grid Grid.Row="4" Margin="0 0 0 16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox PlaceholderText="请输入短信验证码"
+                         KeyDown="CodeTextBox_KeyDown"
+                         x:Name="CodeTextBox"
+                         Text="{x:Bind ViewModel.Code, Mode=TwoWay}"/>
+
+                <Button Grid.Column="1"
+                        Content="获取短信验证码"
+                        Click="SendCode_Click"
+                        IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
+                        Margin="4 0 0 0"/>
+            </Grid>
+
+            <StackPanel Grid.Row="5"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 0 16">
+                <TextBlock Text="收不到短信？"/>
+                <Button Content="试试语音验证码"
+                        Padding="0"
+                        Style="{ThemeResource TextBlockButtonStyle}"
+                        Foreground="{StaticResource PrimaryBrush}"
+                        IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
+                        Click="SendVoice_Click"/>
+            </StackPanel>
+
+            <tethys:Alert Grid.Row="6"
+                          Mode="Danger"
+                          Icon="Cancel"
+                          Margin="0 0 0 16"
+                          Visibility="{x:Bind ViewModel.ShowError, Mode=OneWay}"
+                          Text="{x:Bind ViewModel.ErrorText, Mode=OneWay}"/>
+
+            <Button Grid.Row="7"
+                    x:Name="NextStepButton"
+                    Content="下一步"
                     HorizontalAlignment="Stretch"
                     Foreground="White"
                     Background="{StaticResource PrimaryBrush}"
                     Style="{ThemeResource ButtonRevealStyle}"
                     Margin="0 0 0 16"
-                    Padding="26 6"/>
+                    Padding="26 6"
+                    IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
+                    Click="NextStepButton_Click"/>
 
-            <StackPanel Grid.Row="6"
+            <ProgressRing Grid.Row="7" Margin="0 0 0 16" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+
+            <StackPanel Grid.Row="8"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
                 <TextBlock Text="或"/>
                 <HyperlinkButton Content="注册企业"
                                  Padding="0"
+                                 Click="{x:Bind ViewModel.SignUpTeamAsync}"
                                  Foreground="{StaticResource PrimaryBrush}"/>
             </StackPanel>
         </Grid>

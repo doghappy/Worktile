@@ -370,6 +370,7 @@
     <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />
     <Compile Include="ViewModels\SignIn\PasswordSignInViewModel.cs" />
     <Compile Include="ViewModels\SignIn\ChooseTeamViewModel.cs" />
+    <Compile Include="ViewModels\SignIn\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignIn\VerifyCodeSignInViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Detail\AssistantDetailPage.xaml.cs">

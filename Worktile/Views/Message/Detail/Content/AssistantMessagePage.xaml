@@ -4,11 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:cvt="using:Worktile.Converters"
     xmlns:controls="using:Worktile.Controls"
     xmlns:message="using:Worktile.Models.Message"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
+    </Page.Resources>
 
     <Grid>
         <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
@@ -26,7 +30,7 @@
                                     <Button Style="{ThemeResource TextBlockButtonStyle}"
                                             x:Name="PinButton"
                                             Click="Pin_Click"
-                                            x:Load="{x:Bind IsPending, Mode=OneWay, Converter={StaticResource BooleanReserveConverter}}">
+                                            x:Load="{x:Bind IsPending, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}">
                                         <FontIcon Glyph="&#xE7C1;" />
                                     </Button>
                                     <Button Style="{ThemeResource TextBlockButtonStyle}"

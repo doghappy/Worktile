@@ -1,22 +1,31 @@
-﻿using Windows.UI.Xaml;
+﻿using System.ComponentModel;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Worktile.Controls
 {
-    public sealed partial class MessageControl : UserControl
+    public sealed partial class MessageControl : UserControl, INotifyPropertyChanged
     {
         public MessageControl()
         {
             InitializeComponent();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private Models.Message.Message _message;
         public Models.Message.Message Message
         {
-            get { return (Models.Message.Message)GetValue(MessageProperty); }
-            set { SetValue(MessageProperty, value); }
+            get => _message;
+            set
+            {
+                if (_message != value)
+                {
+                    _message = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Models.Message.Message)));
+                }
+            }
         }
-        public static readonly DependencyProperty MessageProperty =
-            DependencyProperty.Register("Message", typeof(Models.Message.Message), typeof(MessageControl), new PropertyMetadata(default(Models.Message.Message)));
 
         public object RightContent
         {

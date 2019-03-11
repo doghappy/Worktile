@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.Storage;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ViewModels.Profile;
 using Worktile.Views.SignIn;
@@ -17,7 +18,7 @@ namespace Worktile.Views.Profile
 
         private void SignOut_Click(object sender, RoutedEventArgs e)
         {
-            //ApplicationData.Current.LocalSettings.Values.Remove("Domain");
+            ApplicationData.Current.LocalSettings.Values.Remove("Domain");
             var rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(PasswordSignInPage));
         }

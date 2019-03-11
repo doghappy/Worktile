@@ -10,39 +10,9 @@ using Worktile.Views.SignIn;
 
 namespace Worktile.ViewModels.SignIn
 {
-    class PasswordSignInViewModel : ViewModel, INotifyPropertyChanged
+    class PasswordSignInViewModel : SignInViewModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public Frame Frame { get; set; }
-
-        private bool _showError;
-        public bool ShowError
-        {
-            get => _showError;
-            set
-            {
-                if (_showError != value)
-                {
-                    _showError = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _errorText;
-        public string ErrorText
-        {
-            get => _errorText;
-            set
-            {
-                if (_errorText != value)
-                {
-                    _errorText = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         private string _account;
         public string Account
@@ -92,8 +62,8 @@ namespace Worktile.ViewModels.SignIn
             {
                 if (res.Data.Teams.Count == 1)
                 {
-                    //直接登录
-                    throw new System.NotImplementedException();
+                    var team = res.Data.Teams[0];
+                    await SignInAsync(team.Id, team.Domain, res.Data.PassToken);
                 }
                 else if (res.Data.Teams.Count > 1)
                 {
