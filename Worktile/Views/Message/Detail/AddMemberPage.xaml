@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="Worktile.Views.Message.Detail.AddMemberPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Message.Detail"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}"
+          Margin="0 32"
+          Padding="32"
+          Width="660"
+          VerticalAlignment="Top"
+          HorizontalAlignment="Center">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="添加群组成员"
+                   Margin="0 0 0 16"
+                   Style="{ThemeResource SubtitleTextBlockStyle}"/>
+
+        <AutoSuggestBox Grid.Row="1"
+                        QueryIcon="Find"
+                        PlaceholderText="输入成员名查找"/>
+    </Grid>
+</Page>

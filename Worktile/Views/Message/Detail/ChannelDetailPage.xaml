@@ -16,7 +16,8 @@
     </Page.Resources>
 
     <Grid>
-        <NavigationView PaneDisplayMode="Top"
+        <NavigationView x:Name="Nav"
+                        PaneDisplayMode="Top"
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="False"
                         SelectedItem="{x:Bind ViewModel.SelectedNav, Mode=TwoWay}"
@@ -75,7 +76,8 @@
                         <AppBarButton Icon="AddFriend"
                                       Label="添加群组成员"
                                       x:Name="AddMemberButton"
-                                      x:Load="{x:Bind ViewModel.CanAddMember}"/>
+                                      x:Load="{x:Bind ViewModel.CanAddMember}"
+                                      Click="AddMemberButton_Click"/>
                         <AppBarButton Label="消息通知设置">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xEA8F;"/>

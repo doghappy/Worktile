@@ -80,5 +80,21 @@ namespace Worktile.Views.Message.Detail
             Uri uri = new Uri(DataSource.SubDomain + "/console/services");
             await Launcher.LaunchUriAsync(uri);
         }
+
+        private void AddMemberButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(typeof(AddMemberPage));
+            Nav.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+            Nav.BackRequested += Nav_BackRequested;
+            Nav.IsBackEnabled = true;
+        }
+
+        private void Nav_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            ContentFrame.GoBack();
+            Nav.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            Nav.BackRequested -= Nav_BackRequested;
+            Nav.IsBackEnabled = false;
+        }
     }
 }
