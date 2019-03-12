@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Worktile.Common;
 using Worktile.Enums;
@@ -78,7 +79,7 @@ namespace Worktile.Models.Message.Session
         public Member.Member CreatedBy { get; set; }
 
         [JsonProperty("members")]
-        public List<Member.Member> Members { get; set; }
+        public ObservableCollection<Member.Member> Members { get; set; }
 
         [JsonProperty("is_system")]
         public bool IsSystem { get; set; }

@@ -67,6 +67,8 @@
                         </StackPanel>
 
                         <Button Grid.Column="2"
+                                DataContext="{x:Bind}"
+                                Click="AddButton_Click"
                                 Style="{ThemeResource TextBlockButtonStyle}">
                             <StackPanel Orientation="Horizontal">
                                 <SymbolIcon Symbol="Add"/>

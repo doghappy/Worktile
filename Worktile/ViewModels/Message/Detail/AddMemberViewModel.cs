@@ -5,21 +5,38 @@ using System.Runtime.CompilerServices;
 using Worktile.Models.Member;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
+using Worktile.Models.Message.Session;
+using Worktile.Common;
+using Worktile.Enums;
+using Worktile.Common.Extensions;
+using Worktile.Common.WtRequestClient;
+using Worktile.ApiModels;
 
 namespace Worktile.ViewModels.Message.Detail
 {
     class AddMemberViewModel : ViewModel, INotifyPropertyChanged
     {
-        public AddMemberViewModel(List<Member> members)
+        public AddMemberViewModel(ChannelSession session)
         {
-            _members = members;
             Members = new ObservableCollection<Member>();
-            members.ForEach(i => Members.Add(i));
+            _session = session;
+            _members = new List<Member>();
+            foreach (var item in DataSource.Team.Members)
+            {
+                if (item.Role != RoleType.Bot && session.Members.All(m => m.Uid != item.Uid))
+                {
+                    item.ForShowAvatar(AvatarSize.X80);
+                    _members.Add(item);
+                    Members.Add(item);
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly List<Member> _members;
+        private readonly ChannelSession _session;
 
         public ObservableCollection<Member> Members { get; }
 
@@ -60,6 +77,19 @@ namespace Worktile.ViewModels.Message.Detail
                         Members.Add(m);
                     }
                 });
+            }
+        }
+
+        public async Task AddMemberAsync(Member member)
+        {
+            string url = $"api/channels/{_session.Id}/invite";
+            var req = new { uid = member.Uid };
+            var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url, req);
+            if (res.Code == 200 && res.Data)
+            {
+                _members.Remove(member);
+                Members.Remove(member);
+                _session.Members.Add(member);
             }
         }
     }
