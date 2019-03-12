@@ -133,7 +133,7 @@ namespace Worktile.ViewModels.SignIn
             }
             else if (code == 3000008)
             {
-                ErrorText = "您的验证信息已过期，请刷新页面重试。";
+                ErrorText = "您的验证信息已过期，请点击验证码刷新。";
                 ShowError = true;
             }
             IsActive = false;
