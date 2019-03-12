@@ -11,6 +11,7 @@ using Windows.System;
 using Worktile.ViewModels;
 using Worktile.ViewModels.Message;
 using Worktile.Models.Message.Session;
+using Worktile.Views.Message.Detail;
 
 namespace Worktile.Views.Message
 {
@@ -73,10 +74,31 @@ namespace Worktile.Views.Message
             }
         }
 
-        private async void CreateGroup_Click(object sender, RoutedEventArgs e)
+        private void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new CreateGroupDialog();
-            await dialog.ShowAsync();
+            Type sourcePageType = typeof(CreateChannelPage);
+            if (ContentFrame.CurrentSourcePageType != sourcePageType)
+            {
+                ContentFrame.Navigate(typeof(CreateChannelPage), ViewModel.MainViewModel);
+                ViewModel.MainViewModel.NavigationView.IsBackEnabled = true;
+                ViewModel.MainViewModel.NavigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+                ViewModel.MainViewModel.NavigationView.BackRequested += NavigationView_BackRequested;
+            }
+        }
+
+        private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            if (ContentFrame.CanGoBack)
+            {
+                ContentFrame.GoBack();
+            }
+            else
+            {
+                ContentFrame.Navigate(typeof(TransparentPage));
+            }
+            ViewModel.MainViewModel.NavigationView.IsBackEnabled = false;
+            ViewModel.MainViewModel.NavigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            ViewModel.MainViewModel.NavigationView.BackRequested -= NavigationView_BackRequested;
         }
 
         private void CreateNewSession(ISession session)

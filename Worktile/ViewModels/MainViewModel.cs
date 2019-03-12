@@ -37,33 +37,10 @@ namespace Worktile.ViewModels
 {
     public class MainViewModel : ViewModel, INotifyPropertyChanged, IDisposable
     {
-        public MainViewModel(CoreDispatcher dispatcher, Frame contentFrame, InAppNotification inAppNotification)
+        public MainViewModel()
         {
             Apps = new ObservableCollection<WtApp>();
-            _dispatcher = dispatcher;
-            _contentFrame = contentFrame;
-            _inAppNotification = inAppNotification;
             NetworkHelper.Instance.NetworkChanged += NetworkChanged;
-        }
-
-        private async void NetworkChanged(object sender, EventArgs e)
-        {
-            await Task.Run(async () =>
-            {
-                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
-                {
-                    var helper = sender as NetworkHelper;
-                    if (helper.ConnectionInformation.IsInternetAvailable)
-                    {
-                        ShowNotification("网络已恢复，正在重新连接……", NotificationLevel.Warning, 4000);
-                    }
-                    else
-                    {
-                        ShowNotification("网络已断开，正在重新连接……", NotificationLevel.Danger, 4000);
-                        ReConnect();
-                    }
-                });
-            });
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -72,14 +49,15 @@ namespace Worktile.ViewModels
         public event Action<Models.Message.Message> OnMessageReceived;
         public event Action<Models.Message.Feed> OnFeedReceived;
 
-        private CoreDispatcher _dispatcher;
-        private Frame _contentFrame;
-        private InAppNotification _inAppNotification;
         private ThreadPoolTimer _timer;
         private ThreadPoolTimer _reconnectTimer;
         public bool _showConnSuccessNoti;
 
         public string SocketId { get; private set; }
+        public NavigationView NavigationView { get; set; }
+        public Frame ContentFrame { get; set; }
+        public InAppNotification InAppNotification { get; set; }
+        public CoreDispatcher Dispatcher { get; set; }
 
         private int _unreadBadge;
         public int UnreadBadge
@@ -156,6 +134,26 @@ namespace Worktile.ViewModels
         protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private async void NetworkChanged(object sender, EventArgs e)
+        {
+            await Task.Run(async () =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    var helper = sender as NetworkHelper;
+                    if (helper.ConnectionInformation.IsInternetAvailable)
+                    {
+                        ShowNotification("网络已恢复，正在重新连接……", NotificationLevel.Warning, 4000);
+                    }
+                    else
+                    {
+                        ShowNotification("网络已断开，正在重新连接……", NotificationLevel.Danger, 4000);
+                        ReConnect();
+                    }
+                });
+            });
         }
 
         public async Task RequestApiUserMeAsync()
@@ -261,7 +259,7 @@ namespace Worktile.ViewModels
                 _showConnSuccessNoti = true;
                 _reconnectTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
                 {
-                    await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         await ConnectSocketAsync();
                     });
@@ -314,7 +312,7 @@ namespace Worktile.ViewModels
             {
                 _timer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
                 {
-                    await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         using (var dataWriter = new DataWriter(_socket.OutputStream))
                         {
@@ -455,13 +453,13 @@ namespace Worktile.ViewModels
             switch (app)
             {
                 case "message":
-                    _contentFrame.Navigate(typeof(MasterPage), this);
+                    ContentFrame.Navigate(typeof(MasterPage), this);
                     break;
                 //case "mission":
                 //    ContentFrame.Navigate(typeof(MissionPage));
                 //    break;
                 default:
-                    _contentFrame.Navigate(typeof(WaitForDevelopmentPage));
+                    ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
                     break;
             }
         }
@@ -490,14 +488,14 @@ namespace Worktile.ViewModels
         {
             if (level == NotificationLevel.Default)
             {
-                _inAppNotification.BorderBrush = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
+                InAppNotification.BorderBrush = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
             }
             else
             {
                 string key = level.ToString() + "Brush";
-                _inAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
+                InAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
             }
-            _inAppNotification.Show(text, duration);
+            InAppNotification.Show(text, duration);
         }
 
         public void Dispose()

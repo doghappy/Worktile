@@ -356,6 +356,7 @@
     <Compile Include="ViewModels\Message\Detail\Content\Pin\MemberPinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\PinnedViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\CreateChannelViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\SessionDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\MemberDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\AssistantMessageViewModel.cs" />
@@ -374,6 +375,9 @@
     <Compile Include="ViewModels\SignIn\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignIn\VerifyCodeSignInViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\Message\Detail\CreateChannelPage.xaml.cs">
+      <DependentUpon>CreateChannelPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TransparentPage.xaml.cs">
       <DependentUpon>TransparentPage.xaml</DependentUpon>
     </Compile>
@@ -830,6 +834,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Message\Detail\CreateChannelPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\TransparentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1039,10 +1047,10 @@
       <Version>4.7.0.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Data.Sqlite.Core">
-      <Version>2.2.2</Version>
+      <Version>2.2.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore">
-      <Version>2.2.2</Version>
+      <Version>2.2.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.3</Version>
@@ -1085,7 +1093,9 @@
       <Name>Worktile.Repository</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NavigateModels\Message\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

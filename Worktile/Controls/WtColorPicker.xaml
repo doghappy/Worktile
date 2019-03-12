@@ -5,13 +5,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Loaded="UserControl_Loaded"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <GridView ItemsSource="{x:Bind Colors}" SelectedItem="{x:Bind SelectedColor, Mode=TwoWay}">
+    <GridView ItemsSource="{x:Bind Colors}"
+              SelectedItem="{x:Bind SelectedColor, Mode=TwoWay}"
+              SelectionChanged="GridView_SelectionChanged">
         <GridView.ItemTemplate>
             <DataTemplate x:DataType="x:String">
-                <Ellipse Width="24" Height="24" Fill="{x:Bind}"/>
+                <Border Width="{StaticResource GridViewItemMinWidth}"
+                        Height="{StaticResource GridViewItemMinHeight}"
+                        Background="{x:Bind}">
+                    <FontIcon Style="{StaticResource LcIcon}"
+                              x:Name="CheckIcon"
+                              Visibility="Collapsed"
+                              Foreground="White"
+                              Glyph="&#xE61d;"/>
+                </Border>
             </DataTemplate>
         </GridView.ItemTemplate>
     </GridView>

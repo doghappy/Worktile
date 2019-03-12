@@ -28,13 +28,13 @@ namespace Worktile.ViewModels.Message
         public MasterViewModel(MainViewModel mainViewModel, Frame contentFrame)
         {
             _contentFrame = contentFrame;
-            _mainViewModel = mainViewModel;
+            MainViewModel = mainViewModel;
             Sessions = new ObservableCollection<ISession>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private Frame _contentFrame;
-        private MainViewModel _mainViewModel;
+        public MainViewModel MainViewModel { get; }
 
         public ObservableCollection<ISession> Sessions { get; }
 
@@ -130,9 +130,9 @@ namespace Worktile.ViewModels.Message
             }
             IsActive = false;
 
-            _mainViewModel.UnreadBadge += Sessions.Sum(s => s.UnRead);
-            _mainViewModel.OnMessageReceived += OnMessageReceived;
-            _mainViewModel.OnFeedReceived += OnFeedReceived;
+            MainViewModel.UnreadBadge += Sessions.Sum(s => s.UnRead);
+            MainViewModel.OnMessageReceived += OnMessageReceived;
+            MainViewModel.OnFeedReceived += OnFeedReceived;
         }
 
         private void ContentFrameNavigate(ISession session)
@@ -159,7 +159,7 @@ namespace Worktile.ViewModels.Message
                 _contentFrame.Navigate(type, new ToMessageDetailPageParam
                 {
                     Session = session,
-                    MainViewModel = _mainViewModel,
+                    MainViewModel = MainViewModel,
                     MasterViewModel = this
                 });
             }
@@ -244,8 +244,8 @@ namespace Worktile.ViewModels.Message
 
         public void Dispose()
         {
-            _mainViewModel.OnMessageReceived -= OnMessageReceived;
-            _mainViewModel.OnFeedReceived -= OnFeedReceived;
+            MainViewModel.OnMessageReceived -= OnMessageReceived;
+            MainViewModel.OnFeedReceived -= OnFeedReceived;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Worktile.Views
         public MainPage()
         {
             InitializeComponent();
-            ViewModel = new MainViewModel(Dispatcher, ContentFrame, InAppNotification);
+            ViewModel = new MainViewModel();
         }
 
         public MainViewModel ViewModel { get; }
@@ -25,6 +25,10 @@ namespace Worktile.Views
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.IsActive = true;
+            ViewModel.Dispatcher = Dispatcher;
+            ViewModel.ContentFrame = ContentFrame;
+            ViewModel.InAppNotification = InAppNotification;
+            ViewModel.NavigationView = Nav;
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
             if (string.IsNullOrEmpty(domain))
             {

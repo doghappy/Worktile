@@ -1,0 +1,79 @@
+﻿<Page
+    x:Class="Worktile.Views.Message.Detail.CreateChannelPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Message.Detail"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:member="using:Worktile.Models.Member"
+    xmlns:tethys="using:Worktile.Tethys"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:controls="using:Worktile.Controls"
+    Background="{ThemeResource SystemControlAcrylicElementBrush}"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Grid Padding="32">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="创建群组"
+                   Margin="0 0 0 16"
+                   Style="{ThemeResource SubtitleTextBlockStyle}"/>
+
+        <TextBox Grid.Row="1"
+                 x:Name="ChannelNameTextBox"
+                 Margin="0 0 0 16"
+                 Text="{x:Bind ViewModel.ChannelName, Mode=TwoWay}"
+                 PlaceholderText="群组名称"/>
+
+        <controls:WtColorPicker Grid.Row="2"
+                                Margin="0 0 0 16"
+                                SelectedColor="{x:Bind ViewModel.Color, Mode=TwoWay}"/>
+
+        <TextBox Grid.Row="3"
+                 Margin="0 0 0 16"
+                 Header="群组主题"
+                 PlaceholderText="说明群组主要讨论的内容"
+                 Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
+                 AcceptsReturn="True"/>
+
+        <ToggleSwitch Grid.Row="4"
+                      Margin="0 0 0 16"
+                      IsOn="{x:Bind ViewModel.IsPrivate, Mode=TwoWay}"
+                      Header="可见性"
+                      OffContent="公开群组"
+                      OnContent="私有群组"/>
+
+        <controls:MemberPicker Grid.Row="5"
+                               Margin="0 0 0 16"
+                               SelectedAvatars="{x:Bind ViewModel.SelectedAvatars}"/>
+        
+        <tethys:Alert Grid.Row="6"
+                      Mode="Danger"
+                      Icon="Cancel"
+                      Margin="0 0 0 16"
+                      Visibility="{x:Bind ViewModel.ShowError, Mode=OneWay}"
+                      Text="{x:Bind ViewModel.ErrorText, Mode=OneWay}"/>
+
+        <StackPanel Grid.Row="7" Orientation="Horizontal">
+            <Button Content="确定"
+                    Background="{ThemeResource SystemAccentColor}"
+                    Style="{ThemeResource ButtonRevealStyle}"
+                    Click="PrimaryButton_Click"
+                    Foreground="White"/>
+            <Button Content="取消"
+                    Click="GoBackButton_Click"
+                    Margin="8 0 0 0"/>
+        </StackPanel>
+    </Grid>
+</Page>
