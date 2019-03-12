@@ -349,6 +349,7 @@
     <Compile Include="PageModels\WtKeyValue.cs" />
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\AddMemberViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\SessionMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\FileMessageViewModel.cs" />

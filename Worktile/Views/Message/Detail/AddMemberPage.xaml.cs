@@ -12,19 +12,38 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
+using Worktile.Common;
+using Worktile.Common.Extensions;
+using Worktile.Enums;
+using Worktile.Models.Member;
+using Worktile.Models.Message.Session;
+using Worktile.ViewModels.Message.Detail;
 
 namespace Worktile.Views.Message.Detail
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
     public sealed partial class AddMemberPage : Page
     {
         public AddMemberPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+
+        }
+
+        AddMemberViewModel ViewModel { get; set; }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var session = e.Parameter as ChannelSession;
+            List<Member> members = new List<Member>();
+            foreach (var item in DataSource.Team.Members)
+            {
+                if (item.Role != RoleType.Bot && session.Members.All(m => m.Uid != item.Uid))
+                {
+                    item.ForShowAvatar(AvatarSize.X80);
+                    members.Add(item);
+                }
+            }
+            ViewModel = new AddMemberViewModel(members);
         }
     }
 }

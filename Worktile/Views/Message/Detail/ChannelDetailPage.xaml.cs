@@ -83,7 +83,7 @@ namespace Worktile.Views.Message.Detail
 
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(typeof(AddMemberPage));
+            ContentFrame.Navigate(typeof(AddMemberPage), ViewModel.Session);
             Nav.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
             Nav.BackRequested += Nav_BackRequested;
             Nav.IsBackEnabled = true;
