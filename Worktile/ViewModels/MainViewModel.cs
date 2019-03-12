@@ -55,7 +55,6 @@ namespace Worktile.ViewModels
         public bool _showConnSuccessNoti;
 
         public string SocketId { get; private set; }
-        public NavigationView NavigationView { get; set; }
         public Frame ContentFrame { get; set; }
         public InAppNotification InAppNotification { get; set; }
         public CoreDispatcher Dispatcher { get; set; }

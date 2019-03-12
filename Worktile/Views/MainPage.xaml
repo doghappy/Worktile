@@ -15,7 +15,7 @@
             <ImageBrush ImageSource="{x:Bind ViewModel.BgImage, Mode=OneWay}" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <NavigationView x:Name="Nav"
+        <NavigationView x:Name="MainNavView"
                         PaneDisplayMode="LeftCompact"
                         MenuItemsSource="{x:Bind ViewModel.Apps}"
                         SelectedItem="{x:Bind ViewModel.SelectedApp, Mode=TwoWay}"
@@ -46,7 +46,7 @@
                 </StackPanel>
             </NavigationView.PaneFooter>
 
-            <Frame x:Name="ContentFrame">
+            <Frame x:Name="MainContentFrame">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition/>

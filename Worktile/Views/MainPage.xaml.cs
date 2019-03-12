@@ -26,9 +26,8 @@ namespace Worktile.Views
         {
             ViewModel.IsActive = true;
             ViewModel.Dispatcher = Dispatcher;
-            ViewModel.ContentFrame = ContentFrame;
+            ViewModel.ContentFrame = MainContentFrame;
             ViewModel.InAppNotification = InAppNotification;
-            ViewModel.NavigationView = Nav;
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
             if (string.IsNullOrEmpty(domain))
             {
@@ -60,13 +59,13 @@ namespace Worktile.Views
         private void Me_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             ViewModel.SelectedApp = null;
-            ContentFrame.Navigate(typeof(ProfilePage));
+            MainContentFrame.Navigate(typeof(ProfilePage));
         }
 
         private void Setting_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             ViewModel.SelectedApp = null;
-            ContentFrame.Navigate(typeof(TestPage));
+            MainContentFrame.Navigate(typeof(TestPage));
         }
     }
 }

@@ -25,16 +25,14 @@ namespace Worktile.ViewModels.Message
 {
     class MasterViewModel : MessageViewModel, INotifyPropertyChanged, IDisposable
     {
-        public MasterViewModel(MainViewModel mainViewModel, Frame contentFrame)
+        public MasterViewModel()
         {
-            _contentFrame = contentFrame;
-            MainViewModel = mainViewModel;
             Sessions = new ObservableCollection<ISession>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private Frame _contentFrame;
-        public MainViewModel MainViewModel { get; }
+        public Frame ContentFrame { get; set; }
+        public MainViewModel MainViewModel { get; set; }
 
         public ObservableCollection<ISession> Sessions { get; }
 
@@ -139,7 +137,7 @@ namespace Worktile.ViewModels.Message
         {
             if (session == null)
             {
-                _contentFrame.Navigate(typeof(TransparentPage));
+                ContentFrame.Navigate(typeof(TransparentPage));
             }
             else
             {
@@ -156,7 +154,7 @@ namespace Worktile.ViewModels.Message
                         type = typeof(ChannelDetailPage);
                         break;
                 }
-                _contentFrame.Navigate(type, new ToMessageDetailPageParam
+                ContentFrame.Navigate(type, new ToMessageDetailPageParam
                 {
                     Session = session,
                     MainViewModel = MainViewModel,
@@ -247,5 +245,7 @@ namespace Worktile.ViewModels.Message
             MainViewModel.OnMessageReceived -= OnMessageReceived;
             MainViewModel.OnFeedReceived -= OnFeedReceived;
         }
+
+
     }
 }

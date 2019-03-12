@@ -21,7 +21,7 @@
             <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
         </Button.Resources>
 
-        <Grid Padding="18 10" BorderThickness="2 0 0 0" BorderBrush="{StaticResource DefaultThemeBrush}">
+        <Grid Padding="18 10" BorderThickness="2 0 0 0" BorderBrush="{StaticResource PrimaryBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

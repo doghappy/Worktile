@@ -24,6 +24,8 @@ namespace Worktile.Views.Message
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        NavigationView _mainNavView;
+
         private MasterViewModel _viewModel;
         private MasterViewModel ViewModel
         {
@@ -40,13 +42,18 @@ namespace Worktile.Views.Message
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            _mainNavView = this.GetParent<NavigationView>("MainNavView");
             await ViewModel.InitializeAsync();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var mainViewModel = e.Parameter as MainViewModel;
-            ViewModel = new MasterViewModel(mainViewModel, ContentFrame);
+            ViewModel = new MasterViewModel
+            {
+                ContentFrame = MasterContentFrame,
+                MainViewModel = mainViewModel
+            };
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -74,31 +81,45 @@ namespace Worktile.Views.Message
             }
         }
 
-        private void CreateGroup_Click(object sender, RoutedEventArgs e)
+        private void CreateChannel_Click(object sender, RoutedEventArgs e)
         {
             Type sourcePageType = typeof(CreateChannelPage);
-            if (ContentFrame.CurrentSourcePageType != sourcePageType)
+            if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
             {
-                ContentFrame.Navigate(typeof(CreateChannelPage), ViewModel.MainViewModel);
-                ViewModel.MainViewModel.NavigationView.IsBackEnabled = true;
-                ViewModel.MainViewModel.NavigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-                ViewModel.MainViewModel.NavigationView.BackRequested += NavigationView_BackRequested;
+                MasterContentFrame.Navigate(sourcePageType, ViewModel.MainViewModel);
+                _mainNavView.IsBackEnabled = true;
+                _mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+                _mainNavView.BackRequested += NavigationView_BackRequested;
             }
         }
 
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            if (ContentFrame.CanGoBack)
+            var names = new[] { nameof(CreateChannelPage), nameof(JoinChannelPage) };
+            while (true)
             {
-                ContentFrame.GoBack();
+                var item = MasterContentFrame.BackStack.FirstOrDefault(t => names.Contains(t.SourcePageType.Name));
+                if (item == null)
+                {
+                    break;
+                }
+                else
+                {
+                    MasterContentFrame.BackStack.Remove(item);
+                }
+            }
+
+            if (MasterContentFrame.CanGoBack)
+            {
+                MasterContentFrame.GoBack();
             }
             else
             {
-                ContentFrame.Navigate(typeof(TransparentPage));
+                MasterContentFrame.Navigate(typeof(TransparentPage));
             }
-            ViewModel.MainViewModel.NavigationView.IsBackEnabled = false;
-            ViewModel.MainViewModel.NavigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
-            ViewModel.MainViewModel.NavigationView.BackRequested -= NavigationView_BackRequested;
+            _mainNavView.IsBackEnabled = false;
+            _mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            _mainNavView.BackRequested -= NavigationView_BackRequested;
         }
 
         private void CreateNewSession(ISession session)
@@ -117,16 +138,16 @@ namespace Worktile.Views.Message
             }
         }
 
-        private async void JoinGroup_Click(object sender, RoutedEventArgs e)
+        private void JoinChannel_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new JoinGroupDialog();
-            dialog.OnActived += session => CreateNewSession(session);
-            dialog.OnJoined += session =>
+            Type sourcePageType = typeof(JoinChannelPage);
+            if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
             {
-                ViewModel.Sessions.Insert(0, session);
-                ViewModel.SelectedSession = session;
-            };
-            await dialog.ShowAsync();
+                MasterContentFrame.Navigate(sourcePageType, ViewModel);
+                _mainNavView.IsBackEnabled = true;
+                _mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+                _mainNavView.BackRequested += NavigationView_BackRequested;
+            }
         }
 
         private async void AddMember_Click(object sender, RoutedEventArgs e)

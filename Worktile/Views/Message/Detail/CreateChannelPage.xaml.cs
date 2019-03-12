@@ -34,7 +34,7 @@ namespace Worktile.Views.Message.Detail
         private void ClosePage()
         {
             var masterPage = Frame.GetParent<MasterPage>();
-            var frame = masterPage.GetChild<Frame>("ContentFrame");
+            var frame = masterPage.GetChild<Frame>("MasterContentFrame");
             if (frame.CanGoBack)
             {
                 frame.GoBack();
@@ -43,8 +43,9 @@ namespace Worktile.Views.Message.Detail
             {
                 frame.Navigate(typeof(TransparentPage));
             }
-            _mainViewModel.NavigationView.IsBackEnabled = false;
-            _mainViewModel.NavigationView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            var mainNavView = this.GetParent<NavigationView>("MainNavView");
+            mainNavView.IsBackEnabled = false;
+            mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)

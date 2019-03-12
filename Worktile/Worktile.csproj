@@ -357,6 +357,7 @@
     <Compile Include="ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\PinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\CreateChannelViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\JoinChannelViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\SessionDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\MemberDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\AssistantMessageViewModel.cs" />
@@ -377,6 +378,9 @@
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Detail\CreateChannelPage.xaml.cs">
       <DependentUpon>CreateChannelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Detail\JoinChannelPage.xaml.cs">
+      <DependentUpon>JoinChannelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TransparentPage.xaml.cs">
       <DependentUpon>TransparentPage.xaml</DependentUpon>
@@ -401,12 +405,6 @@
     </Compile>
     <Compile Include="Views\Message\Dialog\CreateChatDialog.xaml.cs">
       <DependentUpon>CreateChatDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Message\Dialog\CreateGroupDialog.xaml.cs">
-      <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Message\Dialog\JoinGroupDialog.xaml.cs">
-      <DependentUpon>JoinGroupDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Message\Feed.cs" />
     <Compile Include="Enums\FeedType.cs" />
@@ -838,6 +836,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Message\Detail\JoinChannelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TransparentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -887,14 +889,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\Dialog\CreateChatDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Message\Dialog\CreateGroupDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Message\Dialog\JoinGroupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -42,12 +42,12 @@
                         <Button.Flyout>
                             <MenuFlyout>
                                 <MenuFlyout.Items>
-                                    <MenuFlyoutItem Text="创建组群" Click="CreateGroup_Click">
+                                    <MenuFlyoutItem Text="创建组群" Click="CreateChannel_Click">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Glyph="&#xEBDA;"/>
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
-                                    <MenuFlyoutItem Text="加入组群" Click="JoinGroup_Click">
+                                    <MenuFlyoutItem Text="加入组群" Click="JoinChannel_Click">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Glyph="&#xE902;"/>
                                         </MenuFlyoutItem.Icon>
@@ -196,7 +196,7 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                <Frame x:Name="ContentFrame">
+                <Frame x:Name="MasterContentFrame">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition/>
