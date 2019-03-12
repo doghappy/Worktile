@@ -21,5 +21,7 @@ namespace Worktile.Common.Extensions
         {
             member.TethysAvatar = AvatarHelper.GetAvatar(member, size);
         }
+
+        public static bool IsTrueMember(this Member member) => member.Role != RoleType.Bot && !string.IsNullOrEmpty(member.Team);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.UI.Xaml;
@@ -14,46 +15,47 @@ using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Models.Department;
 using Worktile.Views.Message;
+using Worktile.Models.Member;
+using Worktile.Common.Extensions;
 
 namespace Worktile.Controls
 {
-    public sealed partial class MemberPickerEditor : UserControl//, INotifyPropertyChanged
+    public sealed partial class MemberPickerEditor : UserControl, INotifyPropertyChanged
     {
         public MemberPickerEditor()
         {
             InitializeComponent();
             UnSelectedAvatars = new ObservableCollection<TethysAvatar>();
             SelectedAvatars = new ObservableCollection<TethysAvatar>();
-            //SelectedAvatars.CollectionChanged += SelectedAvatars_CollectionChanged;
-            SuggestAvatars = new ObservableCollection<TethysAvatar>();
             DepartmentNodes = new ObservableCollection<DepartmentNode>();
         }
 
         public event Action<MemberPickerEditor> OnPrimaryButtonClick;
         public event Action<MemberPickerEditor> OnCloseButtonClick;
 
-        //public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        //private string _title;
-        //public string Title
-        //{
-        //    get => _title;
-        //    set
-        //    {
-        //        if (_title != value)
-        //        {
-        //            _title = value;
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Title)));
-        //        }
-        //    }
-        //}
+        private string _queryText;
+        public string QueryText
+        {
+            get => _queryText;
+            set
+            {
+                if (_queryText != value)
+                {
+                    _queryText = value;
+                    OnQueryTextChanged();
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Title)));
+                }
+            }
+        }
+
         private List<DepartmentNode> _departmentNodeList { get; set; }
 
         public string Title { get; set; }
 
         public ObservableCollection<TethysAvatar> UnSelectedAvatars { get; }
         public ObservableCollection<TethysAvatar> SelectedAvatars { get; }
-        public ObservableCollection<TethysAvatar> SuggestAvatars { get; }
         public ObservableCollection<DepartmentNode> DepartmentNodes { get; }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -71,30 +73,30 @@ namespace Worktile.Controls
             SelectedAvatars.Remove(item);
         }
 
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private void OnQueryTextChanged()
         {
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            string text = QueryText.Trim();
+            UnSelectedAvatars.Clear();
+            if (text == string.Empty)
             {
-                string text = sender.Text.Trim();
-                if (text != string.Empty)
+                foreach (var item in DataSource.Team.Members)
                 {
-                    SuggestAvatars.Clear();
-                    var items = UnSelectedAvatars.Where(a => a.DisplayName.Contains(text) || a.DisplayNamePinyin.Any(p => p.Contains(text, StringComparison.CurrentCultureIgnoreCase)));
-                    foreach (var item in items)
+                    if (item.IsTrueMember() && !SelectedAvatars.Any(a => a.Name == item.Name))
                     {
-                        SuggestAvatars.Add(item);
+                        UnSelectedAvatars.Add(item.TethysAvatar);
                     }
                 }
             }
-        }
-
-        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            if (args.ChosenSuggestion is TethysAvatar item)
+            else
             {
-                SelectedAvatars.Add(item);
-                UnSelectedAvatars.Remove(item);
-                SuggestAvatars.Remove(item);
+                foreach (var item in DataSource.Team.Members)
+                {
+                    if (item.IsTrueMember() && !SelectedAvatars.Any(a => a.Name == item.Name)
+                        && (item.TethysAvatar.DisplayName.Contains(text, StringComparison.CurrentCultureIgnoreCase) || item.TethysAvatar.DisplayNamePinyin.Any(p => p.Contains(text, StringComparison.CurrentCultureIgnoreCase))))
+                    {
+                        UnSelectedAvatars.Add(item.TethysAvatar);
+                    }
+                }
             }
         }
 
@@ -105,7 +107,6 @@ namespace Worktile.Controls
                 SelectedAvatars.Add(item);
             }
             UnSelectedAvatars.Clear();
-            SuggestAvatars.Clear();
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
@@ -120,17 +121,19 @@ namespace Worktile.Controls
         // 加载部门树，TreeView控件存在Bug
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            // 此控件外部是Flyout，Flyout会缓存内容，此处判断是为了性能。
             if (!UnSelectedAvatars.Any())
             {
                 foreach (var item in DataSource.Team.Members)
                 {
-                    if (item.Role != RoleType.Bot)
+                    if (item.IsTrueMember())
                     {
-                        UnSelectedAvatars.Add(AvatarHelper.GetAvatar(item, AvatarSize.X40));
+                        UnSelectedAvatars.Add(item.TethysAvatar);
                     }
                 }
             }
 
+            // 此控件外部是Flyout，Flyout会缓存内容，此处判断是为了性能。
             if (!DepartmentNodes.Any())
             {
                 string url = $"/api/departments/tree?async=false";

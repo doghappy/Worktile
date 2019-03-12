@@ -13,8 +13,11 @@
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
-    <Grid Padding="32">
+    <Page.Resources>
+        <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
+    </Page.Resources>
 
+    <Grid Padding="32">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -69,6 +72,7 @@
             <Button Content="确定"
                     Background="{ThemeResource SystemAccentColor}"
                     Style="{ThemeResource ButtonRevealStyle}"
+                    IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
                     Click="PrimaryButton_Click"
                     Foreground="White"/>
             <Button Content="取消"

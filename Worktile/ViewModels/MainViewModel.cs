@@ -32,6 +32,7 @@ using Worktile.Views;
 using Worktile.Views.Message;
 using Worktile.ApiModels;
 using Worktile.Models.Team;
+using Worktile.Common.Extensions;
 
 namespace Worktile.ViewModels
 {
@@ -195,6 +196,8 @@ namespace Worktile.ViewModels
             });
             SelectedApp = Apps.First();
             Logo = new BitmapImage(new Uri(DataSource.ApiUserMeData.Config.Box.LogoUrl + DataSource.Team.Logo));
+
+            DataSource.Team.Members.ForEach(m => m.ForShowAvatar(AvatarSize.X80));
         }
 
         private async Task ConnectSocketAsync()

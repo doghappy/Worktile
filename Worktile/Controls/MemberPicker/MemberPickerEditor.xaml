@@ -52,27 +52,13 @@
 
                         <AutoSuggestBox PlaceholderText="搜索成员..."
                                         QueryIcon="Find"
-                                        TextMemberPath="DisplayName"
                                         Margin="0 0 0 12"
-                                        ItemsSource="{x:Bind SuggestAvatars}"
-                                        QuerySubmitted="AutoSuggestBox_QuerySubmitted"
-                                        TextChanged="AutoSuggestBox_TextChanged">
-                            <AutoSuggestBox.ItemTemplate>
-                                <DataTemplate x:DataType="models:TethysAvatar">
-                                    <StackPanel Orientation="Horizontal">
-                                        <tethys:Avatar Size="30"
-                                                       DisplayName="{x:Bind DisplayName}"
-                                                       Source="{x:Bind Source}"
-                                                       Background="{x:Bind Background}"/>
-                                        <TextBlock Text="{x:Bind DisplayName}" VerticalAlignment="Center" Margin="4 0 0 0"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </AutoSuggestBox.ItemTemplate>
-                        </AutoSuggestBox>
+                                        Text="{x:Bind QueryText, Mode=TwoWay}"/>
 
                         <ListView Grid.Row="1"
                                   SelectionMode="None"
                                   IsItemClickEnabled="True"
+                                  Height="360"
                                   ItemClick="ListView_ItemClick"
                                   ItemsSource="{x:Bind UnSelectedAvatars}">
 
@@ -101,7 +87,7 @@
                 </PivotItem>
 
                 <PivotItem Header="部门">
-                    <TreeView ItemsSource="{x:Bind DepartmentNodes}" SelectionMode="Multiple">
+                    <TreeView ItemsSource="{x:Bind DepartmentNodes}" SelectionMode="Multiple" Margin="0 12">
                         <TreeView.ItemTemplate>
                             <DataTemplate x:DataType="department:DepartmentNode">
                                 <TreeViewItem ItemsSource="{x:Bind Children}">

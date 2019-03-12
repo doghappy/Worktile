@@ -117,6 +117,7 @@ namespace Worktile.ViewModels.Message.Detail
 
         public async Task<bool> CreateAsync()
         {
+            IsActive = true;
             var uids = SelectedAvatars.Select(a => a.Id);
             var req = new
             {
@@ -127,6 +128,7 @@ namespace Worktile.ViewModels.Message.Detail
                 visibility = IsPrivate ? WtVisibility.Private : WtVisibility.Public
             };
             var res = await WtHttpClient.PostAsync<ApiDataResponse<ChannelSession>>("api/channel", req);
+            IsActive = false;
             return res.Code == 200;
         }
     }
