@@ -19,6 +19,7 @@ using Worktile.Models.Message.Session;
 using Worktile.Common.Extensions;
 using Worktile.Views.Message.Detail;
 using Windows.UI.Xaml;
+using Worktile.Views;
 
 namespace Worktile.ViewModels.Message
 {
@@ -136,24 +137,32 @@ namespace Worktile.ViewModels.Message
 
         private void ContentFrameNavigate(ISession session)
         {
-            Type type = null;
-            switch (session.PageType)
+            if (session == null)
             {
-                case PageType.Assistant:
-                    type = typeof(AssistantDetailPage);
-                    break;
-                case PageType.Member:
-                    type = typeof(MemberDetailPage);
-                    break;
-                case PageType.Channel:
-                    type = typeof(ChannelDetailPage);
-                    break;
+                _contentFrame.Navigate(typeof(TransparentPage));
             }
-            _contentFrame.Navigate(type, new ToMessageDetailPageParam
+            else
             {
-                Session = session,
-                MainViewModel = _mainViewModel
-            });
+                Type type = null;
+                switch (session.PageType)
+                {
+                    case PageType.Assistant:
+                        type = typeof(AssistantDetailPage);
+                        break;
+                    case PageType.Member:
+                        type = typeof(MemberDetailPage);
+                        break;
+                    case PageType.Channel:
+                        type = typeof(ChannelDetailPage);
+                        break;
+                }
+                _contentFrame.Navigate(type, new ToMessageDetailPageParam
+                {
+                    Session = session,
+                    MainViewModel = _mainViewModel,
+                    MasterViewModel = this
+                });
+            }
         }
 
         private async void OnMessageReceived(Models.Message.Message apiMsg)

@@ -13,18 +13,23 @@ using Worktile.Enums;
 using Worktile.Common;
 using System;
 using Worktile.Enums.Privileges;
+using System.Threading.Tasks;
+using Worktile.Common.WtRequestClient;
+using Worktile.ApiModels;
 
 namespace Worktile.ViewModels.Message
 {
     class ChannelDetailViewModel : SessionDetailViewModel<ChannelSession>, INotifyPropertyChanged
     {
-        public ChannelDetailViewModel(ChannelSession session, Frame contentFrame, MainViewModel mainViewModel)
+        public ChannelDetailViewModel(ChannelSession session, Frame contentFrame, MainViewModel mainViewModel, MasterViewModel masterViewModel)
             : base(session, contentFrame, mainViewModel)
         {
+            _masterViewModel = masterViewModel;
             SetPermission();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        readonly MasterViewModel _masterViewModel;
 
         public override ObservableCollection<TopNav> Navs { get; protected set; }
 
@@ -93,6 +98,16 @@ namespace Worktile.ViewModels.Message
             int messagePermission = Convert.ToInt32(DataSource.Team.Privileges.Message.Value, 2);
             CanAddMember = Session.Visibility == WtVisibility.Private || (((int)MessagePrivilege.AdminPublicChannel & messagePermission) != 0 && !Session.IsSystem);
             CanAdminChannel = Session.Visibility == WtVisibility.Private || (!Session.IsSystem && ((int)MessagePrivilege.AdminPublicChannel & messagePermission) != 0);
+        }
+
+        public async Task ExitChannelAsync()
+        {
+            string url = $"api/channels/{Session.Id}/leave";
+            var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
+            if (res.Code == 200 && res.Data)
+            {
+                _masterViewModel.Sessions.Remove(Session);
+            }
         }
     }
 }

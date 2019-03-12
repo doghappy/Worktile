@@ -54,8 +54,6 @@ namespace Worktile.Views.Message
             ViewModel.Dispose();
         }
 
-
-
         private ISession _rightTappedSession;
 
         private void ListView_RightTapped(object sender, RightTappedRoutedEventArgs e)

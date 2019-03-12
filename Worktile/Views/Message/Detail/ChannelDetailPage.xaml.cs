@@ -11,6 +11,7 @@ using Worktile.Models.Member;
 using Windows.System;
 using System;
 using Worktile.Common;
+using Worktile.Enums;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -43,7 +44,7 @@ namespace Worktile.Views.Message.Detail
         {
             _navParam = e.Parameter as ToMessageDetailPageParam;
             var session = _navParam.Session as ChannelSession;
-            ViewModel = new ChannelDetailViewModel(session, ContentFrame, _navParam.MainViewModel);
+            ViewModel = new ChannelDetailViewModel(session, ContentFrame, _navParam.MainViewModel, _navParam.MasterViewModel);
         }
 
         private void ContactInfo_Click(object sender, RoutedEventArgs e)
@@ -95,6 +96,26 @@ namespace Worktile.Views.Message.Detail
             Nav.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
             Nav.BackRequested -= Nav_BackRequested;
             Nav.IsBackEnabled = false;
+        }
+
+        private async void ExitChannel_Click(object sender, RoutedEventArgs e)
+        {
+            string content = ViewModel.Session.Visibility == WtVisibility.Public
+                ? "该群组为公开群组，退出群组后，你将收不到该群组中的消息，但是仍然可以搜索到群组消息。稍后你可以从群组列表中重新加入该群组。确定要退出群组吗？"
+                : "该群组为私有群组，退出群组后，你将收不到该群组中的消息，并且无法重新加入，除非该群组中的成员邀请你加入。确定要退出群组吗？";
+            var dialog = new ContentDialog
+            {
+                Title = "退出群组",
+                Content = content,
+                PrimaryButtonText = "取消",
+                SecondaryButtonText = "确认退出",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            var result = await dialog.ShowAsync();
+            if (result== ContentDialogResult.Secondary)
+            {
+                await ViewModel.ExitChannelAsync();
+            }
         }
     }
 }

@@ -87,7 +87,7 @@
                                       Label="群组设置"
                                       x:Name="ChannelSettingButton"
                                       x:Load="{x:Bind ViewModel.CanAdminChannel}"/>
-                        <AppBarButton Label="退出群组">
+                        <AppBarButton Label="退出群组" Click="ExitChannel_Click">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE656;" Style="{StaticResource LcIcon}"/>
                             </AppBarButton.Icon>
