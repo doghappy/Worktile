@@ -20,6 +20,7 @@ using Worktile.Common.Extensions;
 using Worktile.Views.Message.Detail;
 using Windows.UI.Xaml;
 using Worktile.Views;
+using Worktile.Enums.Privileges;
 
 namespace Worktile.ViewModels.Message
 {
@@ -28,12 +29,13 @@ namespace Worktile.ViewModels.Message
         public MasterViewModel()
         {
             Sessions = new ObservableCollection<ISession>();
+            SetPermission();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public Frame ContentFrame { get; set; }
         public MainViewModel MainViewModel { get; set; }
-
+        public bool CanAddMember { get; private set; }
         public ObservableCollection<ISession> Sessions { get; }
 
         private ISession _selectedSession;
@@ -82,6 +84,12 @@ namespace Worktile.ViewModels.Message
         protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        private void SetPermission()
+        {
+            int messagePermission = Convert.ToInt32(DataSource.Team.Privileges.Message.Value, 2);
+            CanAddMember = ((int)AdminPrivilege.Member & messagePermission) != 0;
         }
 
         public async Task InitializeAsync()

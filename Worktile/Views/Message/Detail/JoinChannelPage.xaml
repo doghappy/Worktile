@@ -28,6 +28,7 @@
 
         <AutoSuggestBox Grid.Row="1"
                         QueryIcon="Find"
+                        Text="{x:Bind ViewModel.QueryText, Mode=TwoWay}"
                         PlaceholderText="搜索组群"
                         Margin="0 0 0 16"/>
 

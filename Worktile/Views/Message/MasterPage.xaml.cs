@@ -6,7 +6,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Windows.UI.Xaml.Input;
-using Worktile.Views.Message.Dialog;
 using Windows.System;
 using Worktile.ViewModels;
 using Worktile.ViewModels.Message;
@@ -84,18 +83,12 @@ namespace Worktile.Views.Message
         private void CreateChannel_Click(object sender, RoutedEventArgs e)
         {
             Type sourcePageType = typeof(CreateChannelPage);
-            if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
-            {
-                MasterContentFrame.Navigate(sourcePageType, ViewModel.MainViewModel);
-                _mainNavView.IsBackEnabled = true;
-                _mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-                _mainNavView.BackRequested += NavigationView_BackRequested;
-            }
+            EnableNavGoBack(sourcePageType);
         }
 
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            var names = new[] { nameof(TransparentPage), nameof(CreateChannelPage), nameof(JoinChannelPage) };
+            var names = new[] { nameof(TransparentPage), nameof(CreateChannelPage), nameof(JoinChannelPage), nameof(CreateChatPage) };
             while (true)
             {
                 var item = MasterContentFrame.BackStack.FirstOrDefault(t => names.Contains(t.SourcePageType.Name));
@@ -141,13 +134,7 @@ namespace Worktile.Views.Message
         private void JoinChannel_Click(object sender, RoutedEventArgs e)
         {
             Type sourcePageType = typeof(JoinChannelPage);
-            if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
-            {
-                MasterContentFrame.Navigate(sourcePageType, ViewModel);
-                _mainNavView.IsBackEnabled = true;
-                _mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-                _mainNavView.BackRequested += NavigationView_BackRequested;
-            }
+            EnableNavGoBack(sourcePageType);
         }
 
         private async void AddMember_Click(object sender, RoutedEventArgs e)
@@ -155,11 +142,21 @@ namespace Worktile.Views.Message
             await Launcher.LaunchUriAsync(new Uri(DataSource.SubDomain + "/console/members?add=true"));
         }
 
-        private async void CreateChat_Click(object sender, RoutedEventArgs e)
+        private void CreateChat_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new CreateChatDialog();
-            dialog.OnSessionCreated += session => CreateNewSession(session);
-            await dialog.ShowAsync();
+            Type sourcePageType = typeof(CreateChatPage);
+            EnableNavGoBack(sourcePageType);
+        }
+
+        private void EnableNavGoBack(Type sourcePageType)
+        {
+            if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
+            {
+                MasterContentFrame.Navigate(sourcePageType, ViewModel);
+                _mainNavView.IsBackEnabled = true;
+                _mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+                _mainNavView.BackRequested += NavigationView_BackRequested;
+            }
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)

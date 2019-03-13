@@ -350,6 +350,7 @@
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\AddMemberViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\BaseJoinChatViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\SessionMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\FileMessageViewModel.cs" />
@@ -357,6 +358,7 @@
     <Compile Include="ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\PinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\CreateChannelViewModel.cs" />
+    <Compile Include="ViewModels\Message\Detail\CreateChatViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\JoinChannelViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\SessionDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\MemberDetailViewModel.cs" />
@@ -378,6 +380,9 @@
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\Message\Detail\CreateChannelPage.xaml.cs">
       <DependentUpon>CreateChannelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Message\Detail\CreateChatPage.xaml.cs">
+      <DependentUpon>CreateChatPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Detail\JoinChannelPage.xaml.cs">
       <DependentUpon>JoinChannelPage.xaml</DependentUpon>
@@ -402,9 +407,6 @@
     </Compile>
     <Compile Include="Views\Message\Detail\Content\AssistantMessagePage.xaml.cs">
       <DependentUpon>AssistantMessagePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Message\Dialog\CreateChatDialog.xaml.cs">
-      <DependentUpon>CreateChatDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Message\Feed.cs" />
     <Compile Include="Enums\FeedType.cs" />
@@ -836,6 +838,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Message\Detail\CreateChatPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Message\Detail\JoinChannelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -885,10 +891,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Message\Detail\Content\MemberMessagePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Message\Dialog\CreateChatDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

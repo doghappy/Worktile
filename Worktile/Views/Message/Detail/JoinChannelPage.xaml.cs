@@ -13,10 +13,9 @@ namespace Worktile.Views.Message.Detail
         public JoinChannelPage()
         {
             InitializeComponent();
-            ViewModel = new JoinChannelViewModel();
         }
 
-        JoinChannelViewModel ViewModel { get; }
+        JoinChannelViewModel ViewModel { get; set; }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -25,7 +24,8 @@ namespace Worktile.Views.Message.Detail
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModel.MasterViewModel = e.Parameter as MasterViewModel;
+            var masterViewModel = e.Parameter as MasterViewModel;
+            ViewModel = new JoinChannelViewModel(masterViewModel);
         }
 
         private async void SendMessageButton_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -11,17 +12,15 @@ using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message.Detail
 {
-    class JoinChannelViewModel : ViewModel, INotifyPropertyChanged
+    class JoinChannelViewModel : BaseJoinChatViewModel, INotifyPropertyChanged
     {
-        public JoinChannelViewModel()
+        public JoinChannelViewModel(MasterViewModel masterViewModel) : base(masterViewModel)
         {
             Sessions = new ObservableCollection<ChannelSession>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         List<ChannelSession> _sessions;
-
-        public MasterViewModel MasterViewModel { get; set; }
 
         public ObservableCollection<ChannelSession> Sessions { get; }
 
@@ -44,6 +43,29 @@ namespace Worktile.ViewModels.Message.Detail
             IsActive = false;
         }
 
+        protected override void OnQueryTextChanged()
+        {
+            Sessions.Clear();
+            string text = QueryText.Trim();
+            if (text == string.Empty)
+            {
+                foreach (var item in _sessions)
+                {
+                    Sessions.Add(item);
+                }
+            }
+            else if (text != ",")
+            {
+                foreach (var item in _sessions)
+                {
+                    if (item.Name.Contains(text, StringComparison.CurrentCultureIgnoreCase) || item.NamePinyin.Contains(text, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        Sessions.Add(item);
+                    }
+                }
+            }
+        }
+
         public async Task<bool> ActiveAsync(ChannelSession session)
         {
             string url = $"api/channels/{session.Id}/active";
@@ -54,22 +76,6 @@ namespace Worktile.ViewModels.Message.Detail
                 return true;
             }
             return false;
-        }
-
-        private void CreateNewSession(ISession session)
-        {
-            var ss = MasterViewModel.Sessions.SingleOrDefault(s => s.Id == session.Id);
-            if (ss == null)
-            {
-                MasterViewModel.Sessions.Insert(0, session);
-                MasterViewModel.SelectedSession = session;
-            }
-            else
-            {
-                MasterViewModel.Sessions.Remove(ss);
-                MasterViewModel.Sessions.Insert(0, ss);
-                MasterViewModel.SelectedSession = ss;
-            }
         }
 
         public async Task<bool> JoinAsync(ChannelSession session)
