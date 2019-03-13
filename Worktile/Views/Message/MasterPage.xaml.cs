@@ -95,7 +95,7 @@ namespace Worktile.Views.Message
 
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            var names = new[] { nameof(CreateChannelPage), nameof(JoinChannelPage) };
+            var names = new[] { nameof(TransparentPage), nameof(CreateChannelPage), nameof(JoinChannelPage) };
             while (true)
             {
                 var item = MasterContentFrame.BackStack.FirstOrDefault(t => names.Contains(t.SourcePageType.Name));

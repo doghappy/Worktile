@@ -64,7 +64,7 @@ namespace Worktile.ViewModels.Message.Detail
                 MasterViewModel.Sessions.Insert(0, session);
                 MasterViewModel.SelectedSession = session;
             }
-            else if (MasterViewModel.SelectedSession != ss)
+            else
             {
                 MasterViewModel.Sessions.Remove(ss);
                 MasterViewModel.Sessions.Insert(0, ss);
