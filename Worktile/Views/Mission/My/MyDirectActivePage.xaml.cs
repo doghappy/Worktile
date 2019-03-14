@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels.ApiMissionVnextWorkMyDirectedActive;
 using Worktile.Models.Kanban;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using System.Collections.Generic;
 using System;
 using Worktile.Enums;

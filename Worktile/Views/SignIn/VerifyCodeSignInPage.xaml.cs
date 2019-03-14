@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.ViewModels.SignIn;
 
 namespace Worktile.Views.SignIn

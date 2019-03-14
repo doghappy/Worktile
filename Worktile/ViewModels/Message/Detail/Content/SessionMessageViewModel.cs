@@ -10,12 +10,11 @@ namespace Worktile.ViewModels.Message.Detail.Content
 {
     abstract class SessionMessageViewModel<S> : BaseSessionMessageViewModel<S> where S : ISession
     {
-        public SessionMessageViewModel(S session, MainViewModel mainViewModel) : base(session, mainViewModel) { }
+        public SessionMessageViewModel(S session) : base(session) { }
 
         string _latestId;
 
         protected override string Url => $"/api/messages?ref_id={Session.Id}&ref_type={RefType}&latest_id={_latestId}&size=20";
-        protected virtual int ToType { get; }
 
         protected override void ReadMessage(JToken jToken)
         {
@@ -57,22 +56,6 @@ namespace Worktile.ViewModels.Message.Detail.Content
                 msg.IsPinned = false;
             }
             return result;
-        }
-
-        public async Task<bool> SendMessageAsync(string msg)
-        {
-            var data = new
-            {
-                fromType = 1,
-                from = DataSource.ApiUserMeData.Me.Uid,
-                to = Session.Id,
-                toType = ToType,
-                messageType = 1,
-                client = 1,
-                markdown = 1,
-                content = msg
-            };
-            return await MainViewModel.SendMessageAsync(SocketMessageType.Message, data);
         }
     }
 }

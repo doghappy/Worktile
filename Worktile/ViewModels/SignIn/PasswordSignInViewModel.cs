@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels.SignIn.ApiSignInByPassword;
 using Worktile.Common;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.NavigateModels.SignIn;
 using Worktile.Views.SignIn;
 

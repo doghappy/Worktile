@@ -6,14 +6,14 @@ using Windows.UI.Xaml.Controls;
 using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
+using Worktile.Operators.Message.Detail;
 using Worktile.Views.Message.Detail.Content;
 
 namespace Worktile.ViewModels.Message
 {
     class AssistantDetailViewModel : DetailViewModel<MemberSession>, INotifyPropertyChanged
     {
-        public AssistantDetailViewModel(MemberSession session, Frame contentFrame, MainViewModel mainViewModel)
-            : base(session, contentFrame, mainViewModel)
+        public AssistantDetailViewModel(MemberSession session) : base(session)
         {
             Navs = new ObservableCollection<TopNav>
             {
@@ -37,11 +37,10 @@ namespace Worktile.ViewModels.Message
                 if (_selectedNav != value)
                 {
                     _selectedNav = value;
-                    ContentFrame.Navigate(typeof(AssistantMessagePage), new ToUnReadMsgPageParam
+                    AssistantDetailOperator.ContentFrame.Navigate(typeof(AssistantMessagePage), new ToUnReadMsgPageParam
                     {
                         Session = Session,
-                        Nav = value,
-                        MainViewModel = MainViewModel
+                        Nav = value
                     });
                     OnPropertyChanged();
                 }

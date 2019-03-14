@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media;
 using Worktile.ApiModels;
 using Worktile.ApiModels.ApiPinnedMessages;
 using Worktile.Common;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;

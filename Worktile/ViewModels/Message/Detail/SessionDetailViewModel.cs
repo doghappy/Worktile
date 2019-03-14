@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.UI.Xaml.Controls;
 using Worktile.Models.Message;
 using Worktile.Models.Message.Session;
 
@@ -8,8 +7,7 @@ namespace Worktile.ViewModels.Message
 {
     abstract class SessionDetailViewModel<S> : DetailViewModel<S> where S : ISession
     {
-        public SessionDetailViewModel(S session, Frame contentFrame, MainViewModel mainViewModel)
-            : base(session, contentFrame, mainViewModel)
+        public SessionDetailViewModel(S session) : base(session)
         {
             Navs = new ObservableCollection<TopNav>
             {

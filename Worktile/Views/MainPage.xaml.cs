@@ -3,12 +3,17 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
 using Worktile.ViewModels;
 using Worktile.Views.Profile;
 using Worktile.Views.SignIn;
+using Microsoft.Toolkit.Uwp.Connectivity;
+using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Worktile.Enums;
+using Worktile.Operators;
 
 namespace Worktile.Views
 {
@@ -24,10 +29,11 @@ namespace Worktile.Views
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            NetworkHelper.Instance.NetworkChanged += NetworkChanged;
             ViewModel.IsActive = true;
-            ViewModel.Dispatcher = Dispatcher;
-            ViewModel.ContentFrame = MainContentFrame;
-            ViewModel.InAppNotification = InAppNotification;
+            MainOperator.ContentFrame = MainContentFrame;
+            MainOperator.InAppNotification = InAppNotification;
+            MainOperator.NavView = MainNavView;
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
             if (string.IsNullOrEmpty(domain))
             {
@@ -46,13 +52,13 @@ namespace Worktile.Views
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
-            ViewModel.WindowActivationState = e.WindowActivationState;
+            MainOperator.WindowActivationState = e.WindowActivationState;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            ViewModel.Dispose();
+            WtSocket.Dispose();
             Window.Current.Activated -= Window_Activated;
         }
 
@@ -66,6 +72,26 @@ namespace Worktile.Views
         {
             ViewModel.SelectedApp = null;
             MainContentFrame.Navigate(typeof(TestPage));
+        }
+
+        private async void NetworkChanged(object sender, EventArgs e)
+        {
+            await Task.Run(async () =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    var helper = sender as NetworkHelper;
+                    if (helper.ConnectionInformation.IsInternetAvailable)
+                    {
+                        MainOperator.ShowNotification("网络已恢复，正在重新连接……", NotificationLevel.Warning, 4000);
+                    }
+                    else
+                    {
+                        MainOperator.ShowNotification("网络已断开，正在重新连接……", NotificationLevel.Danger, 4000);
+                        WtSocket.ReConnect();
+                    }
+                });
+            });
         }
     }
 }

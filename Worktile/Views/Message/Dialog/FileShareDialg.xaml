@@ -1,0 +1,67 @@
+﻿<ContentDialog
+    x:Class="Worktile.Views.Message.Dialog.FileShareDialg"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Message.Dialog"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wuxdata="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    mc:Ignorable="d"
+    Title="发送到聊天"
+    PrimaryButtonText="发送"
+    SecondaryButtonText="取消"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    DefaultButton="Primary">
+
+    <ContentDialog.Resources>
+        <CollectionViewSource x:Name="SampleCVS" Source="{x:Bind Items}" IsSourceGrouped="True"/>
+    </ContentDialog.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <SemanticZoom ViewChangeStarted="SemanticZoom_ViewChangeStarted">
+            <SemanticZoom.ZoomedInView>
+                <ListView ItemsSource="{x:Bind SampleCVS.View, Mode=OneWay}" 
+                          ScrollViewer.IsHorizontalScrollChainingEnabled="False">
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate x:DataType="local:SampleItemGroup">
+                                    <TextBlock Text="{x:Bind Key}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:SampleItem">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Bind FirstName}"/>
+                                <TextBlock Text="{x:Bind LastName}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </SemanticZoom.ZoomedInView>
+
+            <SemanticZoom.ZoomedOutView>
+                <GridView ItemsSource="{x:Bind SampleCVS.View.CollectionGroups}"
+                          ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                          SelectionMode="None">
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="wuxdata:ICollectionViewGroup">
+                            <TextBlock Text="{x:Bind Group.(local:SampleItemGroup.Key)}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </SemanticZoom.ZoomedOutView>
+        </SemanticZoom>
+
+        <TextBox Grid.Row="1"
+                 Header="会话内容"
+                 PlaceholderText="说点什么"
+                 AcceptsReturn="True"/>
+    </Grid>
+</ContentDialog>

@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Common.Communication;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
 using Worktile.ViewModels.Message;
@@ -38,13 +39,13 @@ namespace Worktile.Views.Message.Detail.Content
         {
             _param = e.Parameter as ToUnReadMsgPageParam;
             var session = _param.Session as MemberSession;
-            ViewModel = new AssistantMessageViewModel(session, _param.MainViewModel, _param.Nav);
-            _param.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
+            ViewModel = new AssistantMessageViewModel(session, _param.Nav);
+            WtSocket.OnMessageReceived += ViewModel.OnMessageReceived;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            _param.MainViewModel.OnMessageReceived -= ViewModel.OnMessageReceived;
+            WtSocket.OnMessageReceived -= ViewModel.OnMessageReceived;
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

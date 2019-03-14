@@ -3,6 +3,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
+using Worktile.Operators.Message.Detail;
 using Worktile.ViewModels.Message;
 
 namespace Worktile.Views.Message.Detail
@@ -15,8 +16,6 @@ namespace Worktile.Views.Message.Detail
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        ToMessageDetailPageParam _navParam;
 
         private AssistantDetailViewModel _viewModel;
         private AssistantDetailViewModel ViewModel
@@ -34,9 +33,9 @@ namespace Worktile.Views.Message.Detail
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _navParam = e.Parameter as ToMessageDetailPageParam;
-            var session = _navParam.Session as MemberSession;
-            ViewModel = new AssistantDetailViewModel(session, ContentFrame, _navParam.MainViewModel);
+            AssistantDetailOperator.ContentFrame = ContentFrame;
+            var session = e.Parameter as MemberSession;
+            ViewModel = new AssistantDetailViewModel(session);
         }
     }
 }

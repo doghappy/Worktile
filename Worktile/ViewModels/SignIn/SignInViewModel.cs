@@ -4,7 +4,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.Views;
 
 namespace Worktile.ViewModels.SignIn

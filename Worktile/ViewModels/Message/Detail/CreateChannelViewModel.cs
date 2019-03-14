@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Worktile.ApiModels;
 using Worktile.Common;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.Enums;
 using Worktile.Models;
 using Worktile.Models.Message.Session;

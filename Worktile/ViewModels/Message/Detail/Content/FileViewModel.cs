@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Worktile.ApiModels.Message.ApiMessageFiles;
 using Worktile.Common;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;

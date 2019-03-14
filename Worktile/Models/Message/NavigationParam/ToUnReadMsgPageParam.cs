@@ -7,6 +7,5 @@ namespace Worktile.Models.Message.NavigationParam
     {
         public ISession Session { get; set; }
         public TopNav Nav { get; set; }
-        public MainViewModel MainViewModel { get; set; }
     }
 }

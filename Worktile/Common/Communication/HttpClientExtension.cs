@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Windows.Web.Http;
 using System;
 
-namespace Worktile.Common.WtRequestClient
+namespace Worktile.Common.Communication
 {
     public static class HttpClientExtension
     {

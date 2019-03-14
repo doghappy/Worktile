@@ -5,7 +5,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
 using Worktile.Common;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.Enums.Message;
 
 namespace Worktile.Controls.Message

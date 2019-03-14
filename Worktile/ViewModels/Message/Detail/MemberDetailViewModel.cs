@@ -9,15 +9,15 @@ using Worktile.Models.Message.Session;
 using Worktile.Views.Message.Detail.Content;
 using Worktile.Views.Message.Detail.Content.Pin;
 using System.Threading.Tasks;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.ApiModels;
+using Worktile.Operators.Message.Detail;
 
 namespace Worktile.ViewModels.Message
 {
     class MemberDetailViewModel : SessionDetailViewModel<MemberSession>, INotifyPropertyChanged
     {
-        public MemberDetailViewModel(MemberSession session, Frame contentFrame, MainViewModel mainViewModel)
-            : base(session, contentFrame, mainViewModel) { }
+        public MemberDetailViewModel(MemberSession session) : base(session) { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,18 +38,17 @@ namespace Worktile.ViewModels.Message
                     switch (index)
                     {
                         case 0:
-                            ContentFrame.Navigate(typeof(MemberMessagePage), new ToUnReadMsgPageParam
+                            MemberDetailOperator.ContentFrame.Navigate(typeof(MemberMessagePage), new ToUnReadMsgPageParam
                             {
                                 Session = Session,
-                                Nav = value,
-                                MainViewModel = MainViewModel
+                                Nav = value
                             });
                             break;
                         case 1:
-                            ContentFrame.Navigate(typeof(FilePage), Session);
+                            MemberDetailOperator.ContentFrame.Navigate(typeof(FilePage), Session);
                             break;
                         case 2:
-                            ContentFrame.Navigate(typeof(MemberPinnedPage), Session);
+                            MemberDetailOperator.ContentFrame.Navigate(typeof(MemberPinnedPage), Session);
                             break;
                     }
                     OnPropertyChanged();

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.Models.Message.Session;
 using Worktile.Enums.Message;
 using System.Collections.ObjectModel;
@@ -16,16 +16,14 @@ namespace Worktile.ViewModels.Message.Detail.Content
 {
     abstract class BaseSessionMessageViewModel<S> : MessageViewModel<S> where S : ISession
     {
-        public BaseSessionMessageViewModel(S session, MainViewModel mainViewModel) : base(session)
+        public BaseSessionMessageViewModel(S session) : base(session)
         {
-            MainViewModel = mainViewModel;
             Messages = new ObservableCollection<Models.Message.Message>();
         }
 
         protected abstract string Url { get; }
         public ObservableCollection<Models.Message.Message> Messages { get; }
         public bool? HasMore { get; protected set; }
-        protected MainViewModel MainViewModel { get; }
 
         protected abstract void ReadMessage(JToken jToken);
 
@@ -41,7 +39,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
         {
             string url = $"/api/messages/unread/clear?ref_id={Session.Id}";
             await WtHttpClient.PutAsync<object>(url);
-            MainViewModel.UnreadBadge -= Session.UnRead;
+            App.UnreadBadge -= Session.UnRead;
             await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Session.UnRead = 0));
         }
 

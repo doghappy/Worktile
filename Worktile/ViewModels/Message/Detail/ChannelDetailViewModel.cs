@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Windows.UI.Xaml.Controls;
 using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
@@ -14,22 +13,22 @@ using Worktile.Common;
 using System;
 using Worktile.Enums.Privileges;
 using System.Threading.Tasks;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.ApiModels;
+using Worktile.Operators.Message;
+using Worktile.Operators.Message.Detail;
 
 namespace Worktile.ViewModels.Message
 {
     class ChannelDetailViewModel : SessionDetailViewModel<ChannelSession>, INotifyPropertyChanged
     {
-        public ChannelDetailViewModel(ChannelSession session, Frame contentFrame, MainViewModel mainViewModel, MasterViewModel masterViewModel)
-            : base(session, contentFrame, mainViewModel)
+        public ChannelDetailViewModel(ChannelSession session)
+            : base(session)
         {
-            _masterViewModel = masterViewModel;
             SetPermission();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        readonly MasterViewModel _masterViewModel;
 
         public override ObservableCollection<TopNav> Navs { get; protected set; }
 
@@ -52,18 +51,17 @@ namespace Worktile.ViewModels.Message
                     switch (index)
                     {
                         case 0:
-                            ContentFrame.Navigate(typeof(ChannelMessagePage), new ToUnReadMsgPageParam
+                            ChannelDetailOperator.ContentFrame.Navigate(typeof(ChannelMessagePage), new ToUnReadMsgPageParam
                             {
                                 Session = Session,
-                                Nav = value,
-                                MainViewModel = MainViewModel
+                                Nav = value
                             });
                             break;
                         case 1:
-                            ContentFrame.Navigate(typeof(FilePage), Session);
+                            ChannelDetailOperator.ContentFrame.Navigate(typeof(FilePage), Session);
                             break;
                         case 2:
-                            ContentFrame.Navigate(typeof(ChannelPinnedPage), Session);
+                            ChannelDetailOperator.ContentFrame.Navigate(typeof(ChannelPinnedPage), Session);
                             break;
                     }
                     OnPropertyChanged();
@@ -106,7 +104,7 @@ namespace Worktile.ViewModels.Message
             var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
             if (res.Code == 200 && res.Data)
             {
-                _masterViewModel.Sessions.Remove(Session);
+                MasterOperator.ViewModel.Sessions.Remove(Session);
             }
         }
     }

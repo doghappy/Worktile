@@ -6,12 +6,11 @@ namespace Worktile.ViewModels.Message.Detail.Content
 {
     class MemberMessageViewModel : SessionMessageViewModel<MemberSession>, INotifyPropertyChanged
     {
-        public MemberMessageViewModel(MemberSession session, MainViewModel mainViewModel) : base(session, mainViewModel) { }
+        public MemberMessageViewModel(MemberSession session) : base(session) { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected override string IdType => "session_id";
-        protected override int ToType => 2;
 
         protected override void OnPropertyChanged([CallerMemberName] string prop = null)
         {

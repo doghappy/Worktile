@@ -11,6 +11,8 @@ using Worktile.ViewModels;
 using Worktile.ViewModels.Message;
 using Worktile.Models.Message.Session;
 using Worktile.Views.Message.Detail;
+using Worktile.Operators;
+using Worktile.Operators.Message;
 
 namespace Worktile.Views.Message
 {
@@ -22,8 +24,6 @@ namespace Worktile.Views.Message
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        NavigationView _mainNavView;
 
         private MasterViewModel _viewModel;
         private MasterViewModel ViewModel
@@ -41,18 +41,14 @@ namespace Worktile.Views.Message
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            _mainNavView = this.GetParent<NavigationView>("MainNavView");
+            MasterOperator.ContentFrame = MasterContentFrame;
             await ViewModel.InitializeAsync();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var mainViewModel = e.Parameter as MainViewModel;
-            ViewModel = new MasterViewModel
-            {
-                ContentFrame = MasterContentFrame,
-                MainViewModel = mainViewModel
-            };
+            ViewModel = new MasterViewModel();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -110,9 +106,9 @@ namespace Worktile.Views.Message
             {
                 MasterContentFrame.Navigate(typeof(TransparentPage));
             }
-            _mainNavView.IsBackEnabled = false;
-            _mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
-            _mainNavView.BackRequested -= NavigationView_BackRequested;
+            MainOperator.NavView.IsBackEnabled = false;
+            MainOperator.NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            MainOperator.NavView.BackRequested -= NavigationView_BackRequested;
         }
 
         private void CreateNewSession(ISession session)
@@ -153,9 +149,9 @@ namespace Worktile.Views.Message
             if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
             {
                 MasterContentFrame.Navigate(sourcePageType, ViewModel);
-                _mainNavView.IsBackEnabled = true;
-                _mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-                _mainNavView.BackRequested += NavigationView_BackRequested;
+                MainOperator.NavView.IsBackEnabled = true;
+                MainOperator.NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+                MainOperator.NavView.BackRequested += NavigationView_BackRequested;
             }
         }
 

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Worktile.ApiModels;
 using Worktile.ApiModels.SignIn.ApiSignInByPassword;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.NavigateModels.SignIn;
 using Worktile.PageModels;
 using Worktile.Views.SignIn;

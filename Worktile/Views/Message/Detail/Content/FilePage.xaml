@@ -107,7 +107,8 @@
                                       LabelPosition="Collapsed">
                             <AppBarButton.Flyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="共享">
+                                    <MenuFlyoutItem Text="共享"
+                                                    Click="FileShare_Click">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe670;"/>
                                         </MenuFlyoutItem.Icon>

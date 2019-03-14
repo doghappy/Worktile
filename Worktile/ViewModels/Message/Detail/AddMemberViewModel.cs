@@ -10,7 +10,7 @@ using Worktile.Models.Message.Session;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Common.Extensions;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.ApiModels;
 
 namespace Worktile.ViewModels.Message.Detail

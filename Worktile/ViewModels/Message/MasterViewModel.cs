@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Worktile.ApiModels;
 using Worktile.ApiModels.ApiTeamChats;
 using Worktile.Common;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.Enums;
 using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
@@ -21,6 +21,7 @@ using Worktile.Views.Message.Detail;
 using Windows.UI.Xaml;
 using Worktile.Views;
 using Worktile.Enums.Privileges;
+using Worktile.Operators.Message;
 
 namespace Worktile.ViewModels.Message
 {
@@ -33,8 +34,6 @@ namespace Worktile.ViewModels.Message
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public Frame ContentFrame { get; set; }
-        public MainViewModel MainViewModel { get; set; }
         public bool CanAddMember { get; private set; }
         public ObservableCollection<ISession> Sessions { get; }
 
@@ -97,10 +96,12 @@ namespace Worktile.ViewModels.Message
             IsActive = true;
             var data = await WtHttpClient.GetAsync<ApiTeamChats>("/api/team/chats");
             var list = new List<ISession>();
+            DataSource.JoinedChannels = new List<ChannelSession>();
             var channels = data.Data.Channels.Concat(data.Data.Groups);
             foreach (var item in channels)
             {
                 item.TethysAvatar = AvatarHelper.GetAvatar(item);
+                DataSource.JoinedChannels.Add(item as ChannelSession);
                 list.Add(item);
             }
 
@@ -136,16 +137,16 @@ namespace Worktile.ViewModels.Message
             }
             IsActive = false;
 
-            MainViewModel.UnreadBadge += Sessions.Sum(s => s.UnRead);
-            MainViewModel.OnMessageReceived += OnMessageReceived;
-            MainViewModel.OnFeedReceived += OnFeedReceived;
+            App.UnreadBadge += Sessions.Sum(s => s.UnRead);
+            WtSocket.OnMessageReceived += OnMessageReceived;
+            WtSocket.OnFeedReceived += OnFeedReceived;
         }
 
         private void ContentFrameNavigate(ISession session)
         {
             if (session == null)
             {
-                ContentFrame.Navigate(typeof(TransparentPage));
+                MasterOperator.ContentFrame.Navigate(typeof(TransparentPage));
             }
             else
             {
@@ -162,12 +163,7 @@ namespace Worktile.ViewModels.Message
                         type = typeof(ChannelDetailPage);
                         break;
                 }
-                ContentFrame.Navigate(type, new ToMessageDetailPageParam
-                {
-                    Session = session,
-                    MainViewModel = MainViewModel,
-                    MasterViewModel = this
-                });
+                MasterOperator.ContentFrame.Navigate(type, session);
             }
         }
 
@@ -250,10 +246,8 @@ namespace Worktile.ViewModels.Message
 
         public void Dispose()
         {
-            MainViewModel.OnMessageReceived -= OnMessageReceived;
-            MainViewModel.OnFeedReceived -= OnFeedReceived;
+            WtSocket.OnMessageReceived -= OnMessageReceived;
+            WtSocket.OnFeedReceived -= OnFeedReceived;
         }
-
-
     }
 }

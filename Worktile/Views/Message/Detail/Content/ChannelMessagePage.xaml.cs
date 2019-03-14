@@ -13,6 +13,7 @@ using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message;
 using Worktile.ViewModels.Message.Detail.Content;
 using Worktile.Models.Message.Session;
+using Worktile.Common.Communication;
 
 namespace Worktile.Views.Message.Detail.Content
 {
@@ -45,13 +46,13 @@ namespace Worktile.Views.Message.Detail.Content
         {
             _param = e.Parameter as ToUnReadMsgPageParam;
             var session = _param.Session as ChannelSession;
-            ViewModel = new ChannelMessageViewModel(session, _param.MainViewModel);
-            _param.MainViewModel.OnMessageReceived += ViewModel.OnMessageReceived;
+            ViewModel = new ChannelMessageViewModel(session);
+            WtSocket.OnMessageReceived += ViewModel.OnMessageReceived;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            _param.MainViewModel.OnMessageReceived -= ViewModel.OnMessageReceived;
+            WtSocket.OnMessageReceived -= ViewModel.OnMessageReceived;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

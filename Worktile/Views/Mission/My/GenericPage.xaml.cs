@@ -8,7 +8,7 @@ using Worktile.ApiModels.ApiMissionVnextWorkMyGeneric;
 using Worktile.Common;
 using Worktile.Enums;
 using Worktile.Models;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 
 namespace Worktile.Views.Mission.My
 {

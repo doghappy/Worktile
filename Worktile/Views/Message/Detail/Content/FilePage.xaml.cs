@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.Models.Message;
 using Worktile.Models.Message.Session;
 using Worktile.ViewModels.Message.Detail.Content;
+using Worktile.Views.Message.Dialog;
 
 namespace Worktile.Views.Message.Detail.Content
 {
@@ -116,6 +117,12 @@ namespace Worktile.Views.Message.Detail.Content
                     ViewModel.Files.Remove(file);
                 }
             }
+        }
+
+        private async void FileShare_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new FileShareDialg();
+            await dialog.ShowAsync();
         }
     }
 }

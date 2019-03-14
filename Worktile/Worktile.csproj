@@ -126,6 +126,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\AvatarHelper.cs" />
+    <Compile Include="Operators\Message\Detail\MemberDetailOperator.cs" />
+    <Compile Include="Operators\Message\Detail\AssistantDetailOperator.cs" />
+    <Compile Include="Operators\Message\Detail\ChannelDetailOperator.cs" />
+    <Compile Include="Operators\MainOperator.cs" />
+    <Compile Include="Operators\Message\MasterOperator.cs" />
+    <Compile Include="Common\Communication\WtSocket.cs" />
     <Compile Include="Common\DataSource.cs" />
     <Compile Include="Common\Extensions\WorktileExtension.cs" />
     <Compile Include="Common\HashEncryptor.cs" />
@@ -142,8 +148,8 @@
     <Compile Include="Common\WtColorHelper.cs" />
     <Compile Include="Common\WtDateTimeHelper.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
-    <Compile Include="Common\WtRequestClient\HttpClientExtension.cs" />
-    <Compile Include="Common\WtRequestClient\WtHttpClient.cs" />
+    <Compile Include="Common\Communication\HttpClientExtension.cs" />
+    <Compile Include="Common\Communication\WtHttpClient.cs" />
     <Compile Include="Controls\Emoji\EmojiPicker.xaml.cs">
       <DependentUpon>EmojiPicker.xaml</DependentUpon>
     </Compile>
@@ -387,6 +393,9 @@
     <Compile Include="Views\Message\Detail\JoinChannelPage.xaml.cs">
       <DependentUpon>JoinChannelPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Message\Dialog\FileShareDialg.xaml.cs">
+      <DependentUpon>FileShareDialg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TransparentPage.xaml.cs">
       <DependentUpon>TransparentPage.xaml</DependentUpon>
     </Compile>
@@ -469,7 +478,6 @@
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
-    <Compile Include="Models\Message\NavigationParam\ToMessageDetailPageParam.cs" />
     <Compile Include="Enums\Message\MessageType.cs" />
     <Compile Include="Views\Message\Detail\Content\Pin\MemberPinnedPage.xaml.cs">
       <DependentUpon>MemberPinnedPage.xaml</DependentUpon>
@@ -843,6 +851,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Message\Detail\JoinChannelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\Dialog\FileShareDialg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

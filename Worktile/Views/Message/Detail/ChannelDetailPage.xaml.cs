@@ -12,6 +12,8 @@ using Windows.System;
 using System;
 using Worktile.Common;
 using Worktile.Enums;
+using Worktile.Common.Communication;
+using Worktile.Operators.Message.Detail;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -23,8 +25,6 @@ namespace Worktile.Views.Message.Detail
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        ToMessageDetailPageParam _navParam;
 
         private ChannelDetailViewModel _viewModel;
         private ChannelDetailViewModel ViewModel
@@ -42,9 +42,9 @@ namespace Worktile.Views.Message.Detail
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _navParam = e.Parameter as ToMessageDetailPageParam;
-            var session = _navParam.Session as ChannelSession;
-            ViewModel = new ChannelDetailViewModel(session, ContentFrame, _navParam.MainViewModel, _navParam.MasterViewModel);
+            ChannelDetailOperator.ContentFrame = ContentFrame;
+            var session = e.Parameter as ChannelSession;
+            ViewModel = new ChannelDetailViewModel(session);
         }
 
         private void ContactInfo_Click(object sender, RoutedEventArgs e)
@@ -112,7 +112,7 @@ namespace Worktile.Views.Message.Detail
                 DefaultButton = ContentDialogButton.Primary
             };
             var result = await dialog.ShowAsync();
-            if (result== ContentDialogResult.Secondary)
+            if (result == ContentDialogResult.Secondary)
             {
                 await ViewModel.ExitChannelAsync();
             }

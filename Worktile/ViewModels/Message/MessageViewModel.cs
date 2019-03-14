@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Worktile.ApiModels;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
 using Worktile.Models.Message.Session;
 
 namespace Worktile.ViewModels.Message

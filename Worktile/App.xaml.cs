@@ -18,6 +18,10 @@ using Worktile.Views;
 using Worktile.Enums;
 using Worktile.Repository;
 using Microsoft.EntityFrameworkCore;
+using Windows.UI.Notifications;
+using Windows.Data.Xml.Dom;
+using Worktile.Common.Communication;
+using Worktile.Operators;
 
 namespace Worktile
 {
@@ -112,10 +116,7 @@ namespace Worktile
                             markdown = 1,
                             content = toastActivationArgs.UserInput["msg"].ToString()
                         };
-                        if (rootFrame.Content is MainPage mainPage)
-                        {
-                            await mainPage.ViewModel.SendMessageAsync(SocketMessageType.Message, data);
-                        }
+                        await WtSocket.SendMessageAsync(SocketMessageType.Message, data);
                     }
                 }
                 // If we're loading the app for the first time, place the main page on
@@ -189,7 +190,7 @@ namespace Worktile
             {
                 if (rootFrame.Content is MainPage mainPage)
                 {
-                    mainPage.ViewModel.ShowNotification(text, level, duration);
+                    MainOperator.ShowNotification(text, level, duration);
                     return;
                 }
             }
@@ -202,5 +203,34 @@ namespace Worktile
             };
             await dialog.ShowAsync();
         }
+
+        #region UreadBadge
+        private static int _unreadBadge;
+        public static int UnreadBadge
+        {
+            get => _unreadBadge;
+            set
+            {
+                if (_unreadBadge != value || value == 0)
+                {
+                    _unreadBadge = value;
+                    if (value > 0)
+                        UpdateBadgeNumber(value);
+                    else
+                        BadgeUpdateManager.CreateBadgeUpdaterForApplication().Clear();
+                }
+            }
+        }
+
+        public static void UpdateBadgeNumber(int number)
+        {
+            XmlDocument badgeXml = BadgeUpdateManager.GetTemplateContent(BadgeTemplateType.BadgeNumber);
+            XmlElement badgeElement = badgeXml.SelectSingleNode("/badge") as XmlElement;
+            badgeElement.SetAttribute("value", number.ToString());
+            BadgeNotification badge = new BadgeNotification(badgeXml);
+            BadgeUpdater badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication();
+            badgeUpdater.Update(badge);
+        }
+        #endregion
     }
 }

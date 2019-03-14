@@ -8,7 +8,8 @@ using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Worktile.ApiModels.Upload;
 using Worktile.Common;
-using Worktile.Common.WtRequestClient;
+using Worktile.Common.Communication;
+using Worktile.Domain.SocketMessageConverter;
 using Worktile.Enums.Message;
 using Worktile.Models.Message.Session;
 
@@ -22,7 +23,9 @@ namespace Worktile.ViewModels.Message.Detail.Content
         }
 
         protected S Session { get; }
+        protected MainViewModel MainViewModel { get; }
         protected int RefType => Session.PageType == PageType.Channel ? 1 : 2;
+        protected int ToType => Session.GetType() == typeof(ChannelSession) ? 1 : 2;
 
         public async Task UploadFileAsync(IReadOnlyList<StorageFile> files)
         {
@@ -51,6 +54,22 @@ namespace Worktile.ViewModels.Message.Detail.Content
             string url = WtFileHelper.GetS3FileUrl(fileId);
             var buffer = await WtHttpClient.GetByteBufferAsync(url);
             await FileIO.WriteBufferAsync(storageFile, buffer);
+        }
+
+        public async Task<bool> SendMessageAsync(string msg)
+        {
+            var data = new
+            {
+                fromType = 1,
+                from = DataSource.ApiUserMeData.Me.Uid,
+                to = Session.Id,
+                toType = ToType,
+                messageType = 1,
+                client = 1,
+                markdown = 1,
+                content = msg
+            };
+            return await WtSocket.SendMessageAsync(SocketMessageType.Message, data);
         }
     }
 }
