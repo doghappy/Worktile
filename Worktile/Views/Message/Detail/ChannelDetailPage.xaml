@@ -144,6 +144,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <tethys:Avatar Width="30"
                                                        DisplayName="{x:Bind TethysAvatar.DisplayName, Mode=OneWay}"
+                                                       Background="{x:Bind TethysAvatar.Background, Mode=OneWay}"
                                                        Source="{x:Bind TethysAvatar.Source, Mode=OneWay}"/>
                                         <TextBlock Text="{x:Bind DisplayName}" VerticalAlignment="Center" Margin="4 0 0 0"/>
                                     </StackPanel>
