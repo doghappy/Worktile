@@ -90,10 +90,10 @@
                                    Style="{StaticResource ListViewItemTextBlock}"
                                    Text="{x:Bind Size}"/>
                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <tethys:Avatar Size="24"
+                            <tethys:Avatar Width="24"
                                            Source="{x:Bind Avatar.Source}"
-                                           DisplayName="{x:Bind Avatar.DisplayName}"
-                                           Background="{x:Bind Avatar.Background}"/>
+                                           Background="{x:Bind Avatar.Background}"
+                                           DisplayName="{x:Bind Avatar.DisplayName}"/>
                             <TextBlock Style="{StaticResource ListViewItemTextBlock}"
                                        Margin="4 0 0 0"
                                        Text="{x:Bind Avatar.DisplayName}"/>

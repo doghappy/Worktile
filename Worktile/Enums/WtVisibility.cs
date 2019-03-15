@@ -2,7 +2,8 @@
 {
     public enum WtVisibility
     {
-        Public = 1,
+        None,
+        Public,
         Private
     }
 }

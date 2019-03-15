@@ -14,7 +14,7 @@ using Worktile.ApiModels;
 
 namespace Worktile.ViewModels.Message.Detail.Content
 {
-    class FileViewModel : FileMessageViewModel<ISession>
+    class FileViewModel : FileMessageViewModel<ISession>, INotifyPropertyChanged
     {
         public FileViewModel(ISession session) : base(session)
         {
@@ -39,6 +39,7 @@ namespace Worktile.ViewModels.Message.Detail.Content
             string url = $"/api/entities?page={_page}&size=20&ref_type={RefType}&ref_id={Session.Id}";
             var data = await WtHttpClient.GetAsync<ApiMessageFiles>(url);
             Files.HasMoreItems = Files.Count + data.Data.Entities.Count < data.Data.Total;
+            _page++;
             foreach (var item in data.Data.Entities)
             {
                 list.Add(new FileItem

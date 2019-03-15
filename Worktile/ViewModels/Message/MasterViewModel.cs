@@ -96,13 +96,16 @@ namespace Worktile.ViewModels.Message
             IsActive = true;
             var data = await WtHttpClient.GetAsync<ApiTeamChats>("/api/team/chats");
             var list = new List<ISession>();
-            DataSource.JoinedChannels = new List<ChannelSession>();
+            bool flag = !DataSource.JoinedChannels.Any();
             var channels = data.Data.Channels.Concat(data.Data.Groups);
             foreach (var item in channels)
             {
                 item.TethysAvatar = AvatarHelper.GetAvatar(item);
-                DataSource.JoinedChannels.Add(item as ChannelSession);
                 list.Add(item);
+                if (flag)
+                {
+                    DataSource.JoinedChannels.Add(item as ChannelSession);
+                }
             }
 
             foreach (var item in data.Data.Sessions)

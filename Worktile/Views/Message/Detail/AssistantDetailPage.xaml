@@ -22,14 +22,13 @@
 
             <NavigationView.PaneHeader>
                 <StackPanel Orientation="Horizontal">
-                    <tethys:Avatar Size="30"
+                    <tethys:Avatar Width="30"
                                    Margin="16 0 8 0"
-                                   Foreground="White"
                                    Source="{x:Bind ViewModel.Session.TethysAvatar.Source, Mode=OneWay}"
                                    DisplayName="{x:Bind ViewModel.Session.TethysAvatar.DisplayName, Mode=OneWay}"
-                                   BadgeIcon="{x:Bind ViewModel.Session.TethysAvatar.Icon, Mode=OneWay}"
+                                   Icon="{x:Bind ViewModel.Session.TethysAvatar.Icon, Mode=OneWay}"
                                    Background="{x:Bind ViewModel.Session.TethysAvatar.Background, Mode=OneWay}"
-                                   BadgeIconFontFamily="{x:Bind ViewModel.Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
+                                   FontFamily="{x:Bind ViewModel.Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
                     <TextBlock Grid.Column="1"
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TopNavigationViewItemForegroundDisabled}"

@@ -74,10 +74,9 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:TethysAvatar">
                                     <StackPanel Orientation="Horizontal">
-                                        <tethys:Avatar Size="30"
+                                        <tethys:Avatar Width="30"
                                                        DisplayName="{x:Bind DisplayName}"
-                                                       Source="{x:Bind Source}"
-                                                       Background="{x:Bind Background}"/>
+                                                       Source="{x:Bind Source}"/>
                                         <TextBlock Text="{x:Bind DisplayName}" VerticalAlignment="Center" Margin="4 0 0 0"/>
                                     </StackPanel>
                                 </DataTemplate>
@@ -98,7 +97,7 @@
                                                   Glyph="&#xE621;"/>
                                         <tethys:Avatar x:Name="AvatarInTree"
                                                        x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Member}"
-                                                       Size="24"
+                                                       Width="24"
                                                        DisplayName="{x:Bind Avatar.DisplayName}"
                                                        Source="{x:Bind Avatar.Source}"
                                                        Background="{x:Bind Avatar.Background}"/>
@@ -139,7 +138,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <tethys:Avatar Size="30"
+                                <tethys:Avatar Width="30"
                                            DisplayName="{x:Bind DisplayName}"
                                            Source="{x:Bind Source}"
                                            Background="{x:Bind Background}"/>

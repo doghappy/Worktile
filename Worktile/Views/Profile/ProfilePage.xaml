@@ -49,10 +49,9 @@
             </StackPanel>
 
             <tethys:Avatar Grid.Column="2"
-                           Size="160"
+                           Width="160"
                            Margin="32 0 0 0"
                            DisplayName="{x:Bind ViewModel.UserAvatar.DisplayName}"
-                           Background="{x:Bind ViewModel.UserAvatar.Background}"
                            Source="{x:Bind ViewModel.UserAvatar.Source}"/>
 
             <StackPanel Grid.Column="3" Margin="16 0">

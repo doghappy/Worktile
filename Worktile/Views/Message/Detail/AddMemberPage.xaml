@@ -55,9 +55,8 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <tethys:Avatar Size="38"
+                        <tethys:Avatar Width="38"
                                        DisplayName="{x:Bind TethysAvatar.DisplayName}"
-                                       Background="{x:Bind TethysAvatar.Background}"
                                        Source="{x:Bind TethysAvatar.Source}"/>
 
                         <StackPanel Grid.Column="1" Margin="8 0 0 0">

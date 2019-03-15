@@ -49,13 +49,12 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <tethys:Avatar Size="40"
-                                       Foreground="White"
+                        <tethys:Avatar Width="40"
                                        Source="{x:Bind TethysAvatar.Source}"
                                        DisplayName="{x:Bind TethysAvatar.DisplayName}"
-                                       BadgeIcon="{x:Bind TethysAvatar.Icon}"
+                                       Icon="{x:Bind TethysAvatar.Icon}"
                                        Background="{x:Bind TethysAvatar.Background}"
-                                       BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
+                                       FontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
 
                         <Grid Grid.Column="1" Padding="8 0 0 0">
                             <Grid.RowDefinitions>

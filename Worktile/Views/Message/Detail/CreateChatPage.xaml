@@ -44,11 +44,9 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <tethys:Avatar Size="40"
-                                       Foreground="White"
+                        <tethys:Avatar Width="40"
                                        Source="{x:Bind Source}"
-                                       DisplayName="{x:Bind DisplayName}"
-                                       Background="{x:Bind Background}"/>
+                                       DisplayName="{x:Bind DisplayName}"/>
 
                         <Grid Grid.Column="1" Padding="8 0 0 0">
                             <Grid.RowDefinitions>

@@ -121,7 +121,17 @@ namespace Worktile.Views.Message.Detail.Content
 
         private async void FileShare_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new FileShareDialg();
+            var dialog = new FileShareDialg
+            {
+                SendMessage = ViewModel.SendMessageAsync
+            };
+            //dialog.PrimaryButtonClick += (s, args) =>
+            //{
+            //    if (dialog.SelectedItem != null)
+            //    {
+
+            //    }
+            //};
             await dialog.ShowAsync();
         }
     }

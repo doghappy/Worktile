@@ -27,7 +27,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <tethys:Avatar Size="68"
+            <tethys:Avatar Width="68"
                            DisplayName="{x:Bind Member.TethysAvatar.DisplayName, Mode=OneWay}"
                            Source="{x:Bind Member.TethysAvatar.Source, Mode=OneWay}"
                            Background="{x:Bind Member.TethysAvatar.Background, Mode=OneWay}"/>

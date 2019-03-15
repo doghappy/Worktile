@@ -112,13 +112,12 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <tethys:Avatar Size="30"
-                                                   Foreground="White"
+                                    <tethys:Avatar Width="30"
                                                    Source="{x:Bind TethysAvatar.Source}"
                                                    DisplayName="{x:Bind TethysAvatar.DisplayName}"
-                                                   BadgeIcon="{x:Bind TethysAvatar.Icon}"
+                                                   Icon="{x:Bind TethysAvatar.Icon}"
                                                    Background="{x:Bind TethysAvatar.Background}"
-                                                   BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
+                                                   FontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
 
                                     <TextBlock Grid.Column="1"
                                                HorizontalAlignment="Left"
@@ -152,13 +151,12 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <tethys:Avatar Size="30"
-                                                   Foreground="White"
+                                    <tethys:Avatar Width="30"
                                                    Source="{x:Bind TethysAvatar.Source}"
                                                    DisplayName="{x:Bind TethysAvatar.DisplayName}"
-                                                   BadgeIcon="{x:Bind TethysAvatar.Icon}"
+                                                   Icon="{x:Bind TethysAvatar.Icon}"
                                                    Background="{x:Bind TethysAvatar.Background}"
-                                                   BadgeIconFontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
+                                                   FontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
 
                                     <TextBlock Grid.Column="1"
                                                HorizontalAlignment="Left"

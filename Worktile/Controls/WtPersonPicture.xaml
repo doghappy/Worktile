@@ -1,0 +1,18 @@
+﻿<UserControl
+    x:Class="Worktile.Controls.WtPersonPicture"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <PersonPicture x:Name="PersonPicture"
+                   Initials="{x:Bind Initials, Mode=OneWay}"
+                   ProfilePicture="{x:Bind ProfilePicture, Mode=OneWay}">
+        <PersonPicture.Resources>
+            <SolidColorBrush x:Key="PersonPictureEllipseFillThemeBrush" Color="{x:Bind EllipseColor, Mode=OneWay}" />
+        </PersonPicture.Resources>
+    </PersonPicture>
+</UserControl>

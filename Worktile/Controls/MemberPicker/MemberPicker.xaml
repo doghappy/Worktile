@@ -15,7 +15,7 @@
         <GridView ItemsSource="{x:Bind SelectedAvatars}" SelectionMode="None">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="models:TethysAvatar">
-                    <tethys:Avatar Size="30" DisplayName="{x:Bind DisplayName}" Source="{x:Bind Source}" Background="{x:Bind Background}"/>
+                    <tethys:Avatar Width="30" DisplayName="{x:Bind DisplayName}" Source="{x:Bind Source}" Background="{x:Bind Background}"/>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.Footer>

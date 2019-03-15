@@ -30,14 +30,13 @@
 
             <NavigationView.PaneHeader>
                 <StackPanel Orientation="Horizontal">
-                    <tethys:Avatar Size="30"
+                    <tethys:Avatar Width="30"
                                    Margin="16 0 8 0"
-                                   Foreground="White"
                                    Source="{x:Bind ViewModel.Session.TethysAvatar.Source, Mode=OneWay}"
                                    DisplayName="{x:Bind ViewModel.Session.TethysAvatar.DisplayName, Mode=OneWay}"
-                                   BadgeIcon="{x:Bind ViewModel.Session.TethysAvatar.Icon, Mode=OneWay}"
+                                   Icon="{x:Bind ViewModel.Session.TethysAvatar.Icon, Mode=OneWay}"
                                    Background="{x:Bind ViewModel.Session.TethysAvatar.Background, Mode=OneWay}"
-                                   BadgeIconFontFamily="{x:Bind ViewModel.Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
+                                   FontFamily="{x:Bind ViewModel.Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
                     <TextBlock Grid.Column="1"
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TopNavigationViewItemForegroundDisabled}"
@@ -143,10 +142,9 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="member:Member">
                                     <StackPanel Orientation="Horizontal">
-                                        <tethys:Avatar Size="30"
+                                        <tethys:Avatar Width="30"
                                                        DisplayName="{x:Bind TethysAvatar.DisplayName, Mode=OneWay}"
-                                                       Source="{x:Bind TethysAvatar.Source, Mode=OneWay}"
-                                                       Background="{x:Bind TethysAvatar.Background, Mode=OneWay}"/>
+                                                       Source="{x:Bind TethysAvatar.Source, Mode=OneWay}"/>
                                         <TextBlock Text="{x:Bind DisplayName}" VerticalAlignment="Center" Margin="4 0 0 0"/>
                                     </StackPanel>
                                 </DataTemplate>

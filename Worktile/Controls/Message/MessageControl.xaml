@@ -24,7 +24,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <tethys:Avatar Size="40"
+        <tethys:Avatar Width="40"
                        Margin="16 0 8 0"
                        VerticalAlignment="Top"
                        DisplayName="{x:Bind Message.From.TethysAvatar.DisplayName, Mode=OneWay}"

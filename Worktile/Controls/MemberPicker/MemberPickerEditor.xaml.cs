@@ -87,12 +87,12 @@ namespace Worktile.Controls
                     }
                 }
             }
-            else
+            else if (text != ",")
             {
                 foreach (var item in DataSource.Team.Members)
                 {
                     if (item.IsTrueMember() && !SelectedAvatars.Any(a => a.Name == item.Name)
-                        && (item.TethysAvatar.DisplayName.Contains(text, StringComparison.CurrentCultureIgnoreCase) || item.TethysAvatar.DisplayNamePinyin.Any(p => p.Contains(text, StringComparison.CurrentCultureIgnoreCase))))
+                        && (item.TethysAvatar.DisplayName.Contains(text, StringComparison.CurrentCultureIgnoreCase) || item.TethysAvatar.DisplayNamePinyin.Contains(text, StringComparison.CurrentCultureIgnoreCase)))
                     {
                         UnSelectedAvatars.Add(item.TethysAvatar);
                     }

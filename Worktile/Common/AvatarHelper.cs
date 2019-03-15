@@ -116,19 +116,15 @@ namespace Worktile.Common
 
         public static TethysAvatar GetAvatar(Member member, AvatarSize size)
         {
-            var avatar = new TethysAvatar
+            return new TethysAvatar
             {
                 Id = member.Uid,
                 DisplayName = member.DisplayName,
                 Background = GetColorBrush(member.DisplayName),
                 Source = GetAvatarBitmap(member.Avatar, size, FromType.User),
-                Name = member.Name
+                Name = member.Name,
+                DisplayNamePinyin = member.DisplayNamePinyin
             };
-            if (!string.IsNullOrEmpty(member.DisplayNamePinyin))
-            {
-                avatar.DisplayNamePinyin = member.DisplayNamePinyin.Split(',').ToArray();
-            }
-            return avatar;
         }
 
         public static TethysAvatar GetAvatar(ChannelSession session)
@@ -138,7 +134,7 @@ namespace Worktile.Common
                 Id = session.Id,
                 DisplayName = session.Name,
                 Background = WtColorHelper.GetNewBrush(session.Color),
-                DisplayNamePinyin = session.NamePinyin.Split(',').ToArray()
+                DisplayNamePinyin = session.NamePinyin
             };
             if (session.Visibility == WtVisibility.Public)
             {
@@ -160,7 +156,7 @@ namespace Worktile.Common
                 Id = session.Id,
                 DisplayName = session.To.DisplayName,
                 Background = AvatarHelper.GetColorBrush(session.To.DisplayName),
-                DisplayNamePinyin = session.To.DisplayNamePinyin.Split(',').ToArray(),
+                DisplayNamePinyin = session.To.DisplayNamePinyin,
                 Name = session.To.Name,
                 Source = GetAvatarBitmap(session.To.Avatar, size, FromType.User)
             };

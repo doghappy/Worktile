@@ -63,16 +63,16 @@ namespace Worktile.ViewModels.Message.Detail
         private void OnQueryTextChanged()
         {
             Members.Clear();
-            if (string.IsNullOrWhiteSpace(QueryText))
+            string text = QueryText.Trim();
+            if (text == string.Empty)
             {
                 _members.ForEach(i => Members.Add(i));
             }
-            else
+            else if (text == ",")
             {
-                string text = QueryText.Trim();
                 _members.ForEach(m =>
                 {
-                    if (m.TethysAvatar.DisplayName.Contains(text, StringComparison.CurrentCultureIgnoreCase) || m.TethysAvatar.DisplayNamePinyin.Any(n => n.Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                    if (m.TethysAvatar.DisplayName.Contains(text, StringComparison.CurrentCultureIgnoreCase) || m.TethysAvatar.DisplayNamePinyin.Contains(text, StringComparison.CurrentCultureIgnoreCase))
                     {
                         Members.Add(m);
                     }
