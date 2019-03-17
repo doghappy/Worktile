@@ -2,6 +2,7 @@
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using System;
 
 namespace Worktile.Common
 {
@@ -119,8 +120,15 @@ namespace Worktile.Common
 
         public static T GetChild<T>(this FrameworkElement obj, string name) where T : FrameworkElement
         {
-            var children = obj.GetChildren<T>();
-            return children.FirstOrDefault(e => e.Name == name);
+            if (obj==null)
+            {
+                throw new NullReferenceException();
+            }
+            else
+            {
+                var children = obj.GetChildren<T>();
+                return children.FirstOrDefault(e => e.Name == name);
+            }
         }
     }
 }

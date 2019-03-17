@@ -24,7 +24,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Grid Padding="{StaticResource TitleBarHeight}" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>

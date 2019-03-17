@@ -395,5 +395,26 @@ namespace Worktile.Common
                 default: return null;
             }
         }
+
+        public static string GetAppIcon2(string app)
+        {
+            switch (app)
+            {
+                case "message": return "\ue61e";
+                case "task": return "\ue61a";
+                case "calendar": return "\ue615";
+                case "drive": return "\ue61c";
+                case "report": return "\ue60d";
+                case "crm": return "\ue60f";
+                case "approval": return "\ue611";
+                case "bulletin": return "\ue60e";
+                case "leave": return "\ue608";
+                case "portal": return "\ue610";
+                case "appraisal": return "\ue601";
+                case "okr": return "\ue60a";
+                case "mission": return "\ue70c";
+                default: return null;
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace Worktile.Views
             ViewModel.IsActive = true;
             MainOperator.ContentFrame = MainContentFrame;
             MainOperator.InAppNotification = InAppNotification;
-            MainOperator.NavView = MainNavView;
+            //MainOperator.NavView = MainNavView;
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
             if (string.IsNullOrEmpty(domain))
             {

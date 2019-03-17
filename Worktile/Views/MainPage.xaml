@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Worktile.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -15,36 +16,38 @@
             <ImageBrush ImageSource="{x:Bind ViewModel.BgImage, Mode=OneWay}" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <NavigationView x:Name="MainNavView"
+        <winui:NavigationView x:Name="MainNavView"
+                              AlwaysShowHeader="False"
+                              Padding="0"
                         PaneDisplayMode="LeftCompact"
                         MenuItemsSource="{x:Bind ViewModel.Apps}"
                         SelectedItem="{x:Bind ViewModel.SelectedApp, Mode=TwoWay}"
                         IsSettingsVisible="False"
                         IsBackButtonVisible="Collapsed">
-            <NavigationView.MenuItemTemplate>
+            <winui:NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:WtApp">
-                    <NavigationViewItem Tag="{x:Bind Name}" Content="{x:Bind DisplayName}">
-                        <NavigationViewItem.Icon>
+                    <winui:NavigationViewItem Content="{x:Bind DisplayName}">
+                        <winui:NavigationViewItem.Icon>
                             <FontIcon Style="{ThemeResource WtfIcon}" Glyph="{x:Bind Icon}"/>
-                        </NavigationViewItem.Icon>
-                    </NavigationViewItem>
+                        </winui:NavigationViewItem.Icon>
+                    </winui:NavigationViewItem>
                 </DataTemplate>
-            </NavigationView.MenuItemTemplate>
+            </winui:NavigationView.MenuItemTemplate>
 
-            <NavigationView.AutoSuggestBox>
+            <winui:NavigationView.AutoSuggestBox>
                 <AutoSuggestBox QueryIcon="Find"/>
-            </NavigationView.AutoSuggestBox>
+            </winui:NavigationView.AutoSuggestBox>
 
-            <NavigationView.PaneHeader>
+            <winui:NavigationView.PaneHeader>
                 <Image Source="{x:Bind ViewModel.Logo, Mode=OneWay}" HorizontalAlignment="Left" Margin="8 0 0 0"/>
-            </NavigationView.PaneHeader>
+            </winui:NavigationView.PaneHeader>
 
-            <NavigationView.PaneFooter>
+            <winui:NavigationView.PaneFooter>
                 <StackPanel>
                     <NavigationViewItem Content="{x:Bind ViewModel.DisplayName, Mode=OneWay}" Icon="Contact" Tapped="Me_Tapped"/>
                     <NavigationViewItem Content="设置" Icon="Setting" Tapped="Setting_Tapped"/>
                 </StackPanel>
-            </NavigationView.PaneFooter>
+            </winui:NavigationView.PaneFooter>
 
             <Frame x:Name="MainContentFrame">
                 <Frame.ContentTransitions>
@@ -53,7 +56,7 @@
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
-        </NavigationView>
+        </winui:NavigationView>
         <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
         <controls:InAppNotification x:Name="InAppNotification" Margin="0" VerticalAlignment="Bottom"/>
     </Grid>

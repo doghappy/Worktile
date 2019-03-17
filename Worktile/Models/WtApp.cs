@@ -21,5 +21,7 @@ namespace Worktile.Models
         public PrivilegeObject Privileges { get; set; }
 
         public string Icon { get; set; }
+
+        public string Icon2 { get; set; }
     }
 }
