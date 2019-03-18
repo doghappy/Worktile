@@ -10,7 +10,29 @@
                 <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Themes/Generic.xaml"/>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
             </ResourceDictionary.MergedDictionaries>
-            
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <Color x:Key="SystemAccentColor">#22d7bb</Color>
+                    <SolidColorBrush x:Key="SystemControlBackgroundAccentBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="SystemControlDisabledAccentBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="SystemControlForegroundAccentBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="SystemControlHighlightAltAccentBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentHighBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.9" />
+                    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentLowBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.6" />
+                    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentMediumBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.8" />
+                    <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.9" />
+                    <SolidColorBrush x:Key="SystemControlHighlightListAccentDarkBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.6" />
+                    <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.8" />
+                    <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="ContentDialogBorderThemeBrush" Color="{ThemeResource SystemAccentColor}" />
+                    <SolidColorBrush x:Key="JumpListDefaultEnabledBackground" Color="{ThemeResource SystemAccentColor}" />
+                    
+                    <!--暗主题色，用于选中应用的背景色-->
+                    <SolidColorBrush x:Key="SystemAccentColorDark3" Color="#18BFA4" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
             <Style TargetType="FontIcon" x:Key="LcIcon">
                 <Setter Property="FontFamily" Value="ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont"/>
             </Style>

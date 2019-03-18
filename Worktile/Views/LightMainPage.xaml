@@ -7,12 +7,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Worktile.Models"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <cvt:ImageSourceConverter x:Key="ImageSourceConverter"/>
+        <Style TargetType="ListViewItem" x:Name="WtAppListViewItem">
+            <Setter Property="MinWidth" Value="70"/>
+            <Setter Property="Height" Value="70"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Name="WtAppLabel">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style TargetType="FontIcon" x:Name="WtAppIcon">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontFamily" Value="{StaticResource Wtf}"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
@@ -26,35 +44,27 @@
         </Grid.ColumnDefinitions>
 
         <!--<Grid Padding="0 32 0 0" Background="{x:Bind NavBackground, Mode=OneWay}">-->
-            <Grid Padding="0 32 0 0" Background="{ThemeResource SystemAccentColor}">
-                <ListView ItemsSource="{x:Bind Apps}" SelectedItem="{x:Bind SelectedApp, Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="MinWidth" Value="70"/>
-                        <Setter Property="Height" Value="70"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
+        <Grid Padding="0 32 0 0" Background="{ThemeResource SystemAccentColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Image Width="50" Height="50" Margin="0 0 0 16" Source="{x:Bind Logo, Mode=OneWay, Converter={StaticResource ImageSourceConverter}}"/>
+
+            <ListView Grid.Row="1" ItemsSource="{x:Bind Apps}" SelectedItem="{x:Bind SelectedApp, Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged" ItemContainerStyle="{StaticResource WtAppListViewItem}">
+                <ListView.Resources>
+                    <StaticResource x:Key="ListViewItemBackgroundSelected" ResourceKey="SystemAccentColorDark3"/>
+                    <StaticResource x:Key="ListViewItemBackgroundSelectedPointerOver" ResourceKey="SystemAccentColorDark3"/>
+                </ListView.Resources>
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:WtApp">
                         <ListViewItem PointerEntered="ListViewItem_PointerEntered" PointerExited="ListViewItem_PointerExited">
                             <UserControl x:Name="AppItem">
                                 <Grid>
-                                    <Grid.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Foreground" Value="White"/>
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                            <Setter Property="FontSize" Value="12"/>
-                                        </Style>
-                                        <Style TargetType="FontIcon">
-                                            <Setter Property="Foreground" Value="White"/>
-                                            <Setter Property="FontSize" Value="24"/>
-                                            <Setter Property="FontFamily" Value="{StaticResource Wtf}"/>
-                                        </Style>
-                                    </Grid.Resources>
                                     <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup>
                                             <VisualState x:Name="Normal"/>
@@ -73,10 +83,10 @@
                                             </VisualState>
                                         </VisualStateGroup>
                                     </VisualStateManager.VisualStateGroups>
-                                    <FontIcon x:Name="AppIcon" Glyph="{x:Bind Icon}"/>
+                                    <FontIcon x:Name="AppIcon" Glyph="{x:Bind Icon}" Style="{StaticResource WtAppIcon}"/>
                                     <StackPanel x:Name="AppIconGroup" Visibility="Collapsed" VerticalAlignment="Center">
-                                        <FontIcon Glyph="{x:Bind Icon2}"/>
-                                        <TextBlock x:Name="AppIcon2" Text="{x:Bind DisplayName}"/>
+                                        <FontIcon Glyph="{x:Bind Icon2}" Style="{StaticResource WtAppIcon}"/>
+                                        <TextBlock x:Name="AppIcon2" Text="{x:Bind DisplayName}" Style="{StaticResource WtAppLabel}"/>
                                     </StackPanel>
                                 </Grid>
                             </UserControl>
@@ -84,12 +94,53 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <ListViewItem Grid.Row="2" Style="{StaticResource WtAppListViewItem}" PointerEntered="ListViewItem_PointerEntered" PointerExited="ListViewItem_PointerExited" Tapped="People_Tapped">
+                <UserControl x:Name="AppItem">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="AppIcon.Visibility" Value="Collapsed"/>
+                                        <Setter Target="AppIconGroup.Visibility" Value="Visible"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="AppIcon.Visibility" Value="Collapsed"/>
+                                        <Setter Target="AppIconGroup.Visibility" Value="Visible"/>
+                                        <Setter Target="AppIcon2.Visibility" Value="Collapsed"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <FontIcon x:Name="AppIcon" Glyph="&#xE617;" Style="{StaticResource WtAppIcon}"/>
+                        <StackPanel x:Name="AppIconGroup" Visibility="Collapsed" VerticalAlignment="Center">
+                            <FontIcon Glyph="&#xE604;" Style="{StaticResource WtAppIcon}"/>
+                            <TextBlock x:Name="AppIcon2" Text="通讯录" Style="{StaticResource WtAppLabel}"/>
+                        </StackPanel>
+                    </Grid>
+                </UserControl>
+            </ListViewItem>
+
+            <Button Grid.Row="3" Margin="0 16" Padding="0" CornerRadius="48" HorizontalAlignment="Center">
+                <tethys:Avatar Width="48" DisplayName="{x:Bind MyAvatar.DisplayName, Mode=OneWay}" Background="{x:Bind MyAvatar.Background, Mode=OneWay}" Source="{x:Bind MyAvatar.Source, Mode=OneWay}"/>
+            </Button>
         </Grid>
 
-        <Grid Padding="0 32 0 0" Grid.Column="1">
+        <!--<Grid Padding="0 32 0 0" Grid.Column="1">
             <StackPanel>
                 <Button Content="紫色"/>
             </StackPanel>
-        </Grid>
+        </Grid>-->
+        <Frame x:Name="MainContentFrame" Grid.Column="1">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
     </Grid>
 </Page>

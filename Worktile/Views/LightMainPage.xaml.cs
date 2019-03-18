@@ -19,8 +19,11 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Common.Communication;
+using Worktile.Enums;
+using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Services;
+using Worktile.Views.Message;
 using Worktile.Views.SignIn;
 
 namespace Worktile.Views
@@ -83,19 +86,19 @@ namespace Worktile.Views
             }
         }
 
-        //private SolidColorBrush _navBackground;
-        //public SolidColorBrush NavBackground
-        //{
-        //    get => _navBackground;
-        //    set
-        //    {
-        //        if (_navBackground != value)
-        //        {
-        //            _navBackground = value;
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NavBackground)));
-        //        }
-        //    }
-        //}
+        private TethysAvatar _myAvatar;
+        public TethysAvatar MyAvatar
+        {
+            get => _myAvatar;
+            set
+            {
+                if (_myAvatar != value)
+                {
+                    _myAvatar = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MyAvatar)));
+                }
+            }
+        }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -116,6 +119,12 @@ namespace Worktile.Views
         {
             var me = await _userService.GetMeAsync();
             DataSource.ApiUserMeData = me;
+            MyAvatar = new TethysAvatar
+            {
+                DisplayName = DataSource.ApiUserMeData.Me.DisplayName,
+                Background = AvatarHelper.GetColorBrush(DataSource.ApiUserMeData.Me.DisplayName),
+                Source = AvatarHelper.GetAvatarBitmap(DataSource.ApiUserMeData.Me.Avatar, AvatarSize.X320, FromType.User)
+            };
 
             var img = me.Me.Preferences.BackgroundImage;
             if (img.StartsWith("desktop-") && img.EndsWith(".jpg"))
@@ -127,16 +136,16 @@ namespace Worktile.Views
                 WtBackgroundImage = me.Config.Box.BaseUrl + "background-image/" + img + "/from-s3";
             }
 
-            switch (me.Me.Preferences.Theme)
-            {
-                default:
-                    //NavBackground = Application.Current.Resources["PrimaryBrush"] as SolidColorBrush;
-                    {
-                        // 需要更换的Keys https://stackoverflow.com/a/33854662/7771913
-                        Application.Current.Resources["SystemAccentColor"] = Color.FromArgb(255, 34, 215, 187);
-                    }
-                    break;
-            }
+            //switch (me.Me.Preferences.Theme)
+            //{
+            //    default:
+            //        //NavBackground = Application.Current.Resources["PrimaryBrush"] as SolidColorBrush;
+            //        {
+            //            // 需要更换的Keys https://stackoverflow.com/a/33854662/7771913
+            //            Application.Current.Resources["SystemAccentColor"] = Color.FromArgb(255, 34, 215, 187);
+            //        }
+            //        break;
+            //}
         }
 
         private async Task LoadTeamInfoAsync()
@@ -173,6 +182,11 @@ namespace Worktile.Views
                 }
                 var uc = container.GetChild<UserControl>("AppItem");
                 VisualStateManager.GoToState(uc, "Pressed", false);
+
+                if (_people != null)
+                {
+                    _people.Background = new SolidColorBrush(Colors.Transparent);
+                }
             }
             if (e.RemovedItems.Count > 0)
             {
@@ -182,11 +196,27 @@ namespace Worktile.Views
             }
         }
 
+        private void ContentFrameNavigate(string app)
+        {
+            switch (app)
+            {
+                case "message":
+                    MainContentFrame.Navigate(typeof(MasterPage));
+                    break;
+                //case "mission":
+                //    ContentFrame.Navigate(typeof(MissionPage));
+                //    break;
+                default:
+                    MainContentFrame.Navigate(typeof(WaitForDevelopmentPage));
+                    break;
+            }
+        }
+
         private void ListViewItem_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             var item = sender as ListViewItem;
             var icon = item.GetChild<FontIcon>("AppIcon");
-            if (icon.Glyph != SelectedApp.Icon)
+            if (SelectedApp != null && icon.Glyph != SelectedApp.Icon)
             {
                 var uc = item.GetChild<UserControl>("AppItem");
                 VisualStateManager.GoToState(uc, "PointOver", false);
@@ -196,12 +226,28 @@ namespace Worktile.Views
         private void ListViewItem_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             var item = sender as ListViewItem;
-            var icon = item.GetChild<FontIcon>("AppIcon");
-            if (icon.Glyph != SelectedApp.Icon)
+            if (item != _people)
             {
-                var uc = item.GetChild<UserControl>("AppItem");
-                VisualStateManager.GoToState(uc, "Normal", false);
+                var icon = item.GetChild<FontIcon>("AppIcon");
+                if (SelectedApp != null && icon.Glyph != SelectedApp.Icon)
+                {
+                    var uc = item.GetChild<UserControl>("AppItem");
+                    VisualStateManager.GoToState(uc, "Normal", false);
+                }
             }
+        }
+
+        ListViewItem _people;
+
+        private void People_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Todo 如果ContentFrame内容页不是，则导航过去
+            SelectedApp = null;
+            var item = sender as ListViewItem;
+            item.Background = Application.Current.Resources["SystemAccentColorDark3"] as SolidColorBrush;
+            _people = item;
+            var uc = item.GetChild<UserControl>("AppItem");
+            VisualStateManager.GoToState(uc, "Pressed", false);
         }
     }
 }
