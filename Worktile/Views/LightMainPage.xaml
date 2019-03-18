@@ -142,5 +142,7 @@
                 </TransitionCollection>
             </Frame.ContentTransitions>
         </Frame>
+
+        <ProgressRing Grid.Column="1" Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

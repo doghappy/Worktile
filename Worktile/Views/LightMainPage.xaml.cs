@@ -58,6 +58,20 @@ namespace Worktile.Views
             }
         }
 
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
+            }
+        }
+
         private string _logo;
         public string Logo
         {
@@ -102,6 +116,7 @@ namespace Worktile.Views
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            IsActive = true;
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
             if (string.IsNullOrEmpty(domain))
             {
@@ -113,6 +128,7 @@ namespace Worktile.Views
                 await LoadPreferencesAsync();
                 await LoadTeamInfoAsync();
             }
+            IsActive = false;
         }
 
         private async Task LoadPreferencesAsync()
@@ -187,6 +203,7 @@ namespace Worktile.Views
                 {
                     _people.Background = new SolidColorBrush(Colors.Transparent);
                 }
+                ContentFrameNavigate(SelectedApp.Name);
             }
             if (e.RemovedItems.Count > 0)
             {
