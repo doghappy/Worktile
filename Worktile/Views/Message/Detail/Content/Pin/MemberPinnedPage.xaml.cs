@@ -72,7 +72,7 @@ namespace Worktile.Views.Message.Detail.Content.Pin
             bool result = await _messageService.UnPinAsync(msg.Id, _session);
             if (result)
             {
-                msg.IsPinned = false;
+                Messages.Remove(msg);
             }
         }
 
