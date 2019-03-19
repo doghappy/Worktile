@@ -6,14 +6,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:message="using:Worktile.Models.Message"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Grid>
         <NavigationView PaneDisplayMode="Top"
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="False"
-                        SelectedItem="{x:Bind ViewModel.SelectedNav, Mode=TwoWay}"
-                        MenuItemsSource="{x:Bind ViewModel.Navs}">
+                        SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}"
+                        MenuItemsSource="{x:Bind Navs}">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="message:TopNav">
                     <NavigationViewItem Content="{x:Bind Name}" />
@@ -24,15 +25,15 @@
                 <StackPanel Orientation="Horizontal">
                     <tethys:Avatar Width="30"
                                    Margin="16 0 8 0"
-                                   Source="{x:Bind ViewModel.Session.TethysAvatar.Source, Mode=OneWay}"
-                                   DisplayName="{x:Bind ViewModel.Session.TethysAvatar.DisplayName, Mode=OneWay}"
-                                   Icon="{x:Bind ViewModel.Session.TethysAvatar.Icon, Mode=OneWay}"
-                                   Background="{x:Bind ViewModel.Session.TethysAvatar.Background, Mode=OneWay}"
-                                   FontFamily="{x:Bind ViewModel.Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
+                                   Source="{x:Bind Session.TethysAvatar.Source, Mode=OneWay}"
+                                   DisplayName="{x:Bind Session.TethysAvatar.DisplayName, Mode=OneWay}"
+                                   Icon="{x:Bind Session.TethysAvatar.Icon, Mode=OneWay}"
+                                   Background="{x:Bind Session.TethysAvatar.Background, Mode=OneWay}"
+                                   FontFamily="{x:Bind Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
                     <TextBlock Grid.Column="1"
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TopNavigationViewItemForegroundDisabled}"
-                               Text="{x:Bind ViewModel.Session.TethysAvatar.DisplayName, Mode=OneWay}"/>
+                               Text="{x:Bind Session.TethysAvatar.DisplayName, Mode=OneWay}"/>
                 </StackPanel>
             </NavigationView.PaneHeader>
 
@@ -50,7 +51,5 @@
                 </Frame.ContentTransitions>
             </Frame>
         </NavigationView>
-
-        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

@@ -16,6 +16,12 @@ using System.Collections.Generic;
 using Worktile.Enums;
 using System.Collections.ObjectModel;
 using Worktile.Enums.Privileges;
+using Worktile.Common.Communication;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Worktile.Models.Message;
+using Worktile.ApiModels;
+using Worktile.Enums.Message;
+using Worktile.Common.Extensions;
 
 namespace Worktile.Views.Message
 {
@@ -76,6 +82,7 @@ namespace Worktile.Views.Message
                 {
                     _selectedSession = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSession)));
+                    ContentFrameNavigate();
                 }
             }
         }
@@ -88,15 +95,19 @@ namespace Worktile.Views.Message
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //MasterOperator.ContentFrame = MasterContentFrame;
             _mainPage = this.GetParent<LightMainPage>();
             await LoadChatAsync();
+
+            App.UnreadBadge += Sessions.Sum(s => s.UnRead);
+            WtSocket.OnMessageReceived += OnMessageReceived;
+            WtSocket.OnFeedReceived += OnFeedReceived;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            //ViewModel.Dispose();
+            WtSocket.OnMessageReceived -= OnMessageReceived;
+            WtSocket.OnFeedReceived -= OnFeedReceived;
         }
 
         private async Task LoadChatAsync()
@@ -272,6 +283,91 @@ namespace Worktile.Views.Message
             {
                 _rightTappedSession.Starred = false;
             }
+        }
+
+        private async void OnMessageReceived(Models.Message.Message apiMsg)
+        {
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+            {
+                var session = Sessions.SingleOrDefault(s => s.Id == apiMsg.To.Id);
+                if (session == null)
+                {
+                    if (apiMsg.Body.At != null && apiMsg.Body.At.Count == 1)
+                    {
+                        var data = await WtHttpClient.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid = apiMsg.From.Uid });
+                        data.Data.ForShowAvatar(AvatarSize.X80);
+                        data.Data.UnRead = 1;
+                        Sessions.Insert(0, session);
+                    }
+                    else if (apiMsg.Type == MessageType.Activity)
+                    {
+                        string url = $"/api/channels/{apiMsg.To.Id}";
+                        var data = await WtHttpClient.GetAsync<ApiDataResponse<ChannelSession>>(url);
+                        if (!Sessions.Any(s => s.Id == data.Data.Id))
+                        {
+                            data.Data.ForShowAvatar();
+                            Sessions.Insert(0, data.Data);
+                        }
+                    }
+                }
+                else
+                {
+                    if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
+                    {
+                        session.UnRead += 1;
+                        Sessions.Remove(session);
+                        Sessions.Insert(0, session);
+                    }
+                }
+            }));
+        }
+
+        private async void OnFeedReceived(Feed feed)
+        {
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+            {
+                if (feed.Type == FeedType.NewChannel)
+                {
+                    string url = $"/api/channels/{feed.ChannelId}";
+                    var data = await WtHttpClient.GetAsync<ApiDataResponse<ChannelSession>>(url);
+                    data.Data.ForShowAvatar();
+                    Sessions.Insert(0, data.Data);
+                }
+                else if (feed.Type == FeedType.RemoveChannel)
+                {
+                    var session = Sessions.SingleOrDefault(s => s.Id == feed.ChannelId);
+                    if (session != null)
+                    {
+                        Sessions.Remove(session);
+                    }
+                }
+                else if (feed.Type == FeedType.RemoveChannelMember)
+                {
+                    var session = Sessions.Single(s => s.Id == feed.ChannelId);
+                    if (feed.Uid == DataSource.ApiUserMeData.Me.Uid)
+                    {
+                        Sessions.Remove(session);
+                    }
+                }
+            }));
+        }
+
+        private void ContentFrameNavigate()
+        {
+            Type type = null;
+            switch (SelectedSession.PageType)
+            {
+                case PageType.Assistant:
+                    type = typeof(AssistantDetailPage);
+                    break;
+                case PageType.Member:
+                    type = typeof(MemberDetailPage);
+                    break;
+                case PageType.Channel:
+                    type = typeof(ChannelDetailPage);
+                    break;
+            }
+            MasterContentFrame.Navigate(type);
         }
     }
 }

@@ -16,7 +16,7 @@
 
     <Grid>
         <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
-            <ItemsControl ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
+            <ItemsControl ItemsSource="{x:Bind Messages, Mode=OneWay}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
@@ -46,6 +46,6 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

@@ -1,10 +1,20 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Common;
 using Worktile.Common.Communication;
+using Worktile.Enums;
+using Worktile.Enums.Message;
+using Worktile.Models;
+using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
+using Worktile.Services;
 using Worktile.ViewModels.Message;
 using Worktile.ViewModels.Message.Detail.Content;
 
@@ -15,45 +25,46 @@ namespace Worktile.Views.Message.Detail.Content
         public AssistantMessagePage()
         {
             InitializeComponent();
+            _assistantMessageService = new AssistantMessageService();
+            Messages = new ObservableCollection<Models.Message.Message>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        readonly AssistantMessageService _assistantMessageService;
+        private MemberSession _session;
+        private TopNav _nav;
 
-        private ToUnReadMsgPageParam _param;
+        public ObservableCollection<Models.Message.Message> Messages { get; }
 
-        private AssistantMessageViewModel _viewModel;
-        private AssistantMessageViewModel ViewModel
+        private bool _isActive;
+        public bool IsActive
         {
-            get => _viewModel;
+            get => _isActive;
             set
             {
-                if (_viewModel != value)
+                if (_isActive != value)
                 {
-                    _viewModel = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewModel)));
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
                 }
             }
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            _param = e.Parameter as ToUnReadMsgPageParam;
-            var session = _param.Session as MemberSession;
-            ViewModel = new AssistantMessageViewModel(session, _param.Nav);
-            WtSocket.OnMessageReceived += ViewModel.OnMessageReceived;
-        }
-
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            WtSocket.OnMessageReceived -= ViewModel.OnMessageReceived;
+            WtSocket.OnMessageReceived -= OnMessageReceived;
         }
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             var scrollViewer = sender as ScrollViewer;
-            if (ViewModel.HasMore.HasValue && ViewModel.HasMore.Value && !ViewModel.IsActive && scrollViewer.VerticalOffset <= 10)
+            if (_assistantMessageService.HasMore.HasValue
+                && _assistantMessageService.HasMore.Value
+                && !IsActive && scrollViewer.VerticalOffset <= 10)
             {
-                await ViewModel.LoadMessagesAsync();
+                IsActive = true;
+                await LoadMessagesAsync();
+                IsActive = false;
             }
         }
 
@@ -61,20 +72,80 @@ namespace Worktile.Views.Message.Detail.Content
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Models.Message.Message;
-            await ViewModel.PinAsync(msg);
+            bool result = await _assistantMessageService.PinAsync(msg.Id, _session.Id);
+            if (result)
+            {
+                msg.IsPinned = true;
+            }
         }
 
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Models.Message.Message;
-            await ViewModel.UnPinAsync(msg);
+            bool result = await _assistantMessageService.UnPinAsync(msg.Id, _session.Id);
+            if (result)
+            {
+                msg.IsPinned = false;
+            }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel.LoadMessagesAsync();
-            await ViewModel.ClearUnReadAsync();
+            IsActive = true;
+
+            var masterPage = this.GetParent<MasterPage>();
+            _session = masterPage.SelectedSession as MemberSession;
+
+            var detailPage = this.GetParent<AssistantDetailPage>();
+            _nav = detailPage.SelectedNav;
+
+            await LoadMessagesAsync();
+            await ClearUnReadAsync();
+
+            WtSocket.OnMessageReceived += OnMessageReceived;
+            IsActive = false;
+        }
+
+        private async Task LoadMessagesAsync()
+        {
+            var messages = await _assistantMessageService.LoadMessagesAsync(_session, _nav.FilterType);
+            foreach (var item in messages)
+            {
+                Messages.Insert(0, item);
+            }
+        }
+
+        private async Task ClearUnReadAsync()
+        {
+            bool result = await _assistantMessageService.ClearUnReadAsync(_session.Id);
+            if (result)
+            {
+                App.UnreadBadge -= _session.UnRead;
+                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _session.UnRead = 0));
+            }
+        }
+
+        public async void OnMessageReceived(Models.Message.Message message)
+        {
+            if (message.To.Id == _session.Id)
+            {
+                await Task.Run(async () =>
+                {
+                    await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                    {
+                        var member = DataSource.Team.Members.Single(m => m.Uid == message.From.Uid);
+                        message.From.TethysAvatar = new TethysAvatar
+                        {
+                            DisplayName = member.DisplayName,
+                            Source = AvatarHelper.GetAvatarBitmap(member.Avatar, AvatarSize.X80, FromType.User),
+                            Background = AvatarHelper.GetColorBrush(member.DisplayName)
+                        };
+                        message.IsPinned = false;
+                        Messages.Add(message);
+                    });
+                });
+            }
         }
     }
 }

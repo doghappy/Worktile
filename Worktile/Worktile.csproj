@@ -359,6 +359,7 @@
     <Compile Include="NavigateModels\SignIn\ToChooseTeamParam.cs" />
     <Compile Include="PageModels\WtKeyValue.cs" />
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
+    <Compile Include="Services\AssistantMessageService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\TeamService.cs" />
     <Compile Include="Services\UserService.cs" />
