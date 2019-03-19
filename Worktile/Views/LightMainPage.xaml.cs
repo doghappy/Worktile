@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Common.Communication;
+using Worktile.Common.Extensions;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
@@ -186,6 +187,7 @@ namespace Worktile.Views
         private async Task LoadTeamInfoAsync()
         {
             var team = await _teamService.GetTeamAsync();
+            team.Members.ForEach(m => m.ForShowAvatar(AvatarSize.X80));
             DataSource.Team = team;
             Apps.Add(new WtApp
             {

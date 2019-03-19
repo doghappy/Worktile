@@ -8,6 +8,7 @@
     xmlns:model="using:Worktile.Models"
     xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     Background="{ThemeResource SystemControlAcrylicElementBrush}">
 
     <Grid Padding="32">
@@ -23,11 +24,11 @@
 
         <AutoSuggestBox Grid.Row="1"
                         QueryIcon="Find"
-                        Text="{x:Bind ViewModel.QueryText, Mode=TwoWay}"
+                        Text="{x:Bind QueryText, Mode=TwoWay}"
                         PlaceholderText="输入成员名查找"
                         Margin="0 0 0 16"/>
 
-        <ListView Grid.Row="2" ItemsSource="{x:Bind ViewModel.Avatars}" SelectionMode="None">
+        <ListView Grid.Row="2" ItemsSource="{x:Bind Avatars}" SelectionMode="None">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Padding" Value="12"/>
@@ -45,6 +46,7 @@
                         </Grid.ColumnDefinitions>
 
                         <tethys:Avatar Width="40"
+                                       Background="{x:Bind Background}"
                                        Source="{x:Bind Source}"
                                        DisplayName="{x:Bind DisplayName}"/>
 
@@ -77,6 +79,6 @@
         <ProgressRing Grid.Row="2"
                       Width="80"
                       Height="80"
-                      IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+                      IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

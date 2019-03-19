@@ -1,43 +1,108 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using Worktile.Common;
+using Worktile.Common.Extensions;
+using Worktile.Enums;
 using Worktile.Models;
-using Worktile.ViewModels.Message;
-using Worktile.ViewModels.Message.Detail;
+using Worktile.Services;
 
 namespace Worktile.Views.Message.Detail
 {
-    public sealed partial class CreateChatPage : Page
+    public sealed partial class CreateChatPage : Page, INotifyPropertyChanged
     {
         public CreateChatPage()
         {
             InitializeComponent();
+            _messageService = new MessageService();
+            Avatars = new ObservableCollection<TethysAvatar>();
         }
 
-        CreateChatViewModel ViewModel { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private MessageService _messageService;
+        private MasterPage _masterPage;
+
+        public ObservableCollection<TethysAvatar> Avatars { get; }
+
+        private string _queryText;
+        public string QueryText
         {
-            var masterViewModel = e.Parameter as MasterViewModel;
-            ViewModel = new CreateChatViewModel(masterViewModel);
+            get => _queryText;
+            set
+            {
+                if (_queryText != value)
+                {
+                    _queryText = value;
+                    OnQueryTextChanged();
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryText)));
+                }
+            }
+        }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            _masterPage = this.GetParent<MasterPage>();
+            foreach (var item in DataSource.Team.Members)
+            {
+                if (item.IsTrueMember())
+                {
+                    Avatars.Add(item.TethysAvatar);
+                }
+            }
         }
 
         private async void SendMessageButton_Click(object sender, RoutedEventArgs e)
         {
+            IsActive = true;
             var btn = sender as Button;
             var avatar = btn.DataContext as TethysAvatar;
-            await ViewModel.CreateAsync(avatar);
+            var session = await _messageService.CreateSessionAsync(avatar.Id);
+            session.ForShowAvatar(AvatarSize.X80);
+            _masterPage.InserSession(session);
+            IsActive = false;
+        }
+
+        private void OnQueryTextChanged()
+        {
+            Avatars.Clear();
+            string text = QueryText.Trim();
+            if (text == string.Empty)
+            {
+                foreach (var item in DataSource.Team.Members)
+                {
+                    if (item.IsTrueMember())
+                    {
+                        Avatars.Add(item.TethysAvatar);
+                    }
+                }
+            }
+            else if (text != ",")
+            {
+                foreach (var item in DataSource.Team.Members)
+                {
+                    if (item.IsTrueMember() && (item.TethysAvatar.Name.Contains(text, StringComparison.CurrentCultureIgnoreCase) || item.DisplayNamePinyin.Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                    {
+                        Avatars.Add(item.TethysAvatar);
+                    }
+                }
+            }
         }
     }
 }

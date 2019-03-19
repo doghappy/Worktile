@@ -145,5 +145,15 @@ namespace Worktile.Services
             var data = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
             return data.Code == 200 && data.Data;
         }
+
+        public async Task<MemberSession> CreateSessionAsync(string uid)
+        {
+            var data = await WtHttpClient.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid });
+            if (data.Code == 200)
+            {
+                return data.Data;
+            }
+            return null;
+        }
     }
 }
