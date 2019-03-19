@@ -27,6 +27,7 @@ using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Services;
 using Worktile.Views.Message;
+using Worktile.Views.Profile;
 using Worktile.Views.SignIn;
 
 namespace Worktile.Views
@@ -302,6 +303,15 @@ namespace Worktile.Views
                     _inAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
                 }
                 _inAppNotification.Show(text, duration);
+            }
+        }
+
+        private void MyAvatar_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(MainContentFrame.Content is ProfilePage page))
+            {
+                SelectedApp = null;
+                MainContentFrame.Navigate(typeof(ProfilePage));
             }
         }
     }

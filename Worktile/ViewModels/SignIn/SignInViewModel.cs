@@ -60,7 +60,7 @@ namespace Worktile.ViewModels.SignIn
             if (res.Code == 200)
             {
                 IsActive = false;
-                Frame.Navigate(typeof(MainPage));
+                Frame.Navigate(typeof(LightMainPage));
                 WtHttpClient.Domain = domain;
                 ApplicationData.Current.LocalSettings.Values["Domain"] = domain;
             }

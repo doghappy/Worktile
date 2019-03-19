@@ -125,7 +125,7 @@
                 </UserControl>
             </ListViewItem>
 
-            <Button Grid.Row="3" Margin="0 16" Padding="0" CornerRadius="48" HorizontalAlignment="Center">
+            <Button Grid.Row="3" Margin="0 16" Padding="0" CornerRadius="48" HorizontalAlignment="Center" Click="MyAvatar_Click">
                 <tethys:Avatar Width="48" DisplayName="{x:Bind MyAvatar.DisplayName, Mode=OneWay}" Background="{x:Bind MyAvatar.Background, Mode=OneWay}" Source="{x:Bind MyAvatar.Source, Mode=OneWay}"/>
             </Button>
         </Grid>
