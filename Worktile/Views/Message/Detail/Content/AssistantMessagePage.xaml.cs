@@ -87,7 +87,7 @@ namespace Worktile.Views.Message.Detail.Content
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Models.Message.Message;
-            bool result = await _assistantMessageService.PinAsync(msg.Id, _session.Id);
+            bool result = await _assistantMessageService.PinAsync(msg.Id, _session);
             if (result)
             {
                 msg.IsPinned = true;
@@ -98,7 +98,7 @@ namespace Worktile.Views.Message.Detail.Content
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Models.Message.Message;
-            bool result = await _assistantMessageService.UnPinAsync(msg.Id, _session.Id);
+            bool result = await _assistantMessageService.UnPinAsync(msg.Id, _session);
             if (result)
             {
                 msg.IsPinned = false;

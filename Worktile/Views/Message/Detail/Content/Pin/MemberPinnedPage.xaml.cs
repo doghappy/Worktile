@@ -69,7 +69,7 @@ namespace Worktile.Views.Message.Detail.Content.Pin
         {
             var btn = sender as Button;
             var msg = btn.DataContext as Models.Message.Message;
-            bool result = await _messageService.UnPinAsync(msg.Id, _session.Id);
+            bool result = await _messageService.UnPinAsync(msg.Id, _session);
             if (result)
             {
                 msg.IsPinned = false;

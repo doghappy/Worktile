@@ -1,10 +1,7 @@
 ﻿using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Navigation;
-using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
-using Worktile.ViewModels.Message;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml;
 using Worktile.Models.Member;
@@ -12,14 +9,14 @@ using Windows.System;
 using System;
 using Worktile.Common;
 using Worktile.Enums;
-using Worktile.Common.Communication;
-using Worktile.Operators.Message.Detail;
 using Worktile.Services;
 using System.Collections.ObjectModel;
 using Worktile.Models.Message;
 using Worktile.Enums.Privileges;
 using Worktile.Views.Message.Detail.Content;
 using Worktile.Views.Message.Detail.Content.Pin;
+using System.Linq;
+using Worktile.Common.Extensions;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -36,7 +33,6 @@ namespace Worktile.Views.Message.Detail
                 new TopNav { Name = "文件" },
                 new TopNav { Name = "固定消息", IsPin = true }
             };
-            SetPermission();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -45,10 +41,50 @@ namespace Worktile.Views.Message.Detail
         private MasterPage _masterPage;
 
         public string PaneTitle => "群组成员";
-        public bool CanAddService { get; private set; }
-        public bool CanAddMember { get; private set; }
-        public bool CanAdminChannel { get; private set; }
         public ObservableCollection<TopNav> Navs { get; }
+
+        private bool _canAddService;
+        public bool CanAddService
+        {
+            get => _canAddService;
+            set
+            {
+                if (_canAddService != value)
+                {
+                    _canAddService = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanAddService)));
+                }
+            }
+        }
+
+        private bool _canAddMember;
+        public bool CanAddMember
+        {
+            get => _canAddMember;
+            set
+            {
+                if (_canAddMember != value)
+                {
+                    _canAddMember = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanAddMember)));
+                }
+            }
+        }
+
+        private bool _canAdminChannel;
+        public bool CanAdminChannel
+        {
+            get => _canAdminChannel;
+            set
+            {
+                if (_canAdminChannel != value)
+                {
+                    _canAdminChannel = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanAdminChannel)));
+                }
+            }
+        }
+
 
         private TopNav _selectedNav;
         public TopNav SelectedNav
@@ -133,11 +169,22 @@ namespace Worktile.Views.Message.Detail
         {
             _masterPage = this.GetParent<MasterPage>();
             Session = _masterPage.SelectedSession as ChannelSession;
+            SetPermission();
+            SelectedNav = Navs.First();
         }
 
         private void ContactInfo_Click(object sender, RoutedEventArgs e)
         {
             IsPaneOpen = true;
+            // 为了显示头像，当 Avatar 未初始化时，需要进行初始化。
+            var member = Session.Members.FirstOrDefault();
+            if (member != null && member.TethysAvatar == null)
+            {
+                foreach (var item in Session.Members)
+                {
+                    item.ForShowAvatar(AvatarSize.X80);
+                }
+            }
         }
 
         private void ListView_Tapped(object sender, TappedRoutedEventArgs e)

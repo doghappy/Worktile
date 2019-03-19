@@ -38,8 +38,7 @@ namespace Worktile.Views.Message.Detail.Content
         readonly FileService _fileService;
         private MemberSession _session;
         private TopNav _nav;
-
-        protected virtual int RefType => 2;
+        const int RefType = 2;
 
         public ObservableCollection<Models.Message.Message> Messages { get; }
 
@@ -164,7 +163,7 @@ namespace Worktile.Views.Message.Detail.Content
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Models.Message.Message;
-            bool result = await _messageService.PinAsync(msg.Id, _session.Id);
+            bool result = await _messageService.PinAsync(msg.Id, _session);
             if (result)
             {
                 msg.IsPinned = true;
@@ -175,7 +174,7 @@ namespace Worktile.Views.Message.Detail.Content
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as Models.Message.Message;
-            bool result = await _messageService.UnPinAsync(msg.Id, _session.Id);
+            bool result = await _messageService.UnPinAsync(msg.Id, _session);
             if (result)
             {
                 msg.IsPinned = false;

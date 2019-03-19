@@ -9,8 +9,6 @@ namespace Worktile.Services
 {
     class AssistantMessageService : MessageService
     {
-        protected override string IdType => "session_id";
-
         private string GetComponentByNumber(int c)
         {
             string component = null;

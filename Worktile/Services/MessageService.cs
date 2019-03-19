@@ -37,7 +37,6 @@ namespace Worktile.Services
         }
 
         public bool? HasMore { get; protected set; }
-        protected virtual string IdType { get; }
 
         public async Task<bool> StarSessionAsync(ISession session)
         {
@@ -70,17 +69,18 @@ namespace Worktile.Services
             return ReadMessages(data);
         }
 
-        public async Task<bool> PinAsync(string messageId, string sessionId)
+        public async Task<bool> PinAsync(string messageId, ISession session)
         {
             string url = "/api/pinneds";
             var req = new
             {
                 type = 1,
                 message_id = messageId,
-                worktile = sessionId
+                worktile = session.Id
             };
             string json = JsonConvert.SerializeObject(req);
-            json = json.Replace("worktile", IdType);
+            string idType = session.GetType() == typeof(ChannelSession) ? "channel_id" : "session_id";
+            json = json.Replace("worktile", idType);
             var response = await WtHttpClient.PostAsync<ApiResponse>(url, json);
             if (response.Code == 200)
             {
@@ -89,9 +89,14 @@ namespace Worktile.Services
             return false;
         }
 
-        public async Task<bool> UnPinAsync(string messageId, string sessionId)
+        private string GetIdType(ISession session)
         {
-            string url = $"/api/messages/{messageId}/unpinned?{IdType}={sessionId}";
+            return session.GetType() == typeof(ChannelSession) ? "channel_id" : "session_id";
+        }
+
+        public async Task<bool> UnPinAsync(string messageId, ISession session)
+        {
+            string url = $"/api/messages/{messageId}/unpinned?{GetIdType(session)}={session.Id}";
             var response = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
             if (response.Code == 200 && response.Data)
             {
@@ -109,7 +114,6 @@ namespace Worktile.Services
 
         public async Task<ApiPinnedMessages> GetPinnedMessagesAsync(ISession session, string anchor)
         {
-            string idType = session.GetType() == typeof(ChannelSession) ? "channel_id" : "session_id";
             string url = $"/api/pinneds?session_id={session.Id}&anchor={anchor}&size=10";
             return await WtHttpClient.GetAsync<ApiPinnedMessages>(url);
         }
