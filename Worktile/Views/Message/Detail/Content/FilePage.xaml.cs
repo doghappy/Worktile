@@ -153,7 +153,7 @@ namespace Worktile.Views.Message.Detail.Content
                 ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
             }
             IsActive = false;
-            control.IsEnabled = false;
+            control.IsEnabled = true;
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
