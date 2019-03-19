@@ -8,19 +8,31 @@ using Worktile.Enums.Message;
 using Worktile.Models.Message;
 using System;
 using Worktile.Models.Message.Session;
+using Worktile.ApiModels.Message.ApiMessages;
+using Worktile.Common;
 
 namespace Worktile.Services
 {
     class MessageService
     {
+        private string _latestId;
+
         protected virtual string GetMessageUrl(ISession session, int refType, int filterType)
         {
-            throw new NotImplementedException();
+            return $"/api/messages?ref_id={session.Id}&ref_type={refType}&latest_id={_latestId}&size=20";
         }
 
         protected virtual IEnumerable<Message> ReadMessages(JToken jToken)
         {
-            throw new NotImplementedException();
+            var apiData = jToken.ToObject<ApiMessages>();
+            foreach (var item in apiData.Data.Messages)
+            {
+                item.ContentFormat();
+                MessageHelper.SetAvatar(item);
+                yield return item;
+            }
+            _latestId = apiData.Data.LatestId;
+            HasMore = apiData.Data.More;
         }
 
         public bool? HasMore { get; protected set; }

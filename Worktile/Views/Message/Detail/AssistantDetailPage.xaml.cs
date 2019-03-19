@@ -66,26 +66,5 @@ namespace Worktile.Views.Message.Detail
             var masterPage = this.GetParent<MasterPage>();
             Session = masterPage.SelectedSession as MemberSession;
         }
-
-        //private AssistantDetailViewModel _viewModel;
-        //private AssistantDetailViewModel ViewModel
-        //{
-        //    get => _viewModel;
-        //    set
-        //    {
-        //        if (_viewModel != value)
-        //        {
-        //            _viewModel = value;
-        //            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ViewModel)));
-        //        }
-        //    }
-        //}
-
-        //protected override void OnNavigatedTo(NavigationEventArgs e)
-        //{
-        //    AssistantDetailOperator.ContentFrame = ContentFrame;
-        //    var session = e.Parameter as MemberSession;
-        //    ViewModel = new AssistantDetailViewModel(session);
-        //}
     }
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Worktile.ApiModels;
 using Worktile.ApiModels.ApiUserMe;
 using Worktile.Common.Communication;
+using Worktile.Models.Member;
 
 namespace Worktile.Services
 {
@@ -14,6 +16,13 @@ namespace Worktile.Services
         {
             var me = await WtHttpClient.GetAsync<ApiUserMe>("api/user/me");
             return me.Data;
+        }
+
+        public async Task<Member> GetMemberInfoAsync(string uid)
+        {
+            string url = $"/api/users/{uid}/basic";
+            var data = await WtHttpClient.GetAsync<ApiDataResponse<Member>>(url);
+            return data.Data;
         }
     }
 }

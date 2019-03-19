@@ -50,6 +50,21 @@ namespace Worktile.Views.Message.Detail.Content
             }
         }
 
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            IsActive = true;
+
+            var detailPage = this.GetParent<AssistantDetailPage>();
+            _session = detailPage.Session;
+            _nav = detailPage.SelectedNav;
+
+            await LoadMessagesAsync();
+            await ClearUnReadAsync();
+
+            WtSocket.OnMessageReceived += OnMessageReceived;
+            IsActive = false;
+        }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             WtSocket.OnMessageReceived -= OnMessageReceived;
@@ -88,23 +103,6 @@ namespace Worktile.Views.Message.Detail.Content
             {
                 msg.IsPinned = false;
             }
-        }
-
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            IsActive = true;
-
-            var masterPage = this.GetParent<MasterPage>();
-            _session = masterPage.SelectedSession as MemberSession;
-
-            var detailPage = this.GetParent<AssistantDetailPage>();
-            _nav = detailPage.SelectedNav;
-
-            await LoadMessagesAsync();
-            await ClearUnReadAsync();
-
-            WtSocket.OnMessageReceived += OnMessageReceived;
-            IsActive = false;
         }
 
         private async Task LoadMessagesAsync()

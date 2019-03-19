@@ -7,6 +7,7 @@
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:message="using:Worktile.Models.Message"
     xmlns:cvt="using:Worktile.Converters"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -18,8 +19,8 @@
         <NavigationView PaneDisplayMode="Top"
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="False"
-                        SelectedItem="{x:Bind ViewModel.SelectedNav, Mode=TwoWay}"
-                        MenuItemsSource="{x:Bind ViewModel.Navs}">
+                        SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}"
+                        MenuItemsSource="{x:Bind Navs}">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="message:TopNav">
                     <NavigationViewItem Content="{x:Bind Name}" />
@@ -30,15 +31,15 @@
                 <StackPanel Orientation="Horizontal">
                     <tethys:Avatar Width="30"
                                    Margin="16 0 8 0"
-                                   Source="{x:Bind ViewModel.Session.TethysAvatar.Source, Mode=OneWay}"
-                                   DisplayName="{x:Bind ViewModel.Session.TethysAvatar.DisplayName, Mode=OneWay}"
-                                   Icon="{x:Bind ViewModel.Session.TethysAvatar.Icon, Mode=OneWay}"
-                                   Background="{x:Bind ViewModel.Session.TethysAvatar.Background, Mode=OneWay}"
-                                   FontFamily="{x:Bind ViewModel.Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
+                                   Source="{x:Bind Session.TethysAvatar.Source, Mode=OneWay}"
+                                   DisplayName="{x:Bind Session.TethysAvatar.DisplayName, Mode=OneWay}"
+                                   Icon="{x:Bind Session.TethysAvatar.Icon, Mode=OneWay}"
+                                   Background="{x:Bind Session.TethysAvatar.Background, Mode=OneWay}"
+                                   FontFamily="{x:Bind Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
                     <TextBlock Grid.Column="1"
                                VerticalAlignment="Center"
                                Foreground="{ThemeResource TopNavigationViewItemForegroundDisabled}"
-                               Text="{x:Bind ViewModel.Session.TethysAvatar.DisplayName, Mode=OneWay}"/>
+                               Text="{x:Bind Session.TethysAvatar.DisplayName, Mode=OneWay}"/>
                 </StackPanel>
             </NavigationView.PaneHeader>
 
@@ -48,7 +49,7 @@
                     <AppBarButton ToolTipService.ToolTip="置顶"
                                   x:Name="StarButton"
                                   Click="StarButton_Click"
-                                  x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}">
+                                  x:Load="{x:Bind Session.Starred, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE183;"/>
                         </AppBarButton.Icon>
@@ -56,7 +57,7 @@
                     <AppBarButton ToolTipService.ToolTip="取消置顶"
                                   x:Name="UnStarButton"
                                   Click="UnStarButton_Click"
-                                  x:Load="{x:Bind ViewModel.Session.Starred, Mode=OneWay}">
+                                  x:Load="{x:Bind Session.Starred, Mode=OneWay}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE845;"/>
                         </AppBarButton.Icon>
@@ -66,7 +67,7 @@
 
             <SplitView DisplayMode="Overlay"
                        PanePlacement="Right"
-                       IsPaneOpen="{x:Bind ViewModel.IsPaneOpen, Mode=TwoWay}">
+                       IsPaneOpen="{x:Bind IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
                     <Grid>
                         <Grid.Resources>
@@ -83,7 +84,7 @@
                         <Grid BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
                               Padding="20 12"
                               BorderThickness="0 0 0 1">
-                            <TextBlock Text="{x:Bind ViewModel.PaneTitle}"/>
+                            <TextBlock Text="{x:Bind PaneTitle}"/>
                         </Grid>
 
                         <Grid Grid.Row="1" Padding="30 0">
@@ -102,11 +103,11 @@
                                 </Grid.ColumnDefinitions>
 
                                 <tethys:Avatar Width="68"
-                                               Source="{x:Bind ViewModel.Session.TethysAvatar.Source, Mode=OneWay}"
-                                               DisplayName="{x:Bind ViewModel.Session.TethysAvatar.DisplayName, Mode=OneWay}"
-                                               Icon="{x:Bind ViewModel.Session.TethysAvatar.Icon, Mode=OneWay}"
-                                               Background="{x:Bind ViewModel.Session.TethysAvatar.Background, Mode=OneWay}"
-                                               FontFamily="{x:Bind ViewModel.Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
+                                               Source="{x:Bind Session.TethysAvatar.Source, Mode=OneWay}"
+                                               DisplayName="{x:Bind Session.TethysAvatar.DisplayName, Mode=OneWay}"
+                                               Icon="{x:Bind Session.TethysAvatar.Icon, Mode=OneWay}"
+                                               Background="{x:Bind Session.TethysAvatar.Background, Mode=OneWay}"
+                                               FontFamily="{x:Bind Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
 
                                 <Grid Grid.Column="1" Margin="16 0 0 0">
                                     <Grid.RowDefinitions>
@@ -114,14 +115,14 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Text="{x:Bind ViewModel.Member.DisplayName, Mode=OneWay}"
+                                    <TextBlock Text="{x:Bind Member.DisplayName, Mode=OneWay}"
                                                IsTextSelectionEnabled="True"
                                                FontWeight="SemiBold"/>
                                     <TextBlock Grid.Row="1"
                                                FontSize="12"
                                                IsTextSelectionEnabled="True"
                                                Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
-                                               Text="{x:Bind ViewModel.Member.Name, Mode=OneWay, Converter={StaticResource AtNameConverter}}" />
+                                               Text="{x:Bind Member.Name, Mode=OneWay, Converter={StaticResource AtNameConverter}}" />
                                 </Grid>
                             </Grid>
 
@@ -134,7 +135,7 @@
                                 <TextBlock Text="手机" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                                 <TextBlock Grid.Column="1"
                                            IsTextSelectionEnabled="True"
-                                           Text="{x:Bind ViewModel.Member.Mobile, Mode=OneWay}"/>
+                                           Text="{x:Bind Member.Mobile, Mode=OneWay}"/>
                             </Grid>
 
                             <Grid Grid.Row="2" Margin="0 16 0 0">
@@ -146,7 +147,7 @@
                                 <TextBlock Text="邮箱" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                                 <TextBlock Grid.Column="1"
                                            IsTextSelectionEnabled="True"
-                                           Text="{x:Bind ViewModel.Member.Email, Mode=OneWay}"/>
+                                           Text="{x:Bind Member.Email, Mode=OneWay}"/>
                             </Grid>
 
                             <Grid Grid.Row="3" Margin="0 16 0 0">
@@ -158,7 +159,7 @@
                                 <TextBlock Text="职位" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                                 <TextBlock Grid.Column="1"
                                            IsTextSelectionEnabled="True"
-                                           Text="{x:Bind ViewModel.Member.Title, Mode=OneWay}"/>
+                                           Text="{x:Bind Member.Title, Mode=OneWay}"/>
                             </Grid>
 
                             <Grid Grid.Row="4" Margin="0 16 0 0">
@@ -170,7 +171,7 @@
                                 <TextBlock Text="部门" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                                 <TextBlock Grid.Column="1"
                                            IsTextSelectionEnabled="True"
-                                           Text="{x:Bind ViewModel.Member.DepartmentName, Mode=OneWay}"/>
+                                           Text="{x:Bind Member.DepartmentName, Mode=OneWay}"/>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -185,6 +186,6 @@
             </SplitView>
         </NavigationView>
 
-        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>
