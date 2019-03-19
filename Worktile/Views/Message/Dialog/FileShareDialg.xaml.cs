@@ -33,7 +33,7 @@ namespace Worktile.Views.Message.Dialog
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Func<string, Task<bool>> SendMessage { get; set; }
+        //public Func<string, Task<bool>> SendMessage { get; set; }
         public string FileId { get; set; }
 
         ObservableCollection<GroupWrapper> Avatars { get; }

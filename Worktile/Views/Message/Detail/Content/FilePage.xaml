@@ -9,6 +9,7 @@
     xmlns:message="using:Worktile.Models.Message"
     Background="{ThemeResource CustomAcrylicBrush}"
     Padding="16"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Grid>
@@ -28,7 +29,7 @@
             </StackPanel>
         </Button>
 
-        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.Files}">
+        <ListView Grid.Row="1" ItemsSource="{x:Bind Files, Mode=OneWay}">
             <ListView.Resources>
                 <Style TargetType="TextBlock" x:Key="ListViewItemTextBlock">
                     <Setter Property="VerticalAlignment" Value="Center"/>
@@ -145,6 +146,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

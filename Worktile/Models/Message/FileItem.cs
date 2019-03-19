@@ -2,7 +2,7 @@
 
 namespace Worktile.Models.Message
 {
-    class FileItem
+    public class FileItem
     {
         public string Id { get; set; }
         public string Icon { get; set; }

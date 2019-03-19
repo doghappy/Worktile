@@ -8,6 +8,8 @@ using Worktile.ApiModels.Upload;
 using Worktile.Common;
 using Worktile.Common.Communication;
 using Windows.Web.Http;
+using Worktile.ApiModels.Message.ApiMessageFiles;
+using Worktile.ApiModels;
 
 namespace Worktile.Services
 {
@@ -33,6 +35,26 @@ namespace Worktile.Services
                     }
                 }
             }
+        }
+
+        public async Task<ApiMessageFiles> GetFilesAsync(int page, int refType, string sessionId)
+        {
+            string url = $"api/entities?page={page}&size=20&ref_type={refType}&ref_id={sessionId}";
+            return await WtHttpClient.GetAsync<ApiMessageFiles>(url);
+        }
+
+        public async Task DownloadFileAsync(StorageFile storageFile, string fileId)
+        {
+            string url = WtFileHelper.GetS3FileUrl(fileId);
+            var buffer = await WtHttpClient.GetByteBufferAsync(url);
+            await FileIO.WriteBufferAsync(storageFile, buffer);
+        }
+
+        public async Task<bool> DeleteFileAsync(string fileId)
+        {
+            string url = $"api/entities/{fileId}";
+            var res = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
+            return res.Code == 200 && res.Data;
         }
     }
 }
