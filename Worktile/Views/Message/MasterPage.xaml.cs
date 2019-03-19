@@ -181,7 +181,7 @@ namespace Worktile.Views.Message
         private void CreateChannel_Click(object sender, RoutedEventArgs e)
         {
             Type sourcePageType = typeof(CreateChannelPage);
-            //EnableNavGoBack(sourcePageType);
+            EnableNavGoBack(sourcePageType);
         }
 
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
@@ -208,9 +208,6 @@ namespace Worktile.Views.Message
             {
                 MasterContentFrame.Navigate(typeof(TransparentPage));
             }
-            //MainOperator.NavView.IsBackEnabled = false;
-            //MainOperator.NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
-            //MainOperator.NavView.BackRequested -= NavigationView_BackRequested;
         }
 
         private void CreateNewSession(ISession session)
@@ -232,7 +229,7 @@ namespace Worktile.Views.Message
         private void JoinChannel_Click(object sender, RoutedEventArgs e)
         {
             Type sourcePageType = typeof(JoinChannelPage);
-            //EnableNavGoBack(sourcePageType);
+            EnableNavGoBack(sourcePageType);
         }
 
         private async void AddMember_Click(object sender, RoutedEventArgs e)
@@ -243,19 +240,19 @@ namespace Worktile.Views.Message
         private void CreateChat_Click(object sender, RoutedEventArgs e)
         {
             Type sourcePageType = typeof(CreateChatPage);
-            //EnableNavGoBack(sourcePageType);
+            EnableNavGoBack(sourcePageType);
         }
 
-        //private void EnableNavGoBack(Type sourcePageType)
-        //{
-        //    if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
-        //    {
-        //        MasterContentFrame.Navigate(sourcePageType, ViewModel);
-        //        MainOperator.NavView.IsBackEnabled = true;
-        //        MainOperator.NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-        //        MainOperator.NavView.BackRequested += NavigationView_BackRequested;
-        //    }
-        //}
+        private void EnableNavGoBack(Type sourcePageType)
+        {
+            if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
+            {
+                MasterContentFrame.Navigate(sourcePageType);
+                //MainOperator.NavView.IsBackEnabled = true;
+                //MainOperator.NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+                //MainOperator.NavView.BackRequested += NavigationView_BackRequested;
+            }
+        }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -367,6 +364,20 @@ namespace Worktile.Views.Message
                     break;
             }
             MasterContentFrame.Navigate(type);
+        }
+
+        public void InserSession(ISession session)
+        {
+            var sourceSession = Sessions.SingleOrDefault(s => s.Id == session.Id);
+            if (sourceSession == null)
+            {
+                Sessions.Insert(0, session);
+            }
+            else
+            {
+                Sessions.Remove(sourceSession);
+                Sessions.Insert(0, sourceSession);
+            }
         }
     }
 }

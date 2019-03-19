@@ -1,41 +1,82 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
+using Worktile.Common.Extensions;
 using Worktile.Models.Message.Session;
-using Worktile.ViewModels.Message;
-using Worktile.ViewModels.Message.Detail;
+using Worktile.Services;
 
 namespace Worktile.Views.Message.Detail
 {
-    public sealed partial class JoinChannelPage : Page
+    public sealed partial class JoinChannelPage : Page, INotifyPropertyChanged
     {
         public JoinChannelPage()
         {
             InitializeComponent();
+            _messageService = new MessageService();
+            Sessions = new ObservableCollection<ChannelSession>();
         }
 
-        JoinChannelViewModel ViewModel { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        readonly MessageService _messageService;
+        private List<ChannelSession> _sessions;
+        private MasterPage _masterPage;
+
+        public ObservableCollection<ChannelSession> Sessions { get; }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
+            }
+        }
+
+        private string _queryText;
+        public string QueryText
+        {
+            get => _queryText;
+            set
+            {
+                if (_queryText != value)
+                {
+                    _queryText = value;
+                    OnQueryTextChanged();
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryText)));
+                }
+            }
+        }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel.LoadDataAsync();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            var masterViewModel = e.Parameter as MasterViewModel;
-            ViewModel = new JoinChannelViewModel(masterViewModel);
+            IsActive = true;
+            _sessions = await _messageService.GetAllChannelsAsync();
+            _masterPage = this.GetParent<MasterPage>();
+            foreach (var item in _sessions)
+            {
+                item.ForShowAvatar();
+                Sessions.Add(item);
+            }
+            IsActive = false;
         }
 
         private async void SendMessageButton_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             var session = btn.DataContext as ChannelSession;
-            var res = await ViewModel.ActiveAsync(session);
+            var res = await _messageService.ActiveChannelAsync(session.Id);
             if (res)
             {
-                DisableGoBack();
+                _masterPage.InserSession(session);
             }
         }
 
@@ -43,18 +84,34 @@ namespace Worktile.Views.Message.Detail
         {
             var btn = sender as Button;
             var session = btn.DataContext as ChannelSession;
-            var res = await ViewModel.JoinAsync(session);
+            var res = await _messageService.JoinChannelAsync(session.Id);
             if (res)
             {
-                DisableGoBack();
+                _masterPage.InserSession(session);
             }
         }
 
-        private void DisableGoBack()
+        private void OnQueryTextChanged()
         {
-            var mainNavView = this.GetParent<NavigationView>("MainNavView");
-            mainNavView.IsBackEnabled = false;
-            mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            Sessions.Clear();
+            string text = QueryText.Trim();
+            if (text == string.Empty)
+            {
+                foreach (var item in _sessions)
+                {
+                    Sessions.Add(item);
+                }
+            }
+            else if (text != ",")
+            {
+                foreach (var item in _sessions)
+                {
+                    if (item.Name.Contains(text, StringComparison.CurrentCultureIgnoreCase) || item.NamePinyin.Contains(text, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        Sessions.Add(item);
+                    }
+                }
+            }
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Models.Member;
-using Worktile.Models.Message.Session;
 using Worktile.ViewModels.Message.Detail;
 using Worktile.Common;
 using Worktile.ViewModels;
@@ -43,9 +41,6 @@ namespace Worktile.Views.Message.Detail
             {
                 frame.Navigate(typeof(TransparentPage));
             }
-            var mainNavView = this.GetParent<NavigationView>("MainNavView");
-            mainNavView.IsBackEnabled = false;
-            mainNavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)

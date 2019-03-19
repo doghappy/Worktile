@@ -124,5 +124,26 @@ namespace Worktile.Services
             var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
             return res.Code == 200 && res.Data;
         }
+
+        public async Task<List<ChannelSession>> GetAllChannelsAsync()
+        {
+            string url = "api/channels?type=all&filter=all&status=ok";
+            var data = await WtHttpClient.GetAsync<ApiDataResponse<List<ChannelSession>>>(url);
+            return data.Data;
+        }
+
+        public async Task<bool> ActiveChannelAsync(string sessionId)
+        {
+            string url = $"api/channels/{sessionId}/active";
+            var data = await WtHttpClient.PutAsync<ApiResponse>(url);
+            return data.Code == 200;
+        }
+
+        public async Task<bool> JoinChannelAsync(string sessionId)
+        {
+            string url = $"api/channels/{sessionId}/join";
+            var data = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
+            return data.Code == 200 && data.Data;
+        }
     }
 }

@@ -28,11 +28,11 @@
 
         <AutoSuggestBox Grid.Row="1"
                         QueryIcon="Find"
-                        Text="{x:Bind ViewModel.QueryText, Mode=TwoWay}"
+                        Text="{x:Bind QueryText, Mode=TwoWay}"
                         PlaceholderText="搜索组群"
                         Margin="0 0 0 16"/>
 
-        <ListView Grid.Row="2" ItemsSource="{x:Bind ViewModel.Sessions}" SelectionMode="None">
+        <ListView Grid.Row="2" ItemsSource="{x:Bind Sessions}" SelectionMode="None">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Padding" Value="12"/>
@@ -101,6 +101,6 @@
         <ProgressRing Grid.Row="2"
                       Width="80"
                       Height="80"
-                      IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+                      IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>
