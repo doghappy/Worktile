@@ -94,7 +94,6 @@ namespace Worktile.Views.Message.Detail
             if (res)
             {
                 _masterPage.InserSession(session);
-                GoBack();
             }
         }
 
@@ -106,7 +105,6 @@ namespace Worktile.Views.Message.Detail
             if (res)
             {
                 _masterPage.InserSession(session);
-                GoBack();
             }
         }
 
@@ -134,11 +132,6 @@ namespace Worktile.Views.Message.Detail
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            GoBack();
-        }
-
-        private void GoBack()
         {
             if (_frame.CanGoBack)
             {

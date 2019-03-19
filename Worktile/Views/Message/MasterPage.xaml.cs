@@ -345,7 +345,7 @@ namespace Worktile.Views.Message
             }));
         }
 
-        public void ContentFrameNavigate()
+        private void ContentFrameNavigate()
         {
             Type type = null;
             switch (SelectedSession.PageType)
@@ -369,11 +369,13 @@ namespace Worktile.Views.Message
             if (sourceSession == null)
             {
                 Sessions.Insert(0, session);
+                SelectedSession = session;
             }
             else
             {
                 Sessions.Remove(sourceSession);
                 Sessions.Insert(0, sourceSession);
+                SelectedSession = sourceSession;
             }
         }
     }

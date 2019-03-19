@@ -7,6 +7,7 @@ using Worktile.Models;
 using Worktile.Services;
 using System.Linq;
 using Worktile.Enums;
+using System.Threading.Tasks;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -150,11 +151,6 @@ namespace Worktile.Views.Message.Detail
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
-            GoBack();
-        }
-
-        private void GoBack()
-        {
             if (_frame.CanGoBack)
             {
                 _frame.GoBack();
@@ -183,9 +179,18 @@ namespace Worktile.Views.Message.Detail
                 var data = await _messageService.CreateChannelAsync(uids, ChannelName.Trim(), Color, Description.Trim(), visibility);
                 if (data.Code == 200)
                 {
-                    GoBack();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        await Task.Delay(20);
+                        var firstSession = _masterPage.Sessions.First();
+                        if (firstSession.Id == data.Data.Id && _masterPage.SelectedSession != firstSession)
+                        {
+                            _masterPage.SelectedSession = firstSession;
+                            break;
+                        }
+                    }
                 }
-                else if (data.Code== 3004)
+                else if (data.Code == 3004)
                 {
                     ErrorText = "已有同名群组";
                     ShowError = true;
