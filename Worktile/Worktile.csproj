@@ -379,7 +379,6 @@
     <Compile Include="ViewModels\Message\Detail\MemberDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\AssistantMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\AssistantDetailViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\FileViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\DetailViewModel.cs" />
     <Compile Include="ViewModels\Message\MasterViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\ChannelMessageViewModel.cs" />
@@ -431,7 +430,6 @@
     </Compile>
     <Compile Include="Models\Message\Feed.cs" />
     <Compile Include="Enums\FeedType.cs" />
-    <Compile Include="Models\Message\FileItem.cs" />
     <Compile Include="Enums\Message\FromType.cs" />
     <Compile Include="Enums\RoleType.cs" />
     <Compile Include="Enums\WtVisibility.cs" />

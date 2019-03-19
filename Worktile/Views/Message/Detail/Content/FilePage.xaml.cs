@@ -119,19 +119,20 @@ namespace Worktile.Views.Message.Detail.Content
         {
             IsActive = true;
             var control = sender as MenuFlyoutItem;
-            var file = control.DataContext as FileItem;
-            string ext = Path.GetExtension(file.FileName);
+            control.IsEnabled = false;
+            var entity = control.DataContext as Entity;
+            string ext = Path.GetExtension(entity.Addition.Title);
             var picker = new FileSavePicker
             {
                 SuggestedStartLocation = PickerLocationId.Downloads,
-                SuggestedFileName = file.FileName,
+                SuggestedFileName = entity.Addition.Title,
                 DefaultFileExtension = ext
             };
             picker.FileTypeChoices.Add(string.Empty, new List<string>() { ext });
             var storageFile = await picker.PickSaveFileAsync();
             if (storageFile != null)
             {
-                await _entityService.DownloadFileAsync(storageFile, file.Id);
+                await _entityService.DownloadFileAsync(storageFile, entity.Id);
                 var toastContent = new ToastContent()
                 {
                     Visual = new ToastVisual()
@@ -142,7 +143,7 @@ namespace Worktile.Views.Message.Detail.Content
                             {
                                 new AdaptiveText()
                                 {
-                                    Text = $"文件“{file.FileName}”下载完成。"
+                                    Text = $"文件“{entity.Addition.Title}”下载完成。"
                                 }
                             }
                         }
@@ -152,6 +153,7 @@ namespace Worktile.Views.Message.Detail.Content
                 ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
             }
             IsActive = false;
+            control.IsEnabled = false;
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
