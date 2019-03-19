@@ -1,4 +1,7 @@
 ﻿using Worktile.Enums;
+using Worktile.Enums.Message;
+using Worktile.Models;
+using Worktile.Models.Entity;
 using Worktile.Models.Member;
 using Worktile.Models.Message.Session;
 
@@ -23,5 +26,18 @@ namespace Worktile.Common.Extensions
         }
 
         public static bool IsTrueMember(this Member member) => member.Role != RoleType.Bot && !string.IsNullOrEmpty(member.Team);
+
+        public static void ForShowEntity(this Entity entity)
+        {
+            entity.Avatar = new TethysAvatar
+            {
+                DisplayName = entity.CreatedBy.DisplayName,
+                Background = AvatarHelper.GetColorBrush(entity.CreatedBy.DisplayName),
+                Source = AvatarHelper.GetAvatarBitmap(entity.CreatedBy.Avatar, AvatarSize.X40, FromType.User)
+            };
+            entity.Icon = WtFileHelper.GetFileIcon(entity.Addition.Ext);
+            entity.IsEnableDelete = entity.CreatedBy.Uid == DataSource.ApiUserMeData.Me.Uid;
+            entity.IsEnableDownload = !string.IsNullOrEmpty(entity.Addition.Path);
+        }
     }
 }

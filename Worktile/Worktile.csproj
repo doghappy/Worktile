@@ -130,6 +130,7 @@
     <Compile Include="Controls\WtPersonPicture.xaml.cs">
       <DependentUpon>WtPersonPicture.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\FriendlySizeConverter.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Common\Communication\WtSocket.cs" />
     <Compile Include="Common\DataSource.cs" />
@@ -327,6 +328,9 @@
     <Compile Include="Models\Department\DepartmentNode.cs" />
     <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
     <Compile Include="Models\Department\DepartmentNodeType.cs" />
+    <Compile Include="Models\Entity\Entity.cs" />
+    <Compile Include="Models\Entity\EntityAddition.cs" />
+    <Compile Include="Models\Entity\EntityReference.cs" />
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
@@ -355,7 +359,7 @@
     <Compile Include="PageModels\WtKeyValue.cs" />
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="Services\AssistantMessageService.cs" />
-    <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\EntityService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\TeamService.cs" />
     <Compile Include="Services\UserService.cs" />

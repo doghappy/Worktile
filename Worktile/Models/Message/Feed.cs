@@ -19,5 +19,8 @@ namespace Worktile.Models.Message
 
         [JsonProperty("channel_id")]
         public string ChannelId { get; set; }
+
+        [JsonProperty("entity_id")]
+        public string EntityId { get; set; }
     }
 }

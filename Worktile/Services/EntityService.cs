@@ -10,10 +10,11 @@ using Worktile.Common.Communication;
 using Windows.Web.Http;
 using Worktile.ApiModels.Message.ApiMessageFiles;
 using Worktile.ApiModels;
+using Worktile.Models.Entity;
 
 namespace Worktile.Services
 {
-    class FileService
+    class EntityService
     {
         public async Task UploadFileAsync(IReadOnlyList<StorageFile> files, string sessionId, int refType)
         {
@@ -41,6 +42,13 @@ namespace Worktile.Services
         {
             string url = $"api/entities?page={page}&size=20&ref_type={refType}&ref_id={sessionId}";
             return await WtHttpClient.GetAsync<ApiMessageFiles>(url);
+        }
+
+        public async Task<Entity> GetFileAsync(string id)
+        {
+            string url = $"api/entities/{id}";
+            var data = await WtHttpClient.GetAsync<ApiDataResponse<Entity>>(url);
+            return data.Data;
         }
 
         public async Task DownloadFileAsync(StorageFile storageFile, string fileId)

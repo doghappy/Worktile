@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.Notifications;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +12,12 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.ApiModels.Message.ApiMessageFiles;
 using Worktile.Common;
+using Worktile.Common.Communication;
+using Worktile.Common.Extensions;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
+using Worktile.Models.Entity;
 using Worktile.Models.Message;
 using Worktile.Models.Message.Session;
 using Worktile.Services;
@@ -27,26 +31,25 @@ namespace Worktile.Views.Message.Detail.Content
         public FilePage()
         {
             InitializeComponent();
-            _fileService = new FileService();
+            _entityService = new EntityService();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        readonly FileService _fileService;
+        readonly EntityService _entityService;
         private ISession _session;
         private int _page = 1;
         private int _refType;
 
-        //public IncrementalCollection<FileItem> Files { get; private set; }
-        private IncrementalCollection<FileItem> _files;
-        public IncrementalCollection<FileItem> Files
+        private IncrementalCollection<Entity> _entities;
+        public IncrementalCollection<Entity> Entities
         {
-            get => _files;
+            get => _entities;
             set
             {
-                if (_files != value)
+                if (_entities != value)
                 {
-                    _files = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Files)));
+                    _entities = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Entities)));
                 }
             }
         }
@@ -71,59 +74,31 @@ namespace Worktile.Views.Message.Detail.Content
             var masterPage = this.GetParent<MasterPage>();
             _session = masterPage.SelectedSession;
             _refType = _session.PageType == PageType.Channel ? 1 : 2;
-
-            Files = new IncrementalCollection<FileItem>(LoadFilesAsync);
+            Entities = new IncrementalCollection<Entity>(LoadFilesAsync);
+            WtSocket.OnFeedReceived += OnFeedReceived;
         }
 
-        private async Task<IEnumerable<FileItem>> LoadFilesAsync()
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            WtSocket.OnFeedReceived -= OnFeedReceived;
+        }
+
+        private async Task<IEnumerable<Entity>> LoadFilesAsync()
         {
             IsActive = true;
-            var list = new List<FileItem>();
-            var data = await _fileService.GetFilesAsync(_page, _refType, _session.Id);
-            Files.HasMoreItems = Files.Count + data.Data.Entities.Count < data.Data.Total;
+            var list = new List<Entity>();
+            var data = await _entityService.GetFilesAsync(_page, _refType, _session.Id);
+            Entities.HasMoreItems = Entities.Count + data.Data.Entities.Count < data.Data.Total;
             _page++;
             foreach (var item in data.Data.Entities)
             {
-                list.Add(new FileItem
-                {
-                    Id = item.Id,
-                    Icon = WtFileHelper.GetFileIcon(item.Addition.Ext),
-                    FileName = item.Addition.Title,
-                    Size = GetFriendlySize(item.Addition.Size),
-                    Avatar = new TethysAvatar
-                    {
-                        DisplayName = item.CreatedBy.DisplayName,
-                        Background = AvatarHelper.GetColorBrush(item.CreatedBy.DisplayName),
-                        Source = AvatarHelper.GetAvatarBitmap(item.CreatedBy.Avatar, AvatarSize.X40, FromType.User)
-                    },
-                    DateTime = item.CreatedAt,
-                    IsEnableDelete = item.CreatedBy.Uid == DataSource.ApiUserMeData.Me.Uid,
-                    IsEnableDownload = !string.IsNullOrEmpty(item.Addition.Path)
-                });
+                item.ForShowEntity();
+                list.Add(item);
             }
 
             IsActive = false;
             return list;
-        }
-
-        private string GetFriendlySize(int size)
-        {
-            if (size <= 0)
-            {
-                return "0B";
-            }
-            else
-            {
-                var units = new[] { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
-                int index = 0;
-                double cursor = size * 1.0;
-                while (cursor >= 1024)
-                {
-                    index++;
-                    cursor /= 1024;
-                }
-                return cursor.ToString("0.00").Replace(".00", string.Empty) + " " + units[index];
-            }
         }
 
         private async void UploadButton_Click(object sender, RoutedEventArgs e)
@@ -135,7 +110,9 @@ namespace Worktile.Views.Message.Detail.Content
             };
             picker.FileTypeFilter.Add("*");
             var files = await picker.PickMultipleFilesAsync();
-            await _fileService.UploadFileAsync(files, _session.Id, _refType);
+            IsActive = true;
+            await _entityService.UploadFileAsync(files, _session.Id, _refType);
+            IsActive = false;
         }
 
         private async void Download_Click(object sender, RoutedEventArgs e)
@@ -154,7 +131,7 @@ namespace Worktile.Views.Message.Detail.Content
             var storageFile = await picker.PickSaveFileAsync();
             if (storageFile != null)
             {
-                await _fileService.DownloadFileAsync(storageFile, file.Id);
+                await _entityService.DownloadFileAsync(storageFile, file.Id);
                 var toastContent = new ToastContent()
                 {
                     Visual = new ToastVisual()
@@ -192,11 +169,11 @@ namespace Worktile.Views.Message.Detail.Content
             {
                 IsActive = true;
                 var control = sender as MenuFlyoutItem;
-                var file = control.DataContext as FileItem;
-                bool res = await _fileService.DeleteFileAsync(file.Id);
+                var entity = control.DataContext as Entity;
+                bool res = await _entityService.DeleteFileAsync(entity.Id);
                 if (res)
                 {
-                    Files.Remove(file);
+                    Entities.Remove(entity);
                 }
                 IsActive = false;
             }
@@ -206,6 +183,24 @@ namespace Worktile.Views.Message.Detail.Content
         {
             var dialog = new FileShareDialg();
             await dialog.ShowAsync();
+        }
+
+        private async void OnFeedReceived(Feed feed)
+        {
+            if (feed.Type == FeedType.AddFile)
+            {
+                await Task.Run(async () =>
+                {
+                    await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+                    {
+                        IsActive = true;
+                        var entity = await _entityService.GetFileAsync(feed.EntityId);
+                        entity.ForShowEntity();
+                        Entities.Insert(0, entity);
+                        IsActive = false;
+                    });
+                });
+            }
         }
     }
 }

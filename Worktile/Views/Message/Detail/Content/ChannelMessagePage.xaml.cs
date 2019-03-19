@@ -29,13 +29,13 @@ namespace Worktile.Views.Message.Detail.Content
         {
             InitializeComponent();
             _messageService = new MessageService();
-            _fileService = new FileService();
+            _entityService = new EntityService();
             Messages = new ObservableCollection<Models.Message.Message>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
         readonly MessageService _messageService;
-        readonly FileService _fileService;
+        readonly EntityService _entityService;
         private ChannelSession _session;
         private TopNav _nav;
         const int RefType = 1;
@@ -156,7 +156,7 @@ namespace Worktile.Views.Message.Detail.Content
             };
             picker.FileTypeFilter.Add("*");
             var files = await picker.PickMultipleFilesAsync();
-            await _fileService.UploadFileAsync(files, _session.Id, RefType);
+            await _entityService.UploadFileAsync(files, _session.Id, RefType);
         }
 
         private async void Pin_Click(object sender, RoutedEventArgs e)
