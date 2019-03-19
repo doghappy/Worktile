@@ -8,6 +8,7 @@
     xmlns:member="using:Worktile.Models.Member"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:cvt="using:Worktile.Converters"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -33,12 +34,12 @@
         <AutoSuggestBox Grid.Row="1"
                         QueryIcon="Find"
                         Margin="0 0 0 16"
-                        Text="{x:Bind ViewModel.QueryText, Mode=TwoWay}"
+                        Text="{x:Bind QueryText, Mode=TwoWay}"
                         PlaceholderText="输入成员名查找"/>
 
         <ListView Grid.Row="2"
                   SelectionMode="None"
-                  ItemsSource="{x:Bind ViewModel.Members}">
+                  ItemsSource="{x:Bind Members}">
 
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -56,6 +57,7 @@
                         </Grid.ColumnDefinitions>
 
                         <tethys:Avatar Width="38"
+                                       Background="{x:Bind TethysAvatar.Background}"
                                        DisplayName="{x:Bind TethysAvatar.DisplayName}"
                                        Source="{x:Bind TethysAvatar.Source}"/>
 

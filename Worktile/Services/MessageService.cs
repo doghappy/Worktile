@@ -169,5 +169,13 @@ namespace Worktile.Services
             };
             return await WtHttpClient.PostAsync<ApiDataResponse<ChannelSession>>("api/channel", req);
         }
+
+        public async Task<bool> AddMemberToChannelAsync(string sessionId, string uid)
+        {
+            string url = $"api/channels/{sessionId}/invite";
+            var req = new { uid };
+            var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url, req);
+            return res.Code == 200 && res.Data;
+        }
     }
 }
