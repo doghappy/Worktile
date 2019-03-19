@@ -184,48 +184,6 @@ namespace Worktile.Views.Message
             EnableNavGoBack(sourcePageType);
         }
 
-        private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
-        {
-            var names = new[] { nameof(TransparentPage), nameof(CreateChannelPage), nameof(JoinChannelPage), nameof(CreateChatPage) };
-            while (true)
-            {
-                var item = MasterContentFrame.BackStack.FirstOrDefault(t => names.Contains(t.SourcePageType.Name));
-                if (item == null)
-                {
-                    break;
-                }
-                else
-                {
-                    MasterContentFrame.BackStack.Remove(item);
-                }
-            }
-
-            if (MasterContentFrame.CanGoBack)
-            {
-                MasterContentFrame.GoBack();
-            }
-            else
-            {
-                MasterContentFrame.Navigate(typeof(TransparentPage));
-            }
-        }
-
-        private void CreateNewSession(ISession session)
-        {
-            var ss = Sessions.SingleOrDefault(s => s.Id == session.Id);
-            if (ss == null)
-            {
-                Sessions.Insert(0, session);
-                SelectedSession = session;
-            }
-            else if (SelectedSession != ss)
-            {
-                Sessions.Remove(ss);
-                Sessions.Insert(0, ss);
-                SelectedSession = ss;
-            }
-        }
-
         private void JoinChannel_Click(object sender, RoutedEventArgs e)
         {
             Type sourcePageType = typeof(JoinChannelPage);
@@ -347,20 +305,27 @@ namespace Worktile.Views.Message
 
         private void ContentFrameNavigate()
         {
-            Type type = null;
-            switch (SelectedSession.PageType)
+            if (SelectedSession == null)
             {
-                case PageType.Assistant:
-                    type = typeof(AssistantDetailPage);
-                    break;
-                case PageType.Member:
-                    type = typeof(MemberDetailPage);
-                    break;
-                case PageType.Channel:
-                    type = typeof(ChannelDetailPage);
-                    break;
+                MasterContentFrame.Navigate(typeof(TransparentPage));
             }
-            MasterContentFrame.Navigate(type);
+            else
+            {
+                Type type = null;
+                switch (SelectedSession.PageType)
+                {
+                    case PageType.Assistant:
+                        type = typeof(AssistantDetailPage);
+                        break;
+                    case PageType.Member:
+                        type = typeof(MemberDetailPage);
+                        break;
+                    case PageType.Channel:
+                        type = typeof(ChannelDetailPage);
+                        break;
+                }
+                MasterContentFrame.Navigate(type);
+            }
         }
 
         public void InserSession(ISession session)

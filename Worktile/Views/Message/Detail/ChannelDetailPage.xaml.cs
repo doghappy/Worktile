@@ -256,11 +256,7 @@ namespace Worktile.Views.Message.Detail
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Secondary)
             {
-                var success = await _messageService.ExitChannelAsync(Session.Id);
-                if (success)
-                {
-                    _masterPage.Sessions.Remove(Session);
-                }
+                await _messageService.ExitChannelAsync(Session.Id);
             }
         }
     }
