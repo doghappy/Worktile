@@ -7,7 +7,7 @@
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:cvt="using:Worktile.Converters"
     xmlns:controls="using:Worktile.Controls"
-    Background="{ThemeResource SystemControlAcrylicElementBrush}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
@@ -34,46 +34,48 @@
         <TextBox Grid.Row="1"
                  x:Name="ChannelNameTextBox"
                  Margin="0 0 0 16"
-                 Text="{x:Bind ViewModel.ChannelName, Mode=TwoWay}"
+                 Text="{x:Bind ChannelName, Mode=TwoWay}"
                  PlaceholderText="群组名称"/>
 
         <controls:WtColorPicker Grid.Row="2"
                                 Margin="0 0 0 16"
-                                SelectedColor="{x:Bind ViewModel.Color, Mode=TwoWay}"/>
+                                SelectedColor="{x:Bind Color, Mode=TwoWay}"/>
 
         <TextBox Grid.Row="3"
                  Margin="0 0 0 16"
                  Header="群组主题"
                  PlaceholderText="说明群组主要讨论的内容"
-                 Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
+                 Text="{x:Bind Description, Mode=TwoWay}"
                  AcceptsReturn="True"/>
 
         <ToggleSwitch Grid.Row="4"
                       Margin="0 0 0 16"
-                      IsOn="{x:Bind ViewModel.IsPrivate, Mode=TwoWay}"
+                      IsOn="{x:Bind IsPrivate, Mode=TwoWay}"
                       Header="可见性"
                       OffContent="公开群组"
                       OnContent="私有群组"/>
 
         <controls:MemberPicker Grid.Row="5"
                                Margin="0 0 0 16"
-                               SelectedAvatars="{x:Bind ViewModel.SelectedAvatars}"/>
+                               SelectedAvatars="{x:Bind Avatars}"/>
         
         <tethys:Alert Grid.Row="6"
                       Mode="Danger"
                       Icon="Cancel"
                       Margin="0 0 0 16"
-                      Visibility="{x:Bind ViewModel.ShowError, Mode=OneWay}"
-                      Text="{x:Bind ViewModel.ErrorText, Mode=OneWay}"/>
+                      Visibility="{x:Bind ShowError, Mode=OneWay}"
+                      Text="{x:Bind ErrorText, Mode=OneWay}"/>
 
         <StackPanel Grid.Row="7" Orientation="Horizontal">
             <Button Content="确定"
                     Background="{ThemeResource SystemAccentColor}"
                     Style="{ThemeResource ButtonRevealStyle}"
-                    IsEnabled="{x:Bind ViewModel.IsActive, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
+                    IsEnabled="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
                     Click="PrimaryButton_Click"
                     Foreground="White"/>
             <Button Content="取消"
+                    x:Name="GoBackButton"
+                    x:Load="{x:Bind CanGoBack, Mode=OneWay}"
                     Click="GoBackButton_Click"
                     Margin="8 0 0 0"/>
         </StackPanel>

@@ -248,9 +248,6 @@ namespace Worktile.Views.Message
             if (MasterContentFrame.CurrentSourcePageType != sourcePageType)
             {
                 MasterContentFrame.Navigate(sourcePageType);
-                //MainOperator.NavView.IsBackEnabled = true;
-                //MainOperator.NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-                //MainOperator.NavView.BackRequested += NavigationView_BackRequested;
             }
         }
 
@@ -348,7 +345,7 @@ namespace Worktile.Views.Message
             }));
         }
 
-        private void ContentFrameNavigate()
+        public void ContentFrameNavigate()
         {
             Type type = null;
             switch (SelectedSession.PageType)

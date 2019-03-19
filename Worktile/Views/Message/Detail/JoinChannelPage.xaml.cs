@@ -113,5 +113,14 @@ namespace Worktile.Views.Message.Detail
                 }
             }
         }
+
+        private void GoBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            var frame = _masterPage.GetChild<Frame>("MasterContentFrame");
+            if (frame.CanGoBack)
+            {
+                frame.GoBack();
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ using Worktile.Models.Message.Session;
 using Worktile.ApiModels.Message.ApiMessages;
 using Worktile.Common;
 using Worktile.ApiModels.ApiPinnedMessages;
+using Worktile.Enums;
 
 namespace Worktile.Services
 {
@@ -154,6 +155,19 @@ namespace Worktile.Services
                 return data.Data;
             }
             return null;
+        }
+
+        public async Task<ApiDataResponse<ChannelSession>> CreateChannelAsync(string uids, string name, string color, string desc, WtVisibility visibility)
+        {
+            var req = new
+            {
+                name,
+                color,
+                desc,
+                default_uids = uids,
+                visibility
+            };
+            return await WtHttpClient.PostAsync<ApiDataResponse<ChannelSession>>("api/channel", req);
         }
     }
 }

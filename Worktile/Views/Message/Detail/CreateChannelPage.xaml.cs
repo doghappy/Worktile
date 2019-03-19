@@ -1,75 +1,203 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Worktile.ViewModels.Message.Detail;
 using Worktile.Common;
-using Worktile.ViewModels;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using Worktile.Models;
+using Worktile.Services;
+using System.Linq;
+using Worktile.Enums;
 
 namespace Worktile.Views.Message.Detail
 {
-    public sealed partial class CreateChannelPage : Page
+    public sealed partial class CreateChannelPage : Page, INotifyPropertyChanged
     {
         public CreateChannelPage()
         {
             InitializeComponent();
-            ViewModel = new CreateChannelViewModel();
+            Avatars = new ObservableCollection<TethysAvatar>();
+            _messageService = new MessageService();
         }
 
-        CreateChannelViewModel ViewModel { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        readonly MessageService _messageService;
+        Frame _frame;
+        MasterPage _masterPage;
 
-        MainViewModel _mainViewModel;
+        public ObservableCollection<TethysAvatar> Avatars { get; }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
+            }
+        }
+
+        private string _color;
+        public string Color
+        {
+            get => _color;
+            set
+            {
+                if (_color != value)
+                {
+                    _color = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Color)));
+                }
+            }
+        }
+
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                if (_description != value)
+                {
+                    _description = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                }
+            }
+        }
+
+        private string _channelName;
+        public string ChannelName
+        {
+            get => _channelName;
+            set
+            {
+                if (_channelName != value)
+                {
+                    _channelName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ChannelName)));
+                }
+            }
+        }
+
+        private bool _isPrivate;
+        public bool IsPrivate
+        {
+            get => _isPrivate;
+            set
+            {
+                if (_isPrivate != value)
+                {
+                    _isPrivate = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPrivate)));
+                }
+            }
+        }
+
+        private bool _showError;
+        public bool ShowError
+        {
+            get => _showError;
+            set
+            {
+                if (_showError != value)
+                {
+                    _showError = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowError)));
+                }
+            }
+        }
+
+        private string _errorText;
+        public string ErrorText
+        {
+            get => _errorText;
+            set
+            {
+                if (_errorText != value)
+                {
+                    _errorText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ErrorText)));
+                }
+            }
+        }
+
+        private bool _canGoBack;
+        public bool CanGoBack
+        {
+            get => _canGoBack;
+            set
+            {
+                if (_canGoBack != value)
+                {
+                    _canGoBack = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoBack)));
+                }
+            }
+        }
+
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            Description = string.Empty;
             ChannelNameTextBox.Focus(FocusState.Programmatic);
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            _mainViewModel = e.Parameter as MainViewModel;
-        }
-
-        private void ClosePage()
-        {
-            var masterPage = Frame.GetParent<MasterPage>();
-            var frame = masterPage.GetChild<Frame>("MasterContentFrame");
-            if (frame.CanGoBack)
-            {
-                frame.GoBack();
-            }
-            else
-            {
-                frame.Navigate(typeof(TransparentPage));
-            }
+            _masterPage = Frame.GetParent<MasterPage>();
+            _frame = _masterPage.GetChild<Frame>("MasterContentFrame");
+            CanGoBack = _frame.CanGoBack;
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
-            ClosePage();
+            GoBack();
+        }
+
+        private void GoBack()
+        {
+            if (_frame.CanGoBack)
+            {
+                _frame.GoBack();
+            }
+            else
+            {
+                _frame.Navigate(typeof(TransparentPage));
+            }
         }
 
         private async void PrimaryButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ShowError = false;
-            if (string.IsNullOrWhiteSpace(ViewModel.ChannelName))
+            IsActive = true;
+            ShowError = false;
+            if (string.IsNullOrWhiteSpace(ChannelName))
             {
-                ViewModel.ErrorText = "群组名称不能为空";
-                ViewModel.ShowError = true;
+                ErrorText = "群组名称不能为空";
+                ShowError = true;
                 ChannelNameTextBox.Focus(FocusState.Programmatic);
             }
             else
             {
-                var res = await ViewModel.CreateAsync();
-                if (res)
+                var avatars = Avatars.Select(a => a.Id);
+                string uids = string.Join(',', avatars);
+                var visibility = IsPrivate ? WtVisibility.Private : WtVisibility.Public;
+                var data = await _messageService.CreateChannelAsync(uids, ChannelName.Trim(), Color, Description.Trim(), visibility);
+                if (data.Code == 200)
                 {
-                    ClosePage();
+                    GoBack();
+                }
+                else if (data.Code== 3004)
+                {
+                    ErrorText = "已有同名群组";
+                    ShowError = true;
+                    ChannelNameTextBox.Focus(FocusState.Programmatic);
                 }
                 else
                 {
-                    ViewModel.ErrorText = "创建失败";
-                    ViewModel.ShowError = true;
+                    ErrorText = "创建失败";
+                    ShowError = true;
                 }
             }
+            IsActive = false;
         }
     }
 }

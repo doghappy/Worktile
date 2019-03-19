@@ -9,7 +9,7 @@
     xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
-    Background="{ThemeResource SystemControlAcrylicElementBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <cvt:BooleanReverseConverter x:Key="BooleanReserveConverter"/>
@@ -20,6 +20,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="加入群组"
@@ -97,6 +98,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Button Grid.Row="3" Content="返回" Style="{ThemeResource AccentButtonStyle}" Click="GoBackButton_Click"/>
 
         <ProgressRing Grid.Row="2"
                       Width="80"
