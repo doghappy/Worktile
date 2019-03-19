@@ -10,6 +10,7 @@ using System;
 using Worktile.Models.Message.Session;
 using Worktile.ApiModels.Message.ApiMessages;
 using Worktile.Common;
+using Worktile.ApiModels.ApiPinnedMessages;
 
 namespace Worktile.Services
 {
@@ -104,6 +105,13 @@ namespace Worktile.Services
             string url = $"/api/messages/unread/clear?ref_id={sessionId}";
             var data = await WtHttpClient.PutAsync<ApiResponse>(url);
             return data.Code == 200;
+        }
+
+        public async Task<ApiPinnedMessages> GetPinnedMessagesAsync(ISession session, string anchor)
+        {
+            string idType = session.GetType() == typeof(ChannelSession) ? "channel_id" : "session_id";
+            string url = $"/api/pinneds?session_id={session.Id}&anchor={anchor}&size=10";
+            return await WtHttpClient.GetAsync<ApiPinnedMessages>(url);
         }
     }
 }

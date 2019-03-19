@@ -6,10 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Worktile.Controls"
     xmlns:message="using:Worktile.Models.Message"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Grid>
-        <ListView ItemsSource="{x:Bind ViewModel.Messages}" SelectionMode="None">
+        <ListView ItemsSource="{x:Bind Messages, Mode=OneWay}" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="message:Message">
                     <controls:MessageControl Message="{x:Bind}">
@@ -25,6 +26,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>
