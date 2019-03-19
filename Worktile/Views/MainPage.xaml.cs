@@ -13,7 +13,6 @@ using Microsoft.Toolkit.Uwp.Connectivity;
 using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Worktile.Enums;
-using Worktile.Operators;
 
 namespace Worktile.Views
 {
@@ -31,8 +30,6 @@ namespace Worktile.Views
         {
             NetworkHelper.Instance.NetworkChanged += NetworkChanged;
             ViewModel.IsActive = true;
-            MainOperator.ContentFrame = MainContentFrame;
-            MainOperator.InAppNotification = InAppNotification;
             //MainOperator.NavView = MainNavView;
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
             if (string.IsNullOrEmpty(domain))
@@ -52,7 +49,6 @@ namespace Worktile.Views
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
-            MainOperator.WindowActivationState = e.WindowActivationState;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -83,11 +79,9 @@ namespace Worktile.Views
                     var helper = sender as NetworkHelper;
                     if (helper.ConnectionInformation.IsInternetAvailable)
                     {
-                        MainOperator.ShowNotification("网络已恢复，正在重新连接……", NotificationLevel.Warning, 4000);
                     }
                     else
                     {
-                        MainOperator.ShowNotification("网络已断开，正在重新连接……", NotificationLevel.Danger, 4000);
                         WtSocket.ReConnect();
                     }
                 });

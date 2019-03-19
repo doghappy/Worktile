@@ -205,12 +205,11 @@ namespace Worktile.Views.Message.Detail.Content
 
         public async Task<bool> SendMessageAsync(string msg)
         {
-            //int toType = _session.GetType() == typeof(ChannelSession) ? 1 : 2;
             var data = new
             {
                 fromType = 1,
                 from = DataSource.ApiUserMeData.Me.Uid,
-                to = 2,
+                to = _session.Id,
                 toType = 2,
                 messageType = 1,
                 client = 1,

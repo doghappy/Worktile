@@ -9,12 +9,14 @@ using Windows.Storage.Streams;
 using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
+using Windows.UI.Xaml;
 using Worktile.Domain.MessageContentReader;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Domain.SocketMessageConverter.Converters;
 using Worktile.Enums;
 using Worktile.Enums.Message;
-using Worktile.Operators;
+using Worktile.Views;
+using Worktile.Views.Message;
 
 namespace Worktile.Common.Communication
 {
@@ -36,7 +38,6 @@ namespace Worktile.Common.Communication
             {
                 await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                 {
-                    var aaa = System.Threading.Thread.CurrentThread.ManagedThreadId;
                     try
                     {
                         _socket = new MessageWebSocket();
@@ -50,12 +51,12 @@ namespace Worktile.Common.Communication
                             await _socket.ConnectAsync(uri);
                             if (_showConnSuccessNoti)
                             {
-                                MainOperator.ShowNotification("网络已恢复，已经重新连接到消息服务了。", NotificationLevel.Success, 4000);
+                                LightMainPage.ShowNotification("网络已恢复，已经重新连接到消息服务了。", NotificationLevel.Success, 4000);
                             }
                         }
                         catch (Exception e)
                         {
-                            MainOperator.ShowNotification("与消息服务器断开连接，正在重新连接……", NotificationLevel.Danger, 4000);
+                            LightMainPage.ShowNotification("与消息服务器断开连接，正在重新连接……", NotificationLevel.Danger, 4000);
                             if (_reconnectTimer == null)
                             {
                                 ReConnect();
@@ -174,13 +175,11 @@ namespace Worktile.Common.Communication
             if (apiMsg.From.Uid != DataSource.ApiUserMeData.Me.Uid)
             {
                 App.UnreadBadge += 1;
-                if (MainOperator.WindowActivationState == CoreWindowActivationState.Deactivated)
+
+                if (Window.Current.Content is LightMainPage mainPage)
                 {
-                    SendToast(apiMsg);
-                }
-                else
-                {
-                    if (MainOperator.SelectedApp.Name != "message")
+                    var masterPage = mainPage.GetChildren<MasterPage>().FirstOrDefault();
+                    if (mainPage.WindowActivationState == CoreWindowActivationState.Deactivated || masterPage == null)
                     {
                         SendToast(apiMsg);
                     }

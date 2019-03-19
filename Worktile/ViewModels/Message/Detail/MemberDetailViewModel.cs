@@ -11,7 +11,6 @@ using Worktile.Views.Message.Detail.Content.Pin;
 using System.Threading.Tasks;
 using Worktile.Common.Communication;
 using Worktile.ApiModels;
-using Worktile.Operators.Message.Detail;
 
 namespace Worktile.ViewModels.Message
 {
@@ -35,22 +34,22 @@ namespace Worktile.ViewModels.Message
                 {
                     _selectedNav = value;
                     int index = Navs.IndexOf(value);
-                    switch (index)
-                    {
-                        case 0:
-                            MemberDetailOperator.ContentFrame.Navigate(typeof(MemberMessagePage), new ToUnReadMsgPageParam
-                            {
-                                Session = Session,
-                                Nav = value
-                            });
-                            break;
-                        case 1:
-                            MemberDetailOperator.ContentFrame.Navigate(typeof(FilePage), Session);
-                            break;
-                        case 2:
-                            MemberDetailOperator.ContentFrame.Navigate(typeof(MemberPinnedPage), Session);
-                            break;
-                    }
+                    //switch (index)
+                    //{
+                    //    case 0:
+                    //        MemberDetailOperator.ContentFrame.Navigate(typeof(MemberMessagePage), new ToUnReadMsgPageParam
+                    //        {
+                    //            Session = Session,
+                    //            Nav = value
+                    //        });
+                    //        break;
+                    //    case 1:
+                    //        MemberDetailOperator.ContentFrame.Navigate(typeof(FilePage), Session);
+                    //        break;
+                    //    case 2:
+                    //        MemberDetailOperator.ContentFrame.Navigate(typeof(MemberPinnedPage), Session);
+                    //        break;
+                    //}
                     OnPropertyChanged();
                 }
             }

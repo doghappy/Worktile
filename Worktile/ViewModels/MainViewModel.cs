@@ -15,7 +15,6 @@ using Worktile.Views.Message;
 using Worktile.ApiModels;
 using Worktile.Models.Team;
 using Worktile.Common.Extensions;
-using Worktile.Operators;
 
 namespace Worktile.ViewModels
 {
@@ -72,7 +71,6 @@ namespace Worktile.ViewModels
                 if (_selectedApp != value)
                 {
                     _selectedApp = value;
-                    MainOperator.SelectedApp = value;
                     OnPropertyChanged();
                     if (value != null)
                     {
@@ -132,18 +130,18 @@ namespace Worktile.ViewModels
 
         private void ContentFrameNavigate(string app)
         {
-            switch (app)
-            {
-                case "message":
-                    MainOperator.ContentFrame.Navigate(typeof(MasterPage), this);
-                    break;
-                //case "mission":
-                //    ContentFrame.Navigate(typeof(MissionPage));
-                //    break;
-                default:
-                    MainOperator.ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
-                    break;
-            }
+            //switch (app)
+            //{
+            //    case "message":
+            //        MainOperator.ContentFrame.Navigate(typeof(MasterPage), this);
+            //        break;
+            //    //case "mission":
+            //    //    ContentFrame.Navigate(typeof(MissionPage));
+            //    //    break;
+            //    default:
+            //        MainOperator.ContentFrame.Navigate(typeof(WaitForDevelopmentPage));
+            //        break;
+            //}
         }
     }
 }

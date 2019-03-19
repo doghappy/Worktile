@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -42,6 +44,8 @@ namespace Worktile.Views
 
         readonly TeamService _teamService;
         readonly UserService _userService;
+        private static InAppNotification _inAppNotification;
+        public CoreWindowActivationState WindowActivationState { get; private set; }
         public ObservableCollection<WtApp> Apps { get; }
 
         private WtApp _selectedApp;
@@ -127,8 +131,23 @@ namespace Worktile.Views
                 WtHttpClient.Domain = domain;
                 await LoadPreferencesAsync();
                 await LoadTeamInfoAsync();
+                await WtSocket.ConnectSocketAsync();
             }
+            _inAppNotification = InAppNotification;
+            Window.Current.Activated += Window_Activated;
             IsActive = false;
+        }
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            WindowActivationState = e.WindowActivationState;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            WtSocket.Dispose();
+            Window.Current.Activated -= Window_Activated;
         }
 
         private async Task LoadPreferencesAsync()
@@ -265,6 +284,23 @@ namespace Worktile.Views
             _people = item;
             var uc = item.GetChild<UserControl>("AppItem");
             VisualStateManager.GoToState(uc, "Pressed", false);
+        }
+
+        public static void ShowNotification(string text, NotificationLevel level, int duration = 0)
+        {
+            if (_inAppNotification != null)
+            {
+                if (level == NotificationLevel.Default)
+                {
+                    _inAppNotification.BorderBrush = Application.Current.Resources["SystemControlForegroundBaseLowBrush"] as SolidColorBrush;
+                }
+                else
+                {
+                    string key = level.ToString() + "Brush";
+                    _inAppNotification.BorderBrush = Application.Current.Resources[key] as SolidColorBrush;
+                }
+                _inAppNotification.Show(text, duration);
+            }
         }
     }
 }

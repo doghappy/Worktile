@@ -15,8 +15,6 @@ using Worktile.Enums.Privileges;
 using System.Threading.Tasks;
 using Worktile.Common.Communication;
 using Worktile.ApiModels;
-using Worktile.Operators.Message;
-using Worktile.Operators.Message.Detail;
 
 namespace Worktile.ViewModels.Message
 {
@@ -48,22 +46,7 @@ namespace Worktile.ViewModels.Message
                 {
                     _selectedNav = value;
                     int index = Navs.IndexOf(value);
-                    switch (index)
-                    {
-                        case 0:
-                            ChannelDetailOperator.ContentFrame.Navigate(typeof(ChannelMessagePage), new ToUnReadMsgPageParam
-                            {
-                                Session = Session,
-                                Nav = value
-                            });
-                            break;
-                        case 1:
-                            ChannelDetailOperator.ContentFrame.Navigate(typeof(FilePage), Session);
-                            break;
-                        case 2:
-                            ChannelDetailOperator.ContentFrame.Navigate(typeof(ChannelPinnedPage), Session);
-                            break;
-                    }
+                   
                     OnPropertyChanged();
                 }
             }
@@ -104,7 +87,6 @@ namespace Worktile.ViewModels.Message
             var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
             if (res.Code == 200 && res.Data)
             {
-                MasterOperator.ViewModel.Sessions.Remove(Session);
             }
         }
     }

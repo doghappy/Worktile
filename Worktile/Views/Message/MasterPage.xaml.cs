@@ -9,7 +9,6 @@ using Windows.UI.Xaml.Input;
 using Windows.System;
 using Worktile.Models.Message.Session;
 using Worktile.Views.Message.Detail;
-using Worktile.Operators;
 using System.Threading.Tasks;
 using Worktile.Services;
 using System.Collections.Generic;
@@ -209,9 +208,9 @@ namespace Worktile.Views.Message
             {
                 MasterContentFrame.Navigate(typeof(TransparentPage));
             }
-            MainOperator.NavView.IsBackEnabled = false;
-            MainOperator.NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
-            MainOperator.NavView.BackRequested -= NavigationView_BackRequested;
+            //MainOperator.NavView.IsBackEnabled = false;
+            //MainOperator.NavView.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
+            //MainOperator.NavView.BackRequested -= NavigationView_BackRequested;
         }
 
         private void CreateNewSession(ISession session)

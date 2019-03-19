@@ -8,10 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Windows.Storage.Pickers;
-using Worktile.ViewModels.Message;
-using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message;
-using Worktile.ViewModels.Message.Detail.Content;
 using Worktile.Models.Message.Session;
 using Worktile.Common.Communication;
 using Worktile.Services;
@@ -212,7 +209,7 @@ namespace Worktile.Views.Message.Detail.Content
             {
                 fromType = 1,
                 from = DataSource.ApiUserMeData.Me.Uid,
-                to = 2,
+                to = _session.Id,
                 toType = 1,
                 messageType = 1,
                 client = 1,

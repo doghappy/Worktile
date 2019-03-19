@@ -19,7 +19,6 @@ using Worktile.Common;
 using Worktile.Common.Extensions;
 using Worktile.Models;
 using Worktile.Models.Message.Session;
-using Worktile.Operators.Message;
 
 namespace Worktile.Views.Message.Dialog
 {

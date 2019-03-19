@@ -21,7 +21,6 @@ using Worktile.Views.Message.Detail;
 using Windows.UI.Xaml;
 using Worktile.Views;
 using Worktile.Enums.Privileges;
-using Worktile.Operators.Message;
 
 namespace Worktile.ViewModels.Message
 {
@@ -149,7 +148,6 @@ namespace Worktile.ViewModels.Message
         {
             if (session == null)
             {
-                MasterOperator.ContentFrame.Navigate(typeof(TransparentPage));
             }
             else
             {
@@ -166,7 +164,6 @@ namespace Worktile.ViewModels.Message
                         type = typeof(ChannelDetailPage);
                         break;
                 }
-                MasterOperator.ContentFrame.Navigate(type, session);
             }
         }
 

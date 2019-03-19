@@ -6,7 +6,6 @@ using Windows.UI.Xaml.Controls;
 using Worktile.Models.Message;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
-using Worktile.Operators.Message.Detail;
 using Worktile.Views.Message.Detail.Content;
 
 namespace Worktile.ViewModels.Message
@@ -37,11 +36,11 @@ namespace Worktile.ViewModels.Message
                 if (_selectedNav != value)
                 {
                     _selectedNav = value;
-                    AssistantDetailOperator.ContentFrame.Navigate(typeof(AssistantMessagePage), new ToUnReadMsgPageParam
-                    {
-                        Session = Session,
-                        Nav = value
-                    });
+                    //AssistantDetailOperator.ContentFrame.Navigate(typeof(AssistantMessagePage), new ToUnReadMsgPageParam
+                    //{
+                    //    Session = Session,
+                    //    Nav = value
+                    //});
                     OnPropertyChanged();
                 }
             }

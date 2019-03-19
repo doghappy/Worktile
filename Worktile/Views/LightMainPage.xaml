@@ -8,6 +8,7 @@
     xmlns:models="using:Worktile.Models"
     xmlns:cvt="using:Worktile.Converters"
     xmlns:tethys="using:Worktile.Tethys"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -43,7 +44,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <!--<Grid Padding="0 32 0 0" Background="{x:Bind NavBackground, Mode=OneWay}">-->
         <Grid Padding="0 32 0 0" Background="{ThemeResource SystemAccentColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -130,11 +130,6 @@
             </Button>
         </Grid>
 
-        <!--<Grid Padding="0 32 0 0" Grid.Column="1">
-            <StackPanel>
-                <Button Content="紫色"/>
-            </StackPanel>
-        </Grid>-->
         <Frame x:Name="MainContentFrame" Grid.Column="1">
             <Frame.ContentTransitions>
                 <TransitionCollection>
@@ -144,5 +139,6 @@
         </Frame>
 
         <ProgressRing Grid.Column="1" Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+        <controls:InAppNotification x:Name="InAppNotification" Grid.Column="1" Margin="0" VerticalAlignment="Bottom"/>
     </Grid>
 </Page>

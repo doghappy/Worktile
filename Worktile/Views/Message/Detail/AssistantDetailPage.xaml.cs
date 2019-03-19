@@ -3,7 +3,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
-using Worktile.Operators.Message.Detail;
 using Worktile.ViewModels.Message;
 using Windows.UI.Xaml;
 using Worktile.Models.Message;

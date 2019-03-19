@@ -131,11 +131,6 @@
       <DependentUpon>WtPersonPicture.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ImageSourceConverter.cs" />
-    <Compile Include="Operators\Message\Detail\MemberDetailOperator.cs" />
-    <Compile Include="Operators\Message\Detail\AssistantDetailOperator.cs" />
-    <Compile Include="Operators\Message\Detail\ChannelDetailOperator.cs" />
-    <Compile Include="Operators\MainOperator.cs" />
-    <Compile Include="Operators\Message\MasterOperator.cs" />
     <Compile Include="Common\Communication\WtSocket.cs" />
     <Compile Include="Common\DataSource.cs" />
     <Compile Include="Common\Extensions\WorktileExtension.cs" />

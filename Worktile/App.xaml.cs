@@ -21,7 +21,6 @@ using Microsoft.EntityFrameworkCore;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 using Worktile.Common.Communication;
-using Worktile.Operators;
 
 namespace Worktile
 {
@@ -190,7 +189,7 @@ namespace Worktile
             {
                 if (rootFrame.Content is MainPage mainPage)
                 {
-                    MainOperator.ShowNotification(text, level, duration);
+                    LightMainPage.ShowNotification(text, level, duration);
                     return;
                 }
             }
