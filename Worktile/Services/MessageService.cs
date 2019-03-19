@@ -113,5 +113,12 @@ namespace Worktile.Services
             string url = $"/api/pinneds?session_id={session.Id}&anchor={anchor}&size=10";
             return await WtHttpClient.GetAsync<ApiPinnedMessages>(url);
         }
+
+        public async Task<bool> ExitChannelAsync(string sessionId)
+        {
+            string url = $"api/channels/{sessionId}/leave";
+            var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
+            return res.Code == 200 && res.Data;
+        }
     }
 }
