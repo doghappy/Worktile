@@ -24,6 +24,7 @@ namespace Worktile.Views.Message.Detail
         readonly MessageService _messageService;
         private List<ChannelSession> _sessions;
         private MasterPage _masterPage;
+        private Frame _frame;
 
         public ObservableCollection<ChannelSession> Sessions { get; }
 
@@ -37,6 +38,20 @@ namespace Worktile.Views.Message.Detail
                 {
                     _isActive = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
+            }
+        }
+
+        private bool _canGoBack;
+        public bool CanGoBack
+        {
+            get => _canGoBack;
+            set
+            {
+                if (_canGoBack != value)
+                {
+                    _canGoBack = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoBack)));
                 }
             }
         }
@@ -61,6 +76,8 @@ namespace Worktile.Views.Message.Detail
             IsActive = true;
             _sessions = await _messageService.GetAllChannelsAsync();
             _masterPage = this.GetParent<MasterPage>();
+            _frame = _masterPage.GetChild<Frame>("MasterContentFrame");
+            CanGoBack = _frame.CanGoBack;
             foreach (var item in _sessions)
             {
                 item.ForShowAvatar();
@@ -77,6 +94,7 @@ namespace Worktile.Views.Message.Detail
             if (res)
             {
                 _masterPage.InserSession(session);
+                GoBack();
             }
         }
 
@@ -88,6 +106,7 @@ namespace Worktile.Views.Message.Detail
             if (res)
             {
                 _masterPage.InserSession(session);
+                GoBack();
             }
         }
 
@@ -116,10 +135,18 @@ namespace Worktile.Views.Message.Detail
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
-            var frame = _masterPage.GetChild<Frame>("MasterContentFrame");
-            if (frame.CanGoBack)
+            GoBack();
+        }
+
+        private void GoBack()
+        {
+            if (_frame.CanGoBack)
             {
-                frame.GoBack();
+                _frame.GoBack();
+            }
+            else
+            {
+                _frame.Navigate(typeof(TransparentPage));
             }
         }
     }
