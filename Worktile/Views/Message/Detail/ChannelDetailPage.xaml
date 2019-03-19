@@ -68,7 +68,7 @@
                         <AppBarButton Label="添加服务集成"
                                       Click="AddServiceButton_Click"
                                       x:Name="AddServiceButton"
-                                      x:Load="{x:Bind CanAddService}">
+                                      x:Load="{x:Bind CanAddService, Mode=OneWay}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE61C;" Style="{StaticResource LcIcon}"/>
                             </AppBarButton.Icon>
@@ -76,7 +76,7 @@
                         <AppBarButton Icon="AddFriend"
                                       Label="添加群组成员"
                                       x:Name="AddMemberButton"
-                                      x:Load="{x:Bind CanAddMember}"
+                                      x:Load="{x:Bind CanAddMember, Mode=OneWay}"
                                       Click="AddMemberButton_Click"/>
                         <AppBarButton Label="消息通知设置">
                             <AppBarButton.Icon>
@@ -86,7 +86,7 @@
                         <AppBarButton Icon="Setting"
                                       Label="群组设置"
                                       x:Name="ChannelSettingButton"
-                                      x:Load="{x:Bind CanAdminChannel}"/>
+                                      x:Load="{x:Bind CanAdminChannel, Mode=OneWay}"/>
                         <AppBarButton Label="退出群组" Click="ExitChannel_Click">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE656;" Style="{StaticResource LcIcon}"/>
