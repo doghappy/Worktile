@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.UI.Notifications;
@@ -39,6 +40,7 @@ namespace Worktile.Views.Message.Detail.Content
         private ISession _session;
         private int _page = 1;
         private int _refType;
+        private MasterPage _masterPage;
 
         private IncrementalCollection<Entity> _entities;
         public IncrementalCollection<Entity> Entities
@@ -71,9 +73,9 @@ namespace Worktile.Views.Message.Detail.Content
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var masterPage = this.GetParent<MasterPage>();
-            _session = masterPage.SelectedSession;
-            _refType = _session.PageType == PageType.Channel ? 1 : 2;
+            _masterPage = this.GetParent<MasterPage>();
+            _session = _masterPage.SelectedSession;
+            _refType = MessageService.GetRefType(_session.PageType);
             Entities = new IncrementalCollection<Entity>(LoadFilesAsync);
             WtSocket.OnFeedReceived += OnFeedReceived;
         }
@@ -183,7 +185,13 @@ namespace Worktile.Views.Message.Detail.Content
 
         private async void FileShare_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new FileShareDialg();
+            var item = sender as MenuFlyoutItem;
+
+            var dialog = new FileShareDialg
+            {
+                FileId = item.DataContext.ToString(),
+                MasterPage = _masterPage
+            };
             await dialog.ShowAsync();
         }
 

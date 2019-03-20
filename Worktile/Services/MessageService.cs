@@ -19,8 +19,9 @@ namespace Worktile.Services
     {
         private string _latestId;
 
-        protected virtual string GetMessageUrl(ISession session, int refType, int filterType)
+        protected virtual string GetMessageUrl(ISession session, int filterType)
         {
+            int refType = GetRefType(session.PageType);
             return $"/api/messages?ref_id={session.Id}&ref_type={refType}&latest_id={_latestId}&size=20";
         }
 
@@ -62,10 +63,14 @@ namespace Worktile.Services
             return data.Code == 200 && data.Data;
         }
 
+        public static int GetRefType(PageType type)
+        {
+            return type == PageType.Channel ? 1 : 2;
+        }
+
         public async Task<IEnumerable<Message>> LoadMessagesAsync(ISession session, int filterType)
         {
-            int refType = session.PageType == PageType.Channel ? 1 : 2;
-            string url = GetMessageUrl(session, refType, filterType);
+            string url = GetMessageUrl(session, filterType);
             var data = await WtHttpClient.GetJTokenAsync(url);
             return ReadMessages(data);
         }

@@ -64,5 +64,17 @@ namespace Worktile.Services
             var res = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
             return res.Code == 200 && res.Data;
         }
+
+        public async Task<bool> ShareAsync(string fileId, string sessionId, int refType)
+        {
+            string url = $"api/entities/{fileId}/share";
+            var req = new
+            {
+                ref_id = sessionId,
+                ref_type = refType
+            };
+            var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url, req);
+            return res.Code == 200 && res.Data;
+        }
     }
 }

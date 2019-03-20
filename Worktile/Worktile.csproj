@@ -365,7 +365,6 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\AddMemberViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\BaseJoinChatViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\SessionMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\FileMessageViewModel.cs" />
@@ -373,14 +372,11 @@
     <Compile Include="ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\Pin\PinnedViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\CreateChannelViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\CreateChatViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\JoinChannelViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\SessionDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\MemberDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\AssistantMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\AssistantDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\DetailViewModel.cs" />
-    <Compile Include="ViewModels\Message\MasterViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\ChannelMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\BaseSessionMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\MessageViewModel.cs" />

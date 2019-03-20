@@ -114,16 +114,11 @@ namespace Worktile.Views.Message
             _mainPage.IsActive = true;
             var data = await _teamService.GetChatAsync();
             var list = new List<ISession>();
-            bool flag = !DataSource.JoinedChannels.Any();
             var channels = data.Channels.Concat(data.Groups);
             foreach (var item in channels)
             {
                 item.TethysAvatar = AvatarHelper.GetAvatar(item);
                 list.Add(item);
-                if (flag)
-                {
-                    DataSource.JoinedChannels.Add(item as ChannelSession);
-                }
             }
 
             foreach (var item in data.Sessions)
@@ -328,19 +323,21 @@ namespace Worktile.Views.Message
             }
         }
 
-        public void InserSession(ISession session)
+        public void InserSession(ISession session, bool navigate)
         {
             var sourceSession = Sessions.SingleOrDefault(s => s.Id == session.Id);
             if (sourceSession == null)
             {
                 Sessions.Insert(0, session);
-                SelectedSession = session;
+                if (navigate)
+                    SelectedSession = session;
             }
             else
             {
                 Sessions.Remove(sourceSession);
                 Sessions.Insert(0, sourceSession);
-                SelectedSession = sourceSession;
+                if (navigate)
+                    SelectedSession = sourceSession;
             }
         }
     }

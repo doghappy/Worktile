@@ -115,6 +115,7 @@
                             <AppBarButton.Flyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem Text="共享"
+                                                    DataContext="{x:Bind Id}"
                                                     Click="FileShare_Click">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xe670;"/>

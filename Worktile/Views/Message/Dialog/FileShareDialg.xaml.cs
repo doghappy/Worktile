@@ -15,10 +15,15 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.ApiModels;
 using Worktile.Common;
+using Worktile.Common.Communication;
 using Worktile.Common.Extensions;
+using Worktile.Enums;
+using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Models.Message.Session;
+using Worktile.Services;
 
 namespace Worktile.Views.Message.Dialog
 {
@@ -28,12 +33,16 @@ namespace Worktile.Views.Message.Dialog
         {
             InitializeComponent();
             Avatars = new ObservableCollection<GroupWrapper>();
+            _messageService = new MessageService();
+            _entityService = new EntityService();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        readonly MessageService _messageService;
+        readonly EntityService _entityService;
 
-        //public Func<string, Task<bool>> SendMessage { get; set; }
         public string FileId { get; set; }
+        public MasterPage MasterPage { get; set; }
 
         ObservableCollection<GroupWrapper> Avatars { get; }
 
@@ -70,39 +79,49 @@ namespace Worktile.Views.Message.Dialog
         {
             var avatars = new List<TethysAvatar>();
             avatars.AddRange(DataSource.Team.Members.Where(m => m.IsTrueMember()).Select(m => m.TethysAvatar));
-            avatars.AddRange(DataSource.JoinedChannels.Select(c => c.TethysAvatar));
+            avatars.AddRange(MasterPage.Sessions.Where(s => s is ChannelSession).Select(c => c.TethysAvatar));
 
-            var group = avatars//.Where(a => a.DisplayName == "测试人员")
+            var group = avatars
                 .GroupBy(a => a.DisplayNamePinyin[0].ToString().ToUpper())
-                 .Select(a => new GroupWrapper(a.OrderBy(i => i.DisplayNamePinyin))
-                 {
-                     Key = a.Key
-                 })
-                 .OrderBy(g => g.Key);
+                .Select(a => new GroupWrapper(a.OrderBy(i => i.DisplayNamePinyin))
+                {
+                    Key = a.Key
+                })
+                .OrderBy(g => g.Key);
             foreach (var item in group)
             {
                 Avatars.Add(item);
             }
-            //MasterOperator.ViewModel.Sessions.fir
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             if (SelectedItem != null)
             {
-                //string url = $"api/entities/{FileId}/share";
-                //var req = new
-                //{
-                //    ref_id=SelectedItem."5c6625cc5d0bcf5cf13bfb40"
-                //};
+                string sessionId = null;
+                int refType = 0;
+                var memberSessions = MasterPage.Sessions
+                    .Where(s => s is MemberSession)
+                    .Select(s => s as MemberSession)
+                    .ToList();
+                if (SelectedItem.Id.Length == 32)
+                {
+                    var session = memberSessions.SingleOrDefault(s => s.To.Uid == SelectedItem.Id);
+                    if (session == null)
+                    {
+                        session = await _messageService.CreateSessionAsync(SelectedItem.Id);
+                        session.ForShowAvatar(AvatarSize.X80);
+                        MasterPage.InserSession(session, false);
+                    }
+                    refType = 2;
+                    sessionId = session.Id;
+                }
+                else if(SelectedItem.Id.Length == 24)
+                {
+                    refType = 1;
+                }
+                await _entityService.ShareAsync(FileId, sessionId, refType);
             }
-            /*
-             * var data = await WtHttpClient.PostAsync<ApiDataResponse<MemberSession>>("/api/session", new { uid = avatar.Id });
-            if (data.Code == 200)
-            {
-                CreateNewSession(data.Data);
-            }
-            */
         }
     }
 }

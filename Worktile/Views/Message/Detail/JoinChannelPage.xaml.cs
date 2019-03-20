@@ -93,7 +93,7 @@ namespace Worktile.Views.Message.Detail
             var res = await _messageService.ActiveChannelAsync(session.Id);
             if (res)
             {
-                _masterPage.InserSession(session);
+                _masterPage.InserSession(session, true);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Worktile.Views.Message.Detail
             var res = await _messageService.JoinChannelAsync(session.Id);
             if (res)
             {
-                _masterPage.InserSession(session);
+                _masterPage.InserSession(session, true);
             }
         }
 

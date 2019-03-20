@@ -33,8 +33,9 @@ namespace Worktile.Services
 
         private string _next;
 
-        protected override string GetMessageUrl(ISession session, int refType, int filterType)
+        protected override string GetMessageUrl(ISession session, int filterType)
         {
+            int refType = MessageService.GetRefType(session.PageType);
             var memberSession = session as MemberSession;
             string component = GetComponentByNumber(memberSession.Component.Value);
             string url = $"/api/pigeon/messages?ref_id={memberSession.Id}&ref_type={refType}&filter_type={filterType}&component={component}&size=20";

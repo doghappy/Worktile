@@ -75,7 +75,7 @@ namespace Worktile.Views.Message.Detail
             var avatar = btn.DataContext as TethysAvatar;
             var session = await _messageService.CreateSessionAsync(avatar.Id);
             session.ForShowAvatar(AvatarSize.X80);
-            _masterPage.InserSession(session);
+            _masterPage.InserSession(session, true);
             _masterPage.SelectedSession = session;
             IsActive = false;
         }
