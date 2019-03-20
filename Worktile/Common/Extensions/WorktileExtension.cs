@@ -37,7 +37,7 @@ namespace Worktile.Common.Extensions
             };
             entity.Icon = WtFileHelper.GetFileIcon(entity.Addition.Ext);
             entity.IsEnableDelete = entity.CreatedBy.Uid == DataSource.ApiUserMeData.Me.Uid;
-            entity.IsEnableDownload = !string.IsNullOrEmpty(entity.Addition.Path);
+            entity.IsEnableDownload = entity.Addition.Path != null && !(entity.Addition.Path.StartsWith("http://") || entity.Addition.Path.StartsWith("https://")) && (entity.Type == MessageType.File || entity.Type == MessageType.Image);
         }
     }
 }

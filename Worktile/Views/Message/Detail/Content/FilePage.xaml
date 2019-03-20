@@ -9,7 +9,7 @@
     xmlns:message="using:Worktile.Models.Message"
     xmlns:entity="using:Worktile.Models.Entity"
     xmlns:cvt="using:Worktile.Converters"
-    Background="{ThemeResource CustomAcrylicBrush}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Padding="16"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
