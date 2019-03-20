@@ -8,15 +8,14 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Padding="32">
-        <controls:WtPersonPicture DisplayName="Test"/>
-        <controls:WtPersonPicture DisplayName="揣玉和"/>
-        <controls:WtPersonPicture DisplayName="揣玉和" ProfilePicture="https://docs.microsoft.com/en-us/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png"/>
-        <controls:WtPersonPicture DisplayName="揣玉和" ProfilePicture="https://docs.microsoft.com/en-us/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payloadd.png"/>
-
-        <controls:WtPersonPicture IsGroup="True" WtVisibility="Public" DisplayName="afqwe2"/>
-        <controls:WtPersonPicture IsGroup="True" WtVisibility="Private" DisplayName="adfa22"/>
-
-        <PersonPicture DisplayName="&#xE716;"/>
-    </StackPanel>
+<StackPanel Padding="32">
+    <Button Content="紫色" Style="{ThemeResource AccentButtonStyle}" Click="Button_Click"/>
+    <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorLight3}"/>
+    <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorLight2}"/>
+    <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorLight1}"/>
+    <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColor}"/>
+    <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorDark1}"/>
+    <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorDark2}"/>
+    <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorDark3}"/>
+</StackPanel>
 </Page>

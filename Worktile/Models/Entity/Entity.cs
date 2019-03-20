@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using Worktile.Enums.Message;
 
 namespace Worktile.Models.Entity
 {
@@ -21,7 +22,7 @@ namespace Worktile.Models.Entity
         public string Team { get; set; }
 
         [JsonProperty("type")]
-        public int Type { get; set; }
+        public MessageType Type { get; set; }
 
         [JsonProperty("references")]
         public List<EntityReference> References { get; set; }

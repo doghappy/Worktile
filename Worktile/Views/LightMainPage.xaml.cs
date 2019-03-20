@@ -286,6 +286,7 @@ namespace Worktile.Views
             _people = item;
             var uc = item.GetChild<UserControl>("AppItem");
             VisualStateManager.GoToState(uc, "Pressed", false);
+            MainContentFrame.Navigate(typeof(TestPage));
         }
 
         public static void ShowNotification(string text, NotificationLevel level, int duration = 0)
@@ -313,5 +314,55 @@ namespace Worktile.Views
                 MainContentFrame.Navigate(typeof(ProfilePage));
             }
         }
+
+        #region Theme
+        public void ChangeTheme()
+        {
+            string theme = RequestedTheme.ToString();
+            ColorPaletteResources light = FindColorPaletteResourcesForTheme("Light");
+            light.Accent = Color.FromArgb(255, 111, 118, 250);
+            ColorPaletteResources def = FindColorPaletteResourcesForTheme("Default");
+            def.Accent = Color.FromArgb(255, 111, 118, 250);
+            ReloadPageTheme(RequestedTheme);
+        }
+
+        private void ReloadPageTheme(ElementTheme startTheme)
+        {
+            if (RequestedTheme == ElementTheme.Dark)
+                RequestedTheme = ElementTheme.Light;
+            else if (RequestedTheme == ElementTheme.Light)
+                RequestedTheme = ElementTheme.Default;
+            else if (RequestedTheme == ElementTheme.Default)
+                RequestedTheme = ElementTheme.Dark;
+
+            if (RequestedTheme != startTheme)
+                ReloadPageTheme(startTheme);
+        }
+
+        private ColorPaletteResources FindColorPaletteResourcesForTheme(string theme)
+        {
+            foreach (var themeDictionary in Application.Current.Resources.ThemeDictionaries)
+            {
+                if (themeDictionary.Key.ToString() == theme)
+                {
+                    if (themeDictionary.Value is ColorPaletteResources)
+                    {
+                        return themeDictionary.Value as ColorPaletteResources;
+                    }
+                    else if (themeDictionary.Value is ResourceDictionary targetDictionary)
+                    {
+                        foreach (var mergedDictionary in targetDictionary.MergedDictionaries)
+                        {
+                            if (mergedDictionary is ColorPaletteResources)
+                            {
+                                return mergedDictionary as ColorPaletteResources;
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+        #endregion
     }
 }
