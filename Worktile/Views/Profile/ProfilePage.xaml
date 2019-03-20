@@ -6,8 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <cvt:ImageSourceConverter x:Key="ImageSourceConverter"/>
+    </Page.Resources>
 
     <Grid Padding="32">
         <Grid.RowDefinitions>
@@ -27,38 +33,40 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Image Source="{x:Bind ViewModel.TeamAvatar}" Width="160" Height="160"/>
+            <Image Source="{x:Bind TeamAvatar, Mode=OneWay, Converter={StaticResource ImageSourceConverter}}" Width="160" Height="160"/>
 
             <StackPanel Grid.Column="1" Margin="16 0">
-                <TextBlock Text="{x:Bind ViewModel.TeamName}" Style="{ThemeResource TitleTextBlockStyle}"/>
-                <TextBlock Text="{x:Bind ViewModel.Version}"
+                <TextBlock Text="{x:Bind TeamName, Mode=OneWay}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                <TextBlock Text="{x:Bind Version, Mode=OneWay}"
                            Foreground="{StaticResource PrimaryBrush}"
                            Style="{ThemeResource TitleTextBlockStyle}"/>
                 <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
                     <Run Text="购买帐号总数："/>
-                    <Run Text="{x:Bind ViewModel.UserLimit}"/>
+                    <Run Text="{x:Bind UserLimit, Mode=OneWay}"/>
                 </TextBlock>
                 <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
                     <Run Text="已开通使用数："/>
-                    <Run Text="{x:Bind ViewModel.MemberCount}"/>
+                    <Run Text="{x:Bind MemberCount, Mode=OneWay}"/>
                 </TextBlock>
                 <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}">
                     <Run Text="到期日期："/>
-                    <Run Text="{x:Bind ViewModel.ExpiredAt}"/>
+                    <Run Text="{x:Bind ExpiredAt, Mode=OneWay}"/>
                 </TextBlock>
             </StackPanel>
 
             <tethys:Avatar Grid.Column="2"
                            Width="160"
+                           Height="160"
                            Margin="32 0 0 0"
-                           DisplayName="{x:Bind ViewModel.UserAvatar.DisplayName}"
-                           Source="{x:Bind ViewModel.UserAvatar.Source}"/>
+                           Background="{x:Bind UserAvatar.Background, Mode=OneWay}"
+                           DisplayName="{x:Bind UserAvatar.DisplayName, Mode=OneWay}"
+                           Source="{x:Bind UserAvatar.Source, Mode=OneWay}"/>
 
             <StackPanel Grid.Column="3" Margin="16 0">
-                <TextBlock Text="{x:Bind ViewModel.UserAvatar.DisplayName}" Style="{ThemeResource TitleTextBlockStyle}"/>
-                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind ViewModel.MemberTitle}"/>
-                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind ViewModel.MemberMobile}"/>
-                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind ViewModel.MemberEmail}"/>
+                <TextBlock Text="{x:Bind UserAvatar.DisplayName}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind MemberTitle, Mode=OneWay}"/>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind MemberMobile, Mode=OneWay}"/>
+                <TextBlock Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" Text="{x:Bind MemberEmail, Mode=OneWay}"/>
             </StackPanel>
 
             <Button Grid.Column="4"

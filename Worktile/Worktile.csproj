@@ -386,7 +386,6 @@
     <Compile Include="ViewModels\Message\Detail\Content\MessageViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\Content\MemberMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
-    <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />
     <Compile Include="ViewModels\SignIn\PasswordSignInViewModel.cs" />
     <Compile Include="ViewModels\SignIn\ChooseTeamViewModel.cs" />
     <Compile Include="ViewModels\SignIn\SignInViewModel.cs" />
