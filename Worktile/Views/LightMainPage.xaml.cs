@@ -14,8 +14,6 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -148,6 +146,7 @@ namespace Worktile.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            _inAppNotification = null;
             WtSocket.Dispose();
             Window.Current.Activated -= Window_Activated;
         }

@@ -283,6 +283,7 @@ namespace Worktile.Common.Communication
 
         public static void Dispose()
         {
+            _reconnectTimer?.Cancel();
             _timer?.Cancel();
             if (_socket != null)
             {
