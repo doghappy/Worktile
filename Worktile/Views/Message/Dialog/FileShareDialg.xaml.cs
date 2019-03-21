@@ -119,6 +119,7 @@ namespace Worktile.Views.Message.Dialog
                 else if(SelectedItem.Id.Length == 24)
                 {
                     refType = 1;
+                    sessionId = SelectedItem.Id;
                 }
                 await _entityService.ShareAsync(FileId, sessionId, refType);
             }
