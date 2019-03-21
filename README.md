@@ -7,9 +7,3 @@ Worktile UWP
 - 此应用不支持微软消息推送（应用未启动情况下接收消息），使用微软消息推送服务需要Worktile服务端的支持。
 
 ![Worktile UWP](./worktile.jpg)
-
-![Worktile UWP](./1.jpg)
-
-![Worktile UWP](./2.jpg)
-
-![Worktile UWP](./3.jpg)
