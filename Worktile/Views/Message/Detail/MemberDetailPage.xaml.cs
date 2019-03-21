@@ -9,7 +9,6 @@ using Worktile.Models.Message;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Worktile.Views.Message.Detail.Content;
-using Worktile.Views.Message.Detail.Content.Pin;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -110,7 +109,7 @@ namespace Worktile.Views.Message.Detail
                             ContentFrame.Navigate(typeof(FilePage));
                             break;
                         case 2:
-                            ContentFrame.Navigate(typeof(MemberPinnedPage));
+                            ContentFrame.Navigate(typeof(PinnedPage));
                             break;
                     }
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));

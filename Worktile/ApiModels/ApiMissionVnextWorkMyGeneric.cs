@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Worktile.Common;
+using Worktile.Common.JsonConverters;
 
 namespace Worktile.ApiModels.ApiMissionVnextWorkMyGeneric
 {

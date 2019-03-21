@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -14,18 +15,17 @@ using Worktile.Models;
 using Worktile.Models.Message.Session;
 using Worktile.Services;
 
-namespace Worktile.Views.Message.Detail.Content.Pin
+namespace Worktile.Views.Message.Detail.Content
 {
-    public sealed partial class MemberPinnedPage : Page, INotifyPropertyChanged
+    public sealed partial class PinnedPage : Page, INotifyPropertyChanged
     {
-        public MemberPinnedPage()
+        public PinnedPage()
         {
             InitializeComponent();
-            _messageService = new MessageService();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        readonly MessageService _messageService;
+        private MessageService _messageService;
         private ISession _session;
         private string _anchor;
 
@@ -57,11 +57,21 @@ namespace Worktile.Views.Message.Detail.Content.Pin
             }
         }
 
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var detailPage = this.GetParent<MemberDetailPage>();
-            _session = detailPage.Session;
+            var masterPage = this.GetParent<MasterPage>();
+            _session = masterPage.SelectedSession;
+            switch (_session.PageType)
+            {
+                case PageType.Member:
+                    _messageService = new MessageService();
+                    break;
+                case PageType.Channel:
+                    _messageService = new ChannelMessageService();
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
             Messages = new IncrementalCollection<Models.Message.Message>(LoadMessagesAsync);
         }
 

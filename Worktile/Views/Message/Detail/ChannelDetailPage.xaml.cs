@@ -14,7 +14,6 @@ using System.Collections.ObjectModel;
 using Worktile.Models.Message;
 using Worktile.Enums.Privileges;
 using Worktile.Views.Message.Detail.Content;
-using Worktile.Views.Message.Detail.Content.Pin;
 using System.Linq;
 using Worktile.Common.Extensions;
 
@@ -105,7 +104,7 @@ namespace Worktile.Views.Message.Detail
                             ContentFrame.Navigate(typeof(FilePage));
                             break;
                         case 2:
-                            ContentFrame.Navigate(typeof(ChannelPinnedPage), Session);
+                            ContentFrame.Navigate(typeof(PinnedPage));
                             break;
                     }
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));

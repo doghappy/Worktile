@@ -12,11 +12,8 @@ using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Models.Message;
-using Worktile.Models.Message.NavigationParam;
 using Worktile.Models.Message.Session;
 using Worktile.Services;
-using Worktile.ViewModels.Message;
-using Worktile.ViewModels.Message.Detail.Content;
 
 namespace Worktile.Views.Message.Detail.Content
 {

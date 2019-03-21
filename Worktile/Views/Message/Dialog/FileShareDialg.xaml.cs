@@ -19,9 +19,11 @@ using Worktile.ApiModels;
 using Worktile.Common;
 using Worktile.Common.Communication;
 using Worktile.Common.Extensions;
+using Worktile.Domain.SocketMessageConverter;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
+using Worktile.Models.Message;
 using Worktile.Models.Message.Session;
 using Worktile.Services;
 
@@ -99,7 +101,7 @@ namespace Worktile.Views.Message.Dialog
             if (SelectedItem != null)
             {
                 string sessionId = null;
-                int refType = 0;
+                ToType toType = ToType.Channel;
                 var memberSessions = MasterPage.Sessions
                     .Where(s => s is MemberSession)
                     .Select(s => s as MemberSession)
@@ -113,15 +115,29 @@ namespace Worktile.Views.Message.Dialog
                         session.ForShowAvatar(AvatarSize.X80);
                         MasterPage.InserSession(session, false);
                     }
-                    refType = 2;
+                    toType = ToType.Session;
                     sessionId = session.Id;
                 }
-                else if(SelectedItem.Id.Length == 24)
+                else if (SelectedItem.Id.Length == 24)
                 {
-                    refType = 1;
                     sessionId = SelectedItem.Id;
                 }
-                await _entityService.ShareAsync(FileId, sessionId, refType);
+                await _entityService.ShareAsync(FileId, sessionId, toType);
+
+                if (!string.IsNullOrWhiteSpace(Message))
+                {
+                    await WtSocket.SendMessageAsync(SocketMessageType.Message, new SendMessageRequestBody
+                    {
+                        FromType = FromType.User,
+                        From = DataSource.ApiUserMeData.Me.Uid,
+                        ToType = toType,
+                        To = sessionId,
+                        MessageType = MessageType.Text,
+                        Client = Client.Win8,
+                        IsMarkdown = true,
+                        Content = Message
+                    });
+                }
             }
         }
     }

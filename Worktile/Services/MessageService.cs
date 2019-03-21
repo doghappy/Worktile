@@ -113,14 +113,14 @@ namespace Worktile.Services
 
         public async Task<bool> ClearUnReadAsync(string sessionId)
         {
-            string url = $"/api/messages/unread/clear?ref_id={sessionId}";
+            string url = $"api/messages/unread/clear?ref_id={sessionId}";
             var data = await WtHttpClient.PutAsync<ApiResponse>(url);
             return data.Code == 200;
         }
 
-        public async Task<ApiPinnedMessages> GetPinnedMessagesAsync(ISession session, string anchor)
+        public virtual async Task<ApiPinnedMessages> GetPinnedMessagesAsync(ISession session, string anchor)
         {
-            string url = $"/api/pinneds?session_id={session.Id}&anchor={anchor}&size=10";
+            string url = $"api/pinneds?session_id={session.Id}&anchor={anchor}&size=10";
             return await WtHttpClient.GetAsync<ApiPinnedMessages>(url);
         }
 

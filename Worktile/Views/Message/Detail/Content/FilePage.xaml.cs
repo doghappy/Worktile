@@ -4,25 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Worktile.ApiModels.Message.ApiMessageFiles;
 using Worktile.Common;
 using Worktile.Common.Communication;
 using Worktile.Common.Extensions;
 using Worktile.Enums;
-using Worktile.Enums.Message;
-using Worktile.Models;
 using Worktile.Models.Entity;
 using Worktile.Models.Message;
 using Worktile.Models.Message.Session;
 using Worktile.Services;
-using Worktile.ViewModels.Message.Detail.Content;
 using Worktile.Views.Message.Dialog;
 
 namespace Worktile.Views.Message.Detail.Content

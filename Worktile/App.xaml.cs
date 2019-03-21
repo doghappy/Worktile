@@ -21,6 +21,8 @@ using Microsoft.EntityFrameworkCore;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 using Worktile.Common.Communication;
+using Worktile.Models.Message;
+using Worktile.Enums.Message;
 
 namespace Worktile
 {
@@ -104,18 +106,16 @@ namespace Worktile
                     string msg = toastActivationArgs.UserInput["msg"].ToString().Trim();
                     if (msg != string.Empty && args["action"] == "reply")
                     {
-                        var data = new
+                        await WtSocket.SendMessageAsync(SocketMessageType.Message, new SendMessageRequestBody
                         {
-                            fromType = 1,
-                            from = args["from"],
-                            to = args["to"],
-                            toType = int.Parse(args["toType"]),
-                            messageType = 1,
-                            client = 1,
-                            markdown = 1,
-                            content = toastActivationArgs.UserInput["msg"].ToString()
-                        };
-                        await WtSocket.SendMessageAsync(SocketMessageType.Message, data);
+                            FromType = FromType.User,
+                            From = args["from"],
+                            ToType = EnumsNET.Enums.Parse<ToType>(args["toType"]),
+                            MessageType = MessageType.Text,
+                            Client = Client.Win8,
+                            IsMarkdown = true,
+                            Content = toastActivationArgs.UserInput["msg"].ToString()
+                        });
                     }
                 }
                 // If we're loading the app for the first time, place the main page on

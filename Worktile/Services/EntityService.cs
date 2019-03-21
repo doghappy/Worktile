@@ -11,6 +11,7 @@ using Windows.Web.Http;
 using Worktile.ApiModels.Message.ApiMessageFiles;
 using Worktile.ApiModels;
 using Worktile.Models.Entity;
+using Worktile.Enums.Message;
 
 namespace Worktile.Services
 {
@@ -65,13 +66,13 @@ namespace Worktile.Services
             return res.Code == 200 && res.Data;
         }
 
-        public async Task<bool> ShareAsync(string fileId, string sessionId, int refType)
+        public async Task<bool> ShareAsync(string fileId, string sessionId, ToType toType)
         {
             string url = $"api/entities/{fileId}/share";
             var req = new
             {
                 ref_id = sessionId,
-                ref_type = refType
+                ref_type = toType
             };
             var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url, req);
             return res.Code == 200 && res.Data;

@@ -12,7 +12,7 @@ namespace Worktile.Models.Message
         public List<string> At { get; set; }
 
         [JsonProperty("markdown")]
-        public int Markdown { get; set; }
+        public bool IsMarkdown { get; set; }
 
         [JsonProperty("style")]
         public int Style { get; set; }

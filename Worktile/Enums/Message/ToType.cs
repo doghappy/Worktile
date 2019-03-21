@@ -1,9 +1,8 @@
 ﻿namespace Worktile.Enums.Message
 {
-    public enum SessionType
+    public enum ToType
     {
-        Channel,
-        Group,
+        Channel = 1,
         Session
     }
 }

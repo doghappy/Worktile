@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Worktile.Common;
+using Worktile.Common.JsonConverters;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 

@@ -2,8 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 using System.ComponentModel;
-using Worktile.Common;
-using Worktile.Enums;
+using Worktile.Common.JsonConverters;
 using Worktile.Enums.Message;
 
 namespace Worktile.Models.Message.Session

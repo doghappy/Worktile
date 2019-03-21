@@ -145,7 +145,7 @@
     <Compile Include="Common\MessageHelper.cs" />
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\UiExtension.cs" />
-    <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
+    <Compile Include="Common\JsonConverters\SafeUnixDateTimeConverter.cs" />
     <Compile Include="Common\WtColorHelper.cs" />
     <Compile Include="Common\WtDateTimeHelper.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
@@ -315,8 +315,9 @@
     <Compile Include="Domain\SocketMessageConverter\SocketMessageConverter.cs" />
     <Compile Include="Domain\SocketMessageConverter\UnkonwMessageTypeException.cs" />
     <Compile Include="Enums\AvatarSize.cs" />
+    <Compile Include="Enums\Client.cs" />
+    <Compile Include="Enums\Message\ToType.cs" />
     <Compile Include="Enums\Message\PageType.cs" />
-    <Compile Include="Enums\Message\SessionType.cs" />
     <Compile Include="Enums\Message\MessageAction.cs" />
     <Compile Include="Enums\NotificationLevel.cs" />
     <Compile Include="Enums\Privileges\DrivePrivilege.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
+    <Compile Include="Models\Message\SendMessageRequestBody.cs" />
     <Compile Include="Models\Message\Session\MemberSession.cs" />
     <Compile Include="Models\Message\Session\ChannelSession.cs" />
     <Compile Include="Models\Message\Session\ISession.cs" />
@@ -360,27 +362,14 @@
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
     <Compile Include="Services\AssistantMessageService.cs" />
     <Compile Include="Services\EntityService.cs" />
+    <Compile Include="Services\ChannelMessageService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\TeamService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\AddMemberViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\ChannelDetailViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\SessionMessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\FileMessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\Pin\MemberPinnedViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\Pin\ChannelPinnedViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\Pin\PinnedViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\CreateChannelViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\SessionDetailViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\MemberDetailViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\AssistantMessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\AssistantDetailViewModel.cs" />
     <Compile Include="ViewModels\Message\Detail\DetailViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\ChannelMessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\BaseSessionMessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\MessageViewModel.cs" />
-    <Compile Include="ViewModels\Message\Detail\Content\MemberMessageViewModel.cs" />
     <Compile Include="ViewModels\Message\MessageViewModel.cs" />
     <Compile Include="ViewModels\SignIn\PasswordSignInViewModel.cs" />
     <Compile Include="ViewModels\SignIn\ChooseTeamViewModel.cs" />
@@ -413,9 +402,6 @@
     </Compile>
     <Compile Include="Views\Message\Detail\Content\AddMemberToChannelDialog.xaml.cs">
       <DependentUpon>AddMemberToChannelDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Message\Detail\Content\Pin\ChannelPinnedPage.xaml.cs">
-      <DependentUpon>ChannelPinnedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Detail\MemberDetailPage.xaml.cs">
       <DependentUpon>MemberDetailPage.xaml</DependentUpon>
@@ -482,10 +468,9 @@
     <Compile Include="Views\Message\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Message\NavigationParam\ToUnReadMsgPageParam.cs" />
     <Compile Include="Enums\Message\MessageType.cs" />
-    <Compile Include="Views\Message\Detail\Content\Pin\MemberPinnedPage.xaml.cs">
-      <DependentUpon>MemberPinnedPage.xaml</DependentUpon>
+    <Compile Include="Views\Message\Detail\Content\PinnedPage.xaml.cs">
+      <DependentUpon>PinnedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\TethysAvatar.cs" />
     <Compile Include="Models\Message\TopNav.cs" />
@@ -899,10 +884,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\Detail\Content\Pin\ChannelPinnedPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\Message\Detail\MemberDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -931,7 +912,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\Detail\Content\Pin\MemberPinnedPage.xaml">
+    <Page Include="Views\Message\Detail\Content\PinnedPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1119,9 +1100,7 @@
       <Name>Worktile.Repository</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NavigateModels\Message\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

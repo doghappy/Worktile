@@ -15,6 +15,7 @@ using Worktile.Domain.SocketMessageConverter;
 using Worktile.Domain.SocketMessageConverter.Converters;
 using Worktile.Enums;
 using Worktile.Enums.Message;
+using Worktile.Models.Message;
 using Worktile.Views;
 using Worktile.Views.Message;
 
@@ -27,8 +28,8 @@ namespace Worktile.Common.Communication
         private static ThreadPoolTimer _timer;
         private static ThreadPoolTimer _reconnectTimer;
 
-        public static event Action<Models.Message.Message> OnMessageReceived;
-        public static event Action<Models.Message.Feed> OnFeedReceived;
+        public static event Action<Message> OnMessageReceived;
+        public static event Action<Feed> OnFeedReceived;
 
         public static string SocketId { get; private set; }
 
@@ -113,7 +114,7 @@ namespace Worktile.Common.Communication
             {
                 using (DataReader dataReader = args.GetDataReader())
                 {
-                    dataReader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+                    dataReader.UnicodeEncoding = UnicodeEncoding.Utf8;
                     string rawMsg = dataReader.ReadString(dataReader.UnconsumedBufferLength);
                     var (msg, cvt) = SocketMessageConverter.Read(rawMsg);
                     if (cvt != null)
@@ -170,7 +171,7 @@ namespace Worktile.Common.Communication
         /// <param name="msg"></param>
         private static void MessageReceived(string msg)
         {
-            var apiMsg = JsonConvert.DeserializeObject<Models.Message.Message>(msg);
+            var apiMsg = JsonConvert.DeserializeObject<Message>(msg);
             OnMessageReceived?.Invoke(apiMsg);
             if (apiMsg.From.Uid != DataSource.ApiUserMeData.Me.Uid)
             {
@@ -187,7 +188,7 @@ namespace Worktile.Common.Communication
             }
         }
 
-        private static void SendToast(Models.Message.Message apiMsg)
+        private static void SendToast(Message apiMsg)
         {
             var member = DataSource.Team.Members.Single(m => m.Uid == apiMsg.From.Uid);
             string avatar = "Assets/StoreLogo.scale-400.png";
@@ -257,15 +258,15 @@ namespace Worktile.Common.Communication
 
         private static void FeedReceived(string msg)
         {
-            var feed = JsonConvert.DeserializeObject<Models.Message.Feed>(msg);
+            var feed = JsonConvert.DeserializeObject<Feed>(msg);
             OnFeedReceived?.Invoke(feed);
         }
 
-        public static async Task<bool> SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, object data)
+        public static async Task<bool> SendMessageAsync(Domain.SocketMessageConverter.SocketMessageType msgType, SendMessageRequestBody body)
         {
             if (_socket != null)
             {
-                string msg = SocketMessageConverter.Process(msgType, data);
+                string msg = SocketMessageConverter.Process(msgType, body);
                 using (var dataWriter = new DataWriter(_socket.OutputStream))
                 {
                     dataWriter.WriteString(msg);

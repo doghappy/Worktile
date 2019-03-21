@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 
-namespace Worktile.Common
+namespace Worktile.Common.JsonConverters
 {
     /// <summary>
     /// 安全的UnixDateTimeConverter，当API返回的Unix中包含小数点时，使用此Converter

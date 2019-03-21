@@ -205,18 +205,17 @@ namespace Worktile.Views.Message.Detail.Content
 
         public async Task<bool> SendMessageAsync(string msg)
         {
-            var data = new
+            return await WtSocket.SendMessageAsync(SocketMessageType.Message, new SendMessageRequestBody
             {
-                fromType = 1,
-                from = DataSource.ApiUserMeData.Me.Uid,
-                to = _session.Id,
-                toType = 1,
-                messageType = 1,
-                client = 1,
-                markdown = 1,
-                content = msg
-            };
-            return await WtSocket.SendMessageAsync(SocketMessageType.Message, data);
+                FromType = FromType.User,
+                From = DataSource.ApiUserMeData.Me.Uid,
+                ToType = ToType.Channel,
+                To = _session.Id,
+                MessageType = MessageType.Text,
+                Client = Client.Win8,
+                IsMarkdown = true,
+                Content = msg
+            });
         }
     }
 }
