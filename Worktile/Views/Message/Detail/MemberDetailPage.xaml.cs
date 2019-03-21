@@ -9,6 +9,7 @@ using Worktile.Models.Message;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Worktile.Views.Message.Detail.Content;
+using Worktile.NavigateModels.Message;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -103,7 +104,11 @@ namespace Worktile.Views.Message.Detail
                     switch (index)
                     {
                         case 0:
-                            ContentFrame.Navigate(typeof(MemberMessagePage));
+                            ContentFrame.Navigate(typeof(MessageListPage), new ToMessageListParam
+                            {
+                                TopNav = value,
+                                Session = Session
+                            });
                             break;
                         case 1:
                             ContentFrame.Navigate(typeof(FilePage));

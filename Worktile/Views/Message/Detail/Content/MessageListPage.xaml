@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Worktile.Views.Message.Detail.Content.ChannelMessagePage"
+    x:Class="Worktile.Views.Message.Detail.Content.MessageListPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -23,7 +23,7 @@
 
         <Grid>
             <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
-                <ItemsControl ItemsSource="{x:Bind Messages, Mode=OneWay}">
+                <ItemsControl ItemsSource="{x:Bind Messages}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>

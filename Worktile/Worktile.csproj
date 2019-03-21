@@ -357,6 +357,7 @@
     <Compile Include="Models\Team\TeamSecurity.cs" />
     <Compile Include="Models\Team\TeamService.cs" />
     <Compile Include="Models\Team\TeamServiceReference.cs" />
+    <Compile Include="NavigateModels\Message\ToMessageListParam.cs" />
     <Compile Include="NavigateModels\SignIn\ToChooseTeamParam.cs" />
     <Compile Include="PageModels\WtKeyValue.cs" />
     <Compile Include="Selectors\SessionDataTemplateSelector.cs" />
@@ -453,11 +454,8 @@
     <Compile Include="Views\EmptyPage.xaml.cs">
       <DependentUpon>EmptyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Message\Detail\Content\ChannelMessagePage.xaml.cs">
-      <DependentUpon>ChannelMessagePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Message\Detail\Content\MemberMessagePage.xaml.cs">
-      <DependentUpon>MemberMessagePage.xaml</DependentUpon>
+    <Compile Include="Views\Message\Detail\Content\MessageListPage.xaml.cs">
+      <DependentUpon>MessageListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Message\Detail\Content\FilePage.xaml.cs">
       <DependentUpon>FilePage.xaml</DependentUpon>
@@ -892,11 +890,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Message\Detail\Content\ChannelMessagePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Message\Detail\Content\MemberMessagePage.xaml">
+    <Page Include="Views\Message\Detail\Content\MessageListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

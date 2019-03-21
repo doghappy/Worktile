@@ -20,23 +20,23 @@ using Worktile.Models;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Domain.SocketMessageConverter;
+using Worktile.NavigateModels.Message;
 
 namespace Worktile.Views.Message.Detail.Content
 {
-    public partial class MemberMessagePage : Page, INotifyPropertyChanged
+    public partial class MessageListPage : Page, INotifyPropertyChanged
     {
-        public MemberMessagePage()
+        public MessageListPage()
         {
             InitializeComponent();
-            _messageService = new MessageService();
             _entityService = new EntityService();
             Messages = new ObservableCollection<Models.Message.Message>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        readonly MessageService _messageService;
+        private MessageService _messageService;
         readonly EntityService _entityService;
-        private MemberSession _session;
+        private ISession _session;
         private TopNav _nav;
         const int RefType = 2;
 
@@ -56,6 +56,26 @@ namespace Worktile.Views.Message.Detail.Content
             }
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var param = e.Parameter as ToMessageListParam;
+            _session = param.Session;
+            _nav = param.TopNav;
+
+            switch (_session.PageType)
+            {
+                case PageType.Member:
+                    _messageService = new MessageService();
+                    break;
+                case PageType.Channel:
+                    _messageService = new ChannelMessageService();
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             WtSocket.OnMessageReceived -= OnMessageReceived;
@@ -64,10 +84,6 @@ namespace Worktile.Views.Message.Detail.Content
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
-            var detailPage = this.GetParent<MemberDetailPage>();
-            _session = detailPage.Session;
-            _nav = detailPage.SelectedNav;
-
             await LoadMessagesAsync();
             if (MsgTextBox != null)
                 MsgTextBox.Focus(FocusState.Programmatic);

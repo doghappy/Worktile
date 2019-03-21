@@ -16,6 +16,7 @@ using Worktile.Enums.Privileges;
 using Worktile.Views.Message.Detail.Content;
 using System.Linq;
 using Worktile.Common.Extensions;
+using Worktile.NavigateModels.Message;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -98,7 +99,11 @@ namespace Worktile.Views.Message.Detail
                     switch (index)
                     {
                         case 0:
-                            ContentFrame.Navigate(typeof(ChannelMessagePage));
+                            ContentFrame.Navigate(typeof(MessageListPage), new ToMessageListParam
+                            {
+                                TopNav = value,
+                                Session = Session
+                            });
                             break;
                         case 1:
                             ContentFrame.Navigate(typeof(FilePage));
