@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Padding="32">
@@ -15,7 +16,7 @@
             <TextBlock Text="设置群组名称和群组讨论的主题。" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
         <StackPanel Margin="0 0 0 16">
-            <Button x:Name="ArchiveButton" Content="归档群组" Style="{ThemeResource TextBlockButtonStyle}" Padding="0"/>
+            <Button x:Name="ArchiveButton" Content="归档群组" Style="{ThemeResource TextBlockButtonStyle}" Padding="0" Click="ArchiveButton_Click"/>
             <TextBlock Text="群组不再使用或者你想清空，你可以归档它，归档后可以重新激活该群组。" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
         <StackPanel Margin="0 0 0 16">

@@ -303,6 +303,7 @@ namespace Worktile.Views.Message
             if (SelectedSession == null)
             {
                 MasterContentFrame.Navigate(typeof(TransparentPage));
+                MasterContentFrame.BackStack.Clear();
             }
             else
             {

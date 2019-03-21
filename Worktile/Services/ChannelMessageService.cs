@@ -26,5 +26,12 @@ namespace Worktile.Services
             var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url, req);
             return res.Code == 200 && res.Data;
         }
+
+        public async Task<bool> ArchiveAsync(string sessionId)
+        {
+            string url = $"api/channels/{sessionId}/archive";
+            var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
+            return res.Code == 200 && res.Data;
+        }
     }
 }
