@@ -132,9 +132,12 @@ namespace Worktile.Views.Message.Detail
         private async void ContactInfo_Click(object sender, RoutedEventArgs e)
         {
             IsPaneOpen = true;
-            IsActive = true;
-            Member = await _userService.GetMemberInfoAsync(_session.To.Uid);
-            IsActive = false;
+            if (Member == null)
+            {
+                IsActive = true;
+                Member = await _userService.GetMemberInfoAsync(_session.To.Uid);
+                IsActive = false;
+            }
         }
 
         private async void StarButton_Click(object sender, RoutedEventArgs e)

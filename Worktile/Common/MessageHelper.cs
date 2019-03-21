@@ -1,9 +1,14 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Windows.UI;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Worktile.Enums;
 using Worktile.Models;
 using Worktile.Models.Message;
+using Windows.UI.Xaml.Navigation;
+using Worktile.Views.Message.Detail.Content;
 
 namespace Worktile.Common
 {

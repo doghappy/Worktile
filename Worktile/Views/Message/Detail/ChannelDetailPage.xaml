@@ -78,11 +78,11 @@
                                       x:Name="AddMemberButton"
                                       x:Load="{x:Bind CanAddMember, Mode=OneWay}"
                                       Click="AddMemberButton_Click"/>
-                        <AppBarButton Label="消息通知设置">
+                        <!--<AppBarButton Label="消息通知设置">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xEA8F;"/>
                             </AppBarButton.Icon>
-                        </AppBarButton>
+                        </AppBarButton>-->
                         <AppBarButton Icon="Setting"
                                       Label="群组设置"
                                       x:Name="ChannelSettingButton"

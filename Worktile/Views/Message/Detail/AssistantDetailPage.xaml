@@ -6,9 +6,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:message="using:Worktile.Models.Message"
+    xmlns:cvt="using:Worktile.Converters"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <cvt:AtNameConverter x:Key="AtNameConverter"/>
+    </Page.Resources>
+    
     <Grid>
         <NavigationView PaneDisplayMode="Top"
                         IsBackButtonVisible="Collapsed"
@@ -39,17 +44,84 @@
 
             <NavigationView.PaneFooter>
                 <CommandBar DefaultLabelPosition="Collapsed" Background="Transparent">
-                    <AppBarButton Icon="Setting"/>
+                    <AppBarButton Icon="ContactInfo" Click="ContactInfo_Click"/>
                 </CommandBar>
             </NavigationView.PaneFooter>
 
-            <Frame x:Name="ContentFrame">
-                <Frame.ContentTransitions>
-                    <TransitionCollection>
-                        <NavigationThemeTransition/>
-                    </TransitionCollection>
-                </Frame.ContentTransitions>
-            </Frame>
+            <SplitView DisplayMode="Overlay"
+                       PanePlacement="Right"
+                       IsPaneOpen="{x:Bind IsPaneOpen, Mode=TwoWay}">
+                <SplitView.Pane>
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
+                              Padding="20 12"
+                              BorderThickness="0 0 0 1">
+                            <TextBlock Text="{x:Bind PaneTitle}"/>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Padding="30 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Padding="0 24">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <tethys:Avatar Width="68"
+                                               Source="{x:Bind Session.TethysAvatar.Source, Mode=OneWay}"
+                                               DisplayName="{x:Bind Session.TethysAvatar.DisplayName, Mode=OneWay}"
+                                               Icon="{x:Bind Session.TethysAvatar.Icon, Mode=OneWay}"
+                                               Background="{x:Bind Session.TethysAvatar.Background, Mode=OneWay}"
+                                               FontFamily="{x:Bind Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
+
+                                <Grid Grid.Column="1" Margin="16 0 0 0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="{x:Bind Member.DisplayName, Mode=OneWay}"
+                                               IsTextSelectionEnabled="True"
+                                               FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Row="1"
+                                               FontSize="12"
+                                               IsTextSelectionEnabled="True"
+                                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                               Text="{x:Bind Member.Name, Mode=OneWay, Converter={StaticResource AtNameConverter}}" />
+                                </Grid>
+                            </Grid>
+
+                            <TextBlock Grid.Row="1"
+                                       IsTextSelectionEnabled="True"
+                                       Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                       TextWrapping="Wrap"
+                                       Text="{x:Bind Member.Service.Remark, Mode=OneWay}"/>
+                        </Grid>
+                    </Grid>
+                </SplitView.Pane>
+                <Frame x:Name="ContentFrame">
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition/>
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
+                </Frame>
+            </SplitView>
         </NavigationView>
     </Grid>
 </Page>

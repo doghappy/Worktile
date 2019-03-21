@@ -335,6 +335,7 @@
     <Compile Include="Models\IMemberBase.cs" />
     <Compile Include="Models\Member\Member.cs" />
     <Compile Include="Models\Member\Preference.cs" />
+    <Compile Include="Models\Member\ServiceInfo.cs" />
     <Compile Include="Models\Message\SendMessageRequestBody.cs" />
     <Compile Include="Models\Message\Session\MemberSession.cs" />
     <Compile Include="Models\Message\Session\ChannelSession.cs" />

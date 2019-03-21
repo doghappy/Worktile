@@ -34,6 +34,13 @@ namespace Worktile.Views.Message.Detail
                 new TopNav { Name = "文件" },
                 new TopNav { Name = "固定消息", IsPin = true }
             };
+            _ignorePageNames = new[]
+            {
+                nameof(MessageListPage),
+                nameof(AssistantMessagePage),
+                nameof(FilePage),
+                nameof(PinnedPage)
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -43,6 +50,8 @@ namespace Worktile.Views.Message.Detail
 
         public string PaneTitle => "群组成员";
         public ObservableCollection<TopNav> Navs { get; }
+
+        private string[] _ignorePageNames;
 
         private bool _canAddService;
         public bool CanAddService
@@ -269,7 +278,22 @@ namespace Worktile.Views.Message.Detail
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
+            //for (int i = 0; i < ContentFrame.BackStack.Count; i++)
+            //{
+            //    if (_ignorePageNames.Contains(ContentFrame.BackStack[i].SourcePageType.Name))
+            //    {
+            //        ContentFrame.BackStack.RemoveAt(i);
+            //        if (i != 0)
+            //        {
+            //            i--;
+            //        }
+            //    }
+            //}
+
             Nav.IsBackEnabled = ContentFrame.CanGoBack;
+            Nav.IsBackButtonVisible = Nav.IsBackEnabled
+                ? NavigationViewBackButtonVisible.Visible
+                : NavigationViewBackButtonVisible.Collapsed;
             if (e.NavigationMode == NavigationMode.Back)
             {
                 var items = Nav.GetChildren<NavigationViewItem>()

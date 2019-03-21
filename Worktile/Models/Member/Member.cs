@@ -53,6 +53,9 @@ namespace Worktile.Models.Member
         [JsonProperty("department_name")]
         public string DepartmentName { get; set; }
 
+        [JsonProperty("service")]
+        public ServiceInfo Service { get; set; }
+
         private TethysAvatar _tethysAvatar;
         public TethysAvatar TethysAvatar
         {
