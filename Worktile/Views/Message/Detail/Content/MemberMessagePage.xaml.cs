@@ -78,6 +78,7 @@ namespace Worktile.Views.Message.Detail.Content
 
         private async Task LoadMessagesAsync()
         {
+            IsActive = true;
             var messages = await _messageService.LoadMessagesAsync(_session, _nav.FilterType);
             bool flag = false;
             if (Messages.Any())
@@ -92,15 +93,21 @@ namespace Worktile.Views.Message.Detail.Content
                 else
                     Messages.Add(item);
             }
+            IsActive = false;
         }
+
+        long _ticks = 0;
 
         private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             var scrollViewer = sender as ScrollViewer;
+            long ticks = DateTime.Now.Ticks;
             if (_messageService.HasMore.HasValue
                 && _messageService.HasMore.Value
-                && !IsActive && scrollViewer.VerticalOffset <= 10)
+                && scrollViewer.VerticalOffset <= 10
+                && (_ticks == 0 || new TimeSpan(ticks - _ticks).TotalSeconds > 2))
             {
+                _ticks = ticks;
                 await LoadMessagesAsync();
             }
         }
