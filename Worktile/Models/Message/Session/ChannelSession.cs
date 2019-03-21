@@ -22,7 +22,19 @@ namespace Worktile.Models.Message.Session
         [JsonProperty("name_pinyin")]
         public string NamePinyin { get; set; }
 
-        public TethysAvatar TethysAvatar { get; set; }
+        private TethysAvatar _tethysAvatar;
+        public TethysAvatar TethysAvatar
+        {
+            get => _tethysAvatar;
+            set
+            {
+                if (_tethysAvatar != value)
+                {
+                    _tethysAvatar = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TethysAvatar)));
+                }
+            }
+        }
 
         private bool _starred;
         [JsonProperty("starred")]

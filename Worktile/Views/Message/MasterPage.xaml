@@ -112,11 +112,11 @@
                                 </Grid.ColumnDefinitions>
 
                                 <tethys:Avatar Width="30"
-                                                   Source="{x:Bind TethysAvatar.Source}"
-                                                   DisplayName="{x:Bind TethysAvatar.DisplayName}"
-                                                   Icon="{x:Bind TethysAvatar.Icon}"
-                                                   Background="{x:Bind TethysAvatar.Background}"
-                                                   FontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
+                                               Source="{x:Bind TethysAvatar.Source, Mode=OneWay}"
+                                               DisplayName="{x:Bind TethysAvatar.DisplayName, Mode=OneWay}"
+                                               Icon="{x:Bind TethysAvatar.Icon, Mode=OneWay}"
+                                               Background="{x:Bind TethysAvatar.Background, Mode=OneWay}"
+                                               FontFamily="{x:Bind TethysAvatar.AvatarFont, Mode=OneWay}"/>
 
                                 <TextBlock Grid.Column="1"
                                                HorizontalAlignment="Left"
@@ -151,11 +151,11 @@
                                 </Grid.ColumnDefinitions>
 
                                 <tethys:Avatar Width="30"
-                                                   Source="{x:Bind TethysAvatar.Source}"
-                                                   DisplayName="{x:Bind TethysAvatar.DisplayName}"
-                                                   Icon="{x:Bind TethysAvatar.Icon}"
-                                                   Background="{x:Bind TethysAvatar.Background}"
-                                                   FontFamily="{x:Bind TethysAvatar.AvatarFont}"/>
+                                               Source="{x:Bind TethysAvatar.Source, Mode=OneWay}"
+                                               DisplayName="{x:Bind TethysAvatar.DisplayName, Mode=OneWay}"
+                                               Icon="{x:Bind TethysAvatar.Icon, Mode=OneWay}"
+                                               Background="{x:Bind TethysAvatar.Background, Mode=OneWay}"
+                                               FontFamily="{x:Bind TethysAvatar.AvatarFont, Mode=OneWay}"/>
 
                                 <TextBlock Grid.Column="1"
                                                HorizontalAlignment="Left"
