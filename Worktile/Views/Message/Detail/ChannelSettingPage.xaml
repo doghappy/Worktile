@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="Worktile.Views.Message.Detail.ChannelSettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Message.Detail"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Padding="32">
+        <TextBlock Text="群组设置" Style="{ThemeResource TitleTextBlockStyle}" Margin="0 0 0 16"/>
+        <StackPanel Margin="0 0 0 16">
+            <Button x:Name="EditButton" Content="修改群组信息" Style="{ThemeResource TextBlockButtonStyle}" Padding="0"/>
+            <TextBlock Text="设置群组名称和群组讨论的主题。" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+        </StackPanel>
+        <StackPanel Margin="0 0 0 16">
+            <Button x:Name="ArchiveButton" Content="归档群组" Style="{ThemeResource TextBlockButtonStyle}" Padding="0"/>
+            <TextBlock Text="群组不再使用或者你想清空，你可以归档它，归档后可以重新激活该群组。" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+        </StackPanel>
+        <StackPanel Margin="0 0 0 16">
+            <Button x:Name="DeleteButton" Content="删除群组" Style="{ThemeResource TextBlockButtonStyle}" Padding="0"/>
+            <TextBlock Text="群组已经不再需要时可以删除，删除后群组中的消息也会一并删除。" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+        </StackPanel>
+    </StackPanel>
+</Page>

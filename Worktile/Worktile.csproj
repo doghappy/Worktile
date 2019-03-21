@@ -380,6 +380,9 @@
     <Compile Include="Views\LightMainPage.xaml.cs">
       <DependentUpon>LightMainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Message\Detail\ChannelSettingPage.xaml.cs">
+      <DependentUpon>ChannelSettingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\Detail\CreateChannelPage.xaml.cs">
       <DependentUpon>CreateChannelPage.xaml</DependentUpon>
     </Compile>
@@ -835,6 +838,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LightMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Message\Detail\ChannelSettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

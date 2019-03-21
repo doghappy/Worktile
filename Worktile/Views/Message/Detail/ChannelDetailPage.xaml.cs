@@ -253,15 +253,23 @@ namespace Worktile.Views.Message.Detail
             {
                 Title = "退出群组",
                 Content = content,
-                PrimaryButtonText = "取消",
-                SecondaryButtonText = "确认退出",
+                PrimaryButtonText = "确认退出",
+                SecondaryButtonText = "取消",
                 DefaultButton = ContentDialogButton.Primary
             };
             var result = await dialog.ShowAsync();
-            if (result == ContentDialogResult.Secondary)
+            if (result == ContentDialogResult.Primary)
             {
                 await _messageService.ExitChannelAsync(Session.Id);
             }
+        }
+
+        private void ChannelSettingButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(typeof(ChannelSettingPage));
+            Nav.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
+            Nav.BackRequested += Nav_BackRequested;
+            Nav.IsBackEnabled = true;
         }
     }
 }

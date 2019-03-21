@@ -86,7 +86,8 @@
                         <AppBarButton Icon="Setting"
                                       Label="群组设置"
                                       x:Name="ChannelSettingButton"
-                                      x:Load="{x:Bind CanAdminChannel, Mode=OneWay}"/>
+                                      x:Load="{x:Bind CanAdminChannel, Mode=OneWay}"
+                                      Click="ChannelSettingButton_Click"/>
                         <AppBarButton Label="退出群组" Click="ExitChannel_Click">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE656;" Style="{StaticResource LcIcon}"/>
