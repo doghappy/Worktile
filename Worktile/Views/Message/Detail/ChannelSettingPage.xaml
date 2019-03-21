@@ -20,7 +20,7 @@
             <TextBlock Text="群组不再使用或者你想清空，你可以归档它，归档后可以重新激活该群组。" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
         <StackPanel Margin="0 0 0 16">
-            <Button x:Name="DeleteButton" Content="删除群组" Style="{ThemeResource TextBlockButtonStyle}" Padding="0"/>
+            <Button x:Name="DeleteButton" Content="删除群组" Style="{ThemeResource TextBlockButtonStyle}" Padding="0" Click="DeleteButton_Click"/>
             <TextBlock Text="群组已经不再需要时可以删除，删除后群组中的消息也会一并删除。" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
     </StackPanel>

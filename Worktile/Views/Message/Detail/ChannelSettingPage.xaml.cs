@@ -57,8 +57,24 @@ namespace Worktile.Views.Message.Detail
             if (result == ContentDialogResult.Primary)
             {
                 await _channelMessageService.ArchiveAsync(_session.Id);
-                _detailPage.ContentFrameGoBack(2);
                 _masterPage.Sessions.Remove(_session);
+            }
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = "删除群组",
+                Content = "当群组不再使用并且不想保留消息历史时，你可以删除它，群组中的历史消息都将被删除，确定要删除群组吗？",
+                PrimaryButtonText = "确定删除",
+                SecondaryButtonText = "取消",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                await _channelMessageService.DeleteAsync(_session.Id);
             }
         }
     }

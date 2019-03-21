@@ -33,5 +33,12 @@ namespace Worktile.Services
             var res = await WtHttpClient.PutAsync<ApiDataResponse<bool>>(url);
             return res.Code == 200 && res.Data;
         }
+
+        public async Task<bool> DeleteAsync(string sessionId)
+        {
+            string url = $"api/channels/{sessionId}";
+            var res = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
+            return res.Code == 200 && res.Data;
+        }
     }
 }
