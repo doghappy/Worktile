@@ -56,10 +56,10 @@
 
             <ListView Grid.Row="1" ItemsSource="{x:Bind Apps}" SelectedItem="{x:Bind SelectedApp, Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged" ItemContainerStyle="{StaticResource WtAppListViewItem}">
                 <ListView.Resources>
-                    <StaticResource x:Key="ListViewItemBackgroundSelected" ResourceKey="SystemAccentColorDark2"/>
-                    <StaticResource x:Key="ListViewItemBackgroundPressed" ResourceKey="SystemAccentColorDark2"/>
-                    <StaticResource x:Key="ListViewItemBackgroundPointerOver" ResourceKey="SystemAccentColorDark1"/>
-                    <StaticResource x:Key="ListViewItemBackgroundSelectedPointerOver" ResourceKey="SystemAccentColorDark2"/>
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource SystemAccentColorDark1}"/>
+                    <SolidColorBrush x:Key="ListViewItemBackgroundPressed" Color="{ThemeResource SystemAccentColorDark1}"/>
+                    <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="{ThemeResource SystemAccentColorDark1}"/>
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColorDark1}"/>
                 </ListView.Resources>
 
                 <ListView.ItemTemplate>
