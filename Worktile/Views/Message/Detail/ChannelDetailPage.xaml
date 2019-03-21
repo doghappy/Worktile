@@ -19,7 +19,7 @@
     <Grid>
         <NavigationView x:Name="Nav"
                         PaneDisplayMode="Top"
-                        IsBackButtonVisible="Collapsed"
+                        BackRequested="Nav_BackRequested"
                         IsSettingsVisible="False"
                         SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}"
                         MenuItemsSource="{x:Bind Navs}">
@@ -155,7 +155,7 @@
                         </ListView>
                     </Grid>
                 </SplitView.Pane>
-                <Frame x:Name="ContentFrame">
+                <Frame x:Name="ContentFrame" Navigated="ContentFrame_Navigated">
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition/>

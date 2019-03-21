@@ -11,7 +11,7 @@
     <StackPanel Padding="32">
         <TextBlock Text="群组设置" Style="{ThemeResource TitleTextBlockStyle}" Margin="0 0 0 16"/>
         <StackPanel Margin="0 0 0 16">
-            <Button x:Name="EditButton" Content="修改群组信息" Style="{ThemeResource TextBlockButtonStyle}" Padding="0"/>
+            <Button x:Name="EditButton" Content="修改群组信息" Style="{ThemeResource TextBlockButtonStyle}" Padding="0" Click="EditButton_Click"/>
             <TextBlock Text="设置群组名称和群组讨论的主题。" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
         </StackPanel>
         <StackPanel Margin="0 0 0 16">

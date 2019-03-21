@@ -17,6 +17,7 @@ using Worktile.Views.Message.Detail.Content;
 using System.Linq;
 using Worktile.Common.Extensions;
 using Worktile.NavigateModels.Message;
+using Windows.UI.Xaml.Navigation;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -231,17 +232,14 @@ namespace Worktile.Views.Message.Detail
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
             ContentFrame.Navigate(typeof(AddMemberPage));
-            Nav.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-            Nav.BackRequested += Nav_BackRequested;
-            Nav.IsBackEnabled = true;
         }
 
         private void Nav_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            ContentFrame.GoBack();
-            Nav.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed;
-            Nav.BackRequested -= Nav_BackRequested;
-            Nav.IsBackEnabled = false;
+            if (ContentFrame.CanGoBack)
+            {
+                ContentFrame.GoBack();
+            }
         }
 
         private async void ExitChannel_Click(object sender, RoutedEventArgs e)
@@ -267,9 +265,46 @@ namespace Worktile.Views.Message.Detail
         private void ChannelSettingButton_Click(object sender, RoutedEventArgs e)
         {
             ContentFrame.Navigate(typeof(ChannelSettingPage));
-            Nav.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible;
-            Nav.BackRequested += Nav_BackRequested;
-            Nav.IsBackEnabled = true;
+        }
+
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            Nav.IsBackEnabled = ContentFrame.CanGoBack;
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                var items = Nav.GetChildren<NavigationViewItem>()
+                    .Where(n => n.Content != null && n.Content is string)
+                    .ToList();
+                int index = -1;
+                switch (e.SourcePageType)
+                {
+                    case Type t when e.SourcePageType == typeof(MessageListPage):
+                    case Type a when e.SourcePageType == typeof(AssistantMessagePage):
+                        index = 0;
+                        break;
+                    case Type t when e.SourcePageType == typeof(FilePage):
+                        index = 1;
+                        break;
+                    case Type t when e.SourcePageType == typeof(PinnedPage):
+                        index = 2;
+                        break;
+                }
+                if (index != -1)
+                {
+                    items[index].IsSelected = true;
+                }
+            }
+        }
+
+        public void ContentFrameGoBack(int step)
+        {
+            for (int i = 0; i < step; i++)
+            {
+                if (ContentFrame.CanGoBack)
+                {
+                    ContentFrame.GoBack();
+                }
+            }
         }
     }
 }

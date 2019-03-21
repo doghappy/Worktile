@@ -389,6 +389,9 @@
     <Compile Include="Views\Message\Detail\CreateChatPage.xaml.cs">
       <DependentUpon>CreateChatPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Message\Detail\EditChannelPage.xaml.cs">
+      <DependentUpon>EditChannelPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Message\Detail\JoinChannelPage.xaml.cs">
       <DependentUpon>JoinChannelPage.xaml</DependentUpon>
     </Compile>
@@ -852,6 +855,10 @@
     <Page Include="Views\Message\Detail\CreateChatPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Message\Detail\EditChannelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Message\Detail\JoinChannelPage.xaml">
       <SubType>Designer</SubType>
