@@ -143,7 +143,7 @@
 
                     <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="{x:Bind Message.From.TethysAvatar.DisplayName, Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                        <TextBlock Text="{x:Bind Message.CreatedAt, Mode=OneWay}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        <TextBlock Text="{x:Bind Message.CreatedAt.LocalDateTime, Mode=OneWay}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                     </StackPanel>
                 </Grid>
                 

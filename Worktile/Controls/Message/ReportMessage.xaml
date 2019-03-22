@@ -36,7 +36,7 @@
 
                     <FontIcon Style="{StaticResource WtfIcon}"
                           Glyph="&#xE60c;"
-                          Foreground="{StaticResource QQBlueThemeBrush}"
+                          Foreground="{StaticResource ReportBrush}"
                           Margin="0 0 8 0"
                           VerticalAlignment="Top"/>
 
@@ -85,7 +85,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Grid>
-                <Rectangle Fill="{StaticResource QQBlueThemeBrush}" Width="2" HorizontalAlignment="Left"/>
+                <Rectangle Fill="{StaticResource ReportBrush}" Width="2" HorizontalAlignment="Left"/>
             </Grid>
         </Button>
     </StackPanel>

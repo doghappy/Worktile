@@ -99,7 +99,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Grid.Row="3" Content="返回" Style="{ThemeResource AccentButtonStyle}" Click="GoBackButton_Click" IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"/>
+        <Button Grid.Row="3" Content="返回" Style="{ThemeResource ButtonRevealStyle}" Click="GoBackButton_Click" IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"/>
 
         <ProgressRing Grid.Row="2"
                       Width="80"

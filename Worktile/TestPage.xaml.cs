@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -38,8 +39,12 @@ namespace Worktile
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var mainPage = this.GetParent<LightMainPage>();
-            mainPage.ChangeTheme();
+            //var mainPage = this.GetParent<LightMainPage>();
+            //mainPage.ChangeTheme();
+            string json = "{\"created_at\": 1553237418}";
+            var msg = JsonConvert.DeserializeObject<Worktile.Models.Message.Message>(json);
+            string json1 = "{\"created_at\": 1553237418.123}";
+            var msg1 = JsonConvert.DeserializeObject<Worktile.Models.Message.Message>(json1);
         }
     }
 }

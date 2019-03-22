@@ -30,7 +30,7 @@ namespace Worktile.Models.Message
 
         [JsonProperty("created_at")]
         [JsonConverter(typeof(SafeUnixDateTimeConverter))]
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         [JsonProperty("component")]
         public int Component { get; set; }

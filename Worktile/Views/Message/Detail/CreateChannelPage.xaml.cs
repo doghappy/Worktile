@@ -125,20 +125,6 @@ namespace Worktile.Views.Message.Detail
             }
         }
 
-        private bool _canGoBack;
-        public bool CanGoBack
-        {
-            get => _canGoBack;
-            set
-            {
-                if (_canGoBack != value)
-                {
-                    _canGoBack = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoBack)));
-                }
-            }
-        }
-
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -146,7 +132,6 @@ namespace Worktile.Views.Message.Detail
             ChannelNameTextBox.Focus(FocusState.Programmatic);
             _masterPage = Frame.GetParent<MasterPage>();
             _frame = _masterPage.GetChild<Frame>("MasterContentFrame");
-            CanGoBack = _frame.CanGoBack;
         }
 
         private void GoBackButton_Click(object sender, RoutedEventArgs e)

@@ -13,7 +13,7 @@ namespace Worktile.Models.Entity
 
         [JsonProperty("created_at")]
         [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         [JsonProperty("created_by")]
         public Member.Member CreatedBy { get; set; }

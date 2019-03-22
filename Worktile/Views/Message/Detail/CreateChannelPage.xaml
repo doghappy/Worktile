@@ -75,7 +75,7 @@
                     Foreground="White"/>
             <Button Content="取消"
                     x:Name="GoBackButton"
-                    x:Load="{x:Bind CanGoBack, Mode=OneWay}"
+                    Style="{ThemeResource ButtonRevealStyle}"
                     Click="GoBackButton_Click"
                     Margin="8 0 0 0"/>
         </StackPanel>

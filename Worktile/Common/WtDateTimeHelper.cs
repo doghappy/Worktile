@@ -7,10 +7,14 @@ namespace Worktile.Common
         public static DateTime GetDateTime(string timestamp)
         {
             long ticks = long.Parse(timestamp);
-            return GetDateTime(ticks);
+            return UnixToDateTime(ticks);
         }
 
-        public static DateTime GetDateTime(long timestamp) => new DateTime(timestamp * 10000000 + 621355968000000000).ToLocalTime();
+        public static DateTime UnixToDateTime(long unix)
+        {
+            var date = DateTimeOffset.FromUnixTimeSeconds(unix);
+            return date.LocalDateTime;
+        }
 
         public static string ToWtKanbanDate(this DateTime date)
         {
