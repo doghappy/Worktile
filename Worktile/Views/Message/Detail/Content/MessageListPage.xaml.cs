@@ -94,9 +94,19 @@ namespace Worktile.Views.Message.Detail.Content
             await LoadMessagesAsync();
             if (MsgTextBox != null)
                 MsgTextBox.Focus(FocusState.Programmatic);
-            await _messageService.ClearUnReadAsync(_session.Id);
+            await ClearUnReadAsync();
             WtSocket.OnMessageReceived += OnMessageReceived;
             IsActive = false;
+        }
+
+        private async Task ClearUnReadAsync()
+        {
+            var result = await _messageService.ClearUnReadAsync(_session.Id);
+            if (result)
+            {
+                App.UnreadBadge -= _session.UnRead;
+                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _session.UnRead = 0));
+            }
         }
 
         private async Task LoadMessagesAsync()
