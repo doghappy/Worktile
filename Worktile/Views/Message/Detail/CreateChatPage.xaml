@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="发起私聊"
@@ -28,7 +29,7 @@
                         PlaceholderText="输入成员名查找"
                         Margin="0 0 0 16"/>
 
-        <ListView Grid.Row="2" ItemsSource="{x:Bind Avatars}" SelectionMode="None">
+        <ListView Grid.Row="2" ItemsSource="{x:Bind Avatars}" SelectionMode="None" Margin="0 0 0 16">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Padding" Value="12"/>
@@ -80,5 +81,7 @@
                       Width="80"
                       Height="80"
                       IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+
+        <Button Grid.Row="3" Content="返回" Style="{ThemeResource ButtonRevealStyle}" Click="GoBack_Click"/>
     </Grid>
 </Page>

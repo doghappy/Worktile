@@ -105,5 +105,17 @@ namespace Worktile.Views.Message.Detail
                 }
             }
         }
+
+        private void GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+            }
+            else
+            {
+                Frame.Navigate(typeof(TransparentPage));
+            }
+        }
     }
 }
