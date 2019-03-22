@@ -39,6 +39,7 @@ namespace Worktile.Views.Message.Detail.Content
         private ISession _session;
         private TopNav _nav;
         const int RefType = 2;
+        private ToType _toType;
 
         public ObservableCollection<Models.Message.Message> Messages { get; }
 
@@ -66,10 +67,16 @@ namespace Worktile.Views.Message.Detail.Content
             switch (_session.PageType)
             {
                 case PageType.Member:
-                    _messageService = new MessageService();
+                    {
+                        _messageService = new MessageService();
+                        _toType = ToType.Session;
+                    }
                     break;
                 case PageType.Channel:
-                    _messageService = new ChannelMessageService();
+                    {
+                        _messageService = new ChannelMessageService();
+                        _toType = ToType.Channel;
+                    }
                     break;
                 default:
                     throw new InvalidOperationException();
@@ -232,7 +239,7 @@ namespace Worktile.Views.Message.Detail.Content
             {
                 FromType = FromType.User,
                 From = DataSource.ApiUserMeData.Me.Uid,
-                ToType = ToType.Session,
+                ToType = _toType,
                 To = _session.Id,
                 MessageType = MessageType.Text,
                 Client = Client.Win8,
