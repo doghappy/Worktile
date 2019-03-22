@@ -14,7 +14,7 @@ namespace Worktile.Services
             return await WtHttpClient.GetAsync<ApiPinnedMessages>(url);
         }
 
-        public async Task<bool> UpdateChannelAsync(string sessionId,string name, string desc, string color)
+        public async Task<bool> UpdateChannelAsync(string sessionId, string name, string desc, string color)
         {
             string url = $"api/channels/{sessionId}";
             var req = new
@@ -37,6 +37,13 @@ namespace Worktile.Services
         public async Task<bool> DeleteAsync(string sessionId)
         {
             string url = $"api/channels/{sessionId}";
+            var res = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
+            return res.Code == 200 && res.Data;
+        }
+
+        public async Task<bool> DeleteMemberFromChannelAsync(string sessionId, string uid)
+        {
+            string url = $"api/channels/{sessionId}/members/{uid}";
             var res = await WtHttpClient.DeleteAsync<ApiDataResponse<bool>>(url);
             return res.Code == 200 && res.Data;
         }

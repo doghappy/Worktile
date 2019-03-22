@@ -125,9 +125,8 @@
                             </TextBlock>
                         </Grid>
 
-                        <ListView Grid.Row="1"
-                                  SelectionMode="None"
-                                  Tapped="ListView_Tapped"
+                        <ListView x:Name="MembersListView"
+                                  Grid.Row="1"
                                   ItemsSource="{x:Bind Session.Members, Mode=OneWay}">
 
                             <ListView.Resources>
@@ -141,15 +140,37 @@
                                 </Flyout>
                             </ListView.Resources>
 
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="member:Member">
-                                    <StackPanel Orientation="Horizontal">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
                                         <tethys:Avatar Width="30"
                                                        DisplayName="{x:Bind TethysAvatar.DisplayName, Mode=OneWay}"
                                                        Background="{x:Bind TethysAvatar.Background, Mode=OneWay}"
                                                        Source="{x:Bind TethysAvatar.Source, Mode=OneWay}"/>
-                                        <TextBlock Text="{x:Bind DisplayName}" VerticalAlignment="Center" Margin="4 0 0 0"/>
-                                    </StackPanel>
+
+                                        <TextBlock Grid.Column="1" Text="{x:Bind DisplayName}" VerticalAlignment="Center" Margin="4 0 0 0"/>
+
+                                        <AppBarButton Grid.Column="2" Icon="More" Label="更多">
+                                            <AppBarButton.Flyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem Text="移出群组" Icon="Remove" Click="RemoveMember_Click" DataContext="{x:Bind Mode=OneWay}"/>
+                                                    <MenuFlyoutItem Text="成员资料" Icon="ContactInfo" Click="MemberInfo_Click"/>
+                                                </MenuFlyout>
+                                            </AppBarButton.Flyout>
+                                        </AppBarButton>
+                                    </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

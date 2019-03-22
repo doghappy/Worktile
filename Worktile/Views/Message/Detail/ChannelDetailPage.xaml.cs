@@ -18,6 +18,7 @@ using System.Linq;
 using Worktile.Common.Extensions;
 using Worktile.NavigateModels.Message;
 using Windows.UI.Xaml.Navigation;
+using Windows.Foundation;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -27,7 +28,7 @@ namespace Worktile.Views.Message.Detail
         {
             InitializeComponent();
             _userService = new UserService();
-            _messageService = new MessageService();
+            _messageService = new ChannelMessageService();
             Navs = new ObservableCollection<TopNav>
             {
                 new TopNav { Name = "消息" },
@@ -45,7 +46,7 @@ namespace Worktile.Views.Message.Detail
 
         public event PropertyChangedEventHandler PropertyChanged;
         readonly UserService _userService;
-        readonly MessageService _messageService;
+        readonly ChannelMessageService _messageService;
         private MasterPage _masterPage;
 
         public string PaneTitle => "群组成员";
@@ -201,19 +202,6 @@ namespace Worktile.Views.Message.Detail
             }
         }
 
-        private void ListView_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            var listView = sender as ListView;
-            var position = e.GetPosition(listView);
-            position.X = -2;
-            MemberCard.Member = ((FrameworkElement)e.OriginalSource).DataContext as Member;
-            MemberCardFlyout.ShowAt(listView, new FlyoutShowOptions
-            {
-                Position = position,
-                Placement = FlyoutPlacementMode.Left
-            });
-        }
-
         private async void StarButton_Click(object sender, RoutedEventArgs e)
         {
             bool result = await _messageService.StarSessionAsync(Session);
@@ -327,6 +315,33 @@ namespace Worktile.Views.Message.Detail
                 if (ContentFrame.CanGoBack)
                 {
                     ContentFrame.GoBack();
+                }
+            }
+        }
+
+        private void MemberInfo_Click(object sender, RoutedEventArgs e)
+        {
+            var item = sender as MenuFlyoutItem;
+            var transform = item.TransformToVisual(MembersListView);
+            var point = transform.TransformPoint(new Point(0, 0));
+            MemberCard.Member = ((FrameworkElement)e.OriginalSource).DataContext as Member;
+            MemberCardFlyout.ShowAt(MembersListView, new FlyoutShowOptions
+            {
+                Position = point,
+                Placement = FlyoutPlacementMode.LeftEdgeAlignedTop
+            });
+        }
+
+        private async void RemoveMember_Click(object sender, RoutedEventArgs e)
+        {
+            var item = sender as MenuFlyoutItem;
+            var member = item.DataContext as Member;
+            if (member.Uid != DataSource.ApiUserMeData.Me.Uid)
+            {
+                var result = await _messageService.DeleteMemberFromChannelAsync(Session.Id, member.Uid);
+                if (result)
+                {
+                    Session.Members.Remove(member);
                 }
             }
         }
