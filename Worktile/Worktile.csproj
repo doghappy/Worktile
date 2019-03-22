@@ -272,6 +272,7 @@
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\EqualVisibilityConverter.cs" />
     <Compile Include="Converters\CountVisibilityConverter.cs" />
+    <Compile Include="Converters\IsNotSelfConverter.cs" />
     <Compile Include="Converters\IsSelfConverter.cs" />
     <Compile Include="Converters\MessageHorizontalAlignmentConverter.cs" />
     <Compile Include="Converters\IsNotNullConverter.cs" />

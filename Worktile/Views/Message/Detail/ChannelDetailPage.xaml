@@ -14,6 +14,7 @@
 
     <Page.Resources>
         <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
+        <cvt:IsNotSelfConverter x:Key="IsNotSelfConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -165,7 +166,7 @@
                                         <AppBarButton Grid.Column="2" Icon="More" Label="更多">
                                             <AppBarButton.Flyout>
                                                 <MenuFlyout>
-                                                    <MenuFlyoutItem Text="移出群组" Icon="Remove" Click="RemoveMember_Click" DataContext="{x:Bind Mode=OneWay}"/>
+                                                    <MenuFlyoutItem Text="移出群组" Icon="Remove" Click="RemoveMember_Click" DataContext="{x:Bind Mode=OneWay}" IsEnabled="{x:Bind Uid, Mode=OneWay, Converter={StaticResource IsNotSelfConverter}}"/>
                                                     <MenuFlyoutItem Text="成员资料" Icon="ContactInfo" Click="MemberInfo_Click"/>
                                                 </MenuFlyout>
                                             </AppBarButton.Flyout>
