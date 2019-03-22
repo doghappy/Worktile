@@ -1,4 +1,6 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+﻿using Microsoft.Toolkit.Uwp.Connectivity;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -121,6 +123,7 @@ namespace Worktile.Views
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
+            NetworkHelper.Instance.NetworkChanged += NetworkChanged;
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
             if (string.IsNullOrEmpty(domain))
             {
@@ -149,6 +152,26 @@ namespace Worktile.Views
             _inAppNotification = null;
             WtSocket.Dispose();
             Window.Current.Activated -= Window_Activated;
+        }
+
+        private async void NetworkChanged(object sender, EventArgs e)
+        {
+            await Task.Run(async () =>
+            {
+                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    var helper = sender as NetworkHelper;
+                    if (helper.ConnectionInformation.IsInternetAvailable)
+                    {
+                        ShowNotification("网络已恢复，正在重新连接……", NotificationLevel.Warning, 4000);
+                    }
+                    else
+                    {
+                        ShowNotification("网络已断开，正在重新连接……", NotificationLevel.Danger, 4000);
+                        WtSocket.ReConnect();
+                    }
+                });
+            });
         }
 
         private async Task LoadPreferencesAsync()
