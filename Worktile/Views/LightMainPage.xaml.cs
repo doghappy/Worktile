@@ -2,15 +2,10 @@
 using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
@@ -26,7 +21,6 @@ using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Services;
-using Worktile.Views.Message;
 using Worktile.Views.Profile;
 using Worktile.Views.SignIn;
 
@@ -287,11 +281,11 @@ namespace Worktile.Views
             switch (app)
             {
                 case "message":
-                    MainContentFrame.Navigate(typeof(MasterPage));
+                    MainContentFrame.Navigate(typeof(Message.MasterPage));
                     break;
-                //case "mission":
-                //    ContentFrame.Navigate(typeof(MissionPage));
-                //    break;
+                case "contact":
+                    MainContentFrame.Navigate(typeof(Contact.MasterPage));
+                    break;
                 default:
                     MainContentFrame.Navigate(typeof(WaitForDevelopmentPage));
                     break;

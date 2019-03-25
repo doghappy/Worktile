@@ -74,11 +74,14 @@
                                 <FontIcon Glyph="&#xE61C;" Style="{StaticResource LcIcon}"/>
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <AppBarButton Icon="AddFriend"
-                                      Label="添加群组成员"
+                        <AppBarButton Label="添加群组成员"
                                       x:Name="AddMemberButton"
                                       x:Load="{x:Bind CanAddMember, Mode=OneWay}"
-                                      Click="AddMemberButton_Click"/>
+                                      Click="AddMemberButton_Click">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE71F;" Style="{StaticResource LcIcon}"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
                         <!--<AppBarButton Label="消息通知设置">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xEA8F;"/>
