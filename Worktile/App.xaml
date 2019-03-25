@@ -42,6 +42,12 @@
                             <Color x:Key="SystemChromeAltHighColor">#FF000000</Color>
                             <Color x:Key="SystemRevealListLowColor">#FF1D1D1D</Color>
                             <Color x:Key="SystemRevealListMediumColor">#FF333333</Color>
+                            <Color x:Key="SystemAccentColorDark1">#FF3ADDC4</Color>
+                            <Color x:Key="SystemAccentColorDark2">#FF52E2CD</Color>
+                            <Color x:Key="SystemAccentColorDark3">#FF6BE8D5</Color>
+                            <Color x:Key="SystemAccentColorLight1">#FF1BC1A6</Color>
+                            <Color x:Key="SystemAccentColorLight2">#FF14AB91</Color>
+                            <Color x:Key="SystemAccentColorLight3">#FF0E967C</Color>
                             <Color x:Key="RegionColor">#FF000000</Color>
                             <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
                         </ResourceDictionary>
@@ -55,6 +61,13 @@
                             <Color x:Key="SystemChromeAltHighColor">#FFFFFFFF</Color>
                             <Color x:Key="SystemRevealListLowColor">#FFE6E6E6</Color>
                             <Color x:Key="SystemRevealListMediumColor">#FFCCCCCC</Color>
+                            --><!-- Override system generated accent colors --><!--
+                            <Color x:Key="SystemAccentColorLight1">#FF3ADDC4</Color>
+                            <Color x:Key="SystemAccentColorLight2">#FF52E2CD</Color>
+                            <Color x:Key="SystemAccentColorLight3">#FF6BE8D5</Color>
+                            <Color x:Key="SystemAccentColorDark1">#FF1BC1A6</Color>
+                            <Color x:Key="SystemAccentColorDark2">#FF14AB91</Color>
+                            <Color x:Key="SystemAccentColorDark3">#FF0E967C</Color>
                             <RevealBackgroundBrush x:Key="SystemControlHighlightListLowRevealBackgroundBrush" TargetTheme="Light" Color="{ThemeResource SystemRevealListMediumColor}" FallbackColor="{ StaticResource SystemListMediumColor}" />
                             <Color x:Key="RegionColor">#FFFFFFFF</Color>
                             <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />

@@ -10,13 +10,13 @@
 
     <StackPanel Padding="32">
         <Button Content="紫色" Style="{ThemeResource AccentButtonStyle}" Click="Button_Click"/>
-        <!--<Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorLight3}"/>
+        <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorLight3}"/>
         <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorLight2}"/>
         <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorLight1}"/>
         <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColor}"/>
         <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorDark1}"/>
         <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorDark2}"/>
-        <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorDark3}"/>-->
+        <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemAccentColorDark3}"/>
         <Border BorderThickness="1" BorderBrush="Red">
             <Rectangle Width="100" Height="100" Fill="{ThemeResource SystemControlPageBackgroundMediumAltMediumBrush}"/>
         </Border>
