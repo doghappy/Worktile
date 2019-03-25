@@ -219,11 +219,36 @@ namespace Worktile.Views
                 Icon2 = WtIconHelper.GetAppIcon2("message"),
                 DisplayName = "消息"
             });
-            DataSource.Team.Apps.ForEach(app =>
+            for (int i = 0; i < DataSource.Team.Apps.Count; i++)
             {
-                app.Icon = WtIconHelper.GetAppIcon(app.Name);
-                app.Icon2 = WtIconHelper.GetAppIcon2(app.Name);
-                Apps.Add(app);
+                Apps.Add(new WtApp
+                {
+                    Name = DataSource.Team.Apps[i].Name,
+                    Icon = WtIconHelper.GetAppIcon(DataSource.Team.Apps[i].Name),
+                    Icon2 = WtIconHelper.GetAppIcon2(DataSource.Team.Apps[i].Name),
+                    DisplayName = DataSource.Team.Apps[i].DisplayName
+                });
+                if (i == 2)
+                {
+                    if (DataSource.Team.Apps.Count > 3)
+                    {
+                        Apps.Add(new WtApp
+                        {
+                            Name = "app",
+                            Icon = "\ue61b",
+                            Icon2 = "\ue61d",
+                            DisplayName = "应用"
+                        });
+                    }
+                    break;
+                }
+            }
+            Apps.Add(new WtApp
+            {
+                Name = "contact",
+                Icon = "\ue617",
+                Icon2 = "\ue604",
+                DisplayName = "通讯录"
             });
             Logo = DataSource.ApiUserMeData.Config.Box.LogoUrl + DataSource.Team.Logo;
             SelectedApp = Apps.First();
