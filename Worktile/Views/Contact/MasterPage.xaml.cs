@@ -51,5 +51,13 @@ namespace Worktile.Views.Contact
                 MembersFrame.Navigate(typeof(MemberListPage));
             }
         }
+
+        private void Channels_Click(object sender, RoutedEventArgs e)
+        {
+            if (MembersFrame.CurrentSourcePageType != typeof(ChannelListPage))
+            {
+                MembersFrame.Navigate(typeof(ChannelListPage));
+            }
+        }
     }
 }

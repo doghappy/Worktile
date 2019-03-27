@@ -382,6 +382,9 @@
     <Compile Include="ViewModels\SignIn\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignIn\VerifyCodeSignInViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\Contact\ChannelListPage.xaml.cs">
+      <DependentUpon>ChannelListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Contact\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
@@ -851,6 +854,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WtPersonPicture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Contact\ChannelListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

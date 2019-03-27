@@ -52,7 +52,7 @@
                         <FontIcon Glyph="&#xF22C;"/>
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="群组">
+                <AppBarButton Label="群组" Click="Channels_Click">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE902;"/>
                     </AppBarButton.Icon>
