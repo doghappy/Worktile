@@ -26,7 +26,7 @@
                                   Glyph="&#xE621;"/>
                         <tethys:Avatar x:Name="AvatarInTree"
                                        x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Member}"
-                                       Width="24"
+                                       Width="28"
                                        DisplayName="{x:Bind Avatar.DisplayName}"
                                        Source="{x:Bind Avatar.Source}"
                                        Background="{x:Bind Avatar.Background}"/>
