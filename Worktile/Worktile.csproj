@@ -388,6 +388,9 @@
     <Compile Include="Views\Contact\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Contact\RobotListPage.xaml.cs">
+      <DependentUpon>RobotListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Contact\MemberListPage.xaml.cs">
       <DependentUpon>MemberListPage.xaml</DependentUpon>
     </Compile>
@@ -864,6 +867,10 @@
     <Page Include="Views\Contact\MasterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Contact\RobotListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Contact\MemberListPage.xaml">
       <SubType>Designer</SubType>
