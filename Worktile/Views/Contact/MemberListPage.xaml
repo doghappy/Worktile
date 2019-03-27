@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="Worktile.Views.Contact.MemberListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Contact"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:common="using:Worktile.Common"
+    xmlns:models="using:Worktile.Models"
+    xmlns:wuxdata="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:tethys="using:Worktile.Tethys"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="AvatarCVS" Source="{x:Bind Avatars}" IsSourceGrouped="True"/>
+    </Page.Resources>
+
+    <SemanticZoom>
+        <SemanticZoom.ZoomedInView>
+            <ListView ItemsSource="{x:Bind AvatarCVS.View, Mode=OneWay}" ScrollViewer.IsHorizontalScrollChainingEnabled="False">
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate x:DataType="common:GroupWrapper">
+                                <TextBlock Text="{x:Bind Key}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TethysAvatar">
+                        <StackPanel Orientation="Horizontal">
+                                <tethys:Avatar Width="28"
+                                               Source="{x:Bind Source}"
+                                               DisplayName="{x:Bind DisplayName}"
+                                               Icon="{x:Bind Icon}"
+                                               Background="{x:Bind Background}"
+                                               FontFamily="{x:Bind AvatarFont}"/>
+                                <TextBlock Text="{x:Bind DisplayName}" Margin="4 0 0 0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </SemanticZoom.ZoomedInView>
+
+        <SemanticZoom.ZoomedOutView>
+            <GridView ItemsSource="{x:Bind AvatarCVS.View.CollectionGroups}"
+                          ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                          SelectionMode="None">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="wuxdata:ICollectionViewGroup">
+                        <TextBlock Text="{x:Bind Group.(common:GroupWrapper.Key)}" Style="{StaticResource SubtitleTextBlockStyle}"/>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </SemanticZoom.ZoomedOutView>
+    </SemanticZoom>
+</Page>

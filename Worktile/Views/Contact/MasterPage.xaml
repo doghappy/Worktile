@@ -5,6 +5,7 @@
     xmlns:local="using:Worktile.Views.Contact"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Grid>
@@ -18,6 +19,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid Padding="12">
@@ -35,50 +37,37 @@
 
             <AutoSuggestBox Grid.Row="1" QueryIcon="Find" Margin="12 0"/>
 
-            <Pivot Grid.Row="2">
-                <Pivot.Resources>
-                    <Thickness x:Key="PivotItemMargin">0</Thickness>
-                </Pivot.Resources>
-                <!--<Pivot.ItemContainerStyle>
-                    <Style TargetType="PivotItem">
-                        <Setter Property="Margin" Value="0"/>
-                    </Style>
-                    <Style TargetType="PivotHeaderItem">
-                        <Setter Property="Margin" Value="0"/>
-                    </Style>
-                </Pivot.ItemContainerStyle>-->
-
-                <PivotItem>
-                    <PivotItem.Header>
-                        <SymbolIcon Symbol="Contact"/>
-                    </PivotItem.Header>
-                    <TextBlock Text="all emails go here." />
-                </PivotItem>
-                <PivotItem>
-                    <PivotItem.Header>
-                        <FontIcon Glyph="&#xE71D;" Style="{StaticResource WtfIcon}"/>
-                    </PivotItem.Header>
-                    <TextBlock Text="all emails go here." />
-                </PivotItem>
-                <PivotItem>
-                    <PivotItem.Header>
-                        <SymbolIcon Symbol="People"/>
-                    </PivotItem.Header>
-                    <TextBlock Text="all emails go here." />
-                </PivotItem>
-                <PivotItem>
-                    <PivotItem.Header>
+            <Frame Grid.Row="2" x:Name="MembersFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+            
+            <CommandBar Grid.Row="3">
+                <AppBarButton Icon="Contact" Label="联系人"/>
+                <AppBarButton Label="组织架构">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xF22C;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Label="群组">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE902;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Label="星标联系人">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE734;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Label="机器人">
+                    <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE99A;"/>
-                    </PivotItem.Header>
-                    <TextBlock Text="all emails go here." />
-                </PivotItem>
-                <PivotItem>
-                    <PivotItem.Header>
-                        <FontIcon Style="{ThemeResource WtfIcon}" Glyph="&#xE71A;"/>
-                    </PivotItem.Header>
-                    <TextBlock Text="unread emails go here." />
-                </PivotItem>
-            </Pivot>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
         </Grid>
 
         <Grid Grid.Column="1">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
+using Worktile.Models.Member;
 
 namespace Worktile.Views.Contact
 {
@@ -22,6 +24,13 @@ namespace Worktile.Views.Contact
         public MasterPage()
         {
             InitializeComponent();
+        }
+
+        //ObservableCollection<Member> Contacts { get; }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            MembersFrame.Navigate(typeof(MemberListPage));
         }
 
         private async void AddMember_Click(object sender, RoutedEventArgs e)
