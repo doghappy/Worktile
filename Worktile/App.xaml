@@ -11,30 +11,7 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
             </ResourceDictionary.MergedDictionaries>
             <ResourceDictionary.ThemeDictionaries>
-                <!--<ResourceDictionary x:Key="Default">
-                    <Color x:Key="SystemAccentColor">#22d7bb</Color>
-                    <SolidColorBrush x:Key="SystemControlBackgroundAccentBrush" Color="{ThemeResource SystemAccentColor}" />
-                    <SolidColorBrush x:Key="SystemControlDisabledAccentBrush" Color="{ThemeResource SystemAccentColor}" />
-                    <SolidColorBrush x:Key="SystemControlForegroundAccentBrush" Color="{ThemeResource SystemAccentColor}" />
-                    <SolidColorBrush x:Key="SystemControlHighlightAccentBrush" Color="{ThemeResource SystemAccentColor}" />
-                    <SolidColorBrush x:Key="SystemControlHighlightAltAccentBrush" Color="{ThemeResource SystemAccentColor}" />
-                    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentHighBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.9" />
-                    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentLowBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.6" />
-                    <SolidColorBrush x:Key="SystemControlHighlightAltListAccentMediumBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.8" />
-                    <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.9" />
-                    <SolidColorBrush x:Key="SystemControlHighlightListAccentDarkBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.6" />
-                    <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush" Color="{ThemeResource SystemAccentColor}" Opacity="0.8" />
-                    <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush" Color="{ThemeResource SystemAccentColor}" />
-                    <SolidColorBrush x:Key="ContentDialogBorderThemeBrush" Color="{ThemeResource SystemAccentColor}" />
-                    <SolidColorBrush x:Key="JumpListDefaultEnabledBackground" Color="{ThemeResource SystemAccentColor}" />
-                    
-                    -->
-                <!--暗主题色，用于选中应用的背景色-->
-                <!--
-                    <SolidColorBrush x:Key="SystemAccentColorDark3" Color="#18BFA4" />
-                </ResourceDictionary>-->
-
-                <!--<ResourceDictionary x:Key="Default">
+                <ResourceDictionary x:Key="Default">
                     <ResourceDictionary.MergedDictionaries>
                         <ColorPaletteResources Accent="#FF22D7BB" AltHigh="#FF000000" AltLow="#FF000000" AltMedium="#FF000000" AltMediumHigh="#FF000000" AltMediumLow="#FF000000" BaseHigh="#FFFFFFFF" BaseLow="#FF333333" BaseMedium="#FF9A9A9A" BaseMediumHigh="#FFB4B4B4" BaseMediumLow="#FF676767" ChromeAltLow="#FFB4B4B4" ChromeBlackHigh="#FF000000" ChromeBlackLow="#FFB4B4B4" ChromeBlackMedium="#FF000000" ChromeBlackMediumLow="#FF000000" ChromeDisabledHigh="#FF333333" ChromeDisabledLow="#FF9A9A9A" ChromeGray="#FF808080" ChromeHigh="#FF808080" ChromeLow="#FF151515" ChromeMedium="#FF1D1D1D" ChromeMediumLow="#FF2C2C2C" ChromeWhite="#FFFFFFFF" ListLow="#FF1D1D1D" ListMedium="#FF333333" />
                         <ResourceDictionary>
@@ -61,7 +38,6 @@
                             <Color x:Key="SystemChromeAltHighColor">#FFFFFFFF</Color>
                             <Color x:Key="SystemRevealListLowColor">#FFE6E6E6</Color>
                             <Color x:Key="SystemRevealListMediumColor">#FFCCCCCC</Color>
-                            --><!-- Override system generated accent colors --><!--
                             <Color x:Key="SystemAccentColorLight1">#FF3ADDC4</Color>
                             <Color x:Key="SystemAccentColorLight2">#FF52E2CD</Color>
                             <Color x:Key="SystemAccentColorLight3">#FF6BE8D5</Color>
@@ -77,40 +53,7 @@
                 <ResourceDictionary x:Key="HighContrast">
                     <StaticResource x:Key="RegionColor" ResourceKey="SystemColorWindowColor" />
                     <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
-                </ResourceDictionary>-->
-
-                <!--SkyBlue 紫气东来-->
-                <!--<ResourceDictionary x:Key="SkyBlueDefault">
-                    <ResourceDictionary.MergedDictionaries>
-                        <ColorPaletteResources Accent="#FF6F76FA" AltHigh="#FF000000" AltLow="#FF000000" AltMedium="#FF000000" AltMediumHigh="#FF000000" AltMediumLow="#FF000000" BaseHigh="#FFFFFFFF" BaseLow="#FF333333" BaseMedium="#FF9A9A9A" BaseMediumHigh="#FFB4B4B4" BaseMediumLow="#FF676767" ChromeAltLow="#FFB4B4B4" ChromeBlackHigh="#FF000000" ChromeBlackLow="#FFB4B4B4" ChromeBlackMedium="#FF000000" ChromeBlackMediumLow="#FF000000" ChromeDisabledHigh="#FF333333" ChromeDisabledLow="#FF9A9A9A" ChromeGray="#FF808080" ChromeHigh="#FF808080" ChromeLow="#FF151515" ChromeMedium="#FF1D1D1D" ChromeMediumLow="#FF2C2C2C" ChromeWhite="#FFFFFFFF" ListLow="#FF1D1D1D" ListMedium="#FF333333" />
-                        <ResourceDictionary>
-                            <Color x:Key="SystemChromeAltMediumHighColor">#CC000000</Color>
-                            <Color x:Key="SystemChromeAltHighColor">#FF000000</Color>
-                            <Color x:Key="SystemRevealListLowColor">#FF1D1D1D</Color>
-                            <Color x:Key="SystemRevealListMediumColor">#FF333333</Color>
-                            <Color x:Key="RegionColor">#FF000000</Color>
-                            <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
-                        </ResourceDictionary>
-                    </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
-                <ResourceDictionary x:Key="SkyBlueLight">
-                    <ResourceDictionary.MergedDictionaries>
-                        <ColorPaletteResources Accent="#FF6F76FA" AltHigh="#FFFFFFFF" AltLow="#FFFFFFFF" AltMedium="#FFFFFFFF" AltMediumHigh="#FFFFFFFF" AltMediumLow="#FFFFFFFF" BaseHigh="#FF000000" BaseLow="#FFCCCCCC" BaseMedium="#FF898989" BaseMediumHigh="#FF5D5D5D" BaseMediumLow="#FF737373" ChromeAltLow="#FF5D5D5D" ChromeBlackHigh="#FF000000" ChromeBlackLow="#FFCCCCCC" ChromeBlackMedium="#FF5D5D5D" ChromeBlackMediumLow="#FF898989" ChromeDisabledHigh="#FFCCCCCC" ChromeDisabledLow="#FF898989" ChromeGray="#FF737373" ChromeHigh="#FFCCCCCC" ChromeLow="#FFECECEC" ChromeMedium="#FFE6E6E6" ChromeMediumLow="#FFECECEC" ChromeWhite="#FFFFFFFF" ListLow="#FFE6E6E6" ListMedium="#FFCCCCCC" />
-                        <ResourceDictionary>
-                            <Color x:Key="SystemChromeAltMediumHighColor">#CCFFFFFF</Color>
-                            <Color x:Key="SystemChromeAltHighColor">#FFFFFFFF</Color>
-                            <Color x:Key="SystemRevealListLowColor">#FFE6E6E6</Color>
-                            <Color x:Key="SystemRevealListMediumColor">#FFCCCCCC</Color>
-                            <RevealBackgroundBrush x:Key="SystemControlHighlightListLowRevealBackgroundBrush" TargetTheme="Light" Color="{ThemeResource SystemRevealListMediumColor}" FallbackColor="{ StaticResource SystemListMediumColor}" />
-                            <Color x:Key="RegionColor">#FFFFFFFF</Color>
-                            <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
-                        </ResourceDictionary>
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-                <ResourceDictionary x:Key="SkyBlueHighContrast">
-                    <StaticResource x:Key="RegionColor" ResourceKey="SystemColorWindowColor" />
-                    <SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
-                </ResourceDictionary>-->
             </ResourceDictionary.ThemeDictionaries>
 
             <Style TargetType="FontIcon" x:Key="LcIcon">

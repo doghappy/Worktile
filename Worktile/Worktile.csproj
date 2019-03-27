@@ -127,6 +127,9 @@
     </Compile>
     <Compile Include="Common\AvatarHelper.cs" />
     <Compile Include="Common\GroupWrapper.cs" />
+    <Compile Include="Common\Theme\WtAccentColor.cs" />
+    <Compile Include="Common\Theme\WtThemeSelector.cs" />
+    <Compile Include="Common\Theme\WtTheme.cs" />
     <Compile Include="Controls\WtPersonPicture.xaml.cs">
       <DependentUpon>WtPersonPicture.xaml</DependentUpon>
     </Compile>

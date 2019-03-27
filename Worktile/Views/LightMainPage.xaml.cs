@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Common.Communication;
 using Worktile.Common.Extensions;
+using Worktile.Common.Theme;
 using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
@@ -189,6 +190,8 @@ namespace Worktile.Views
                 WtBackgroundImage = me.Config.Box.BaseUrl + "background-image/" + img + "/from-s3";
             }
 
+            WtThemeSelector.ChangeTheme(me.Me.Preferences.Theme);
+
             //switch (me.Me.Preferences.Theme)
             //{
             //    default:
@@ -286,6 +289,9 @@ namespace Worktile.Views
                 case "contact":
                     MainContentFrame.Navigate(typeof(Contact.MasterPage));
                     break;
+                case "app":
+                    MainContentFrame.Navigate(typeof(TestPage));
+                    break;
                 default:
                     MainContentFrame.Navigate(typeof(WaitForDevelopmentPage));
                     break;
@@ -356,55 +362,5 @@ namespace Worktile.Views
                 MainContentFrame.Navigate(typeof(ProfilePage));
             }
         }
-
-        #region Theme
-        public void ChangeTheme()
-        {
-            string theme = RequestedTheme.ToString();
-            ColorPaletteResources light = FindColorPaletteResourcesForTheme("Light");
-            light.Accent = Color.FromArgb(255, 111, 118, 250);
-            ColorPaletteResources def = FindColorPaletteResourcesForTheme("Default");
-            def.Accent = Color.FromArgb(255, 111, 118, 250);
-            ReloadPageTheme(RequestedTheme);
-        }
-
-        private void ReloadPageTheme(ElementTheme startTheme)
-        {
-            if (RequestedTheme == ElementTheme.Dark)
-                RequestedTheme = ElementTheme.Light;
-            else if (RequestedTheme == ElementTheme.Light)
-                RequestedTheme = ElementTheme.Default;
-            else if (RequestedTheme == ElementTheme.Default)
-                RequestedTheme = ElementTheme.Dark;
-
-            if (RequestedTheme != startTheme)
-                ReloadPageTheme(startTheme);
-        }
-
-        private ColorPaletteResources FindColorPaletteResourcesForTheme(string theme)
-        {
-            foreach (var themeDictionary in Application.Current.Resources.ThemeDictionaries)
-            {
-                if (themeDictionary.Key.ToString() == theme)
-                {
-                    if (themeDictionary.Value is ColorPaletteResources)
-                    {
-                        return themeDictionary.Value as ColorPaletteResources;
-                    }
-                    else if (themeDictionary.Value is ResourceDictionary targetDictionary)
-                    {
-                        foreach (var mergedDictionary in targetDictionary.MergedDictionaries)
-                        {
-                            if (mergedDictionary is ColorPaletteResources)
-                            {
-                                return mergedDictionary as ColorPaletteResources;
-                            }
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-        #endregion
     }
 }
