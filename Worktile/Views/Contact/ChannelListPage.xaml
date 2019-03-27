@@ -14,7 +14,7 @@
         <ListView ItemsSource="{x:Bind Sessions}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="session:ChannelSession">
-                    <Grid Padding="12 8" HorizontalAlignment="Stretch">
+                    <Grid Padding="0 4" HorizontalAlignment="Stretch">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
