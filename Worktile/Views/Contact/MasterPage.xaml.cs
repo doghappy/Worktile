@@ -67,5 +67,14 @@ namespace Worktile.Views.Contact
                 MembersFrame.Navigate(typeof(RobotListPage));
             }
         }
+
+
+        private void Stars_Click(object sender, RoutedEventArgs e)
+        {
+            if (MembersFrame.CurrentSourcePageType != typeof(StarListPage))
+            {
+                MembersFrame.Navigate(typeof(StarListPage));
+            }
+        }
     }
 }

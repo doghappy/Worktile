@@ -15,25 +15,28 @@
         <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
     </Page.Resources>
 
-    <TreeView ItemsSource="{x:Bind DepartmentNodes}">
-        <TreeView.ItemTemplate>
-            <DataTemplate x:DataType="department:DepartmentNode">
-                <TreeViewItem ItemsSource="{x:Bind Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon x:Name="DepartmentIcon"
-                                  x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Department}"
-                                  Style="{StaticResource LcIcon}"
-                                  Glyph="&#xE621;"/>
-                        <tethys:Avatar x:Name="AvatarInTree"
-                                       x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Member}"
-                                       Width="28"
-                                       DisplayName="{x:Bind Avatar.DisplayName}"
-                                       Source="{x:Bind Avatar.Source}"
-                                       Background="{x:Bind Avatar.Background}"/>
-                        <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Margin="4 0 0 0"/>
-                    </StackPanel>
-                </TreeViewItem>
-            </DataTemplate>
-        </TreeView.ItemTemplate>
-    </TreeView>
+    <Grid>
+        <TreeView ItemsSource="{x:Bind DepartmentNodes}">
+            <TreeView.ItemTemplate>
+                <DataTemplate x:DataType="department:DepartmentNode">
+                    <TreeViewItem ItemsSource="{x:Bind Children}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon x:Name="DepartmentIcon"
+                                      x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Department}"
+                                      Style="{StaticResource LcIcon}"
+                                      Glyph="&#xE621;"/>
+                            <tethys:Avatar x:Name="AvatarInTree"
+                                           x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Member}"
+                                           Width="28"
+                                           DisplayName="{x:Bind Avatar.DisplayName}"
+                                           Source="{x:Bind Avatar.Source}"
+                                           Background="{x:Bind Avatar.Background}"/>
+                            <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Margin="4 0 0 0"/>
+                        </StackPanel>
+                    </TreeViewItem>
+                </DataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <ProgressRing Width="40" Height="40" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
+    </Grid>
 </Page>

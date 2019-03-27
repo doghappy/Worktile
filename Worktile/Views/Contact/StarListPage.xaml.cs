@@ -1,26 +1,27 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Worktile.Common.Extensions;
-using Worktile.Models.Department;
+using Worktile.Common;
+using Worktile.Models;
 using Worktile.Services;
 
 namespace Worktile.Views.Contact
 {
-    public sealed partial class OrganizationStructurePage : Page, INotifyPropertyChanged
+    public sealed partial class StarListPage : Page, INotifyPropertyChanged
     {
-        public OrganizationStructurePage()
+        public StarListPage()
         {
             InitializeComponent();
-            _teamService = new TeamService();
-            DepartmentNodes = new ObservableCollection<DepartmentNode>();
+            Avatars = new ObservableCollection<TethysAvatar>();
+            _userService = new UserService();
         }
 
-        readonly TeamService _teamService;
+        readonly UserService _userService;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        ObservableCollection<DepartmentNode> DepartmentNodes { get; }
+        ObservableCollection<TethysAvatar> Avatars { get; }
 
         private bool _isActive;
         public bool IsActive
@@ -39,11 +40,13 @@ namespace Worktile.Views.Contact
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
-            var data = await _teamService.GetDepartmentsTreeAsync();
-            foreach (var item in data)
+            string[] uids = await _userService.GetFollowsAsync();
+            var avatars = DataSource.Team.Members
+                 .Where(m => uids.Contains(m.Uid))
+                 .Select(m => m.TethysAvatar);
+            foreach (var item in avatars)
             {
-                item.ForShowAvatar();
-                DepartmentNodes.Add(item);
+                Avatars.Add(item);
             }
             IsActive = false;
         }

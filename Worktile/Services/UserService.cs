@@ -20,8 +20,15 @@ namespace Worktile.Services
 
         public async Task<Member> GetMemberInfoAsync(string uid)
         {
-            string url = $"/api/users/{uid}/basic";
+            string url = $"api/users/{uid}/basic";
             var data = await WtHttpClient.GetAsync<ApiDataResponse<Member>>(url);
+            return data.Data;
+        }
+
+        public async Task<string[]> GetFollowsAsync()
+        {
+            string url = "api/follows";
+            var data = await WtHttpClient.GetAsync<ApiDataResponse<string[]>>(url);
             return data.Data;
         }
     }

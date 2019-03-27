@@ -57,7 +57,7 @@
                         <FontIcon Glyph="&#xE902;"/>
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="星标联系人">
+                <AppBarButton Label="星标联系人" Click="Stars_Click">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE734;"/>
                     </AppBarButton.Icon>
