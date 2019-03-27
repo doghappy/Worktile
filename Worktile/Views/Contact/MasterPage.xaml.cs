@@ -35,7 +35,7 @@ namespace Worktile.Views.Contact
         {
             await Launcher.LaunchUriAsync(new Uri(DataSource.SubDomain + "/console/members?add=true"));
         }
-        
+
         private void OrgStructure_Click(object sender, RoutedEventArgs e)
         {
             if (MembersFrame.CurrentSourcePageType != typeof(OrganizationStructurePage))
@@ -75,6 +75,11 @@ namespace Worktile.Views.Contact
             {
                 MembersFrame.Navigate(typeof(StarListPage));
             }
+        }
+
+        public void ContentFrameNavigate(Type sourcePageType, object parameter = null)
+        {
+            MasterContentFrame.Navigate(sourcePageType, parameter);
         }
     }
 }

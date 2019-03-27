@@ -4,6 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.Common;
 using Worktile.Common.Extensions;
+using Worktile.Views.Contact.Detail;
 
 namespace Worktile.Views.Contact
 {
@@ -33,6 +34,12 @@ namespace Worktile.Views.Contact
             {
                 Avatars.Add(item);
             }
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var masterPage = this.GetParent<MasterPage>();
+            masterPage.ContentFrameNavigate(typeof(MemberDetailPage));
         }
     }
 }

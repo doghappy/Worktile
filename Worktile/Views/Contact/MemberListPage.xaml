@@ -18,7 +18,7 @@
 
     <SemanticZoom>
         <SemanticZoom.ZoomedInView>
-            <ListView ItemsSource="{x:Bind AvatarCVS.View, Mode=OneWay}" ScrollViewer.IsHorizontalScrollChainingEnabled="False">
+            <ListView ItemsSource="{x:Bind AvatarCVS.View, Mode=OneWay}" ScrollViewer.IsHorizontalScrollChainingEnabled="False" SelectionChanged="ListView_SelectionChanged">
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>

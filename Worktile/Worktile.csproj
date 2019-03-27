@@ -385,6 +385,9 @@
     <Compile Include="Views\Contact\ChannelListPage.xaml.cs">
       <DependentUpon>ChannelListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Contact\Detail\MemberDetailPage.xaml.cs">
+      <DependentUpon>MemberDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Contact\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
@@ -612,6 +615,7 @@
     <Content Include="Assets\Images\Background\desktop-5.jpg" />
     <Content Include="Assets\Images\Background\desktop-6.jpg" />
     <Content Include="Assets\Images\Background\desktop-7.jpg" />
+    <Content Include="Assets\Images\Background\profile-bg.jpg" />
     <Content Include="Assets\Images\Icons\apk.png" />
     <Content Include="Assets\Images\Icons\bak.png" />
     <Content Include="Assets\Images\Icons\box.png" />
@@ -864,6 +868,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Contact\ChannelListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Contact\Detail\MemberDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
