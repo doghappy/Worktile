@@ -26,8 +26,6 @@ namespace Worktile.Views.Contact
             InitializeComponent();
         }
 
-        //ObservableCollection<Member> Contacts { get; }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             MembersFrame.Navigate(typeof(MemberListPage));
@@ -36,6 +34,22 @@ namespace Worktile.Views.Contact
         private async void AddMember_Click(object sender, RoutedEventArgs e)
         {
             await Launcher.LaunchUriAsync(new Uri(DataSource.SubDomain + "/console/members?add=true"));
+        }
+        
+        private void OrgStructure_Click(object sender, RoutedEventArgs e)
+        {
+            if (MembersFrame.CurrentSourcePageType != typeof(OrganizationStructurePage))
+            {
+                MembersFrame.Navigate(typeof(OrganizationStructurePage));
+            }
+        }
+
+        private void Contacts_Click(object sender, RoutedEventArgs e)
+        {
+            if (MembersFrame.CurrentSourcePageType != typeof(MemberListPage))
+            {
+                MembersFrame.Navigate(typeof(MemberListPage));
+            }
         }
     }
 }

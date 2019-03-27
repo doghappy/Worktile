@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="Worktile.Views.Contact.OrganizationStructurePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Views.Contact"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:department="using:Worktile.Models.Department"
+    xmlns:tethys="using:Worktile.Tethys"
+    xmlns:cvt="using:Worktile.Converters"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+    </Page.Resources>
+
+    <TreeView ItemsSource="{x:Bind DepartmentNodes}">
+        <TreeView.ItemTemplate>
+            <DataTemplate x:DataType="department:DepartmentNode">
+                <TreeViewItem ItemsSource="{x:Bind Children}">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon x:Name="DepartmentIcon"
+                                  x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Department}"
+                                  Style="{StaticResource LcIcon}"
+                                  Glyph="&#xE621;"/>
+                        <tethys:Avatar x:Name="AvatarInTree"
+                                       x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Member}"
+                                       Width="24"
+                                       DisplayName="{x:Bind Avatar.DisplayName}"
+                                       Source="{x:Bind Avatar.Source}"
+                                       Background="{x:Bind Avatar.Background}"/>
+                        <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Margin="4 0 0 0"/>
+                    </StackPanel>
+                </TreeViewItem>
+            </DataTemplate>
+        </TreeView.ItemTemplate>
+    </TreeView>
+</Page>

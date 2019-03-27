@@ -46,8 +46,8 @@
             </Frame>
             
             <CommandBar Grid.Row="3">
-                <AppBarButton Icon="Contact" Label="联系人"/>
-                <AppBarButton Label="组织架构">
+                <AppBarButton Icon="Contact" Label="联系人" Click="Contacts_Click"/>
+                <AppBarButton Label="组织架构" Click="OrgStructure_Click">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xF22C;"/>
                     </AppBarButton.Icon>

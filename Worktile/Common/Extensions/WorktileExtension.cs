@@ -1,6 +1,7 @@
 ﻿using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
+using Worktile.Models.Department;
 using Worktile.Models.Entity;
 using Worktile.Models.Member;
 using Worktile.Models.Message.Session;
@@ -23,6 +24,26 @@ namespace Worktile.Common.Extensions
         public static void ForShowAvatar(this Member member, AvatarSize size)
         {
             member.TethysAvatar = AvatarHelper.GetAvatar(member, size);
+        }
+
+        public static void ForShowAvatar(this DepartmentNode node)
+        {
+            if (node.Type == DepartmentNodeType.Member)
+            {
+                node.Avatar = new TethysAvatar
+                {
+                    DisplayName = node.Addition.DisplayName,
+                    Background = AvatarHelper.GetColorBrush(node.Addition.DisplayName),
+                    Source = AvatarHelper.GetAvatarBitmap(node.Addition.Avatar, AvatarSize.X40, FromType.User)
+                };
+            }
+            else if (node.Type == DepartmentNodeType.Department)
+            {
+                foreach (var item in node.Children)
+                {
+                    ForShowAvatar(item);
+                }
+            }
         }
 
         public static bool IsTrueMember(this Member member) => member.Role != RoleType.Bot && !string.IsNullOrEmpty(member.Team);
