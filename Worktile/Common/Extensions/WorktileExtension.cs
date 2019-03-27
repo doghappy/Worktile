@@ -1,10 +1,14 @@
-﻿using Worktile.Enums;
+﻿using System.Text.RegularExpressions;
+using Worktile.Enums;
 using Worktile.Enums.Message;
 using Worktile.Models;
 using Worktile.Models.Department;
 using Worktile.Models.Entity;
 using Worktile.Models.Member;
 using Worktile.Models.Message.Session;
+using EnumsNET;
+using Windows.UI.Xaml.Media.Imaging;
+using System;
 
 namespace Worktile.Common.Extensions
 {
@@ -43,6 +47,16 @@ namespace Worktile.Common.Extensions
                 {
                     ForShowAvatar(item);
                 }
+            }
+        }
+
+        public static void Resize(this TethysAvatar avatar, AvatarSize size)
+        {
+            if (avatar.Source != null)
+            {
+                string uri = avatar.Source.UriSource.ToString();
+                string newUri = Regex.Replace(uri, @".+_(\d{2,3})x\d{2,3}\.(png|jpg)$", match => uri.Replace(match.Groups[1].Value, ((int)size).ToString()));
+                avatar.Source = new BitmapImage(new Uri(newUri));
             }
         }
 

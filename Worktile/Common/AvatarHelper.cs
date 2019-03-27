@@ -50,12 +50,6 @@ namespace Worktile.Common
             }
         }
 
-        //public static Color GetColor(string displayName)
-        //{
-        //    int code = displayName.Sum(n => n);
-        //    string hex = _colors[code % 9];
-        //    return WtColorHelper.GetColor(WtColorHelper.GetNewColor(hex));
-        //}
         public static SolidColorBrush GetColorBrush(string displayName)
         {
             int code = displayName.Sum(n => n);
