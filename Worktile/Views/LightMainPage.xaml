@@ -96,38 +96,8 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <!--<ListViewItem Grid.Row="2" Style="{StaticResource WtAppListViewItem}" PointerEntered="ListViewItem_PointerEntered" PointerExited="ListViewItem_PointerExited" Tapped="People_Tapped">
-                <UserControl x:Name="AppItem">
-                    <Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup>
-                                <VisualState x:Name="Normal"/>
-                                <VisualState x:Name="PointOver">
-                                    <VisualState.Setters>
-                                        <Setter Target="AppIcon.Visibility" Value="Collapsed"/>
-                                        <Setter Target="AppIconGroup.Visibility" Value="Visible"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <VisualState.Setters>
-                                        <Setter Target="AppIcon.Visibility" Value="Collapsed"/>
-                                        <Setter Target="AppIconGroup.Visibility" Value="Visible"/>
-                                        <Setter Target="AppIcon2.Visibility" Value="Collapsed"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <FontIcon x:Name="AppIcon" Glyph="&#xE617;" Style="{StaticResource WtAppIcon}"/>
-                        <StackPanel x:Name="AppIconGroup" Visibility="Collapsed" VerticalAlignment="Center">
-                            <FontIcon Glyph="&#xE604;" Style="{StaticResource WtAppIcon}"/>
-                            <TextBlock x:Name="AppIcon2" Text="通讯录" Style="{StaticResource WtAppLabel}"/>
-                        </StackPanel>
-                    </Grid>
-                </UserControl>
-            </ListViewItem>-->
-
-            <Button Grid.Row="2" Margin="0 16" Padding="0" CornerRadius="48" HorizontalAlignment="Center" Click="MyAvatar_Click">
-                <tethys:Avatar Width="48" DisplayName="{x:Bind MyAvatar.DisplayName, Mode=OneWay}" Background="{x:Bind MyAvatar.Background, Mode=OneWay}" Source="{x:Bind MyAvatar.Source, Mode=OneWay}"/>
+            <Button Grid.Row="2" Margin="0 16" Padding="0" Width="52" Height="52" CornerRadius="52" HorizontalAlignment="Center" Click="MyAvatar_Click">
+                <tethys:Avatar Width="48" Height="48" DisplayName="{x:Bind MyAvatar.DisplayName, Mode=OneWay}" Background="{x:Bind MyAvatar.Background, Mode=OneWay}" Source="{x:Bind MyAvatar.Source, Mode=OneWay}"/>
             </Button>
         </Grid>
 
