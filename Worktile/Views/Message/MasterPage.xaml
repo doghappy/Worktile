@@ -123,15 +123,8 @@
                                                VerticalAlignment="Center"
                                                Margin="8 0 0 0"
                                                Text="{x:Bind TethysAvatar.DisplayName}"/>
-                                <Border Grid.Column="1"
-                                        Visibility="{x:Bind UnRead, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter='!'}"
-                                        Padding="8 0"
-                                        Background="{StaticResource DangerBrush}"
-                                        CornerRadius="8"
-                                        VerticalAlignment="Top"
-                                        HorizontalAlignment="Right">
-                                    <TextBlock Text="{x:Bind UnRead, Mode=OneWay}" FontSize="12" Foreground="White"/>
-                                </Border>
+
+                                <tethys:Badge Grid.Column="1" Number="{x:Bind UnRead, Mode=OneWay}"/>
                             </Grid>
                             <Polygon x:Name="StarredPolygon"
                                          x:Load="{x:Bind Starred, Mode=OneWay}"
@@ -162,15 +155,8 @@
                                                VerticalAlignment="Center"
                                                Margin="8 0 0 0"
                                                Text="{x:Bind TethysAvatar.DisplayName}"/>
-                                <Border Grid.Column="1"
-                                        Visibility="{x:Bind UnRead, Mode=OneWay, Converter={StaticResource NumberVisibilityConverter}, ConverterParameter='!'}"
-                                        Padding="8 0"
-                                        Background="{StaticResource DangerBrush}"
-                                        CornerRadius="8"
-                                        VerticalAlignment="Top"
-                                        HorizontalAlignment="Right">
-                                    <TextBlock Text="{x:Bind UnRead, Mode=OneWay}" FontSize="12" Foreground="White"/>
-                                </Border>
+
+                                <tethys:Badge Grid.Column="1" Number="{x:Bind UnRead, Mode=OneWay}"/>
                             </Grid>
                             <Polygon x:Name="StarredPolygon"
                                          x:Load="{x:Bind Starred, Mode=OneWay}"
