@@ -15,6 +15,7 @@
 
     <Page.Resources>
         <cvt:ImageSourceConverter x:Key="ImageSourceConverter"/>
+        <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
         <Style TargetType="ListViewItem" x:Name="WtAppListViewItem">
             <Setter Property="MinWidth" Value="70"/>
             <Setter Property="Height" Value="70"/>
@@ -89,6 +90,8 @@
                                         <FontIcon Glyph="{x:Bind Icon2}" Style="{StaticResource WtAppIcon}"/>
                                         <TextBlock x:Name="AppIcon2" Text="{x:Bind DisplayName}" Style="{StaticResource WtAppLabel}"/>
                                     </StackPanel>
+
+                                    <tethys:Badge x:Name="MessageBadge" Number="12" Margin="0 12 12 0" x:Load="{x:Bind Name, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=message}"/>
                                 </Grid>
                             </UserControl>
                         </ListViewItem>
