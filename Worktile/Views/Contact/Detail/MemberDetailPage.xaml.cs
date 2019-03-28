@@ -12,19 +12,69 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
+using Worktile.Common;
+using Worktile.Common.Extensions;
+using Worktile.Enums;
+using Worktile.Models;
+using Worktile.Services;
+using Worktile.Models.Member;
+using System.ComponentModel;
 
 namespace Worktile.Views.Contact.Detail
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
-    public sealed partial class MemberDetailPage : Page
+    public sealed partial class MemberDetailPage : Page, INotifyPropertyChanged
     {
         public MemberDetailPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            _userService = new UserService();
+        }
+
+        readonly UserService _userService;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        TethysAvatar Avatar { get; set; }
+
+        private Member _member;
+        public Member Member
+        {
+            get => _member;
+            set
+            {
+                if (_member != value)
+                {
+                    _member = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Member)));
+                }
+            }
+        }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            Avatar = e.Parameter as TethysAvatar;
+            Avatar.Resize(AvatarSize.X160);
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            IsActive = true;
+            Member = await _userService.GetMemberInfoAsync(Avatar.Id);
+            IsActive = false;
         }
     }
 }

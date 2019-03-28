@@ -5,7 +5,15 @@
     xmlns:local="using:Worktile.Views.Contact.Detail"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tethys="using:Worktile.Tethys"
+    xmlns:cvt="using:Worktile.Converters"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <cvt:AtNameConverter x:Key="AtNameConverter"/>
+        <cvt:StrikethroughConverter x:Key="StrikethroughConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -17,6 +25,92 @@
             <Grid.Background>
                 <ImageBrush ImageSource="/Assets/Images/Background/profile-bg.jpg" Stretch="UniformToFill"/>
             </Grid.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <Grid Margin="160 0 0 12" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{x:Bind Avatar.DisplayName}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" Margin="8 0 0 0" Text="{x:Bind Avatar.Name, Converter={StaticResource AtNameConverter}}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    <Button Grid.Column="2" Style="{ThemeResource TextBlockButtonStyle}">
+                        <FontIcon Glyph="&#xE734;"/>
+                    </Button>
+                </Grid>
+                
+                <Grid Grid.Row="1" Padding="160 0 0 0" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="8 0 0 0"/>
+                        </Style>
+                        <Style TargetType="AppBarSeparator">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="20 0"/>
+                        </Style>
+                        <Style TargetType="FontIcon">
+                            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Glyph="&#xE779;"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind Member.Title, Mode=OneWay, Converter={StaticResource StrikethroughConverter}}"/>
+                    </Grid>
+
+                    <AppBarSeparator Grid.Column="1"/>
+
+                    <Grid Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Glyph="&#xE715;"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind Member.Email, Mode=OneWay, Converter={StaticResource StrikethroughConverter}}"/>
+                    </Grid>
+
+                    <AppBarSeparator Grid.Column="3"/>
+
+                    <Grid Grid.Column="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Glyph="&#xE717;"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind Member.Mobile, Mode=OneWay, Converter={StaticResource StrikethroughConverter}}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+            
+            <tethys:Avatar Width="110"
+                           Height="110"
+                           Margin="16"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Left"
+                           Source="{x:Bind Avatar.Source}"
+                           DisplayName="{x:Bind Avatar.DisplayName}"
+                           Background="{x:Bind Avatar.Background}"/>
         </Grid>
+
+        <ProgressRing Grid.Row="1" Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

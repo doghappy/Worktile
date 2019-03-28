@@ -34,9 +34,7 @@
                                 <tethys:Avatar Width="28"
                                                Source="{x:Bind Source}"
                                                DisplayName="{x:Bind DisplayName}"
-                                               Icon="{x:Bind Icon}"
-                                               Background="{x:Bind Background}"
-                                               FontFamily="{x:Bind AvatarFont}"/>
+                                               Background="{x:Bind Background}"/>
                                 <TextBlock Text="{x:Bind DisplayName}" Margin="4 0 0 0" VerticalAlignment="Center"/>
                             </StackPanel>
                     </DataTemplate>
