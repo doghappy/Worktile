@@ -261,8 +261,11 @@ namespace Worktile.Views.Message
                     if (SelectedSession == null || apiMsg.To.Id != SelectedSession.Id)
                     {
                         session.UnRead += 1;
-                        Sessions.Remove(session);
-                        Sessions.Insert(0, session);
+                        if (Sessions.IndexOf(session) != 0)
+                        {
+                            Sessions.Remove(session);
+                            Sessions.Insert(0, session);
+                        }
                     }
                 }
             }));
