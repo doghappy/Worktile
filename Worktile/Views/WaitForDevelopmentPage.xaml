@@ -5,11 +5,14 @@
     xmlns:local="using:Worktile.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
+
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/Images/Temp/hero.37207e1f.png" Stretch="UniformToFill"/>
+    </Page.Background>
 
     <StackPanel Padding="32">
-        <StackPanel>
+        <StackPanel Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="32">
             <TextBlock Style="{ThemeResource HeaderTextBlockStyle}" Text="此功能待开发"/>
             <TextBlock Text="此应用为Worktile第三方应用，因为Worktile功能模块很多，作者只有业余时间开发，目前主要做“消息模块”。"/>
             <TextBlock Text="想使用更多功能请使用Worktile网页版，访问worktile.com。"/>
