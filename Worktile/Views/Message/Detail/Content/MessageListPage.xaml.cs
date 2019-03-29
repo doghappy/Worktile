@@ -40,6 +40,7 @@ namespace Worktile.Views.Message.Detail.Content
         private TopNav _nav;
         const int RefType = 2;
         private ToType _toType;
+        private LightMainPage _mainPage;
 
         public ObservableCollection<Models.Message.Message> Messages { get; }
 
@@ -91,6 +92,7 @@ namespace Worktile.Views.Message.Detail.Content
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
+            _mainPage = this.GetParent<LightMainPage>();
             await LoadMessagesAsync();
             if (MsgTextBox != null)
                 MsgTextBox.Focus(FocusState.Programmatic);
@@ -104,7 +106,7 @@ namespace Worktile.Views.Message.Detail.Content
             var result = await _messageService.ClearUnReadAsync(_session.Id);
             if (result)
             {
-                App.UnreadBadge -= _session.UnRead;
+                await _mainPage.UpdateMessageBadgeAsync(App.UnreadMessageCount -= _session.UnRead);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _session.UnRead = 0));
             }
         }

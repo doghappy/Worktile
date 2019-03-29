@@ -30,6 +30,7 @@ namespace Worktile.Views.Message.Detail.Content
         readonly AssistantMessageService _assistantMessageService;
         private MemberSession _session;
         private TopNav _nav;
+        private LightMainPage _mainPage;
 
         public ObservableCollection<Models.Message.Message> Messages { get; }
 
@@ -54,6 +55,7 @@ namespace Worktile.Views.Message.Detail.Content
             var detailPage = this.GetParent<AssistantDetailPage>();
             _session = detailPage.Session;
             _nav = detailPage.SelectedNav;
+            _mainPage = detailPage.GetParent<LightMainPage>();
 
             await LoadMessagesAsync();
             await ClearUnReadAsync();
@@ -116,7 +118,7 @@ namespace Worktile.Views.Message.Detail.Content
             bool result = await _assistantMessageService.ClearUnReadAsync(_session.Id);
             if (result)
             {
-                App.UnreadBadge -= _session.UnRead;
+                await _mainPage.UpdateMessageBadgeAsync(App.UnreadMessageCount - _session.UnRead);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => _session.UnRead = 0));
             }
         }

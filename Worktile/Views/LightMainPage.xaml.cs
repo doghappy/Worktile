@@ -133,7 +133,22 @@ namespace Worktile.Views
             }
             _inAppNotification = InAppNotification;
             Window.Current.Activated += Window_Activated;
+            WtSocket.OnMessageReceived += OnMessageReceived;
             IsActive = false;
+        }
+
+        private async void OnMessageReceived(Models.Message.Message message)
+        {
+            await UpdateMessageBadgeAsync(App.UnreadMessageCount + 1);
+        }
+
+        public async Task UpdateMessageBadgeAsync(int count)
+        {
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+            {
+                App.UnreadMessageCount = count;
+                Apps[0].UnreadCount = count;
+            }));
         }
 
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
@@ -147,6 +162,7 @@ namespace Worktile.Views
             _inAppNotification = null;
             WtSocket.Dispose();
             Window.Current.Activated -= Window_Activated;
+            WtSocket.OnMessageReceived -= OnMessageReceived;
         }
 
         private async void NetworkChanged(object sender, EventArgs e)

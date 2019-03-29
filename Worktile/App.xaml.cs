@@ -204,15 +204,15 @@ namespace Worktile
         }
 
         #region UreadBadge
-        private static int _unreadBadge;
-        public static int UnreadBadge
+        private static int _unreadMessageCount;
+        public static int UnreadMessageCount
         {
-            get => _unreadBadge;
+            get => _unreadMessageCount;
             set
             {
-                if (_unreadBadge != value || value == 0)
+                if (_unreadMessageCount != value || value == 0)
                 {
-                    _unreadBadge = value;
+                    _unreadMessageCount = value;
                     if (value > 0)
                         UpdateBadgeNumber(value);
                     else

@@ -176,7 +176,7 @@ namespace Worktile.Common.Communication
             OnMessageReceived?.Invoke(apiMsg);
             if (apiMsg.From.Uid != DataSource.ApiUserMeData.Me.Uid)
             {
-                App.UnreadBadge += 1;
+                App.UnreadMessageCount += 1;
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
                     var rootFrame = Window.Current.Content as Frame;
