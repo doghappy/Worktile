@@ -13,6 +13,8 @@
     <Page.Resources>
         <cvt:AtNameConverter x:Key="AtNameConverter"/>
         <cvt:StrikethroughConverter x:Key="StrikethroughConverter"/>
+        <cvt:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+        <cvt:BooleanReverseVisibilityConverter x:Key="BooleanReverseVisibilityConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -41,7 +43,10 @@
                     <TextBlock Text="{x:Bind Avatar.DisplayName}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
                     <TextBlock Grid.Column="1" Margin="8 0 0 0" Text="{x:Bind Avatar.Name, Converter={StaticResource AtNameConverter}}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
                     <Button Grid.Column="2" Style="{ThemeResource TextBlockButtonStyle}">
-                        <FontIcon Glyph="&#xE734;"/>
+                        <Grid>
+                            <FontIcon Glyph="&#xE735;" Visibility="{x:Bind IsStar, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"/>
+                            <FontIcon Glyph="&#xE734;" Visibility="{x:Bind IsStar, Mode=OneWay, Converter={StaticResource BooleanReverseVisibilityConverter}}"/>
+                        </Grid>
                     </Button>
                 </Grid>
                 

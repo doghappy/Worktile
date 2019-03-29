@@ -63,6 +63,20 @@ namespace Worktile.Views.Contact.Detail
             }
         }
 
+        private bool _isStar;
+        public bool IsStar
+        {
+            get => _isStar;
+            set
+            {
+                if (_isStar != value)
+                {
+                    _isStar = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStar)));
+                }
+            }
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -74,6 +88,8 @@ namespace Worktile.Views.Contact.Detail
         {
             IsActive = true;
             Member = await _userService.GetMemberInfoAsync(Avatar.Id);
+            string[] uids = await _userService.GetFollowsAsync();
+            IsStar = uids.Contains(Member.Uid);
             IsActive = false;
         }
     }
