@@ -10,6 +10,7 @@ using Windows.System.Threading;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Worktile.Domain.MessageContentReader;
 using Worktile.Domain.SocketMessageConverter;
 using Worktile.Domain.SocketMessageConverter.Converters;
@@ -169,22 +170,25 @@ namespace Worktile.Common.Communication
         /// 接收解析到的消息，以提供Toast通知和Tile Badge功能
         /// </summary>
         /// <param name="msg"></param>
-        private static void MessageReceived(string msg)
+        private async static void MessageReceived(string msg)
         {
             var apiMsg = JsonConvert.DeserializeObject<Message>(msg);
             OnMessageReceived?.Invoke(apiMsg);
             if (apiMsg.From.Uid != DataSource.ApiUserMeData.Me.Uid)
             {
                 App.UnreadBadge += 1;
-
-                if (Window.Current.Content is LightMainPage mainPage)
+                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
-                    var masterPage = mainPage.GetChildren<MasterPage>().FirstOrDefault();
-                    if (mainPage.WindowActivationState == CoreWindowActivationState.Deactivated || masterPage == null)
+                    var rootFrame = Window.Current.Content as Frame;
+                    if (rootFrame.Content is LightMainPage mainPage)
                     {
-                        SendToast(apiMsg);
+                        var masterPage = mainPage.GetChildren<MasterPage>().FirstOrDefault();
+                        if (mainPage.WindowActivationState == CoreWindowActivationState.Deactivated || masterPage == null)
+                        {
+                            SendToast(apiMsg);
+                        }
                     }
-                }
+                }));
             }
         }
 
