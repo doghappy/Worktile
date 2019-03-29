@@ -97,7 +97,7 @@ namespace Worktile.Views.Message
             _mainPage = this.GetParent<LightMainPage>();
             await LoadChatAsync();
 
-            App.UnreadMessageCount += Sessions.Sum(s => s.UnRead);
+            await _mainPage.UpdateMessageBadgeAsync(Sessions.Sum(s => s.UnRead));
             WtSocket.OnMessageReceived += OnMessageReceived;
             WtSocket.OnFeedReceived += OnFeedReceived;
         }
