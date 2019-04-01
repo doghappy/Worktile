@@ -81,7 +81,7 @@ namespace Worktile.Views.Contact.Detail
         {
             base.OnNavigatedTo(e);
             Avatar = e.Parameter as TethysAvatar;
-            Avatar.Resize(AvatarSize.X160);
+           // Avatar.Resize(AvatarSize.X160);
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

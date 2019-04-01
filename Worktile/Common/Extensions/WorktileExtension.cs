@@ -30,33 +30,25 @@ namespace Worktile.Common.Extensions
             member.TethysAvatar = AvatarHelper.GetAvatar(member, size);
         }
 
-        public static void ForShowAvatar(this DepartmentNode node)
+        public static void ForShowAvatar(this DepartmentNode node, AvatarSize size)
         {
             if (node.Type == DepartmentNodeType.Member)
             {
                 node.Avatar = new TethysAvatar
                 {
+                    Id = node.Addition.Uid,
+                    Name = node.Addition.Name,
                     DisplayName = node.Addition.DisplayName,
                     Background = AvatarHelper.GetColorBrush(node.Addition.DisplayName),
-                    Source = AvatarHelper.GetAvatarBitmap(node.Addition.Avatar, AvatarSize.X40, FromType.User)
+                    Source = AvatarHelper.GetAvatarBitmap(node.Addition.Avatar, size, FromType.User)
                 };
             }
             else if (node.Type == DepartmentNodeType.Department)
             {
                 foreach (var item in node.Children)
                 {
-                    ForShowAvatar(item);
+                    ForShowAvatar(item, size);
                 }
-            }
-        }
-
-        public static void Resize(this TethysAvatar avatar, AvatarSize size)
-        {
-            if (avatar.Source != null)
-            {
-                string uri = avatar.Source.UriSource.ToString();
-                string newUri = Regex.Replace(uri, @".+_(\d{2,3})x\d{2,3}\.(png|jpg)$", match => uri.Replace(match.Groups[1].Value, ((int)size).ToString()));
-                avatar.Source = new BitmapImage(new Uri(newUri));
             }
         }
 

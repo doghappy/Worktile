@@ -14,7 +14,7 @@
     </Page.Resources>
 
     <Grid>
-        <ListView ItemsSource="{x:Bind Avatars}">
+        <ListView ItemsSource="{x:Bind Avatars}" SelectionChanged="ListView_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:TethysAvatar">
                     <Grid Padding="0 4" HorizontalAlignment="Stretch">

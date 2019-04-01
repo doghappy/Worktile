@@ -2,9 +2,12 @@
 using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Worktile.Common;
 using Worktile.Common.Extensions;
+using Worktile.Enums;
 using Worktile.Models.Department;
 using Worktile.Services;
+using Worktile.Views.Contact.Detail;
 
 namespace Worktile.Views.Contact
 {
@@ -42,10 +45,20 @@ namespace Worktile.Views.Contact
             var data = await _teamService.GetDepartmentsTreeAsync();
             foreach (var item in data)
             {
-                item.ForShowAvatar();
+                item.ForShowAvatar(AvatarSize.X160);
                 DepartmentNodes.Add(item);
             }
             IsActive = false;
+        }
+
+        private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
+        {
+            var node = args.InvokedItem as DepartmentNode;
+            if (node.Type == DepartmentNodeType.Member)
+            {
+                var masterPage = this.GetParent<MasterPage>();
+                masterPage.ContentFrameNavigate(typeof(MemberDetailPage), node.Avatar);
+            }
         }
     }
 }

@@ -16,7 +16,7 @@
     </Page.Resources>
 
     <Grid>
-        <TreeView ItemsSource="{x:Bind DepartmentNodes}">
+        <TreeView ItemsSource="{x:Bind DepartmentNodes}" ItemInvoked="TreeView_ItemInvoked">
             <TreeView.ItemTemplate>
                 <DataTemplate x:DataType="department:DepartmentNode">
                     <TreeViewItem ItemsSource="{x:Bind Children}">

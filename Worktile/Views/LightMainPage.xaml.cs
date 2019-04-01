@@ -223,7 +223,7 @@ namespace Worktile.Views
         private async Task LoadTeamInfoAsync()
         {
             var team = await _teamService.GetTeamAsync();
-            team.Members.ForEach(m => m.ForShowAvatar(AvatarSize.X80));
+            team.Members.ForEach(m => m.ForShowAvatar(AvatarSize.X320));
             DataSource.Team = team;
             Apps.Add(new WtApp
             {

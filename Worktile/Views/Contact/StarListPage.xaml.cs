@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Worktile.Common;
 using Worktile.Models;
 using Worktile.Services;
+using Worktile.Views.Contact.Detail;
 
 namespace Worktile.Views.Contact
 {
@@ -49,6 +50,13 @@ namespace Worktile.Views.Contact
                 Avatars.Add(item);
             }
             IsActive = false;
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var avatar = e.AddedItems[0] as TethysAvatar;
+            var masterPage = this.GetParent<MasterPage>();
+            masterPage.ContentFrameNavigate(typeof(MemberDetailPage), avatar);
         }
     }
 }
