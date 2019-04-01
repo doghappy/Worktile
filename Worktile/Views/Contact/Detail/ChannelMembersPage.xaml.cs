@@ -19,12 +19,14 @@ using Worktile.Models;
 using Worktile.Services;
 using Worktile.Models.Member;
 using System.ComponentModel;
+using Worktile.Models.Message.Session;
+using System.Collections.ObjectModel;
 
 namespace Worktile.Views.Contact.Detail
 {
-    public sealed partial class MemberDetailPage : Page, INotifyPropertyChanged
+    public sealed partial class ChannelMembersPage : Page, INotifyPropertyChanged
     {
-        public MemberDetailPage()
+        public ChannelMembersPage()
         {
             InitializeComponent();
             _userService = new UserService();
@@ -34,6 +36,8 @@ namespace Worktile.Views.Contact.Detail
         public event PropertyChangedEventHandler PropertyChanged;
 
         TethysAvatar Avatar { get; set; }
+
+        public ObservableCollection<Member> Members { get; set; }
 
         private Member _member;
         public Member Member
@@ -45,34 +49,21 @@ namespace Worktile.Views.Contact.Detail
                 {
                     _member = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Member)));
+                    IsPaneOpen = true;
                 }
             }
         }
 
-        private bool _isActive;
-        public bool IsActive
+        private bool _isPaneOpen;
+        public bool IsPaneOpen
         {
-            get => _isActive;
+            get => _isPaneOpen;
             set
             {
-                if (_isActive != value)
+                if (_isPaneOpen != value)
                 {
-                    _isActive = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
-                }
-            }
-        }
-
-        private bool _isStar;
-        public bool IsStar
-        {
-            get => _isStar;
-            set
-            {
-                if (_isStar != value)
-                {
-                    _isStar = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStar)));
+                    _isPaneOpen = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPaneOpen)));
                 }
             }
         }
@@ -80,16 +71,13 @@ namespace Worktile.Views.Contact.Detail
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            Avatar = e.Parameter as TethysAvatar;
-        }
-
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            IsActive = true;
-            Member = await _userService.GetMemberInfoAsync(Avatar.Id);
-            string[] uids = await _userService.GetFollowsAsync();
-            IsStar = uids.Contains(Member.Uid);
-            IsActive = false;
+            var session = e.Parameter as ChannelSession;
+            foreach (var item in session.Members)
+            {
+                item.ForShowAvatar(AvatarSize.X80);
+            }
+            Members = session.Members;
+            Avatar = session.TethysAvatar;
         }
     }
 }

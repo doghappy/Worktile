@@ -7,11 +7,11 @@
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:message="using:Worktile.Models.Message"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:controls="using:Worktile.Controls"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <cvt:AtNameConverter x:Key="AtNameConverter"/>
         <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
     </Page.Resources>
 
@@ -69,112 +69,7 @@
                        PanePlacement="Right"
                        IsPaneOpen="{x:Bind IsPaneOpen, Mode=TwoWay}">
                 <SplitView.Pane>
-                    <Grid>
-                        <Grid.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                            </Style>
-                        </Grid.Resources>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-
-                        <Grid BorderBrush="{ThemeResource SystemControlBackgroundBaseLowRevealBorderBrush}"
-                              Padding="20 12"
-                              BorderThickness="0 0 0 1">
-                            <TextBlock Text="{x:Bind PaneTitle}"/>
-                        </Grid>
-
-                        <Grid Grid.Row="1" Padding="30 0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <Grid Padding="0 24">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <tethys:Avatar Width="68"
-                                               Source="{x:Bind Session.TethysAvatar.Source, Mode=OneWay}"
-                                               DisplayName="{x:Bind Session.TethysAvatar.DisplayName, Mode=OneWay}"
-                                               Icon="{x:Bind Session.TethysAvatar.Icon, Mode=OneWay}"
-                                               Background="{x:Bind Session.TethysAvatar.Background, Mode=OneWay}"
-                                               FontFamily="{x:Bind Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
-
-                                <Grid Grid.Column="1" Margin="16 0 0 0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock Text="{x:Bind Member.DisplayName, Mode=OneWay}"
-                                               IsTextSelectionEnabled="True"
-                                               FontWeight="SemiBold"/>
-                                    <TextBlock Grid.Row="1"
-                                               FontSize="12"
-                                               IsTextSelectionEnabled="True"
-                                               Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
-                                               Text="{x:Bind Member.Name, Mode=OneWay, Converter={StaticResource AtNameConverter}}" />
-                                </Grid>
-                            </Grid>
-
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Text="手机" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                <TextBlock Grid.Column="1"
-                                           IsTextSelectionEnabled="True"
-                                           Text="{x:Bind Member.Mobile, Mode=OneWay}"/>
-                            </Grid>
-
-                            <Grid Grid.Row="2" Margin="0 16 0 0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Text="邮箱" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                <TextBlock Grid.Column="1"
-                                           IsTextSelectionEnabled="True"
-                                           Text="{x:Bind Member.Email, Mode=OneWay}"/>
-                            </Grid>
-
-                            <Grid Grid.Row="3" Margin="0 16 0 0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Text="职位" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                <TextBlock Grid.Column="1"
-                                           IsTextSelectionEnabled="True"
-                                           Text="{x:Bind Member.Title, Mode=OneWay}"/>
-                            </Grid>
-
-                            <Grid Grid.Row="4" Margin="0 16 0 0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Text="部门" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
-                                <TextBlock Grid.Column="1"
-                                           IsTextSelectionEnabled="True"
-                                           Text="{x:Bind Member.DepartmentName, Mode=OneWay}"/>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    <controls:MemberInfoPane Member="{x:Bind Member, Mode=OneWay}"/>
                 </SplitView.Pane>
                 <Frame x:Name="ContentFrame">
                     <Frame.ContentTransitions>

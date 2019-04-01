@@ -10,7 +10,7 @@
     Loaded="Page_Loaded">
 
     <Grid>
-        <ListView ItemsSource="{x:Bind Sessions}">
+        <ListView ItemsSource="{x:Bind Sessions}" SelectionChanged="ListView_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="session:ChannelSession">
                     <Grid Padding="0 4" HorizontalAlignment="Stretch">

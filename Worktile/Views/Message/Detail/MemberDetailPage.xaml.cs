@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.Common;
+using Worktile.Common.Extensions;
 using Worktile.Models.Message.Session;
 using Worktile.Services;
 using Worktile.Models.Member;
@@ -10,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Worktile.Views.Message.Detail.Content;
 using Worktile.NavigateModels.Message;
+using Worktile.Enums;
 
 namespace Worktile.Views.Message.Detail
 {
@@ -136,6 +138,7 @@ namespace Worktile.Views.Message.Detail
             {
                 IsActive = true;
                 Member = await _userService.GetMemberInfoAsync(_session.To.Uid);
+                Member.ForShowAvatar(AvatarSize.X320);
                 IsActive = false;
             }
         }

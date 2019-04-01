@@ -2,10 +2,12 @@
 using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Worktile.Common;
 using Worktile.Common.Extensions;
 using Worktile.Models;
 using Worktile.Models.Message.Session;
 using Worktile.Services;
+using Worktile.Views.Contact.Detail;
 
 namespace Worktile.Views.Contact
 {
@@ -47,6 +49,13 @@ namespace Worktile.Views.Contact
                 Sessions.Add(item);
             }
             IsActive = false;
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var session = e.AddedItems[0] as ChannelSession;
+            var masterPage = this.GetParent<MasterPage>();
+            masterPage.ContentFrameNavigate(typeof(ChannelMembersPage), session);
         }
     }
 }
