@@ -21,6 +21,7 @@ using Worktile.Models.Member;
 using System.ComponentModel;
 using Worktile.Models.Message.Session;
 using System.Collections.ObjectModel;
+using Worktile.NavigateModels.Message;
 
 namespace Worktile.Views.Contact.Detail
 {
@@ -29,11 +30,12 @@ namespace Worktile.Views.Contact.Detail
         public ChannelMembersPage()
         {
             InitializeComponent();
-            _userService = new UserService();
+            _messageService = new ChannelMessageService();
         }
 
-        readonly UserService _userService;
+        readonly ChannelMessageService _messageService;
         public event PropertyChangedEventHandler PropertyChanged;
+        private ChannelSession _session;
 
         TethysAvatar Avatar { get; set; }
 
@@ -63,7 +65,26 @@ namespace Worktile.Views.Contact.Detail
                 if (_isPaneOpen != value)
                 {
                     _isPaneOpen = value;
+                    if (!value)
+                    {
+                        _member = null;
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Member)));
+                    }
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPaneOpen)));
+                }
+            }
+        }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
                 }
             }
         }
@@ -71,13 +92,26 @@ namespace Worktile.Views.Contact.Detail
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var session = e.Parameter as ChannelSession;
-            foreach (var item in session.Members)
+            _session = e.Parameter as ChannelSession;
+            foreach (var item in _session.Members)
             {
                 item.ForShowAvatar(AvatarSize.X80);
             }
-            Members = session.Members;
-            Avatar = session.TethysAvatar;
+            Members = _session.Members;
+            Avatar = _session.TethysAvatar;
+        }
+
+        private void SendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            var mainPage = this.GetParent<LightMainPage>();
+            mainPage.IsAppLocked = true;
+            mainPage.SelectedApp = mainPage.Apps.First();
+            mainPage.ContentFrameNavigate(typeof(Message.MasterPage), new ToMasterDetailParam
+            {
+                Action = NavigateModels.Message.Action.NewSession,
+                Parameter = _session
+            });
+            mainPage.IsAppLocked = false;
         }
     }
 }

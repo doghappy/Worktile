@@ -9,7 +9,7 @@
     xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemControlAcrylicElementBrush}">
 
     <Page.Resources>
         <cvt:BooleanReverseConverter x:Key="BooleanReserveConverter"/>

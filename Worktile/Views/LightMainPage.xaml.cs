@@ -43,6 +43,7 @@ namespace Worktile.Views
         readonly UserService _userService;
         private static InAppNotification _inAppNotification;
         public CoreWindowActivationState WindowActivationState { get; private set; }
+        public bool IsAppLocked { get; set; }
         public ObservableCollection<WtApp> Apps { get; }
 
         private WtApp _selectedApp;
@@ -154,6 +155,12 @@ namespace Worktile.Views
         private void Window_Activated(object sender, WindowActivatedEventArgs e)
         {
             WindowActivationState = e.WindowActivationState;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -269,29 +276,32 @@ namespace Worktile.Views
 
         private async void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lv = sender as ListView;
-            if (e.AddedItems.Count > 0)
+            if (!IsAppLocked)
             {
-                var container = lv.ContainerFromItem(e.AddedItems[0]) as FrameworkElement;
-                while (container == null)
+                var lv = sender as ListView;
+                if (e.AddedItems.Count > 0)
                 {
-                    await Task.Delay(20);
-                    container = lv.ContainerFromItem(e.AddedItems[0]) as FrameworkElement;
-                }
-                var uc = container.GetChild<UserControl>("AppItem");
-                VisualStateManager.GoToState(uc, "Pressed", false);
+                    var container = lv.ContainerFromItem(e.AddedItems[0]) as FrameworkElement;
+                    while (container == null)
+                    {
+                        await Task.Delay(20);
+                        container = lv.ContainerFromItem(e.AddedItems[0]) as FrameworkElement;
+                    }
+                    var uc = container.GetChild<UserControl>("AppItem");
+                    VisualStateManager.GoToState(uc, "Pressed", false);
 
-                if (_people != null)
-                {
-                    _people.Background = new SolidColorBrush(Colors.Transparent);
+                    if (_people != null)
+                    {
+                        _people.Background = new SolidColorBrush(Colors.Transparent);
+                    }
+                    ContentFrameNavigate(SelectedApp.Name);
                 }
-                ContentFrameNavigate(SelectedApp.Name);
-            }
-            if (e.RemovedItems.Count > 0)
-            {
-                var container = lv.ContainerFromItem(e.RemovedItems[0]) as FrameworkElement;
-                var btn = container.GetChild<UserControl>("AppItem");
-                VisualStateManager.GoToState(btn, "Normal", false);
+                if (e.RemovedItems.Count > 0)
+                {
+                    var container = lv.ContainerFromItem(e.RemovedItems[0]) as FrameworkElement;
+                    var btn = container.GetChild<UserControl>("AppItem");
+                    VisualStateManager.GoToState(btn, "Normal", false);
+                }
             }
         }
 
@@ -312,6 +322,11 @@ namespace Worktile.Views
                     MainContentFrame.Navigate(typeof(WaitForDevelopmentPage));
                     break;
             }
+        }
+
+        public void ContentFrameNavigate(Type sourcePageType, object parameter = null)
+        {
+            MainContentFrame.Navigate(sourcePageType, parameter);
         }
 
         private void ListViewItem_PointerEntered(object sender, PointerRoutedEventArgs e)

@@ -17,7 +17,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Padding="16 32 16 16" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Padding="16 32 16 16" Background="{ThemeResource NavigationViewTopPaneBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -91,7 +91,8 @@
 
                 <Button Grid.Row="1"
                         Content="发消息"
-                        Style="{ThemeResource AccentButtonStyle}"/>
+                        Style="{ThemeResource AccentButtonStyle}"
+                        Click="SendMessage_Click"/>
             </Grid>
         </SplitView>
     </Grid>

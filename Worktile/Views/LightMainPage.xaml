@@ -54,7 +54,12 @@
 
             <Image Width="50" Height="50" Margin="0 0 0 16" Source="{x:Bind Logo, Mode=OneWay, Converter={StaticResource ImageSourceConverter}}"/>
 
-            <ListView Grid.Row="1" ItemsSource="{x:Bind Apps}" SelectedItem="{x:Bind SelectedApp, Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged" ItemContainerStyle="{StaticResource WtAppListViewItem}">
+            <ListView
+                Grid.Row="1"
+                ItemsSource="{x:Bind Apps}"
+                SelectedItem="{x:Bind SelectedApp, Mode=TwoWay}"
+                SelectionChanged="ListView_SelectionChanged"
+                ItemContainerStyle="{StaticResource WtAppListViewItem}">
                 <ListView.Resources>
                     <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource SystemAccentColorDark1}"/>
                     <SolidColorBrush x:Key="ListViewItemBackgroundPressed" Color="{ThemeResource SystemAccentColorDark1}"/>

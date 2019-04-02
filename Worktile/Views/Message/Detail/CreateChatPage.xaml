@@ -9,7 +9,7 @@
     xmlns:tethys="using:Worktile.Tethys"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource SystemControlAcrylicElementBrush}">
 
     <Grid Padding="32">
         <Grid.RowDefinitions>

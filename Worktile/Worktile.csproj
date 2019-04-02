@@ -366,6 +366,7 @@
     <Compile Include="Models\Team\TeamSecurity.cs" />
     <Compile Include="Models\Team\TeamService.cs" />
     <Compile Include="Models\Team\TeamServiceReference.cs" />
+    <Compile Include="NavigateModels\Message\ToMasterDetailParam.cs" />
     <Compile Include="NavigateModels\Message\ToMessageListParam.cs" />
     <Compile Include="NavigateModels\SignIn\ToChooseTeamParam.cs" />
     <Compile Include="PageModels\WtKeyValue.cs" />

@@ -21,6 +21,7 @@ using Worktile.Models.Message;
 using Worktile.ApiModels;
 using Worktile.Enums.Message;
 using Worktile.Common.Extensions;
+using Worktile.NavigateModels.Message;
 
 namespace Worktile.Views.Message
 {
@@ -39,6 +40,7 @@ namespace Worktile.Views.Message
         readonly TeamService _teamService;
         readonly MessageService _messageService;
         LightMainPage _mainPage;
+        ToMasterDetailParam _actionData;
 
         public ObservableCollection<ISession> Sessions { get; }
         public bool CanAddMember { get; private set; }
@@ -100,6 +102,29 @@ namespace Worktile.Views.Message
             await _mainPage.UpdateMessageBadgeAsync(Sessions.Sum(s => s.UnRead));
             WtSocket.OnMessageReceived += OnMessageReceived;
             WtSocket.OnFeedReceived += OnFeedReceived;
+
+            ExecuteAction();
+        }
+
+        private void ExecuteAction()
+        {
+            if (_actionData != null)
+            {
+                if (_actionData.Action == NavigateModels.Message.Action.NewSession)
+                {
+                    var session = _actionData.Parameter as ChannelSession;
+                    InserSession(session, true);
+                }
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.NavigationMode == NavigationMode.New && e.Parameter != null)
+            {
+                _actionData = e.Parameter as ToMasterDetailParam;
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
