@@ -116,6 +116,20 @@ namespace Worktile.Views
             }
         }
 
+        private bool _canGoBack;
+        public bool CanGoBack
+        {
+            get => _canGoBack;
+            set
+            {
+                if (_canGoBack != value)
+                {
+                    _canGoBack = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoBack)));
+                }
+            }
+        }
+
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             IsActive = true;
@@ -391,6 +405,38 @@ namespace Worktile.Views
             {
                 SelectedApp = null;
                 MainContentFrame.Navigate(typeof(ProfilePage));
+            }
+        }
+
+        private void MainContentFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            CanGoBack = MainContentFrame.CanGoBack;
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                int index = -1;
+                switch (e.SourcePageType)
+                {
+                    case Type t when e.SourcePageType == typeof(Message.MasterPage):
+                        index = 0;
+                        break;
+                    case Type t when e.SourcePageType == typeof(Contact.MasterPage):
+                        index = 5;
+                        break;
+                }
+                if (index!=-1)
+                {
+                    IsAppLocked = true;
+                    SelectedApp = Apps[index];
+                    IsAppLocked = false;
+                }
+            }
+        }
+
+        private void GoBack_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (MainContentFrame.CanGoBack)
+            {
+                MainContentFrame.GoBack();
             }
         }
     }

@@ -67,6 +67,14 @@
                     <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColorDark1}"/>
                 </ListView.Resources>
 
+                <ListView.Header>
+                    <ListViewItem Style="{StaticResource WtAppListViewItem}"
+                                  IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
+                                  Tapped="GoBack_Tapped">
+                        <SymbolIcon Symbol="Back" Foreground="White"/>
+                    </ListViewItem>
+                </ListView.Header>
+
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:WtApp">
                         <ListViewItem PointerEntered="ListViewItem_PointerEntered" PointerExited="ListViewItem_PointerExited">
@@ -109,7 +117,7 @@
             </Button>
         </Grid>
 
-        <Frame x:Name="MainContentFrame" Grid.Column="1">
+        <Frame x:Name="MainContentFrame" Grid.Column="1" Navigated="MainContentFrame_Navigated">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>
