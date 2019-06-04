@@ -75,7 +75,7 @@ namespace Worktile.Common
             if (!string.IsNullOrWhiteSpace(text))
             {
                 text = Regex.Replace(text, @"\[@([a-z\d]{32})\|(.+?)\]",
-                    match => $"[@{match.Groups[2].Value}](worktile://message/{match.Groups[1].Value})");
+                    match => $"[@{match.Groups[2].Value}](worktile://at/{match.Groups[1].Value})");
             }
             return text;
         }

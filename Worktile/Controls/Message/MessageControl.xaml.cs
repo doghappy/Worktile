@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace Worktile.Controls
 {
@@ -34,5 +35,14 @@ namespace Worktile.Controls
         }
         public static readonly DependencyProperty RightContentProperty =
             DependencyProperty.Register("RightContent", typeof(object), typeof(MessageControl), new PropertyMetadata(null));
+
+        private void ActivityMsg_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            const string atPrefix = "worktile://at/";
+            if (e.Link.StartsWith(atPrefix))
+            {
+                string uid = e.Link.Substring(atPrefix.Length);
+            }
+        }
     }
 }

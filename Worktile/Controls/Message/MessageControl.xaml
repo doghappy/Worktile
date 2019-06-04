@@ -53,17 +53,21 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <controls:MarkdownTextBlock x:Name="TextMsg"
-                                                x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"
-                                                Style="{ThemeResource MessageMarkdown}"
-                                                Text="{x:Bind Message.Body.Content, Mode=OneWay}"
-                                                SchemeList="worktile" UriPrefix="ms-appx://" />
+                    <controls:MarkdownTextBlock
+                        x:Name="TextMsg"
+                        x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"
+                        Style="{ThemeResource MessageMarkdown}"
+                        Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                        SchemeList="worktile" UriPrefix="ms-appx://" />
 
-                    <controls:MarkdownTextBlock x:Name="ActivityMsg"
-                                                x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"
-                                                Style="{ThemeResource MessageMarkdown}"
-                                                Text="{x:Bind Message.Body.Content, Mode=OneWay}"
-                                                SchemeList="worktile" UriPrefix="ms-appx://" />
+                    <controls:MarkdownTextBlock
+                        x:Name="ActivityMsg"
+                        x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"
+                        Style="{ThemeResource MessageMarkdown}"
+                        Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                        SchemeList="worktile"
+                        UriPrefix="ms-appx://"
+                        LinkClicked="ActivityMsg_LinkClicked"/>
 
                     <message:ArticleMessage x:Name="ArticleMsg"
                                           x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Article'}"

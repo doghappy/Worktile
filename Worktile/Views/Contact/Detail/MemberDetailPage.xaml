@@ -40,8 +40,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Bind Avatar.DisplayName}" Style="{ThemeResource SubtitleTextBlockStyle}"/>
-                    <TextBlock Grid.Column="1" Margin="8 0 0 0" Text="{x:Bind Avatar.Name, Converter={StaticResource AtNameConverter}}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    <TextBlock Text="{x:Bind Avatar.DisplayName}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="Black"/>
+                    <TextBlock Grid.Column="1" Margin="8 0 0 0" Text="{x:Bind Avatar.Name, Converter={StaticResource AtNameConverter}}" Style="{ThemeResource SubtitleTextBlockStyle}" Foreground="Black"/>
                     <Button Grid.Column="2" Style="{ThemeResource TextBlockButtonStyle}">
                         <Grid>
                             <FontIcon Glyph="&#xE735;" Visibility="{x:Bind IsStar, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}"/>

@@ -37,7 +37,6 @@
                                    FontFamily="{x:Bind Session.TethysAvatar.AvatarFont, Mode=OneWay}"/>
                     <TextBlock Grid.Column="1"
                                VerticalAlignment="Center"
-                               Foreground="{ThemeResource TopNavigationViewItemForegroundDisabled}"
                                Text="{x:Bind Session.TethysAvatar.DisplayName, Mode=OneWay}"/>
                 </StackPanel>
             </NavigationView.PaneHeader>

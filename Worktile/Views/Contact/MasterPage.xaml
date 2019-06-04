@@ -62,11 +62,11 @@
                         <FontIcon Glyph="&#xE734;"/>
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="机器人" Click="Robots_Click">
+                <!--<AppBarButton Label="机器人" Click="Robots_Click">
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE99A;"/>
                     </AppBarButton.Icon>
-                </AppBarButton>
+                </AppBarButton>-->
             </CommandBar>
         </Grid>
 
