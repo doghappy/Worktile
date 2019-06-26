@@ -67,13 +67,13 @@
                     <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColorDark1}"/>
                 </ListView.Resources>
 
-                <ListView.Header>
+                <!--<ListView.Header>
                     <ListViewItem Style="{StaticResource WtAppListViewItem}"
                                   IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
                                   Tapped="GoBack_Tapped">
                         <SymbolIcon Symbol="Back" Foreground="White"/>
                     </ListViewItem>
-                </ListView.Header>
+                </ListView.Header>-->
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:WtApp">
