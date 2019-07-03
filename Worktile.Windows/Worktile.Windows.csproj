@@ -122,11 +122,6 @@
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\UtilityTool.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
-    <Compile Include="Main\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Main\MainViewModel.cs" />
-    <Compile Include="Main\Models\WtApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -149,10 +144,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Main\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="SignInOut\SignInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

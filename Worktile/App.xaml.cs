@@ -1,28 +1,22 @@
-﻿using Microsoft.QueryStringDotNET;
-using Microsoft.Toolkit.Uwp.Connectivity;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Worktile.Domain.SocketMessageConverter;
-using System.Linq;
-using Worktile.Views;
-using Worktile.Enums;
-using Worktile.Repository;
-using Microsoft.EntityFrameworkCore;
-using Windows.UI.Notifications;
-using Windows.Data.Xml.Dom;
-using Worktile.Common.Communication;
-using Worktile.Models.Message;
-using Worktile.Enums.Message;
 
 namespace Worktile
 {
@@ -37,34 +31,21 @@ namespace Worktile
         /// </summary>
         public App()
         {
-            InitializeComponent();
-            Suspending += OnSuspending;
-            UnhandledException += App_UnhandledException;
-
-            using (var db = new WorktileDbContext())
-            {
-                db.Database.Migrate();
-            }
+            this.InitializeComponent();
+            this.Suspending += OnSuspending;
         }
 
-        private async void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
-        {
-            e.Handled = true;
-
-            if (e.Exception is HttpRequestException ex)
-            {
-                if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
-                {
-                    await ShowNotificationAsync("请确认网络是否连通", NotificationLevel.Danger);
-                    return;
-                }
-            }
-            await ShowNotificationAsync(e.Message, NotificationLevel.Danger);
-        }
-
-        private async Task OnLaunchedOrActivatedAsync(IActivatedEventArgs e)
+        /// <summary>
+        /// 在应用程序由最终用户正常启动时进行调用。
+        /// 将在启动应用程序以打开特定文件等情况下使用。
+        /// </summary>
+        /// <param name="e">有关启动请求和过程的详细信息。</param>
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+
+            // 不要在窗口已包含内容时重复应用程序初始化，
+            // 只需确保窗口处于活动状态
             if (rootFrame == null)
             {
                 // 创建要充当导航上下文的框架，并导航到第一页
@@ -81,68 +62,19 @@ namespace Worktile
                 Window.Current.Content = rootFrame;
             }
 
-            if (e is LaunchActivatedEventArgs)
+            if (e.PrelaunchActivated == false)
             {
-                var args = e as LaunchActivatedEventArgs;
-
-                if (args.PrelaunchActivated == false)
+                if (rootFrame.Content == null)
                 {
-                    if (rootFrame.Content == null)
-                    {
-                        // 当导航堆栈尚未还原时，导航到第一页，
-                        // 并通过将所需信息作为导航参数传入来配置
-                        // 参数
-                        rootFrame.Navigate(typeof(LightMainPage), args.Arguments);
-                        //rootFrame.Navigate(typeof(MainPage), args.Arguments);
-                    }
+                    // 当导航堆栈尚未还原时，导航到第一页，
+                    // 并通过将所需信息作为导航参数传入来配置
+                    // 参数
+                    rootFrame.Navigate(typeof(Main.MainPage), e.Arguments);
                 }
+                // 确保当前窗口处于活动状态
+                Window.Current.Activate();
             }
-            else if (e is ToastNotificationActivatedEventArgs)
-            {
-                var toastActivationArgs = e as ToastNotificationActivatedEventArgs;
-                QueryString args = QueryString.Parse(toastActivationArgs.Argument);
-                if (args.Any())
-                {
-                    string msg = toastActivationArgs.UserInput["msg"].ToString().Trim();
-                    if (msg != string.Empty && args["action"] == "reply")
-                    {
-                        await WtSocket.SendMessageAsync(SocketMessageType.Message, new SendMessageRequestBody
-                        {
-                            FromType = FromType.User,
-                            From = args["from"],
-                            ToType = EnumsNET.Enums.Parse<ToType>(args["toType"]),
-                            MessageType = MessageType.Text,
-                            Client = Client.Win8,
-                            IsMarkdown = true,
-                            Content = toastActivationArgs.UserInput["msg"].ToString()
-                        });
-                    }
-                }
-                // If we're loading the app for the first time, place the main page on
-                // the back stack so that user can go back after they've been
-                // navigated to the specific page
-                //if (rootFrame.BackStack.Count == 0)
-                //    rootFrame.BackStack.Add(new PageStackEntry(typeof(MainPage), null, null));
-            }
-
-            // 确保当前窗口处于活动状态
-            Window.Current.Activate();
             CustomTitleBar();
-        }
-
-        /// <summary>
-        /// 在应用程序由最终用户正常启动时进行调用。
-        /// 将在启动应用程序以打开特定文件等情况下使用。
-        /// </summary>
-        /// <param name="e">有关启动请求和过程的详细信息。</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
-        {
-            await OnLaunchedOrActivatedAsync(e);
-        }
-
-        protected override async void OnActivated(IActivatedEventArgs e)
-        {
-            await OnLaunchedOrActivatedAsync(e);
         }
 
         /// <summary>
@@ -182,54 +114,5 @@ namespace Worktile
             //viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
             viewTitleBar.ButtonForegroundColor = (Resources["ApplicationForegroundThemeBrush"] as SolidColorBrush).Color;
         }
-
-        public async Task ShowNotificationAsync(string text, NotificationLevel level, int duration = 0)
-        {
-            if (Window.Current != null && Window.Current.Content is Frame rootFrame)
-            {
-                if (rootFrame.Content is LightMainPage mainPage)
-                {
-                    LightMainPage.ShowNotification(text, level, duration);
-                    return;
-                }
-            }
-            var dialog = new ContentDialog
-            {
-                PrimaryButtonText = "关闭",
-                DefaultButton = ContentDialogButton.Primary,
-                Title = "异常",
-                Content = text
-            };
-            await dialog.ShowAsync();
-        }
-
-        #region UreadBadge
-        private static int _unreadMessageCount;
-        public static int UnreadMessageCount
-        {
-            get => _unreadMessageCount;
-            set
-            {
-                if (_unreadMessageCount != value || value == 0)
-                {
-                    _unreadMessageCount = value;
-                    if (value > 0)
-                        UpdateBadgeNumber(value);
-                    else
-                        BadgeUpdateManager.CreateBadgeUpdaterForApplication().Clear();
-                }
-            }
-        }
-
-        public static void UpdateBadgeNumber(int number)
-        {
-            XmlDocument badgeXml = BadgeUpdateManager.GetTemplateContent(BadgeTemplateType.BadgeNumber);
-            XmlElement badgeElement = badgeXml.SelectSingleNode("/badge") as XmlElement;
-            badgeElement.SetAttribute("value", number.ToString());
-            BadgeNotification badge = new BadgeNotification(badgeXml);
-            BadgeUpdater badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication();
-            badgeUpdater.Update(badge);
-        }
-        #endregion
     }
 }

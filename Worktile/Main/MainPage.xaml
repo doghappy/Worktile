@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="Worktile.Main.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Main"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Worktile.Main.Models"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <NavigationView
+            PaneDisplayMode="LeftCompact"
+            IsBackButtonVisible="Collapsed"
+            AlwaysShowHeader="False"
+            SelectedItem="{x:Bind ViewModel.SelectedApp, Mode=OneWay}"
+            SelectionChanged="NavigationView_SelectionChanged"
+            MenuItemsSource="{x:Bind ViewModel.Apps}">
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate x:DataType="models:WtApp">
+                    <NavigationViewItem Content="{x:Bind DisplayName}" Tag="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind DisplayName}">
+                        <NavigationViewItem.Icon>
+                            <FontIcon Style="{StaticResource WtfIcon}" Glyph="{x:Bind Icon}"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
+
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+            <!--<NavigationView.PaneFooter>
+                <NavigationViewItem Content="{x:Bind DisplayName}" Tag="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind DisplayName}">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Style="{StaticResource WtfIcon}" Glyph="{x:Bind Icon}"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.PaneFooter>-->
+        </NavigationView>
+    </Grid>
+</Page>
