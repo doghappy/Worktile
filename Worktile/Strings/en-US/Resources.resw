@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AreaNumberChinaText" xml:space="preserve">
+    <value>China+86</value>
+  </data>
+  <data name="AreaNumberJapanText" xml:space="preserve">
+    <value>Japan+81</value>
+  </data>
+  <data name="AreaNumberTaiwanText" xml:space="preserve">
+    <value>Taiwan+886</value>
+  </data>
+  <data name="AreaNumberUSText" xml:space="preserve">
+    <value>United States+1</value>
+  </data>
   <data name="DarkThemeDisplayName" xml:space="preserve">
     <value>Dark</value>
   </data>
@@ -126,11 +138,47 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="MainPageUserProfileNavigationViewItemText" xml:space="preserve">
+    <value>Profile</value>
+  </data>
   <data name="SettingPageLanguageComboBox.Header" xml:space="preserve">
     <value>Language</value>
   </data>
   <data name="SettingPageThemeComboBox.Header" xml:space="preserve">
     <value>Theme</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="VerifyCodeSignInPageCodeTextBox.PlaceholderText" xml:space="preserve">
+    <value>Please enter verification code</value>
+  </data>
+  <data name="VerifyCodeSignInPageImageCodeTextBox.PlaceholderText" xml:space="preserve">
+    <value>Please enter captcha</value>
+  </data>
+  <data name="VerifyCodeSignInPageMoblieTextBox.PlaceholderText" xml:space="preserve">
+    <value>Please enter mobile</value>
+  </data>
+  <data name="VerifyCodeSignInPageNextStepButton.Content" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="VerifyCodeSignInPageOrTextBlock.Text" xml:space="preserve">
+    <value>Or</value>
+  </data>
+  <data name="VerifyCodeSignInPageSendCodeButton.Content" xml:space="preserve">
+    <value>Get verification code</value>
+  </data>
+  <data name="VerifyCodeSignInPageSignInTextBlock.Text" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="VerifyCodeSignInPageSignUpHyperlinkButton.Content" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="VerifyCodeSignInPageSwitchToAccountPasswordHyperlinkButton.Content" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="VerifyCodeSignInPageSwitchToAccountPasswordTextBlock.Text" xml:space="preserve">
+    <value>Signin in with verification code, or </value>
   </data>
   <data name="WtAppMessageDisplayName" xml:space="preserve">
     <value>Message</value>

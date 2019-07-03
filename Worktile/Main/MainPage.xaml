@@ -34,13 +34,16 @@
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
-            <!--<NavigationView.PaneFooter>
-                <NavigationViewItem Content="{x:Bind DisplayName}" Tag="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind DisplayName}">
+            <NavigationView.PaneFooter>
+                <NavigationViewItem
+                    Content="{x:Bind ViewModel.UserProfileText, Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.UserProfileText, Mode=OneWay}"
+                    Tapped="ProfileNavigationViewItem_Tapped">
                     <NavigationViewItem.Icon>
-                        <FontIcon Style="{StaticResource WtfIcon}" Glyph="{x:Bind Icon}"/>
+                        <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE642;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-            </NavigationView.PaneFooter>-->
+            </NavigationView.PaneFooter>
         </NavigationView>
     </Grid>
 </Page>

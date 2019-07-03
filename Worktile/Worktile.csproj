@@ -120,8 +120,11 @@
     </Compile>
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
+    <Compile Include="Common\HttpClientExtension.cs" />
     <Compile Include="Common\UtilityTool.cs" />
+    <Compile Include="Common\WtHttpClient.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
+    <Compile Include="Converters\BooleanReverseConverter.cs" />
     <Compile Include="Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,12 @@
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Setting\SettingViewModel.cs" />
+    <Compile Include="SignInOut\Models\AreaNumber.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="SignInOut\VerifyCodeSignInPage.xaml.cs">
+      <DependentUpon>VerifyCodeSignInPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SignInOut\VerifyCodeSignInViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -144,6 +153,56 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\Background\desktop-1.jpg" />
+    <Content Include="Assets\Images\Background\desktop-2.jpg" />
+    <Content Include="Assets\Images\Background\desktop-3.jpg" />
+    <Content Include="Assets\Images\Background\desktop-4.jpg" />
+    <Content Include="Assets\Images\Background\desktop-5.jpg" />
+    <Content Include="Assets\Images\Background\desktop-6.jpg" />
+    <Content Include="Assets\Images\Background\desktop-7.jpg" />
+    <Content Include="Assets\Images\Background\profile-bg.jpg" />
+    <Content Include="Assets\Images\Icons\apk.png" />
+    <Content Include="Assets\Images\Icons\bak.png" />
+    <Content Include="Assets\Images\Icons\box.png" />
+    <Content Include="Assets\Images\Icons\cs.png" />
+    <Content Include="Assets\Images\Icons\csv.png" />
+    <Content Include="Assets\Images\Icons\default.png" />
+    <Content Include="Assets\Images\Icons\doc.png" />
+    <Content Include="Assets\Images\Icons\evernote.png" />
+    <Content Include="Assets\Images\Icons\exe.png" />
+    <Content Include="Assets\Images\Icons\fla.png" />
+    <Content Include="Assets\Images\Icons\html.png" />
+    <Content Include="Assets\Images\Icons\img.png" />
+    <Content Include="Assets\Images\Icons\ipa.png" />
+    <Content Include="Assets\Images\Icons\java.png" />
+    <Content Include="Assets\Images\Icons\js.png" />
+    <Content Include="Assets\Images\Icons\mp3.png" />
+    <Content Include="Assets\Images\Icons\mp4.png" />
+    <Content Include="Assets\Images\Icons\onedrive.png" />
+    <Content Include="Assets\Images\Icons\onenote.png" />
+    <Content Include="Assets\Images\Icons\page.png" />
+    <Content Include="Assets\Images\Icons\pdf.png" />
+    <Content Include="Assets\Images\Icons\php.png" />
+    <Content Include="Assets\Images\Icons\PlaceholderSource.png" />
+    <Content Include="Assets\Images\Icons\ppt.png" />
+    <Content Include="Assets\Images\Icons\processon.png" />
+    <Content Include="Assets\Images\Icons\quip.png" />
+    <Content Include="Assets\Images\Icons\rar.png" />
+    <Content Include="Assets\Images\Icons\send.png" />
+    <Content Include="Assets\Images\Icons\shimo.png" />
+    <Content Include="Assets\Images\Icons\snippet.png" />
+    <Content Include="Assets\Images\Icons\swf.png" />
+    <Content Include="Assets\Images\Icons\ttf.png" />
+    <Content Include="Assets\Images\Icons\txt.png" />
+    <Content Include="Assets\Images\Icons\vss.png" />
+    <Content Include="Assets\Images\Icons\xls.png" />
+    <Content Include="Assets\Images\Icons\xsd.png" />
+    <Content Include="Assets\Images\Icons\yinxiang.png" />
+    <Content Include="Assets\Images\Icons\youdaonote.png" />
+    <Content Include="Assets\Images\Icons\zip.png" />
+    <Content Include="Assets\Images\Logo\logo-default.png" />
+    <Content Include="Assets\Images\SignIn\signup-bg.png" />
+    <Content Include="Assets\Images\Temp\hero.37207e1f.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />
@@ -211,10 +270,20 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SignInOut\VerifyCodeSignInPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>5.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -226,9 +295,7 @@
   <ItemGroup>
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SignInOut\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

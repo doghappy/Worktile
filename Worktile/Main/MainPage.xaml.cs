@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Main.Models;
 using Worktile.Setting;
+using Worktile.SignInOut;
 
 namespace Worktile.Main
 {
@@ -36,6 +37,18 @@ namespace Worktile.Main
             else
             {
                 ViewModel.SelectedApp = args.SelectedItem as WtApp;
+            }
+        }
+
+        private void ProfileNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (ViewModel.User==null)
+            {
+                ContentFrame.Navigate(typeof(VerifyCodeSignInPage));
+            }
+            else
+            {
+
             }
         }
     }

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.Web.Http.Filters;
 
-namespace Worktile.Common.Communication
+namespace Worktile.Common
 {
     public static class WtHttpClient
     {
