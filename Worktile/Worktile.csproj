@@ -133,6 +133,7 @@
     <Compile Include="Message\MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting\Models\Language.cs" />
     <Compile Include="Setting\Models\Theme.cs" />
@@ -140,12 +141,10 @@
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Setting\SettingViewModel.cs" />
-    <Compile Include="SignInOut\Models\AreaNumber.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="SignInOut\VerifyCodeSignInPage.xaml.cs">
-      <DependentUpon>VerifyCodeSignInPage.xaml</DependentUpon>
+    <Compile Include="SignInOut\SignInPage.xaml.cs">
+      <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SignInOut\VerifyCodeSignInViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -270,7 +269,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SignInOut\VerifyCodeSignInPage.xaml">
+    <Page Include="SignInOut\SignInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -295,7 +294,12 @@
   <ItemGroup>
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Worktile.Repository\Worktile.Repository.csproj">
+      <Project>{bb1ef942-2afb-49e0-bcfb-9eb4478c1834}</Project>
+      <Name>Worktile.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

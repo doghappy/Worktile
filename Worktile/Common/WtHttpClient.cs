@@ -46,6 +46,12 @@ namespace Worktile.Common
             return await _client.GetBufferAsync(GetUri(url));
         }
 
+        public static async Task<JObject> GetAsync(string url)
+        {
+            var json = await _client.GetStringAsync(GetUri(url));
+            return JObject.Parse(json);
+        }
+
         public static async Task<T> GetAsync<T>(string url)
         {
             var resMsg = await _client.GetAsync(GetUri(url));

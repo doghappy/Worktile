@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Worktile.Common;
 using Worktile.Main.Models;
-using Worktile.SignInOut.Models;
+using Worktile.Models;
 
 namespace Worktile.Main
 {
@@ -24,10 +25,21 @@ namespace Worktile.Main
                 }
             };
             SelectedApp = Apps.First();
-            UserProfileText = UtilityTool.GetStringFromResources("SignIn");
+            Members = new ObservableCollection<User>();
         }
 
+        public string IMToken { get; set; }
+
         public ObservableCollection<WtApp> Apps { get; }
+
+        public ObservableCollection<User> Members { get; }
+
+        private Team _team;
+        public Team Team
+        {
+            get => _team;
+            set => SetProperty(ref _team, value);
+        }
 
         private WtApp _selectedApp;
         public WtApp SelectedApp
@@ -36,28 +48,30 @@ namespace Worktile.Main
             set => SetProperty(ref _selectedApp, value);
         }
 
-        private string _userProfileText;
-        public string UserProfileText
-        {
-            get => _userProfileText;
-            set => SetProperty(ref _userProfileText, value);
-        }
-
-        private Worktile.Models.User _user;
-        public Worktile.Models.User User
+        private User _user;
+        public User User
         {
             get => _user;
             set
             {
                 SetProperty(ref _user, value);
-                if (value == null)
-                {
-                    UserProfileText = UtilityTool.GetStringFromResources("SignIn");
-                }
-                else
-                {
-                    UserProfileText = value.DisplayName;
-                }
+            }
+        }
+
+        public async Task RequestMeAsync()
+        {
+            var obj = await WtHttpClient.GetAsync("api/user/me");
+            User = obj["data"]["me"].ToObject<User>();
+        }
+
+        public async Task RequestTeamAsync()
+        {
+            var obj = await WtHttpClient.GetAsync("api/team");
+            Team = obj["data"].ToObject<Team>();
+            var members = obj["data"]["members"].Children<JObject>();
+            foreach (var item in members)
+            {
+                Members.Add(item.ToObject<User>());
             }
         }
     }

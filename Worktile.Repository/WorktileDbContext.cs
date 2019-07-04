@@ -6,11 +6,12 @@ namespace Worktile.Repository
 {
     public class WorktileDbContext : DbContext
     {
-        public DbSet<SignInfo> SignInfos { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Team> Teams { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=worktile.db");
+            optionsBuilder.UseSqlite("Data Source=Worktile.db");
         }
     }
 }

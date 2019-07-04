@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Worktile.Main.Models"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -36,8 +37,8 @@
             </Frame>
             <NavigationView.PaneFooter>
                 <NavigationViewItem
-                    Content="{x:Bind ViewModel.UserProfileText, Mode=OneWay}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.UserProfileText, Mode=OneWay}"
+                    Content="{x:Bind ViewModel.User.DisplayName, Mode=OneWay}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.User.DisplayName, Mode=OneWay}"
                     Tapped="ProfileNavigationViewItem_Tapped">
                     <NavigationViewItem.Icon>
                         <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE642;"/>

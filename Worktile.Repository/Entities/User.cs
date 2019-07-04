@@ -1,29 +1,18 @@
-﻿using Newtonsoft.Json;
-
-namespace Worktile.Models
+﻿namespace Worktile.Repository.Entities
 {
     public class User
     {
-        [JsonProperty("uid")]
-        public string Id { get; set; }
-
+        public string TeamId { get; set; }
+        public string Uid { get; set; }
+        public string ShortCode { get; set; }
         public string Name { get; set; }
-
-        [JsonProperty("display_name")]
         public string DisplayName { get; set; }
-
-        [JsonProperty("display_name_pinyin")]
-        public string DisplayNamePinYin { get; set; }
-
-        public string Email { get; set; }
-
         public string Mobile { get; set; }
-
-        public string Title { get; set; }
-
         public string Avatar { get; set; }
+        public string DepartmentId { get; set; }
+        public bool IsDeleted { get; set; }
 
-        public UserRoleType Role { get; set; }
+        public Team Team { get; set; }
     }
 
     public enum UserStatus
