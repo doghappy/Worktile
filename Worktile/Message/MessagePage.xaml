@@ -5,7 +5,17 @@
     xmlns:local="using:Worktile.Message"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:models="using:Worktile.Models"
+    xmlns:msgcvt="using:Worktile.Message.Converters"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <cvt:AvatarInitialsConverter x:Key="AvatarInitialsConverter"/>
+        <cvt:AvatarSourceConverter x:Key="AvatarSourceConverter"/>
+        <msgcvt:IsGroupConverter x:Key="IsGroupConverter"/>
+        <msgcvt:UnReadVisibilityConverter x:Key="UnReadVisibilityConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -14,10 +24,160 @@
         </Grid.ColumnDefinitions>
 
         <Grid Style="{ThemeResource AppPageMasterGrid}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
             <TextBlock
                 x:Uid="MessagePageMessageTitleTextBlock"
-                Margin="12 0"
+                Text="消息"
+                Margin="12 0 0 16"
                 Style="{ThemeResource TitleTextBlockStyle}"/>
+
+            <ListView
+                Grid.Row="1"
+                ItemsSource="{x:Bind ViewModel.Sessions}">
+
+                <ListView.Resources>
+                    <Style TargetType="TextBlock" x:Key="DisplayNameTextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="{StaticResource Left8}"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Session">
+                        <ListViewItem>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <PersonPicture
+                                    Width="32"
+                                    IsGroup="{x:Bind Type, Converter={StaticResource IsGroupConverter}}"
+                                    Initials="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                                    ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Style="{StaticResource DisplayNameTextBlock}"
+                                    Text="{x:Bind DisplayName}"/>
+
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Visibility="{x:Bind UnRead, Converter={StaticResource UnReadVisibilityConverter}, Mode=OneWay}"
+                                    Text="{x:Bind UnRead, Mode=OneWay}"/>
+                            </Grid>
+                        </ListViewItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <!--<ListViewItem>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <PersonPicture
+                            Width="32"
+                            ProfilePicture="https://docs.microsoft.com/en-us/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png"/>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource DisplayNameTextBlock}"
+                            Text="HeroWong"/>
+                        
+                        <TextBlock
+                            Grid.Column="2"
+                            Text="2"/>
+                    </Grid>
+                </ListViewItem>
+
+                <ListViewItem>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <PersonPicture
+                            Width="32"
+                            ProfilePicture="https://docs.microsoft.com/en-us/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png"/>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource DisplayNameTextBlock}"
+                            Text="雄哥"/>
+
+                        <TextBlock
+                            Grid.Column="2"
+                            Text="5"/>
+                    </Grid>
+                </ListViewItem>
+
+                <ListViewItem>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <PersonPicture
+                            Width="32"
+                            IsGroup="True"
+                            DisplayName="开黑"
+                            ProfilePicture="https://docs.microsoft.com/en-us/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png"/>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource DisplayNameTextBlock}"
+                            Text="开黑"/>
+
+                        <TextBlock
+                            Grid.Column="2"
+                            Text="5"/>
+                    </Grid>
+                </ListViewItem>
+
+                <ListViewItem>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <PersonPicture
+                            Width="32"
+                            Background="Red"
+                            Initials="渣渣辉"
+                            DisplayName="渣渣辉"/>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource DisplayNameTextBlock}"
+                            Text="渣渣辉"/>
+
+                        <TextBlock
+                            Grid.Column="2"
+                            Text="5"/>
+                    </Grid>
+                </ListViewItem>-->
+            </ListView>
         </Grid>
     </Grid>
 </Page>

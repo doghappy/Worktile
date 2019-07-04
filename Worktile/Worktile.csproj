@@ -124,6 +124,8 @@
     <Compile Include="Common\UtilityTool.cs" />
     <Compile Include="Common\WtHttpClient.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
+    <Compile Include="Converters\AvatarInitialsConverter.cs" />
+    <Compile Include="Converters\AvatarSourceConverter.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Converters\BooleanReverseConverter.cs" />
     <Compile Include="Main\MainPage.xaml.cs">
@@ -131,9 +133,13 @@
     </Compile>
     <Compile Include="Main\MainViewModel.cs" />
     <Compile Include="Main\Models\WtApp.cs" />
+    <Compile Include="Message\Converters\IsGroupConverter.cs" />
+    <Compile Include="Message\Converters\UnReadVisibilityConverter.cs" />
     <Compile Include="Message\MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Message\MessageViewModel.cs" />
+    <Compile Include="Models\Session.cs" />
     <Compile Include="Models\StorageBox.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

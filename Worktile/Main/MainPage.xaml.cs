@@ -70,6 +70,7 @@ namespace Worktile.Main
                 WtHttpClient.Domain = domain;
                 await ViewModel.RequestMeAsync();
                 await ViewModel.RequestTeamAsync();
+                await ViewModel.RequestChatsAsync();
                 //await ViewModel.RequestMeAsync();
                 //await LoadPreferencesAsync();
                 //await LoadTeamInfoAsync();

@@ -11,6 +11,7 @@
             </Style>
 
             <Thickness x:Key="Left4">4 0 0 0</Thickness>
+            <Thickness x:Key="Left8">8 0 0 0</Thickness>
 
             <Thickness x:Key="Top-32">0 -32 0 0</Thickness>
             <Thickness x:Key="Top32">0 32 0 0</Thickness>
