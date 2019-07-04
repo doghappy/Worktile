@@ -37,7 +37,9 @@
 
             <ListView
                 Grid.Row="1"
-                ItemsSource="{x:Bind ViewModel.Sessions}">
+                ItemsSource="{x:Bind ViewModel.Sessions}"
+                SelectedItem="{x:Bind ViewModel.Session,Mode=TwoWay}"
+                SelectionChanged="ListView_SelectionChanged">
 
                 <ListView.Resources>
                     <Style TargetType="TextBlock" x:Key="DisplayNameTextBlock">
@@ -179,5 +181,13 @@
                 </ListViewItem>-->
             </ListView>
         </Grid>
+
+        <Frame x:Name="ContentFrame" Grid.Column="1">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
     </Grid>
 </Page>

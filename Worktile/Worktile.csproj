@@ -135,10 +135,15 @@
     <Compile Include="Main\Models\WtApp.cs" />
     <Compile Include="Message\Converters\IsGroupConverter.cs" />
     <Compile Include="Message\Converters\UnReadVisibilityConverter.cs" />
+    <Compile Include="Message\MessageDetailPage.xaml.cs">
+      <DependentUpon>MessageDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Message\MessageDetailViewModel.cs" />
     <Compile Include="Message\MessagePage.xaml.cs">
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Message\MessageViewModel.cs" />
+    <Compile Include="Message\Models\MessageNav.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\StorageBox.cs" />
     <Compile Include="Models\Team.cs" />
@@ -268,6 +273,10 @@
     <Page Include="Main\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Message\MessageDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Message\MessagePage.xaml">
       <SubType>Designer</SubType>

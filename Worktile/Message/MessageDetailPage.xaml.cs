@@ -12,22 +12,24 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Models;
 
 namespace Worktile.Message
 {
-    public sealed partial class MessagePage : Page
+    public sealed partial class MessageDetailPage : Page
     {
-        public MessagePage()
+        public MessageDetailPage()
         {
             InitializeComponent();
-            ViewModel = new MessageViewModel();
+            ViewModel = new MessageDetailViewModel();
         }
 
-        public MessageViewModel ViewModel { get; }
+        public MessageDetailViewModel ViewModel { get; }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ContentFrame.Navigate(typeof(MessageDetailPage), ViewModel.Session);
+            ViewModel.Session = e.Parameter as Session;
+            ViewModel.LoadNavs();
         }
     }
 }

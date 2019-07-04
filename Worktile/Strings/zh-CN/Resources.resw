@@ -126,6 +126,24 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>浅色</value>
   </data>
+  <data name="MessageDetailPageNavFiles" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="MessageDetailPageNavLater" xml:space="preserve">
+    <value>待处理</value>
+  </data>
+  <data name="MessageDetailPageNavMessage" xml:space="preserve">
+    <value>消息</value>
+  </data>
+  <data name="MessageDetailPageNavPinnedMessages" xml:space="preserve">
+    <value>固定消息</value>
+  </data>
+  <data name="MessageDetailPageNavRead" xml:space="preserve">
+    <value>已读</value>
+  </data>
+  <data name="MessageDetailPageNavUnread" xml:space="preserve">
+    <value>未读</value>
+  </data>
   <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
     <value>消息</value>
   </data>

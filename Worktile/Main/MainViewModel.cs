@@ -146,6 +146,7 @@ namespace Worktile.Main
                     UnRead = item.Value<int>("unread"),
                     IsStar = item.Value<bool>("starred"),
                     LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(item.Value<long>("latest_message_at")),
+                    IsAAssistant = item["to"].Value<int>("role") == (int)UserRoleType.Bot,
                     Type = SessionType.Session
                 });
             }

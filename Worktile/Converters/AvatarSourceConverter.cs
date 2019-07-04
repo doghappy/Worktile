@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.Main;

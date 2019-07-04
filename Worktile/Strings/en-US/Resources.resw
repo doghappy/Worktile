@@ -126,6 +126,24 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="MessageDetailPageNavFiles" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="MessageDetailPageNavLater" xml:space="preserve">
+    <value>Later</value>
+  </data>
+  <data name="MessageDetailPageNavMessage" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="MessageDetailPageNavPinnedMessages" xml:space="preserve">
+    <value>Pinned Messages</value>
+  </data>
+  <data name="MessageDetailPageNavRead" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="MessageDetailPageNavUnread" xml:space="preserve">
+    <value>Unread</value>
+  </data>
   <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
     <value>Message</value>
   </data>

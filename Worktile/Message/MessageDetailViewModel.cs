@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Worktile.Common;
+using Worktile.Message.Models;
+using Worktile.Models;
+
+namespace Worktile.Message
+{
+    public class MessageDetailViewModel
+    {
+        public MessageDetailViewModel()
+        {
+            Navs = new ObservableCollection<MessageNav>();
+        }
+
+        public Session Session { get; set; }
+
+        public ObservableCollection<MessageNav> Navs { get; }
+
+        public void LoadNavs()
+        {
+            if (Session.IsAAssistant)
+            {
+                string unread = UtilityTool.GetStringFromResources("MessageDetailPageNavUnread");
+                string read = UtilityTool.GetStringFromResources("MessageDetailPageNavRead");
+                string later = UtilityTool.GetStringFromResources("MessageDetailPageNavLater");
+                Navs.Add(new MessageNav { Tag = "Unread", Content = unread });
+                Navs.Add(new MessageNav { Tag = "Read", Content = read });
+                Navs.Add(new MessageNav { Tag = "Later", Content = later });
+            }
+            else
+            {
+                string message = UtilityTool.GetStringFromResources("MessageDetailPageNavMessage");
+                string file = UtilityTool.GetStringFromResources("MessageDetailPageNavFiles");
+                string pin = UtilityTool.GetStringFromResources("MessageDetailPageNavPinnedMessages");
+                Navs.Add(new MessageNav { Tag = "Message", Content = message });
+                Navs.Add(new MessageNav { Tag = "File", Content = file });
+                Navs.Add(new MessageNav { Tag = "Pin", Content = pin });
+            }
+        }
+    }
+}

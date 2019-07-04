@@ -56,6 +56,8 @@ namespace Worktile.Models
                 }
             }
         }
+
+        public bool IsAAssistant { get; set; }
     }
 
     public enum SessionType
