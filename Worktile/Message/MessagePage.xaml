@@ -5,10 +5,19 @@
     xmlns:local="using:Worktile.Message"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <Grid>
-        <TextBlock Text="Message Page"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid Style="{ThemeResource AppPageMasterGrid}">
+            <TextBlock
+                x:Uid="MessagePageMessageTitleTextBlock"
+                Margin="12 0"
+                Style="{ThemeResource TitleTextBlockStyle}"/>
+        </Grid>
     </Grid>
 </Page>

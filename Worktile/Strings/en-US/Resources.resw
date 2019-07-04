@@ -126,6 +126,9 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
+    <value>Message</value>
+  </data>
   <data name="SettingPageLanguageComboBox.Header" xml:space="preserve">
     <value>Language</value>
   </data>

@@ -74,7 +74,6 @@ namespace Worktile
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
             }
-            CustomTitleBar();
         }
 
         /// <summary>
@@ -99,20 +98,6 @@ namespace Worktile
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
-        }
-
-        private void CustomTitleBar()
-        {
-            //draw into the title bar
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            //remove the solid-colored backgrounds behind the caption controls and system back button
-            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            //viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
-            viewTitleBar.ButtonForegroundColor = (Resources["ApplicationForegroundThemeBrush"] as SolidColorBrush).Color;
         }
     }
 }

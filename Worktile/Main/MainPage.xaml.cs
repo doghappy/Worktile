@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Main.Models;
+using Worktile.Message;
 using Worktile.Setting;
 using Worktile.SignInOut;
 
@@ -39,21 +40,22 @@ namespace Worktile.Main
             }
             else
             {
-                ViewModel.SelectedApp = args.SelectedItem as WtApp;
+                if (args.SelectedItem != null)
+                {
+                    ViewModel.SelectedApp = args.SelectedItem as WtApp;
+                    switch (ViewModel.SelectedApp.Name)
+                    {
+                        case "message":
+                            ContentFrame.Navigate(typeof(MessagePage));
+                            break;
+                    }
+                }
             }
         }
 
         private void ProfileNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ViewModel.SelectedApp = null;
-            if (ViewModel.User == null)
-            {
-                ContentFrame.Navigate(typeof(SignInPage));
-            }
-            else
-            {
-
-            }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

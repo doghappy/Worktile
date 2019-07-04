@@ -126,6 +126,9 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>浅色</value>
   </data>
+  <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
+    <value>消息</value>
+  </data>
   <data name="SettingPageLanguageComboBox.Header" xml:space="preserve">
     <value>语言</value>
   </data>

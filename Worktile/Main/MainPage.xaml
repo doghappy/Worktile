@@ -6,18 +6,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:Worktile.Main.Models"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
-    Loaded="Page_Loaded"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <cvt:ImageSourceConverter x:Key="ImageSourceConverter"/>
+    </Page.Resources>
+
+    <Page.Background>
+        <ImageBrush
+            ImageSource="{x:Bind ViewModel.WtBackgroundImage, Converter={StaticResource ImageSourceConverter}, Mode=OneWay}"
+            Stretch="UniformToFill"/>
+    </Page.Background>
 
     <Grid>
         <NavigationView
             PaneDisplayMode="LeftCompact"
             IsBackButtonVisible="Collapsed"
             AlwaysShowHeader="False"
+            PaneTitle="{x:Bind ViewModel.Team.Name, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.SelectedApp, Mode=OneWay}"
             SelectionChanged="NavigationView_SelectionChanged"
             MenuItemsSource="{x:Bind ViewModel.Apps}">
+            
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:WtApp">
                     <NavigationViewItem Content="{x:Bind DisplayName}" Tag="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind DisplayName}">
@@ -28,7 +40,13 @@
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
 
-            <Frame x:Name="ContentFrame">
+            <!--<NavigationView.PaneHeader>
+                <Image
+                    HorizontalAlignment="Left"
+                    Source="{x:Bind ViewModel.Logo, Converter={StaticResource ImageSourceConverter}, Mode=OneWay}"/>
+            </NavigationView.PaneHeader>-->
+
+            <Frame x:Name="ContentFrame" Margin="{StaticResource Top-32}">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition/>
