@@ -48,6 +48,12 @@ namespace Worktile.Message
                     case "Unread":
                         sourcePageType = typeof(UnreadListPage);
                         break;
+                    case "Read":
+                        sourcePageType = typeof(ReadListPage);
+                        break;
+                    case "Later":
+                        sourcePageType = typeof(LaterListPage);
+                        break;
                 }
                 if (sourcePageType != null)
                 {

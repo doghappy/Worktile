@@ -8,9 +8,9 @@ using Worktile.Models;
 
 namespace Worktile.Message.Details
 {
-    public class UnreadListViewModel : BindableBase
+    public class LaterListViewModel : BindableBase
     {
-        public UnreadListViewModel()
+        public LaterListViewModel()
         {
             Messages = new ObservableCollection<WtMessage.Message>();
             HasMore = true;
@@ -36,7 +36,7 @@ namespace Worktile.Message.Details
             if (HasMore)
             {
                 IsActive = true;
-                string url = $"api/pigeon/messages?ref_id={Session.Id}&ref_type=2&filter_type=2&size=20&next={_next}";
+                string url = $"api/pigeon/messages?ref_id={Session.Id}&ref_type=2&filter_type=3&size=20&next={_next}";
                 var obj = await WtHttpClient.GetAsync(url);
                 var data = obj["data"] as JObject;
                 if (data.ContainsKey("next") && data.Value<string>("next") != string.Empty)

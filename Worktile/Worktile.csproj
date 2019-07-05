@@ -196,14 +196,21 @@
     <Compile Include="Main\Models\WtApp.cs" />
     <Compile Include="Message\Converters\IsGroupConverter.cs" />
     <Compile Include="Message\Converters\UnReadVisibilityConverter.cs" />
-    <Compile Include="Message\Details\ListViewModel.cs" />
+    <Compile Include="Message\Details\LaterListPage.xaml.cs">
+      <DependentUpon>LaterListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Message\Details\MessageListPage.xaml.cs">
       <DependentUpon>MessageListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Message\Details\MessageListViewModel.cs" />
+    <Compile Include="Message\Details\ReadListPage.xaml.cs">
+      <DependentUpon>ReadListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Message\Details\ReadListViewModel.cs" />
     <Compile Include="Message\Details\UnreadListPage.xaml.cs">
       <DependentUpon>UnreadListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Message\Details\LaterListViewModel.cs" />
     <Compile Include="Message\Details\UnreadListViewModel.cs" />
     <Compile Include="Message\MessageDetailPage.xaml.cs">
       <DependentUpon>MessageDetailPage.xaml</DependentUpon>
@@ -430,7 +437,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Message\Details\LaterListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Message\Details\MessageListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Message\Details\ReadListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
