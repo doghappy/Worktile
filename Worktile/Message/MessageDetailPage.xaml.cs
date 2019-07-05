@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Message.Details;
+using Worktile.Message.Models;
 using Worktile.Models;
 
 namespace Worktile.Message
@@ -30,6 +32,25 @@ namespace Worktile.Message
         {
             ViewModel.Session = e.Parameter as Session;
             ViewModel.LoadNavs();
+        }
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (!args.IsSettingsSelected)
+            {
+                var nav = args.SelectedItem as MessageNav;
+                Type sourcePageType = null;
+                switch (nav.Tag)
+                {
+                    case "Message":
+                        sourcePageType = typeof(MessageListPage);
+                        break;
+                }
+                if (sourcePageType != null)
+                {
+                    ContentFrame.Navigate(sourcePageType);
+                }
+            }
         }
     }
 }

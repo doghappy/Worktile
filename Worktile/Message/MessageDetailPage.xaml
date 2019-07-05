@@ -20,7 +20,9 @@
         PaneDisplayMode="Top"
         IsSettingsVisible="False"
         IsBackButtonVisible="Collapsed"
-        MenuItemsSource="{x:Bind ViewModel.Navs}">
+        SelectionChanged="NavigationView_SelectionChanged"
+        MenuItemsSource="{x:Bind ViewModel.Navs}"
+        SelectedItem="{x:Bind ViewModel.Nav, Mode=TwoWay}">
         <NavigationView.PaneHeader>
             <StackPanel Orientation="Horizontal" Padding="12 0">
                 <PersonPicture
@@ -41,5 +43,13 @@
                 <NavigationViewItem Content="{x:Bind Content}" Tag="{x:Bind Tag}" />
             </DataTemplate>
         </NavigationView.MenuItemTemplate>
+
+        <Frame x:Name="ContentFrame">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
     </NavigationView>
 </Page>

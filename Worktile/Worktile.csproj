@@ -121,13 +121,70 @@
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\HttpClientExtension.cs" />
+    <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
     <Compile Include="Common\UtilityTool.cs" />
     <Compile Include="Common\WtHttpClient.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
+    <Compile Include="Controls\Message\AppraisalMessage.xaml.cs">
+      <DependentUpon>AppraisalMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\ApprovalMessage.xaml.cs">
+      <DependentUpon>ApprovalMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\ArticleMessage.xaml.cs">
+      <DependentUpon>ArticleMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\AttachmentMessage.xaml.cs">
+      <DependentUpon>AttachmentMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\BulletinMessage.xaml.cs">
+      <DependentUpon>BulletinMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\CalendarMessage.xaml.cs">
+      <DependentUpon>CalendarMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\CrmMessage.xaml.cs">
+      <DependentUpon>CrmMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\DriveMessage.xaml.cs">
+      <DependentUpon>DriveMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\FileMessage.xaml.cs">
+      <DependentUpon>FileMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\ImageMessage.xaml.cs">
+      <DependentUpon>ImageMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\LeaveMessage.xaml.cs">
+      <DependentUpon>LeaveMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\MessageControl.xaml.cs">
+      <DependentUpon>MessageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\MissionMessage.xaml.cs">
+      <DependentUpon>MissionMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\OkrMessage.xaml.cs">
+      <DependentUpon>OkrMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\PageMessage.xaml.cs">
+      <DependentUpon>PageMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\ReportMessage.xaml.cs">
+      <DependentUpon>ReportMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\SnippetMessage.xaml.cs">
+      <DependentUpon>SnippetMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Message\TaskMessage.xaml.cs">
+      <DependentUpon>TaskMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\AvatarInitialsConverter.cs" />
     <Compile Include="Converters\AvatarSourceConverter.cs" />
+    <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Converters\BooleanReverseConverter.cs" />
+    <Compile Include="Converters\IsNullOrEmptyConverter.cs" />
     <Compile Include="Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -135,6 +192,9 @@
     <Compile Include="Main\Models\WtApp.cs" />
     <Compile Include="Message\Converters\IsGroupConverter.cs" />
     <Compile Include="Message\Converters\UnReadVisibilityConverter.cs" />
+    <Compile Include="Message\Details\MessageListPage.xaml.cs">
+      <DependentUpon>MessageListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Message\MessageDetailPage.xaml.cs">
       <DependentUpon>MessageDetailPage.xaml</DependentUpon>
     </Compile>
@@ -143,7 +203,21 @@
       <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Message\MessageViewModel.cs" />
+    <Compile Include="Message\Models\AttachmentAddition.cs" />
+    <Compile Include="Message\Models\AttachmentReference.cs" />
+    <Compile Include="Message\Models\BodyAttachment.cs" />
+    <Compile Include="Message\Models\FromType.cs" />
+    <Compile Include="Message\Models\Message.cs" />
+    <Compile Include="Message\Models\MessageAction.cs" />
+    <Compile Include="Message\Models\MessageBody.cs" />
+    <Compile Include="Message\Models\MessageContent.cs" />
+    <Compile Include="Message\Models\MessageField.cs" />
+    <Compile Include="Message\Models\MessageFrom.cs" />
+    <Compile Include="Message\Models\MessageInlineAttachment.cs" />
     <Compile Include="Message\Models\MessageNav.cs" />
+    <Compile Include="Message\Models\MessageTo.cs" />
+    <Compile Include="Message\Models\MessageType.cs" />
+    <Compile Include="Message\Models\ToType.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\StorageBox.cs" />
     <Compile Include="Models\Team.cs" />
@@ -270,9 +344,85 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Message\AppraisalMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\ApprovalMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\ArticleMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\AttachmentMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\BulletinMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\CalendarMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\CrmMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\DriveMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\FileMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\ImageMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\LeaveMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\MessageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\MissionMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\OkrMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\PageMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\ReportMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\SnippetMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Message\TaskMessage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Main\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Message\Details\MessageListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Message\MessageDetailPage.xaml">
       <SubType>Designer</SubType>
@@ -292,10 +442,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FontAwesome.UWP">
+      <Version>4.7.0.9</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>5.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>5.1.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">

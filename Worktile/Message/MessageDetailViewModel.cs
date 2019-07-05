@@ -10,7 +10,7 @@ using Worktile.Models;
 
 namespace Worktile.Message
 {
-    public class MessageDetailViewModel
+    public class MessageDetailViewModel : BindableBase
     {
         public MessageDetailViewModel()
         {
@@ -20,6 +20,13 @@ namespace Worktile.Message
         public Session Session { get; set; }
 
         public ObservableCollection<MessageNav> Navs { get; }
+
+        private MessageNav _nav;
+        public MessageNav Nav
+        {
+            get => _nav;
+            set => SetProperty(ref _nav, value);
+        }
 
         public void LoadNavs()
         {
@@ -41,6 +48,7 @@ namespace Worktile.Message
                 Navs.Add(new MessageNav { Tag = "File", Content = file });
                 Navs.Add(new MessageNav { Tag = "Pin", Content = pin });
             }
+            Nav = Navs.First();
         }
     }
 }

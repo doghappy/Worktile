@@ -1,0 +1,165 @@
+﻿<UserControl
+    x:Class="Worktile.Controls.MessageControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:message="using:Worktile.Controls.Message"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="0 16 16 16" HorizontalAlignment="Left">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!--<tethys:Avatar Width="40"
+                       Margin="16 0 8 0"
+                       VerticalAlignment="Top"
+                       DisplayName="{x:Bind Message.From.TethysAvatar.DisplayName, Mode=OneWay}"
+                       Background="{x:Bind Message.From.TethysAvatar.Background, Mode=OneWay}"
+                       Source="{x:Bind Message.From.TethysAvatar.Source, Mode=OneWay}"/>-->
+        <!--<PersonPicture
+                    Width="40"
+                    IsGroup="{x:Bind ViewModel.Session.Type, Converter={StaticResource IsGroupConverter}}"
+                    Initials="{x:Bind ViewModel.Session.DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                    ProfilePicture="{x:Bind Message.From.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
+
+        <Grid Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Polygon Points="0,0 16,0 16,16" Fill="{ThemeResource SystemControlAcrylicElementBrush}" Margin="0,12,0,0"/>
+
+            <Grid Grid.Column="1" Background="{ThemeResource SystemControlAcrylicElementBrush}" HorizontalAlignment="Left">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Padding="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <controls:MarkdownTextBlock
+                        x:Name="TextMsg"
+                        x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Text'}"
+                        Style="{ThemeResource MessageMarkdown}"
+                        Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                        SchemeList="worktile" UriPrefix="ms-appx://" />
+
+                    <controls:MarkdownTextBlock
+                        x:Name="ActivityMsg"
+                        x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Activity'}"
+                        Style="{ThemeResource MessageMarkdown}"
+                        Text="{x:Bind Message.Body.Content, Mode=OneWay}"
+                        SchemeList="worktile"
+                        UriPrefix="ms-appx://"
+                        LinkClicked="ActivityMsg_LinkClicked"/>
+
+                    <message:ArticleMessage x:Name="ArticleMsg"
+                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Article'}"
+                                          Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:ImageMessage x:Name="ImageMsg"
+                                          x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Image'}"
+                                          Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:PageMessage x:Name="PageMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Page'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:SnippetMessage x:Name="SnippetMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Snippet'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:FileMessage x:Name="FileMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='File'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:AttachmentMessage x:Name="AttachmentMsg"
+                                               x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Attachment'}"
+                                               Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:CalendarMessage x:Name="CalendarMsg"
+                                               x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Calendar'}"
+                                               Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:TaskMessage x:Name="TaskMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Task'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:MissionMessage x:Name="MissionMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='MissionVNext'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:BulletinMessage x:Name="BulletinNoticeMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='BulletinNotice'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:BulletinMessage x:Name="BulletinVoteNoticeMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='BulletinVoteNotice'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:LeaveMessage x:Name="LeaveMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='LeaveApplication'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:CrmMessage x:Name="CrmMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Crm'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:CrmMessage x:Name="CrmContractMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='CrmContract'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:ReportMessage x:Name="ReportMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Report'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:ApprovalMessage x:Name="ApprovalMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Approval'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:OkrMessage x:Name="OkrMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Okr'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:AppraisalMessage x:Name="AppraisalMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='AppraisalNotice'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <message:DriveMessage x:Name="DriveMsg"
+                                         x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Drive'}"
+                                         Message="{x:Bind Message, Mode=OneWay}"/>
+
+                    <StackPanel Grid.Row="1" Margin="0 16 0 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{x:Bind Message.From.DisplayName, Mode=OneWay}" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                        <TextBlock Text="{x:Bind Message.CreatedAt.LocalDateTime, Mode=OneWay}" Margin="12,0,0,0" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    </StackPanel>
+                </Grid>
+                
+                <ContentPresenter Grid.Column="1"
+                                  Content="{x:Bind RightContent}"
+                                  VerticalAlignment="Top"/>
+                
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
