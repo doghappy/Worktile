@@ -52,92 +52,18 @@ namespace Worktile.Common
             return JObject.Parse(json);
         }
 
-        public static async Task<T> GetAsync<T>(string url)
-        {
-            var resMsg = await _client.GetAsync(GetUri(url));
-            if (resMsg.IsSuccessStatusCode)
-            {
-                return await resMsg.ReadAsModelAsync<T>();
-            }
-            else
-            {
-                return default;
-            }
-        }
-
-        public static async Task<JToken> GetJTokenAsync(string url)
-        {
-            var resMsg = await _client.GetAsync(GetUri(url));
-            if (resMsg.IsSuccessStatusCode)
-            {
-                string json = await resMsg.Content.ReadAsStringAsync();
-                using (var reader = new StringReader(json))
-                {
-                    return await JToken.ReadFromAsync(new JsonTextReader(reader));
-                }
-            }
-            else
-            {
-                return default;
-            }
-        }
-
-        public static async Task<T> PostAsync<T>(string url)
-        {
-            var resMsg = await _client.PostAsync(GetUri(url), null);
-            if (resMsg.IsSuccessStatusCode)
-            {
-                return await resMsg.ReadAsModelAsync<T>();
-            }
-            else
-            {
-                return default;
-            }
-        }
-
-        public static async Task<T> PostAsync<T>(string url, object data)
-        {
-            string json = JsonConvert.SerializeObject(data);
-            return await PostAsync<T>(url, json);
-        }
-
-        public static async Task<JObject> RawPostAsync(string url, object data)
-        {
-            string json = JsonConvert.SerializeObject(data);
-            return await RawPostAsync(url, json);
-        }
-
-        public static async Task<T> PostAsync<T>(string url, string json)
+        public static async Task<JObject> PostAsync(string url, string json)
         {
             var content = new HttpStringContent(json, UnicodeEncoding.Utf8, ApplicationJson);
-            return await PostAsync<T>(url, content);
+            return await PostAsync(url, content);
         }
 
-        public static async Task<JObject> RawPostAsync(string url, string json)
-        {
-            var content = new HttpStringContent(json, UnicodeEncoding.Utf8, ApplicationJson);
-            return await RawPostAsync(url, content);
-        }
-
-        public static async Task<T> PostAsync<T>(string url, IHttpContent content)
+        public static async Task<JObject> PostAsync(string url, IHttpContent content)
         {
             var resMsg = await _client.PostAsync(GetUri(url), content);
             if (resMsg.IsSuccessStatusCode)
             {
-                return await resMsg.ReadAsModelAsync<T>();
-            }
-            else
-            {
-                return default;
-            }
-        }
-
-        public static async Task<JObject> RawPostAsync(string url, IHttpContent content)
-        {
-            var resMsg = await _client.PostAsync(GetUri(url), content);
-            if (resMsg.IsSuccessStatusCode)
-            {
-                var json = await resMsg.Content.ReadAsStringAsync();
+                string json= await resMsg.Content.ReadAsStringAsync();
                 return JObject.Parse(json);
             }
             else
@@ -160,11 +86,6 @@ namespace Worktile.Common
             }
         }
 
-        public static async Task<T> PutAsync<T>(string url)
-        {
-            return await PutAsync<T>(url, null);
-        }
-
         public static async Task<T> PutAsync<T>(string url, IHttpContent content)
         {
             var resMsg = await _client.PutAsync(GetUri(url), content);
@@ -175,26 +96,6 @@ namespace Worktile.Common
             else
             {
                 return default;
-            }
-        }
-
-        public static async Task<T> PutAsync<T>(string url, object data)
-        {
-            string json = JsonConvert.SerializeObject(data);
-            var content = new HttpStringContent(json, UnicodeEncoding.Utf8, ApplicationJson);
-            return await PutAsync<T>(url, content);
-        }
-
-        public static async Task<T> DeleteAsync<T>(string url)
-        {
-            var resMsg = await _client.DeleteAsync(GetUri(url));
-            if (resMsg.IsSuccessStatusCode)
-            {
-                return await resMsg.ReadAsModelAsync<T>();
-            }
-            else
-            {
-                return default(T);
             }
         }
     }

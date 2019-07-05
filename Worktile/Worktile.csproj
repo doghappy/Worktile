@@ -121,7 +121,6 @@
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\HttpClientExtension.cs" />
-    <Compile Include="Common\IncrementalCollection.cs" />
     <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
     <Compile Include="Common\UtilityTool.cs" />
     <Compile Include="Common\WtHttpClient.cs" />

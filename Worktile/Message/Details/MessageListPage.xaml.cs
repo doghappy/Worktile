@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Models;
+using WtMessage = Worktile.Message.Models;
 
 namespace Worktile.Message.Details
 {
@@ -82,24 +83,16 @@ namespace Worktile.Message.Details
 
         private async void Pin_Click(object sender, RoutedEventArgs e)
         {
-            //var flyoutItem = sender as MenuFlyoutItem;
-            //var msg = flyoutItem.DataContext as Models.Message.Message;
-            //bool result = await _messageService.PinAsync(msg.Id, _session);
-            //if (result)
-            //{
-            //    msg.IsPinned = true;
-            //}
+            var flyoutItem = sender as MenuFlyoutItem;
+            var msg = flyoutItem.DataContext as WtMessage.Message;
+            await ViewModel.PinAsync(msg);
         }
 
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
-            //var flyoutItem = sender as MenuFlyoutItem;
-            //var msg = flyoutItem.DataContext as Models.Message.Message;
-            //bool result = await _messageService.UnPinAsync(msg.Id, _session);
-            //if (result)
-            //{
-            //    msg.IsPinned = false;
-            //}
+            var flyoutItem = sender as MenuFlyoutItem;
+            var msg = flyoutItem.DataContext as WtMessage.Message;
+            await ViewModel.UnPinAsync(msg);
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
