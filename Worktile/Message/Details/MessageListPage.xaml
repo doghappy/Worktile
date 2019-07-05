@@ -5,6 +5,8 @@
     xmlns:local="using:Worktile.Message.Details"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:message="using:Worktile.Message.Models"
+    xmlns:controls="using:Worktile.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -14,8 +16,8 @@
         </Grid.RowDefinitions>
 
         <Grid>
-            <!--<ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
-                <ItemsControl ItemsSource="{x:Bind Messages}">
+            <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
+                <ItemsControl ItemsSource="{x:Bind ViewModel.Messages}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
@@ -23,8 +25,8 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="message:Message">
-                            <controls:MessageControl Message="{x:Bind}">
-                                <controls:MessageControl.RightContent>
+                          <controls:MessageControl Message="{x:Bind}">
+                                <!--<controls:MessageControl.RightContent>
                                     <Button Visibility="{x:Bind IsShowPin}" Style="{ThemeResource TextBlockButtonStyle}">
                                         <Button.Flyout>
                                             <MenuFlyout>
@@ -49,13 +51,13 @@
                                         </Button.Flyout>
                                         <FontIcon FontSize="12" Glyph="&#xE10C;"/>
                                     </Button>
-                                </controls:MessageControl.RightContent>
+                                </controls:MessageControl.RightContent>-->
                             </controls:MessageControl>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <ProgressRing Width="80" Height="80" IsActive="{x:Bind IsActive, Mode=OneWay}"/>-->
+            <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
         </Grid>
 
         <Grid Grid.Row="1">

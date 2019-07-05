@@ -20,13 +20,15 @@ namespace Worktile.Message.Details
         public MessageListPage()
         {
             InitializeComponent();
+            ViewModel = new MessageListViewModel();
         }
 
-
+        public MessageListViewModel ViewModel { get; }
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
             //await SendMessageAsync();
+            ViewModel.TestLoad();
         }
 
         private async void AttachmentButton_Click(object sender, RoutedEventArgs e)
@@ -55,6 +57,45 @@ namespace Worktile.Message.Details
             //        MsgTextBox.Text = MsgTextBox.Text.Insert(index, Environment.NewLine);
             //        MsgTextBox.SelectionStart = index + 1;
             //    }
+            //}
+        }
+
+        long _ticks = 0;
+
+        private async void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+            long ticks = DateTime.Now.Ticks;
+            //if (_messageService.HasMore.HasValue
+            //    && _messageService.HasMore.Value
+            //    && scrollViewer.VerticalOffset <= 10
+            //    && (_ticks == 0 || new TimeSpan(ticks - _ticks).TotalSeconds > 2))
+            //{
+            //    _ticks = ticks;
+            //    await LoadMessagesAsync();
+            //}
+            //ViewModel.TestLoad();
+        }
+
+        private async void Pin_Click(object sender, RoutedEventArgs e)
+        {
+            //var flyoutItem = sender as MenuFlyoutItem;
+            //var msg = flyoutItem.DataContext as Models.Message.Message;
+            //bool result = await _messageService.PinAsync(msg.Id, _session);
+            //if (result)
+            //{
+            //    msg.IsPinned = true;
+            //}
+        }
+
+        private async void UnPin_Click(object sender, RoutedEventArgs e)
+        {
+            //var flyoutItem = sender as MenuFlyoutItem;
+            //var msg = flyoutItem.DataContext as Models.Message.Message;
+            //bool result = await _messageService.UnPinAsync(msg.Id, _session);
+            //if (result)
+            //{
+            //    msg.IsPinned = false;
             //}
         }
     }

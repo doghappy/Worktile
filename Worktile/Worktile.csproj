@@ -180,6 +180,7 @@
       <DependentUpon>TaskMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\AvatarInitialsConverter.cs" />
+    <Compile Include="Converters\AvatarMessageFromConverter.cs" />
     <Compile Include="Converters\AvatarSourceConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Message\Details\MessageListPage.xaml.cs">
       <DependentUpon>MessageListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Message\Details\MessageListViewModel.cs" />
     <Compile Include="Message\MessageDetailPage.xaml.cs">
       <DependentUpon>MessageDetailPage.xaml</DependentUpon>
     </Compile>

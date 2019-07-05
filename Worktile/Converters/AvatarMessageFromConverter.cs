@@ -2,32 +2,37 @@
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 using Worktile.Main;
+using Worktile.Message.Models;
 
 namespace Worktile.Converters
 {
-    public class AvatarSourceConverter : IValueConverter
+    public class AvatarMessageFromConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value != null)
+            if (value is MessageFrom mf)
             {
-                string avatar = value.ToString();
-                if (avatar != string.Empty && avatar != "default.png")
+                int index = mf.Avatar.LastIndexOf('.');
+                string url = null;
+                if (mf.Type == FromType.Service)
                 {
-                    int index = avatar.LastIndexOf('.');
+                    url = MainViewModel.Box.ServiceUrl + mf.Avatar;
+                }
+                else
+                {
                     string size = "80x80";
                     if (parameter != null)
                     {
                         size = parameter.ToString();
                     }
-                    avatar = avatar.Insert(index, '_' + size);
-                    string uri = MainViewModel.Box.AvatarUrl + avatar;
-                    var img = new BitmapImage
-                    {
-                        UriSource = new Uri(uri)
-                    };
-                    return img;
+                    string avatar = mf.Avatar.Insert(index, '_' + size);
+                    url = MainViewModel.Box.AvatarUrl + avatar;
                 }
+                var img = new BitmapImage
+                {
+                    UriSource = new Uri(url)
+                };
+                return img;
             }
             return null;
         }

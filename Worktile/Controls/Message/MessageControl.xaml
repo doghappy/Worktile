@@ -14,6 +14,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
+            <cvt:AvatarInitialsConverter x:Key="AvatarInitialsConverter"/>
+            <cvt:AvatarMessageFromConverter x:Key="AvatarMessageFromConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -22,18 +24,13 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
-        <!--<tethys:Avatar Width="40"
-                       Margin="16 0 8 0"
-                       VerticalAlignment="Top"
-                       DisplayName="{x:Bind Message.From.TethysAvatar.DisplayName, Mode=OneWay}"
-                       Background="{x:Bind Message.From.TethysAvatar.Background, Mode=OneWay}"
-                       Source="{x:Bind Message.From.TethysAvatar.Source, Mode=OneWay}"/>-->
-        <!--<PersonPicture
-                    Width="40"
-                    IsGroup="{x:Bind ViewModel.Session.Type, Converter={StaticResource IsGroupConverter}}"
-                    Initials="{x:Bind ViewModel.Session.DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                    ProfilePicture="{x:Bind Message.From.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
+        
+        <PersonPicture
+            Width="40"
+            Margin="16 0 8 0"
+            VerticalAlignment="Top"
+            Initials="{x:Bind Message.From.DisplayName, Mode=OneWay, Converter={StaticResource AvatarInitialsConverter}}"
+            ProfilePicture="{x:Bind Message.From, Mode=OneWay, Converter={StaticResource AvatarMessageFromConverter}}"/>
 
         <Grid Grid.Column="1">
 
