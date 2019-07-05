@@ -182,6 +182,8 @@
     <Compile Include="Converters\AvatarInitialsConverter.cs" />
     <Compile Include="Converters\AvatarMessageFromConverter.cs" />
     <Compile Include="Converters\AvatarSourceConverter.cs" />
+    <Compile Include="Converters\BooleanReverseVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Converters\BooleanReverseConverter.cs" />
@@ -198,6 +200,9 @@
       <DependentUpon>MessageListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Message\Details\MessageListViewModel.cs" />
+    <Compile Include="Message\Details\UnreadListPage.xaml.cs">
+      <DependentUpon>UnreadListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Message\MessageDetailPage.xaml.cs">
       <DependentUpon>MessageDetailPage.xaml</DependentUpon>
     </Compile>
@@ -424,6 +429,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Message\Details\MessageListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Message\Details\UnreadListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

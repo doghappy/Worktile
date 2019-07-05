@@ -132,6 +132,12 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>浅色</value>
   </data>
+  <data name="MessageControlPinMenuFlyoutItem.Text" xml:space="preserve">
+    <value>固定</value>
+  </data>
+  <data name="MessageControlUnPinMenuFlyoutItem.Text" xml:space="preserve">
+    <value>取消固定</value>
+  </data>
   <data name="MessageDetailPageNavFiles" xml:space="preserve">
     <value>文件</value>
   </data>

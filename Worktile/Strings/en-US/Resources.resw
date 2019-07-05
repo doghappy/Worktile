@@ -132,6 +132,12 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="MessageControlPinMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="MessageControlUnPinMenuFlyoutItem.Text" xml:space="preserve">
+    <value>UnPin</value>
+  </data>
   <data name="MessageDetailPageNavFiles" xml:space="preserve">
     <value>Files</value>
   </data>

@@ -7,8 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:message="using:Worktile.Message.Models"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:cvt="using:Worktile.Converters"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <cvt:BooleanReverseVisibilityConverter x:Key="BooleanReverseVisibilityConverter"/>
+        <cvt:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,23 +33,28 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="message:Message">
                           <controls:MessageControl Message="{x:Bind}">
-                                <!--<controls:MessageControl.RightContent>
-                                    <Button Visibility="{x:Bind IsShowPin}" Style="{ThemeResource TextBlockButtonStyle}">
+                                <controls:MessageControl.RightContent>
+                                    <Button
+                                        Visibility="{x:Bind IsShowPin}"
+                                        Foreground="{ThemeResource ButtonForegroundThemeBrush}"
+                                        Style="{ThemeResource TextBlockButtonStyle}">
                                         <Button.Flyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="固定"
-                                                                DataContext="{x:Bind}"
-                                                                Click="Pin_Click"
-                                                                Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanReverseVisibilityConverter}}">
+                                                <MenuFlyoutItem
+                                                    x:Uid="MessageControlPinMenuFlyoutItem"
+                                                    DataContext="{x:Bind}"
+                                                    Click="Pin_Click"
+                                                    Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanReverseVisibilityConverter}}">
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE840;" />
                                                     </MenuFlyoutItem.Icon>
                                                 </MenuFlyoutItem>
 
-                                                <MenuFlyoutItem Text="取消固定"
-                                                                DataContext="{x:Bind}"
-                                                                Click="UnPin_Click"
-                                                                Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}">
+                                                <MenuFlyoutItem
+                                                    x:Uid="MessageControlUnPinMenuFlyoutItem"
+                                                    DataContext="{x:Bind}"
+                                                    Click="UnPin_Click"
+                                                    Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}">
                                                     <MenuFlyoutItem.Icon>
                                                         <FontIcon Glyph="&#xE196;"/>
                                                     </MenuFlyoutItem.Icon>
@@ -52,7 +63,7 @@
                                         </Button.Flyout>
                                         <FontIcon FontSize="12" Glyph="&#xE10C;"/>
                                     </Button>
-                                </controls:MessageControl.RightContent>-->
+                                </controls:MessageControl.RightContent>
                             </controls:MessageControl>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

@@ -45,6 +45,9 @@ namespace Worktile.Message
                     case "Message":
                         sourcePageType = typeof(MessageListPage);
                         break;
+                    case "Unread":
+                        sourcePageType = typeof(UnreadListPage);
+                        break;
                 }
                 if (sourcePageType != null)
                 {
