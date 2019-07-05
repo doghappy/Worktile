@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Common;
 
 namespace Worktile
 {
@@ -31,8 +32,24 @@ namespace Worktile
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
+            UnhandledException += App_UnhandledException;
+        }
+
+        private async void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            string exTitle = UtilityTool.GetStringFromResources("Exception");
+            string close = UtilityTool.GetStringFromResources("Close");
+            var dialog = new ContentDialog
+            {
+                PrimaryButtonText = close,
+                DefaultButton = ContentDialogButton.Primary,
+                Title = exTitle,
+                Content = e.Exception.Message
+            };
+            await dialog.ShowAsync();
         }
 
         /// <summary>

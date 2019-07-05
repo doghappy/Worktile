@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Models;
 
 namespace Worktile.Message.Details
 {
@@ -24,6 +25,11 @@ namespace Worktile.Message.Details
         }
 
         public MessageListViewModel ViewModel { get; }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel.Session = e.Parameter as Session;
+        }
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
@@ -66,15 +72,13 @@ namespace Worktile.Message.Details
         {
             var scrollViewer = sender as ScrollViewer;
             long ticks = DateTime.Now.Ticks;
-            //if (_messageService.HasMore.HasValue
-            //    && _messageService.HasMore.Value
-            //    && scrollViewer.VerticalOffset <= 10
-            //    && (_ticks == 0 || new TimeSpan(ticks - _ticks).TotalSeconds > 2))
-            //{
-            //    _ticks = ticks;
-            //    await LoadMessagesAsync();
-            //}
-            //ViewModel.TestLoad();
+            if (ViewModel.HasMore
+                && scrollViewer.VerticalOffset <= 10
+                && (_ticks == 0 || new TimeSpan(ticks - _ticks).TotalSeconds > .5))
+            {
+                _ticks = ticks;
+                await ViewModel.LoadMessagesAsync();
+            }
         }
 
         private async void Pin_Click(object sender, RoutedEventArgs e)
@@ -97,6 +101,11 @@ namespace Worktile.Message.Details
             //{
             //    msg.IsPinned = false;
             //}
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.LoadMessagesAsync();
         }
     }
 }

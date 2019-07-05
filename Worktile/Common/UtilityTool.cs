@@ -50,5 +50,10 @@ namespace Worktile.Common
                 return null;
             }
         }
+
+        public static string GetS3FileUrl(string id)
+        {
+            return $"{MainViewModel.Box.BaseUrl}entities/{id}/from-s3?team_id={MainViewModel.TeamId}";
+        }
     }
 }

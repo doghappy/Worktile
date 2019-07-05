@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="DarkThemeDisplayName" xml:space="preserve">
     <value>Dark</value>
   </data>
   <data name="DefaultThemeDisplayName" xml:space="preserve">
     <value>Default</value>
+  </data>
+  <data name="Exception" xml:space="preserve">
+    <value>Exception</value>
   </data>
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>Light</value>

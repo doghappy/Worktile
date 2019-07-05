@@ -35,6 +35,8 @@ namespace Worktile.Main
 
         public static StorageBox Box { get; private set; }
 
+        public static string TeamId { get; private set; }
+
         public static ObservableCollection<Session> Sessions { get; private set; }
 
         public ObservableCollection<User> Members { get; }
@@ -94,6 +96,7 @@ namespace Worktile.Main
         {
             var obj = await WtHttpClient.GetAsync("api/team");
             Team = obj["data"].ToObject<Team>();
+            TeamId = Team.Id;
             Logo = Box.LogoUrl + Team.Logo;
             var members = obj["data"]["members"].Children<JObject>();
             foreach (var item in members)
@@ -117,7 +120,9 @@ namespace Worktile.Main
                     UnRead = item.Value<int>("unread"),
                     IsStar = item.Value<bool>("starred"),
                     LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(item.Value<long>("latest_message_at")),
-                    Type = SessionType.Channel
+                    LatestMessageId = item.Value<string>("latest_message_id"),
+                    Type = SessionType.Channel,
+                    RefType = 1
                 });
             }
 
@@ -131,7 +136,9 @@ namespace Worktile.Main
                     UnRead = item.Value<int>("unread"),
                     IsStar = item.Value<bool>("starred"),
                     LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(item.Value<long>("latest_message_at")),
-                    Type = SessionType.Group
+                    LatestMessageId = item.Value<string>("latest_message_id"),
+                    Type = SessionType.Group,
+                    RefType = 1
                 });
             }
 
@@ -147,7 +154,8 @@ namespace Worktile.Main
                     IsStar = item.Value<bool>("starred"),
                     LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(item.Value<long>("latest_message_at")),
                     IsAAssistant = item["to"].Value<int>("role") == (int)UserRoleType.Bot,
-                    Type = SessionType.Session
+                    Type = SessionType.Session,
+                    RefType = 2
                 });
             }
 

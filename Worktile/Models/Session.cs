@@ -57,7 +57,11 @@ namespace Worktile.Models
             }
         }
 
+        public string LatestMessageId { get; set; }
+
         public bool IsAAssistant { get; set; }
+
+        public int RefType { get; set; }
     }
 
     public enum SessionType

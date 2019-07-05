@@ -18,20 +18,6 @@ namespace Worktile.Controls.Message
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _placeholderSource;
-        private string PlaceholderSource
-        {
-            get => _placeholderSource;
-            set
-            {
-                if (_placeholderSource != value)
-                {
-                    _placeholderSource = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PlaceholderSource)));
-                }
-            }
-        }
-
         private bool _isActive;
         public bool IsActive
         {
@@ -70,7 +56,6 @@ namespace Worktile.Controls.Message
                 if (_message != value && value.Type == WtMessage.MessageType.Image)
                 {
                     _message = value;
-                    //PlaceholderSource = WtFileHelper.GetThumbnailUrl(value.Body.Attachment.Addition.Thumbnail);
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
                 }
             }
@@ -91,7 +76,7 @@ namespace Worktile.Controls.Message
             //StorageFile file;
             //if (fileItem == null)
             //{
-            //    string url = WtFileHelper.GetS3FileUrl(Message.Body.Attachment.Id);
+            //    string url = UtilityTool.GetS3FileUrl(Message.Body.Attachment.Id);
             //    var buffer = await WtHttpClient.GetByteBufferAsync(url);
             //    file = await folder.CreateFileAsync(fileName);
             //    await FileIO.WriteBufferAsync(file, buffer);

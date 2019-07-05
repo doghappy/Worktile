@@ -186,6 +186,7 @@
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Converters\BooleanReverseConverter.cs" />
     <Compile Include="Converters\IsNullOrEmptyConverter.cs" />
+    <Compile Include="Converters\ThumbnailImageSourceConverter.cs" />
     <Compile Include="Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

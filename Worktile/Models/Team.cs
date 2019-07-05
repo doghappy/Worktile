@@ -6,12 +6,8 @@ namespace Worktile.Models
 {
     public class Team
     {
-        [JsonProperty("expired_at")]
-        [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTimeOffset ExpiredAt { get; set; }
-
-        [JsonProperty("user_limit")]
-        public int UserLimit { get; set; }
+        [JsonProperty("_id")]
+        public string Id { get; set; }
 
         public string Name { get; set; }
 
@@ -30,6 +26,13 @@ namespace Worktile.Models
 
         [JsonProperty("pricing_version")]
         public PricingVersion PricingVersion { get; set; }
+
+        [JsonProperty("expired_at")]
+        [JsonConverter(typeof(UnixDateTimeConverter))]
+        public DateTimeOffset ExpiredAt { get; set; }
+
+        [JsonProperty("user_limit")]
+        public int UserLimit { get; set; }
     }
 
     public class PricingCheckpoints

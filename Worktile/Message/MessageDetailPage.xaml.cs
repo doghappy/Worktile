@@ -48,7 +48,7 @@ namespace Worktile.Message
                 }
                 if (sourcePageType != null)
                 {
-                    ContentFrame.Navigate(sourcePageType);
+                    ContentFrame.Navigate(sourcePageType, ViewModel.Session);
                 }
             }
         }

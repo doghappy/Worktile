@@ -1,16 +1,17 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
+using Worktile.Main;
 
 namespace Worktile.Converters
 {
-    public class ImageSourceConverter : IValueConverter
+    class ThumbnailImageSourceConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value != null)
             {
-                string uri = value.ToString();
+                string uri = $"{MainViewModel.Box.BaseUrl}/thumb/{value.ToString()}";
                 return new BitmapImage
                 {
                     UriSource = new Uri(uri)
