@@ -121,6 +121,7 @@
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\HttpClientExtension.cs" />
+    <Compile Include="Common\IncrementalCollection.cs" />
     <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
     <Compile Include="Common\UtilityTool.cs" />
     <Compile Include="Common\WtHttpClient.cs" />
@@ -485,6 +486,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp">
+      <Version>5.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
       <Version>5.1.1</Version>

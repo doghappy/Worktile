@@ -146,6 +146,20 @@ namespace Worktile.Common
             }
         }
 
+        public static async Task<JObject> DeleteAsync(string url)
+        {
+            var resMsg = await _client.DeleteAsync(GetUri(url));
+            if (resMsg.IsSuccessStatusCode)
+            {
+                string json = await resMsg.Content.ReadAsStringAsync();
+                return JObject.Parse(json);
+            }
+            else
+            {
+                return default;
+            }
+        }
+
         public static async Task<T> PutAsync<T>(string url)
         {
             return await PutAsync<T>(url, null);

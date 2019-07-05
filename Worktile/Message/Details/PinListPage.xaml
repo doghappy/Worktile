@@ -2,35 +2,36 @@
     x:Class="Worktile.Message.Details.PinListPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Worktile.Message.Details"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:cvt="using:Worktile.Converters"
     xmlns:message="using:Worktile.Message.Models"
-    xmlns:controls="using:Worktile.Controls"
-    Loaded="Page_Loaded">
+    xmlns:controls="using:Worktile.Controls">
 
     <Grid>
-        <ScrollViewer>
-            <ItemsControl ItemsSource="{x:Bind ViewModel.Messages}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="message:Message">
-                        <controls:MessageControl Message="{x:Bind}">
-                            <controls:MessageControl.RightContent>
-                                <Button
-                                    Visibility="{x:Bind IsShowPin}"
-                                    Foreground="{ThemeResource ButtonForegroundThemeBrush}"
-                                    Style="{ThemeResource TextBlockButtonStyle}"
-                                    Click="UnPin_Click">
-                                        <FontIcon FontSize="12" Glyph="&#xE196;"/>
-                                </Button>
-                            </controls:MessageControl.RightContent>
-                        </controls:MessageControl>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-        <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
+        <ListView ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}" SelectionMode="None">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="message:Message">
+                    <controls:MessageControl Message="{x:Bind}">
+                        <controls:MessageControl.RightContent>
+                            <Button
+                                DataContext="{x:Bind}"
+                                Visibility="{x:Bind IsShowPin}"
+                                Foreground="{ThemeResource ButtonForegroundThemeBrush}"
+                                Style="{ThemeResource TextBlockButtonStyle}"
+                                Click="UnPin_Click">
+                                <FontIcon FontSize="12" Glyph="&#xE196;"/>
+                            </Button>
+                        </controls:MessageControl.RightContent>
+                    </controls:MessageControl>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.Messages.IsLoading, Mode=OneWay}"/>
     </Grid>
 </Page>
