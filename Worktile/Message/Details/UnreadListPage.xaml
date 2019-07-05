@@ -5,9 +5,64 @@
     xmlns:local="using:Worktile.Message.Details"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cvt="using:Worktile.Converters"
+    xmlns:message="using:Worktile.Message.Models"
+    xmlns:controls="using:Worktile.Controls"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <cvt:BooleanReverseVisibilityConverter x:Key="BooleanReverseVisibilityConverter"/>
+        <cvt:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+    </Page.Resources>
+
     <Grid>
-        
+        <ScrollViewer ViewChanged="ScrollViewer_ViewChanged">
+            <ItemsControl ItemsSource="{x:Bind ViewModel.Messages}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel VerticalAlignment="Top" ItemsUpdatingScrollMode="KeepLastItemInView"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="message:Message">
+                        <controls:MessageControl Message="{x:Bind}">
+                            <controls:MessageControl.RightContent>
+                                <Button
+                                    Visibility="{x:Bind IsShowPin}"
+                                    Foreground="{ThemeResource ButtonForegroundThemeBrush}"
+                                    Style="{ThemeResource TextBlockButtonStyle}">
+                                    <Button.Flyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem
+                                                x:Uid="MessageControlPinMenuFlyoutItem"
+                                                DataContext="{x:Bind}"
+                                                Click="Pin_Click"
+                                                Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanReverseVisibilityConverter}}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE840;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutItem
+                                                x:Uid="MessageControlUnPinMenuFlyoutItem"
+                                                DataContext="{x:Bind}"
+                                                Click="UnPin_Click"
+                                                Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE196;"/>
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                    <FontIcon FontSize="12" Glyph="&#xE10C;"/>
+                                </Button>
+                            </controls:MessageControl.RightContent>
+                        </controls:MessageControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <ProgressRing Width="80" Height="80" IsActive="{x:Bind ViewModel.IsActive, Mode=OneWay}"/>
     </Grid>
 </Page>

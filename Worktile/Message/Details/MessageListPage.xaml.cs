@@ -34,7 +34,6 @@ namespace Worktile.Message.Details
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
             //await SendMessageAsync();
-            ViewModel.TestLoad();
         }
 
         private async void AttachmentButton_Click(object sender, RoutedEventArgs e)

@@ -196,6 +196,7 @@
     <Compile Include="Main\Models\WtApp.cs" />
     <Compile Include="Message\Converters\IsGroupConverter.cs" />
     <Compile Include="Message\Converters\UnReadVisibilityConverter.cs" />
+    <Compile Include="Message\Details\ListViewModel.cs" />
     <Compile Include="Message\Details\MessageListPage.xaml.cs">
       <DependentUpon>MessageListPage.xaml</DependentUpon>
     </Compile>
@@ -203,6 +204,7 @@
     <Compile Include="Message\Details\UnreadListPage.xaml.cs">
       <DependentUpon>UnreadListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Message\Details\UnreadListViewModel.cs" />
     <Compile Include="Message\MessageDetailPage.xaml.cs">
       <DependentUpon>MessageDetailPage.xaml</DependentUpon>
     </Compile>

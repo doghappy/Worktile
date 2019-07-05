@@ -8,15 +8,17 @@ using Worktile.Models;
 
 namespace Worktile.Message.Details
 {
-    public class MessageListViewModel : BindableBase
+    public class UnreadListViewModel : BindableBase
     {
-        public MessageListViewModel()
+        public UnreadListViewModel()
         {
             Messages = new ObservableCollection<WtMessage.Message>();
             HasMore = true;
         }
 
         public ObservableCollection<WtMessage.Message> Messages { get; }
+
+        const int PageSize = 20;
 
         public bool HasMore { get; private set; }
 
@@ -29,21 +31,28 @@ namespace Worktile.Message.Details
             set => SetProperty(ref _isActive, value);
         }
 
-        string _latestId = null;
+        string _next = null;
 
         public async Task LoadMessagesAsync()
         {
+            //new TopNav { Name = "未读", FilterType = 2 },
+            //    new TopNav { Name = "已读", FilterType = 4 },
+            //    new TopNav { Name = "待处理", FilterType = 3 }
             if (HasMore)
             {
                 IsActive = true;
-                string url = $"api/messages?ref_id={Session.Id}&ref_type={Session.RefType}&latest_id={_latestId}&size=20";
+                string url = $"api/pigeon/messages?ref_id={Session.Id}&ref_type=2&filter_type=2&size=20&next={_next}";
                 var obj = await WtHttpClient.GetAsync(url);
-                if (_latestId != null)
+                var data = obj["data"] as JObject;
+                if (data.ContainsKey("next") && data.Value<string>("next") != string.Empty)
                 {
-                    HasMore = obj["data"].Value<bool>("more");
+                    _next = data.Value<string>("next");
                 }
-                _latestId = obj["data"].Value<string>("next");
-                var msgs = obj["data"]["messages"].Children<JObject>().OrderByDescending(g => g.Value<double>("created_at"));
+                else
+                {
+                    HasMore = false;
+                }
+                var msgs = data["messages"].Children<JObject>().OrderByDescending(g => g.Value<double>("created_at"));
                 foreach (var item in msgs)
                 {
                     Messages.Insert(0, item.ToObject<WtMessage.Message>());

@@ -6,6 +6,18 @@
     xmlns:local="using:Worktile">
     <Application.Resources>
         <ResourceDictionary>
+            <SolidColorBrush x:Key="SuccessBrush" Color="#22d7bb"/>
+            <SolidColorBrush x:Key="WarningBrush" Color="#ffc442"/>
+            <SolidColorBrush x:Key="DangerBrush" Color="#ff5b57"/>
+            
+            <SolidColorBrush x:Key="CalendarBrush" Color="#1affc442"/>
+            <SolidColorBrush x:Key="ProjectBrush" Color="#F76CAA"/>
+            <SolidColorBrush x:Key="LeaveBrush" Color="#FFD234"/>
+            <SolidColorBrush x:Key="ApprovalBrush" Color="#99D75A"/>
+            <SolidColorBrush x:Key="OkrBrush" Color="#4E8AF9"/>
+            <SolidColorBrush x:Key="AppraisalBrush" Color="#7076FA"/>
+            <SolidColorBrush x:Key="ReportBrush" Color="#2DBCFF"/>
+
             <FontFamily x:Key="Wtf">ms-appx:///Worktile,,,/Assets/Fonts/iconfont.ttf#wtf</FontFamily>
             <Style TargetType="FontIcon" x:Key="WtfIcon">
                 <Setter Property="FontFamily" Value="{StaticResource Wtf}"/>
@@ -22,8 +34,6 @@
 
             <Thickness x:Key="Bottom16">0 0 0 16</Thickness>
             <Thickness x:Key="Bottom32">0 0 0 32</Thickness>
-
-            <SolidColorBrush x:Key="DangerBrush" Color="#ff5b57"/>
 
             <Style TargetType="Grid" x:Key="AppPageMasterGrid">
                 <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
