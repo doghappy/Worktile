@@ -27,6 +27,7 @@ namespace Worktile.Main
             SelectedApp = Apps.First();
             Members = new ObservableCollection<User>();
             Sessions = new ObservableCollection<Session>();
+            Services = new ObservableCollection<WtService>();
         }
 
         public string IMToken { get; private set; }
@@ -39,7 +40,9 @@ namespace Worktile.Main
 
         public static ObservableCollection<Session> Sessions { get; private set; }
 
-        public ObservableCollection<User> Members { get; }
+        public static ObservableCollection<User> Members { get; private set; }
+
+        public static ObservableCollection<WtService> Services { get; private set; }
 
         private Team _team;
         public Team Team
@@ -102,6 +105,11 @@ namespace Worktile.Main
             foreach (var item in members)
             {
                 Members.Add(item.ToObject<User>());
+            }
+            var services = obj["data"]["services"].Children<JObject>();
+            foreach (var item in services)
+            {
+                Services.Add(item.ToObject<WtService>());
             }
         }
 

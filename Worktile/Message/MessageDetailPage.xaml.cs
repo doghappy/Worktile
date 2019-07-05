@@ -54,6 +54,9 @@ namespace Worktile.Message
                     case "Later":
                         sourcePageType = typeof(LaterListPage);
                         break;
+                    case "Pin":
+                        sourcePageType = typeof(PinListPage);
+                        break;
                 }
                 if (sourcePageType != null)
                 {

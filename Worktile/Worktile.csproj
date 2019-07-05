@@ -194,6 +194,7 @@
     </Compile>
     <Compile Include="Main\MainViewModel.cs" />
     <Compile Include="Main\Models\WtApp.cs" />
+    <Compile Include="Main\Models\WtService.cs" />
     <Compile Include="Message\Converters\IsGroupConverter.cs" />
     <Compile Include="Message\Converters\UnReadVisibilityConverter.cs" />
     <Compile Include="Message\Details\LaterListPage.xaml.cs">
@@ -203,6 +204,10 @@
       <DependentUpon>MessageListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Message\Details\MessageListViewModel.cs" />
+    <Compile Include="Message\Details\PinListPage.xaml.cs">
+      <DependentUpon>PinListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Message\Details\PinListViewModel.cs" />
     <Compile Include="Message\Details\ReadListPage.xaml.cs">
       <DependentUpon>ReadListPage.xaml</DependentUpon>
     </Compile>
@@ -442,6 +447,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Message\Details\MessageListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Message\Details\PinListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
