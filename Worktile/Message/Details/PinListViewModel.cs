@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using System.Linq;
 using System.Threading.Tasks;
 using WtMessage = Worktile.Message.Models;
 using Worktile.Common;
 using Worktile.Models;
-using Worktile.Main;
 using Microsoft.Toolkit.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -60,18 +58,7 @@ namespace Worktile.Message.Details
             foreach (var item in msgs)
             {
                 var msg = item["reference"].ToObject<WtMessage.Message>();
-                if (msg.From.Type == WtMessage.FromType.Service)
-                {
-                    var service = MainViewModel.Services.Single(u => u.Id == msg.From.Uid);
-                    msg.From.Avatar = service.Avatar;
-                    msg.From.DisplayName = service.DisplayName;
-                }
-                else
-                {
-                    var member = MainViewModel.Members.Single(u => u.Id == msg.From.Uid);
-                    msg.From.Avatar = member.Avatar;
-                    msg.From.DisplayName = member.DisplayName;
-                }
+                msg.CompleteMessageFrom();
                 list.Add(msg);
             }
             if (list.Count > 0)

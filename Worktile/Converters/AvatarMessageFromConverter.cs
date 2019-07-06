@@ -12,27 +12,30 @@ namespace Worktile.Converters
         {
             if (value is MessageFrom mf)
             {
-                int index = mf.Avatar.LastIndexOf('.');
-                string url = null;
-                if (mf.Type == FromType.Service)
+                if (mf.Avatar != string.Empty)
                 {
-                    url = MainViewModel.Box.ServiceUrl + mf.Avatar;
-                }
-                else
-                {
-                    string size = "80x80";
-                    if (parameter != null)
+                    int index = mf.Avatar.LastIndexOf('.');
+                    string url = null;
+                    if (mf.Type == FromType.Service)
                     {
-                        size = parameter.ToString();
+                        url = MainViewModel.Box.ServiceUrl + mf.Avatar;
                     }
-                    string avatar = mf.Avatar.Insert(index, '_' + size);
-                    url = MainViewModel.Box.AvatarUrl + avatar;
+                    else
+                    {
+                        string size = "80x80";
+                        if (parameter != null)
+                        {
+                            size = parameter.ToString();
+                        }
+                        string avatar = mf.Avatar.Insert(index, '_' + size);
+                        url = MainViewModel.Box.AvatarUrl + avatar;
+                    }
+                    var img = new BitmapImage
+                    {
+                        UriSource = new Uri(url)
+                    };
+                    return img;
                 }
-                var img = new BitmapImage
-                {
-                    UriSource = new Uri(url)
-                };
-                return img;
             }
             return null;
         }

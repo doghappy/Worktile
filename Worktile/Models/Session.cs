@@ -67,7 +67,6 @@ namespace Worktile.Models
     public enum SessionType
     {
         Session,
-        Group,
         Channel
     }
 }

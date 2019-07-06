@@ -1,13 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Worktile.Common;
 using Worktile.Main.Models;
 using Worktile.Models;
+using WtMessage = Worktile.Message.Models;
 
 namespace Worktile.Main
 {
@@ -29,8 +29,6 @@ namespace Worktile.Main
             Sessions = new ObservableCollection<Session>();
             Services = new ObservableCollection<WtService>();
         }
-
-        public string IMToken { get; private set; }
 
         public ObservableCollection<WtApp> Apps { get; }
 
@@ -84,6 +82,8 @@ namespace Worktile.Main
             var obj = await WtHttpClient.GetAsync("api/user/me");
             User = obj["data"]["me"].ToObject<User>();
             Box = obj["data"]["config"]["box"].ToObject<StorageBox>();
+            string imToken = obj["data"]["me"].Value<string>("imToken");
+            string imHost = obj["data"]["config"]["feed"].Value<string>("newHost");
             string img = obj["data"]["me"]["preferences"].Value<string>("background_image");
             if (img.StartsWith("desktop-") && img.EndsWith(".jpg"))
             {
@@ -92,6 +92,43 @@ namespace Worktile.Main
             else
             {
                 WtBackgroundImage = Box.BaseUrl + "background-image/" + img + "/from-s3";
+            }
+
+            WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
+            WtSocketClient.Connect(imHost, imToken, User.Id);
+        }
+
+        private async void WtSocketClient_OnMessageReceived(JObject obj)
+        {
+            var msg = obj.ToObject<WtMessage.Message>();
+            var session = Sessions.FirstOrDefault(s => s.Id == msg.To.Id);
+            if (session == null)
+            {
+                string url = $"api/{msg.To.Type.ToString().ToLower()}s/5b63fdc2b59db2083c0f0df8";
+                var sessionObj = await WtHttpClient.GetAsync(url);
+                Session newSession = null;
+                if (msg.To.Type == WtMessage.ToType.Channel)
+                    newSession = GetChannelSession(sessionObj);
+                else
+                    newSession = GetMemberSession(sessionObj);
+                newSession.UnRead++;
+                newSession.LatestMessageAt = msg.CreatedAt;
+                int index = GetNewIndex(newSession);
+                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Sessions.Insert(index, newSession)));
+            }
+            else
+            {
+                int index = Sessions.IndexOf(session);
+                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                {
+                    session.LatestMessageAt = msg.CreatedAt;
+                    session.UnRead++;
+                    int newindex = GetNewIndex(session);
+                    if (index != newindex)
+                    {
+                        Sessions.Move(index, newindex);
+                    }
+                }));
             }
         }
 
@@ -113,80 +150,106 @@ namespace Worktile.Main
             }
         }
 
+        private Session GetChannelSession(JObject obj)
+        {
+            return new Session
+            {
+                Id = obj.Value<string>("_id"),
+                DisplayName = obj.Value<string>("name"),
+                UnRead = obj.Value<int>("unread"),
+                IsStar = obj.Value<bool>("starred"),
+                LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(obj.Value<long>("latest_message_at")),
+                LatestMessageId = obj.Value<string>("latest_message_id"),
+                Type = SessionType.Channel,
+                RefType = 1
+            };
+        }
+
+        private Session GetMemberSession(JObject obj)
+        {
+            return new Session
+            {
+                Id = obj.Value<string>("_id"),
+                Avatar = obj["to"].Value<string>("avatar"),
+                DisplayName = obj["to"].Value<string>("display_name"),
+                UnRead = obj.Value<int>("unread"),
+                IsStar = obj.Value<bool>("starred"),
+                LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(obj.Value<long>("latest_message_at")),
+                IsAAssistant = obj["to"].Value<int>("role") == (int)UserRoleType.Bot,
+                Type = SessionType.Session,
+                RefType = 2
+            };
+        }
+
         public async Task RequestChatsAsync()
         {
             var obj = await WtHttpClient.GetAsync("api/team/chats");
-            var list = new List<Session>();
 
             var channels = obj["data"]["channels"].Children<JObject>();
-            foreach (var item in channels)
-            {
-                list.Add(new Session
-                {
-                    Id = item.Value<string>("_id"),
-                    DisplayName = item.Value<string>("name"),
-                    UnRead = item.Value<int>("unread"),
-                    IsStar = item.Value<bool>("starred"),
-                    LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(item.Value<long>("latest_message_at")),
-                    LatestMessageId = item.Value<string>("latest_message_id"),
-                    Type = SessionType.Channel,
-                    RefType = 1
-                });
-            }
-
             var groups = obj["data"]["groups"].Children<JObject>();
-            foreach (var item in groups)
+            var allChannels = channels.Concat(groups);
+            foreach (var item in allChannels)
             {
-                list.Add(new Session
-                {
-                    Id = item.Value<string>("_id"),
-                    DisplayName = item.Value<string>("name"),
-                    UnRead = item.Value<int>("unread"),
-                    IsStar = item.Value<bool>("starred"),
-                    LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(item.Value<long>("latest_message_at")),
-                    LatestMessageId = item.Value<string>("latest_message_id"),
-                    Type = SessionType.Group,
-                    RefType = 1
-                });
+                var session = GetChannelSession(item);
+                int index = GetNewIndex(session);
+                Sessions.Insert(index, session);
             }
 
             var sessions = obj["data"]["sessions"].Children<JObject>();
             foreach (var item in sessions)
             {
-                list.Add(new Session
-                {
-                    Id = item.Value<string>("_id"),
-                    Avatar = item["to"].Value<string>("avatar"),
-                    DisplayName = item["to"].Value<string>("display_name"),
-                    UnRead = item.Value<int>("unread"),
-                    IsStar = item.Value<bool>("starred"),
-                    LatestMessageAt = DateTimeOffset.FromUnixTimeSeconds(item.Value<long>("latest_message_at")),
-                    IsAAssistant = item["to"].Value<int>("role") == (int)UserRoleType.Bot,
-                    Type = SessionType.Session,
-                    RefType = 2
-                });
+                var session = GetMemberSession(item);
+                int index = GetNewIndex(session);
+                Sessions.Insert(index, session);
             }
+        }
 
-            list.Sort((a, b) =>
+        public int GetNewIndex(Session session)
+        {
+            if (Sessions.Count == 0)
             {
-                if (a.IsStar && !b.IsStar)
-                    return -1;
-                if (!a.IsStar && b.IsStar)
-                    return 1;
-                if (a.LatestMessageAt > b.LatestMessageAt)
-                    return -1;
-                if (a.LatestMessageAt < b.LatestMessageAt)
-                    return 1;
-                if (a.UnRead > 0 && b.UnRead <= 0)
-                    return -1;
-                if (a.UnRead <= 0 && b.UnRead > 0)
-                    return 1;
-                return a.DisplayName.CompareTo(b.DisplayName);
-            });
-            foreach (var item in list)
-            {
-                Sessions.Add(item);
+                return 0;
             }
+            for (int i = 0; i < Sessions.Count; i++)
+            {
+                if (session.IsStar)
+                {
+                    if (Sessions[i].IsStar)
+                    {
+                        if (session.LatestMessageAt >= Sessions[i].LatestMessageAt)
+                        {
+                            return i;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        return i;
+                    }
+                }
+                else
+                {
+                    if (Sessions[i].IsStar)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (session.LatestMessageAt >= Sessions[i].LatestMessageAt)
+                        {
+                            return i;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
+            return Sessions.Count - 1;
         }
     }
 }

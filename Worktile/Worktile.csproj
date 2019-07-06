@@ -121,10 +121,12 @@
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\HttpClientExtension.cs" />
+    <Compile Include="Common\MessageHelper.cs" />
     <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
     <Compile Include="Common\UtilityTool.cs" />
     <Compile Include="Common\WtHttpClient.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
+    <Compile Include="Common\WtSocketClient.cs" />
     <Compile Include="Controls\Message\AppraisalMessage.xaml.cs">
       <DependentUpon>AppraisalMessage.xaml</DependentUpon>
     </Compile>
@@ -228,7 +230,6 @@
     <Compile Include="Message\Models\AttachmentAddition.cs" />
     <Compile Include="Message\Models\AttachmentReference.cs" />
     <Compile Include="Message\Models\BodyAttachment.cs" />
-    <Compile Include="Message\Models\FromType.cs" />
     <Compile Include="Message\Models\Message.cs" />
     <Compile Include="Message\Models\MessageAction.cs" />
     <Compile Include="Message\Models\MessageBody.cs" />
@@ -239,7 +240,6 @@
     <Compile Include="Message\Models\MessageNav.cs" />
     <Compile Include="Message\Models\MessageTo.cs" />
     <Compile Include="Message\Models\MessageType.cs" />
-    <Compile Include="Message\Models\ToType.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\StorageBox.cs" />
     <Compile Include="Models\Team.cs" />
@@ -497,6 +497,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="SocketIoClientDotNet">
+      <Version>0.9.13</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

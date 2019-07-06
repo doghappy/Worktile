@@ -8,6 +8,12 @@ namespace Worktile.Message.Models
         public string Id { get; set; }
 
         [JsonProperty("type")]
-        public int Type { get; set; }
+        public ToType Type { get; set; }
+    }
+
+    public enum ToType
+    {
+        Channel = 1,
+        Session
     }
 }

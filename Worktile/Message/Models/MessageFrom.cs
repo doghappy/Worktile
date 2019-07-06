@@ -16,4 +16,11 @@ namespace Worktile.Message.Models
         [JsonProperty("display_name")]
         public string DisplayName { get; set; }
     }
+
+    public enum FromType
+    {
+        User = 1,
+        Service,
+        Addition
+    }
 }
