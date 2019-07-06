@@ -156,6 +156,9 @@
   <data name="MessageDetailPageNavUnread" xml:space="preserve">
     <value>Unread</value>
   </data>
+  <data name="MessageListPageMsgTextBox.PlaceholderText" xml:space="preserve">
+    <value>Press Ctrl+Enter to send message, Press Win+. to send Emoji.</value>
+  </data>
   <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
     <value>Message</value>
   </data>

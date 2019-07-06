@@ -79,23 +79,6 @@
             </Grid.RowDefinitions>
             <Grid Background="{ThemeResource NavigationViewTopPaneBackground}">
                 <CommandBar Background="Transparent" HorizontalAlignment="Left" DefaultLabelPosition="Right">
-                    <!--<AppBarButton Label="表情">
-                        <AppBarButton.Flyout>
-                            <Flyout>
-                                <Flyout.FlyoutPresenterStyle>
-                                    <Style TargetType="FlyoutPresenter">
-                                        <Setter Property="Padding" Value="0"/>
-                                        <Setter Property="MaxWidth" Value="800"/>
-                                    </Style>
-                                </Flyout.FlyoutPresenterStyle>
-                                <controls:EmojiPicker Width="700" Height="360" OnEmojiSelected="EmojiPicker_OnEmojiSelected"/>
-                            </Flyout>
-                        </AppBarButton.Flyout>
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE170;"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>-->
                     <AppBarButton Label="附件" Icon="Attach" Click="AttachmentButton_Click"/>
                 </CommandBar>
                 <CommandBar Background="Transparent" HorizontalAlignment="Right" DefaultLabelPosition="Right">
@@ -103,11 +86,12 @@
                 </CommandBar>
             </Grid>
 
-            <TextBox x:Name="MsgTextBox"
-                     Grid.Row="1"
-                     TextWrapping="Wrap"
-                     KeyDown="MsgTextBox_KeyDown"
-                     PlaceholderText="Ctrl+Enter发送消息" />
+            <TextBox
+                x:Name="MsgTextBox"
+                x:Uid="MessageListPageMsgTextBox"
+                Grid.Row="1"
+                TextWrapping="Wrap"
+                KeyDown="MsgTextBox_KeyDown"/>
         </Grid>
     </Grid>
 </Page>

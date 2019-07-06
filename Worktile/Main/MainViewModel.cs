@@ -36,6 +36,8 @@ namespace Worktile.Main
 
         public static string TeamId { get; private set; }
 
+        public static User Me { get; private set; }
+
         public static ObservableCollection<Session> Sessions { get; private set; }
 
         public static ObservableCollection<User> Members { get; private set; }
@@ -81,6 +83,7 @@ namespace Worktile.Main
         {
             var obj = await WtHttpClient.GetAsync("api/user/me");
             User = obj["data"]["me"].ToObject<User>();
+            Me = User;
             Box = obj["data"]["config"]["box"].ToObject<StorageBox>();
             string imToken = obj["data"]["me"].Value<string>("imToken");
             string imHost = obj["data"]["config"]["feed"].Value<string>("newHost");

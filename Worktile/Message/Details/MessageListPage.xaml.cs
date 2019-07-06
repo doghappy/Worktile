@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage.Pickers;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Worktile.Common;
 using Worktile.Models;
 using WtMessage = Worktile.Message.Models;
 
@@ -27,43 +22,60 @@ namespace Worktile.Message.Details
 
         public MessageListViewModel ViewModel { get; }
 
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.LoadMessagesAsync();
+            WtSocketClient.OnMessageReceived += ViewModel.OnMessageReceived;
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel.Session = e.Parameter as Session;
         }
 
-        private async void SendButton_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            //await SendMessageAsync();
+            WtSocketClient.OnMessageReceived -= ViewModel.OnMessageReceived;
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            SendMessage();
         }
 
         private async void AttachmentButton_Click(object sender, RoutedEventArgs e)
         {
-            //var picker = new FileOpenPicker
-            //{
-            //    ViewMode = PickerViewMode.Thumbnail,
-            //    SuggestedStartLocation = PickerLocationId.Downloads
-            //};
-            //picker.FileTypeFilter.Add("*");
-            //var files = await picker.PickMultipleFilesAsync();
-            //await _entityService.UploadFileAsync(files, _session.Id, RefType);
+            var picker = new FileOpenPicker
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.Downloads
+            };
+            picker.FileTypeFilter.Add("*");
+            var files = await picker.PickMultipleFilesAsync();
+            await ViewModel.UploadFileAsync(files);
         }
 
-        private async void MsgTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        private void MsgTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            //if (e.Key == VirtualKey.Enter)
-            //{
-            //    if (Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
-            //    {
-            //        await SendMessageAsync();
-            //    }
-            //    else
-            //    {
-            //        int index = MsgTextBox.SelectionStart;
-            //        MsgTextBox.Text = MsgTextBox.Text.Insert(index, Environment.NewLine);
-            //        MsgTextBox.SelectionStart = index + 1;
-            //    }
-            //}
+            if (e.Key == VirtualKey.Enter)
+            {
+                if (Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
+                {
+                    SendMessage();
+                }
+                else
+                {
+                    int index = MsgTextBox.SelectionStart;
+                    MsgTextBox.Text = MsgTextBox.Text.Insert(index, Environment.NewLine);
+                    MsgTextBox.SelectionStart = index + 1;
+                }
+            }
+        }
+
+        private void SendMessage()
+        {
+            ViewModel.SendMessage(MsgTextBox.Text);
+            MsgTextBox.Text = string.Empty;
         }
 
         long _ticks = 0;
@@ -93,11 +105,6 @@ namespace Worktile.Message.Details
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as WtMessage.Message;
             await ViewModel.UnPinAsync(msg);
-        }
-
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            await ViewModel.LoadMessagesAsync();
         }
     }
 }

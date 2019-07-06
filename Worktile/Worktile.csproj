@@ -181,6 +181,7 @@
     <Compile Include="Controls\Message\TaskMessage.xaml.cs">
       <DependentUpon>TaskMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ExtensionIconConverter.cs" />
     <Compile Include="Converters\AvatarInitialsConverter.cs" />
     <Compile Include="Converters\AvatarMessageFromConverter.cs" />
     <Compile Include="Converters\AvatarSourceConverter.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Message\Models\MessageNav.cs" />
     <Compile Include="Message\Models\MessageTo.cs" />
     <Compile Include="Message\Models\MessageType.cs" />
+    <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\StorageBox.cs" />
     <Compile Include="Models\Team.cs" />

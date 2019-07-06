@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
+using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,12 @@ using WtMessage = Worktile.Message.Models;
 using Worktile.Common;
 using Worktile.Models;
 using Newtonsoft.Json;
+using Microsoft.Toolkit.Uwp.Helpers;
+using System.Collections.Generic;
+using Windows.Storage;
+using Worktile.Main;
+using Windows.Storage.AccessCache;
+using Windows.Web.Http;
 
 namespace Worktile.Message.Details
 {
@@ -79,6 +86,51 @@ namespace Worktile.Message.Details
             if (obj.Value<int>("code") == 200 && obj.Value<bool>("data"))
             {
                 msg.IsPinned = false;
+            }
+        }
+
+        public async void OnMessageReceived(JObject obj)
+        {
+            var msg = obj.ToObject<WtMessage.Message>();
+            msg.CompleteMessageFrom();
+            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Messages.Add(msg)));
+        }
+
+        public void SendMessage(string msg)
+        {
+            string to = Session.Id;
+            WtMessage.ToType toType = WtMessage.ToType.Channel;
+            if (Session.Type == SessionType.Session)
+            {
+                toType = WtMessage.ToType.Session;
+            }
+            string message = msg.Trim();
+            if (message != string.Empty)
+            {
+                WtSocketClient.SendMessage(to, toType, message, WtMessage.MessageType.Text);
+            }
+        }
+
+        public async Task UploadFileAsync(IReadOnlyList<StorageFile> files)
+        {
+            if (files.Any())
+            {
+                string refType = Session.Type == SessionType.Session ? "2" : "1";
+                string url = $"{MainViewModel.Box.BaseUrl}/entities/upload?team_id={MainViewModel.TeamId}&ref_id={Session.Id}&ref_type={refType}";
+                foreach (var file in files)
+                {
+                    StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);
+                    using (var stream = await file.OpenReadAsync())
+                    {
+                        string fileName = file.DisplayName + file.FileType;
+                        var content = new HttpMultipartFormDataContent
+                        {
+                            { new HttpStringContent(fileName), "name" },
+                            { new HttpStreamContent(stream), "file", fileName }
+                        };
+                        await WtHttpClient.PostAsync(url, content);
+                    }
+                }
             }
         }
     }

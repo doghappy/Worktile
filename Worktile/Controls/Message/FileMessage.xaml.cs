@@ -23,21 +23,6 @@ namespace Worktile.Controls.Message
                 {
                     _message = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
-                    //Icon = WtFileHelper.GetFileIcon(value.Body.Attachment.Addition.Ext);
-                }
-            }
-        }
-
-        private string _icon;
-        public string Icon
-        {
-            get => _icon;
-            set
-            {
-                if (_icon != value)
-                {
-                    _icon = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Icon)));
                 }
             }
         }

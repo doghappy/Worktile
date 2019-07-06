@@ -156,6 +156,9 @@
   <data name="MessageDetailPageNavUnread" xml:space="preserve">
     <value>未读</value>
   </data>
+  <data name="MessageListPageMsgTextBox.PlaceholderText" xml:space="preserve">
+    <value>Ctrl+Enter 发送消息，Win+. 发送 Emoji 表情。</value>
+  </data>
   <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
     <value>消息</value>
   </data>

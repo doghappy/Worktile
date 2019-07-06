@@ -5,9 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <cvt:ExtensionIconConverter x:Key="ExtensionIconConverter"/>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -35,7 +40,10 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Image Source="{x:Bind Icon, Mode=OneWay}" Width="60" Height="60"/>
+                <Image
+                    Source="{x:Bind Message.Body.Attachment.Addition.Ext, Mode=OneWay, Converter={StaticResource ExtensionIconConverter}}"
+                    Width="60"
+                    Height="60"/>
 
                 <TextBlock Grid.Column="1"
                            Margin="16 0 0 0"
