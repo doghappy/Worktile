@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Main.Models;
 using Worktile.Message;
+using Worktile.Profile;
 using Worktile.Setting;
 using Worktile.SignInOut;
 
@@ -56,6 +57,7 @@ namespace Worktile.Main
         private void ProfileNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ViewModel.SelectedApp = null;
+            ContentFrame.Navigate(typeof(AccountInfoPage), ViewModel.User);
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -71,10 +73,6 @@ namespace Worktile.Main
                 await ViewModel.RequestMeAsync();
                 await ViewModel.RequestTeamAsync();
                 await ViewModel.RequestChatsAsync();
-                //await ViewModel.RequestMeAsync();
-                //await LoadPreferencesAsync();
-                //await LoadTeamInfoAsync();
-                //await WtSocket.ConnectSocketAsync();
             }
         }
     }

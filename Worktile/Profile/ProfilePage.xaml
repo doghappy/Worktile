@@ -1,16 +1,15 @@
 ﻿<Page
-    x:Class="Worktile.Setting.SettingPage"
+    x:Class="Worktile.Profile.ProfilePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Worktile.Setting"
+    xmlns:local="using:Worktile.Profile"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Loaded="Page_Loaded">
+    mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="32">
+    <!--<Grid Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="32">
         <StackPanel>
-            <TextBlock x:Uid="SettingPageHeaderTextBlock" Style="{ThemeResource SubheaderTextBlockStyle}" Margin="{StaticResource Bottom16}"/>
+            <TextBlock x:Uid="ProfilePageHeaderTextBlock" Style="{ThemeResource SubheaderTextBlockStyle}" Margin="{StaticResource Bottom16}"/>
             <ComboBox
                 x:Name="LanguageComboBox"
                 x:Uid="SettingPageLanguageComboBox"
@@ -26,5 +25,6 @@
                 SelectedItem="{x:Bind ViewModel.SelectedTheme, Mode=OneWay}"
                 DisplayMemberPath="Text"/>
         </StackPanel>
-    </Grid>
+    </Grid>-->
+    <!--将来这里是导航页，代理所有的个人设置。参考系统设置->账户-->
 </Page>

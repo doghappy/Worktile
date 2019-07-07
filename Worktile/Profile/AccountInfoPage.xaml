@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="Worktile.Profile.AccountInfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Profile"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cvt="using:Worktile.Converters"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <cvt:AvatarInitialsConverter x:Key="AvatarInitialsConverter"/>
+        <cvt:AvatarSourceConverter x:Key="AvatarSourceConverter"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}" Padding="32">
+        <StackPanel>
+            <TextBlock
+                x:Uid="AccountInfoPageHeaderTextBlock"
+                Style="{ThemeResource SubheaderTextBlockStyle}"
+                Margin="{StaticResource Bottom32}"/>
+
+            <PersonPicture
+                Width="160"
+                Height="160"
+                HorizontalAlignment="Left"
+                Initials="{x:Bind ViewModel.User.DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                ProfilePicture="{x:Bind ViewModel.User.Avatar, ConverterParameter='320x320', Converter={StaticResource AvatarSourceConverter}}"
+                Margin="{StaticResource Bottom16}"/>
+
+            <TextBlock
+                Text="{x:Bind ViewModel.User.DisplayName}"
+                Style="{ThemeResource SubtitleTextBlockStyle}"
+                FontWeight="Bold"
+                Margin="{StaticResource Bottom8}"/>
+
+            <TextBlock
+                Text="{x:Bind ViewModel.User.Title}"
+                Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                Margin="{StaticResource Bottom8}"/>
+
+            <TextBlock
+                Text="{x:Bind ViewModel.User.Mobile}"
+                Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                Margin="{StaticResource Bottom8}"/>
+
+            <TextBlock
+                Text="{x:Bind ViewModel.User.Email}"
+                Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                Margin="{StaticResource Bottom16}"/>
+
+            <Button
+                x:Uid="AccountInfoPageSignOutButton"
+                Background="{StaticResource DangerBrush}"
+                Click="SignOut_Click"
+                Style="{ThemeResource ButtonRevealStyle}"/>
+        </StackPanel>
+    </Grid>
+</Page>

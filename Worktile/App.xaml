@@ -32,8 +32,9 @@
             <Thickness x:Key="Right2">0 0 2 0</Thickness>
             <Thickness x:Key="Right4">0 0 4 0</Thickness>
 
-            <Thickness x:Key="Bottom16">0 0 0 16</Thickness>
             <Thickness x:Key="Bottom32">0 0 0 32</Thickness>
+            <Thickness x:Key="Bottom16">0 0 0 16</Thickness>
+            <Thickness x:Key="Bottom8">0 0 0 8</Thickness>
 
             <Style TargetType="Grid" x:Key="AppPageMasterGrid">
                 <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}"/>
