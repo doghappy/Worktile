@@ -51,6 +51,7 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
                     </Style>
                 </ListView.ItemContainerStyle>
 
@@ -58,28 +59,38 @@
                     <DataTemplate x:DataType="models:Session">
                         <ListViewItem>
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid Padding="12 6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <PersonPicture
-                                    Width="32"
-                                    IsGroup="{x:Bind Type, Converter={StaticResource IsGroupConverter}}"
-                                    Initials="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                                    ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+                                    <PersonPicture
+                                        Width="32"
+                                        IsGroup="{x:Bind Type, Converter={StaticResource IsGroupConverter}}"
+                                        Initials="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                                        ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
 
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Style="{StaticResource DisplayNameTextBlock}"
-                                    Text="{x:Bind DisplayName}"/>
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Style="{StaticResource DisplayNameTextBlock}"
+                                        Text="{x:Bind DisplayName}"/>
 
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Visibility="{x:Bind UnRead, Converter={StaticResource UnReadVisibilityConverter}, Mode=OneWay}"
-                                    Text="{x:Bind UnRead, Mode=OneWay}"/>
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Visibility="{x:Bind UnRead, Converter={StaticResource UnReadVisibilityConverter}, Mode=OneWay}"
+                                        Text="{x:Bind UnRead, Mode=OneWay}"/>
+                                </Grid>
+
+                                <Polygon
+                                    x:Name="StarredPolygon"
+                                    x:Load="{x:Bind IsStar, Mode=OneWay}"
+                                    Points="0,0 8,0 0,8"
+                                    Fill="{ThemeResource SystemAccentColor}"
+                                    VerticalAlignment="Top"/>
                             </Grid>
+
                         </ListViewItem>
                     </DataTemplate>
                 </ListView.ItemTemplate>
