@@ -58,6 +58,11 @@ namespace Worktile.Common
             return await PostAsync(url, content);
         }
 
+        public static async Task<JObject> PostAsync(string url)
+        {
+            return await PostAsync(url, default(IHttpContent));
+        }
+
         public static async Task<JObject> PostAsync(string url, IHttpContent content)
         {
             var resMsg = await _client.PostAsync(GetUri(url), content);

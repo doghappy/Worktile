@@ -4,13 +4,19 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using Worktile.Common;
 using Worktile.Models;
 
 namespace Worktile.Message.Details
 {
-    public class FileListViewModel
+    public class FileListViewModel : BindableBase
     {
+        public FileListViewModel()
+        {
+            SelectionMode = ListViewSelectionMode.Single;
+        }
+
         public IncrementalLoadingCollection<EntitySource, Entity> Entities { get; private set; }
 
         Session _session;
@@ -22,6 +28,13 @@ namespace Worktile.Message.Details
                 _session = value;
                 Entities = new IncrementalLoadingCollection<EntitySource, Entity>(new EntitySource(value));
             }
+        }
+
+        private ListViewSelectionMode _selectionMode;
+        public ListViewSelectionMode SelectionMode
+        {
+            get => _selectionMode;
+            set => SetProperty(ref _selectionMode, value);
         }
     }
 

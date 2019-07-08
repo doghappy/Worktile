@@ -135,6 +135,9 @@
   <data name="Exception" xml:space="preserve">
     <value>异常</value>
   </data>
+  <data name="FileListPageMultiSelectAppBarToggleButton.Label" xml:space="preserve">
+    <value>多选</value>
+  </data>
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>浅色</value>
   </data>

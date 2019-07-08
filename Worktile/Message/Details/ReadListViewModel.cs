@@ -55,5 +55,25 @@ namespace Worktile.Message.Details
                 IsActive = false;
             }
         }
+
+        public async Task PinAsync(WtMessage.Message msg)
+        {
+            string url = $"api/unreads/{Session.Id}/messages/{msg.Id}/pending";
+            var obj = await WtHttpClient.PostAsync(url);
+            if (obj.Value<int>("code") == 200 && obj.Value<bool>("data"))
+            {
+                msg.IsPending = true;
+            }
+        }
+
+        public async Task UnPinAsync(WtMessage.Message msg)
+        {
+            string url = $"api/unreads/{Session.Id}/messages/{msg.Id}/pending";
+            var obj = await WtHttpClient.DeleteAsync(url);
+            if (obj.Value<int>("code") == 200 && obj.Value<bool>("data"))
+            {
+                msg.IsPending = false;
+            }
+        }
     }
 }

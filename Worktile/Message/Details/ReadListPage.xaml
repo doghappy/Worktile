@@ -38,7 +38,7 @@
                                                 x:Uid="MessageControlPinMenuFlyoutItem"
                                                 DataContext="{x:Bind}"
                                                 Click="Pin_Click"
-                                                Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanReverseVisibilityConverter}}">
+                                                Visibility="{x:Bind IsPending, Mode=OneWay, Converter={StaticResource BooleanReverseVisibilityConverter}}">
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE840;" />
                                                 </MenuFlyoutItem.Icon>
@@ -48,7 +48,7 @@
                                                 x:Uid="MessageControlUnPinMenuFlyoutItem"
                                                 DataContext="{x:Bind}"
                                                 Click="UnPin_Click"
-                                                Visibility="{x:Bind IsPinned, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}">
+                                                Visibility="{x:Bind IsPending, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}">
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE196;"/>
                                                 </MenuFlyoutItem.Icon>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Windows.ApplicationModel.Core;
 using Windows.Storage.Pickers;
 using Windows.System;

@@ -20,7 +20,12 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}" Margin="16">
-        <ListView ItemsSource="{x:Bind ViewModel.Entities}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <ListView ItemsSource="{x:Bind ViewModel.Entities}" SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=TwoWay}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -88,5 +93,13 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <CommandBar Grid.Row="1" DefaultLabelPosition="Right">
+            <AppBarToggleButton x:Uid="FileListPageMultiSelectAppBarToggleButton" Click="AppBarToggleButton_Click">
+                <AppBarToggleButton.Icon>
+                    <FontIcon Glyph="&#xE762;"/>
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+        </CommandBar>
     </Grid>
 </Page>
