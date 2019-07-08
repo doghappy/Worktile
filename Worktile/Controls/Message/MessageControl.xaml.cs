@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.Uwp.UI.Controls;
@@ -14,6 +15,7 @@ namespace Worktile.Controls
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event Action<WtMessage.Message> OnImageMessageClick;
 
         private WtMessage.Message _message;
         public WtMessage.Message Message
@@ -44,6 +46,11 @@ namespace Worktile.Controls
             {
                 string uid = e.Link.Substring(atPrefix.Length);
             }
+        }
+
+        private void ImageMsg_OnImageMessageClick(WtMessage.Message message)
+        {
+            OnImageMessageClick?.Invoke(message);
         }
     }
 }

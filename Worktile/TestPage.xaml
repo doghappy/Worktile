@@ -10,6 +10,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <uc:ImageViewer Images="{x:Bind Images}"/>
+        <!--<uc:ImageViewer Images="{x:Bind Images}"/>-->
     </Grid>
 </Page>

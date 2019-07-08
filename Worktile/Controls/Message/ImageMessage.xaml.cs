@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using Windows.Storage;
-using Windows.System;
 using Windows.UI.Xaml.Controls;
-using Worktile.Common;
 using WtMessage = Worktile.Message.Models;
+using Windows.UI.Xaml;
 
 namespace Worktile.Controls.Message
 {
@@ -17,6 +15,7 @@ namespace Worktile.Controls.Message
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event Action<WtMessage.Message> OnImageMessageClick;
 
         private bool _isActive;
         public bool IsActive
@@ -61,33 +60,9 @@ namespace Worktile.Controls.Message
             }
         }
 
-        private async void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //IsActive = true;
-            //IsButtonEnabled = false;
-            //var folderItem = await ApplicationData.Current.LocalFolder.TryGetItemAsync("MessageImages");
-            //if (folderItem == null)
-            //{
-            //    folderItem = await ApplicationData.Current.LocalFolder.CreateFolderAsync("MessageImages");
-            //}
-            //var folder = folderItem as StorageFolder;
-            //string fileName = Message.Body.Attachment.Id + "." + Message.Body.Attachment.Addition.Ext;
-            //var fileItem = await folder.TryGetItemAsync(fileName);
-            //StorageFile file;
-            //if (fileItem == null)
-            //{
-            //    string url = UtilityTool.GetS3FileUrl(Message.Body.Attachment.Id);
-            //    var buffer = await WtHttpClient.GetByteBufferAsync(url);
-            //    file = await folder.CreateFileAsync(fileName);
-            //    await FileIO.WriteBufferAsync(file, buffer);
-            //}
-            //else
-            //{
-            //    file = fileItem as StorageFile;
-            //}
-            //await Launcher.LaunchFileAsync(file);
-            //IsButtonEnabled = true;
-            //IsActive = false;
+            OnImageMessageClick?.Invoke(Message);
         }
     }
 }

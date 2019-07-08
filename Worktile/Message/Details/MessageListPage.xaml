@@ -32,7 +32,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="message:Message">
-                          <controls:MessageControl Message="{x:Bind}">
+                          <controls:MessageControl Message="{x:Bind}" OnImageMessageClick="MessageControl_OnImageMessageClick">
                                 <controls:MessageControl.RightContent>
                                     <Button
                                         Visibility="{x:Bind IsShowPin}"

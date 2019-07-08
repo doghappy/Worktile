@@ -45,7 +45,7 @@ namespace Worktile.Common
 
         public static string GetS3FileUrl(string id)
         {
-            return $"{MainViewModel.Box.BaseUrl}entities/{id}/from-s3?team_id={MainViewModel.TeamId}";
+            return $"{MainViewModel.Box.BaseUrl}/entities/{id}/from-s3?team_id={MainViewModel.TeamId}";
         }
     }
 }

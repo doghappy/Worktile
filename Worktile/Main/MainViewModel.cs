@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -82,6 +83,20 @@ namespace Worktile.Main
             get => _logo;
             set => SetProperty(ref _logo, value);
         }
+
+        //private bool _imageViewerIsActive;
+        //public bool ImageViewerIsActive
+        //{
+        //    get => _imageViewerIsActive;
+        //    set => SetProperty(ref _imageViewerIsActive, value);
+        //}
+
+        //private List<string> _imageViewerImages;
+        //public List<string> ImageViewerImages
+        //{
+        //    get => _imageViewerImages;
+        //    set => SetProperty(ref _imageViewerImages, value);
+        //}
 
         public async Task RequestMeAsync()
         {

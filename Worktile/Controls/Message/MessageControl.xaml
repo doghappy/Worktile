@@ -76,6 +76,7 @@
 
                     <message:ImageMessage x:Name="ImageMsg"
                                           x:Load="{x:Bind Message.Type, Mode=OneWay, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Image'}"
+                                          OnImageMessageClick="ImageMsg_OnImageMessageClick"
                                           Message="{x:Bind Message, Mode=OneWay}"/>
 
                     <message:PageMessage x:Name="PageMsg"
