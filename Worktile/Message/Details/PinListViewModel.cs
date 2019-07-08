@@ -37,7 +37,6 @@ namespace Worktile.Message.Details
         }
     }
 
-
     public class PinMessageSource : IIncrementalSource<WtMessage.Message>
     {
         public PinMessageSource(Session session)

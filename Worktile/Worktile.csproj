@@ -181,6 +181,7 @@
     <Compile Include="Controls\Message\TaskMessage.xaml.cs">
       <DependentUpon>TaskMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\EqualBooleanReverseConverter.cs" />
     <Compile Include="Converters\ExtensionIconConverter.cs" />
     <Compile Include="Converters\AvatarInitialsConverter.cs" />
     <Compile Include="Converters\AvatarMessageFromConverter.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Converters\BooleanReverseVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\EqualBooleanConverter.cs" />
+    <Compile Include="Converters\FriendlySizeConverter.cs" />
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Converters\BooleanReverseConverter.cs" />
     <Compile Include="Converters\IsNullOrEmptyConverter.cs" />
@@ -201,6 +203,10 @@
     <Compile Include="Main\Models\WtService.cs" />
     <Compile Include="Message\Converters\IsGroupConverter.cs" />
     <Compile Include="Message\Converters\UnReadVisibilityConverter.cs" />
+    <Compile Include="Message\Details\FileListPage.xaml.cs">
+      <DependentUpon>FileListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Message\Details\FileListViewModel.cs" />
     <Compile Include="Message\Details\LaterListPage.xaml.cs">
       <DependentUpon>LaterListPage.xaml</DependentUpon>
     </Compile>
@@ -243,6 +249,7 @@
     <Compile Include="Message\Models\MessageTo.cs" />
     <Compile Include="Message\Models\MessageType.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Exceptions\WtNotLoggedInException.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\StorageBox.cs" />
@@ -459,6 +466,10 @@
     <Page Include="Main\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Message\Details\FileListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Message\Details\LaterListPage.xaml">
       <SubType>Designer</SubType>
