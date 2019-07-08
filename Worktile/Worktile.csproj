@@ -127,6 +127,9 @@
     <Compile Include="Common\WtHttpClient.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="Common\WtSocketClient.cs" />
+    <Compile Include="Controls\ImageViewer.xaml.cs">
+      <DependentUpon>ImageViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\AppraisalMessage.xaml.cs">
       <DependentUpon>AppraisalMessage.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,7 @@
     <Compile Include="Converters\ImageSourceConverter.cs" />
     <Compile Include="Converters\BooleanReverseConverter.cs" />
     <Compile Include="Converters\IsNullOrEmptyConverter.cs" />
+    <Compile Include="Converters\WtBoxImageSourceConverter.cs" />
     <Compile Include="Converters\ThumbnailImageSourceConverter.cs" />
     <Compile Include="Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -242,6 +246,7 @@
     <Compile Include="Message\Models\MessageTo.cs" />
     <Compile Include="Message\Models\MessageType.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Exceptions\WtNotLoggedInException.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\StorageBox.cs" />
     <Compile Include="Models\Team.cs" />
@@ -262,6 +267,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="SignInOut\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -375,6 +383,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ImageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Message\AppraisalMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -492,6 +504,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SignInOut\SignInPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,7 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Worktile.Common;
 using Worktile.Main.Models;
+using Worktile.Message;
 using Worktile.Models;
+using Worktile.Models.Exceptions;
 using WtMessage = Worktile.Message.Models;
 
 namespace Worktile.Main
@@ -43,6 +45,8 @@ namespace Worktile.Main
         public static ObservableCollection<User> Members { get; private set; }
 
         public static ObservableCollection<WtService> Services { get; private set; }
+
+        public static MessageViewModel MessageViewModel { get; set; }
 
         private Team _team;
         public Team Team
@@ -82,23 +86,31 @@ namespace Worktile.Main
         public async Task RequestMeAsync()
         {
             var obj = await WtHttpClient.GetAsync("api/user/me");
-            User = obj["data"]["me"].ToObject<User>();
-            Me = User;
-            Box = obj["data"]["config"]["box"].ToObject<StorageBox>();
-            string imToken = obj["data"]["me"].Value<string>("imToken");
-            string imHost = obj["data"]["config"]["feed"].Value<string>("newHost");
-            string img = obj["data"]["me"]["preferences"].Value<string>("background_image");
-            if (img.StartsWith("desktop-") && img.EndsWith(".jpg"))
+            var data = obj["data"] as JObject;
+            if (data.ContainsKey("me"))
             {
-                WtBackgroundImage = "ms-appx:///Assets/Images/Background/" + img;
+                User = data["me"].ToObject<User>();
+                Me = User;
+                Box = data["config"]["box"].ToObject<StorageBox>();
+                string imToken = data["me"].Value<string>("imToken");
+                string imHost = data["config"]["feed"].Value<string>("newHost");
+                string img = data["me"]["preferences"].Value<string>("background_image");
+                if (img.StartsWith("desktop-") && img.EndsWith(".jpg"))
+                {
+                    WtBackgroundImage = "ms-appx:///Assets/Images/Background/" + img;
+                }
+                else
+                {
+                    WtBackgroundImage = Box.BaseUrl + "background-image/" + img + "/from-s3";
+                }
+
+                WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
+                WtSocketClient.Connect(imHost, imToken, User.Id);
             }
             else
             {
-                WtBackgroundImage = Box.BaseUrl + "background-image/" + img + "/from-s3";
+                throw new WtNotLoggedInException();
             }
-
-            WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
-            WtSocketClient.Connect(imHost, imToken, User.Id);
         }
 
         private async void WtSocketClient_OnMessageReceived(JObject obj)
@@ -107,7 +119,7 @@ namespace Worktile.Main
             var session = Sessions.FirstOrDefault(s => s.Id == msg.To.Id);
             if (session == null)
             {
-                string url = $"api/{msg.To.Type.ToString().ToLower()}s/5b63fdc2b59db2083c0f0df8";
+                string url = $"api/{msg.To.Type.ToString().ToLower()}s/{msg.To.Id}";
                 var sessionObj = await WtHttpClient.GetAsync(url);
                 Session newSession = null;
                 if (msg.To.Type == WtMessage.ToType.Channel)
@@ -121,6 +133,8 @@ namespace Worktile.Main
             }
             else
             {
+                //if (session != MessageViewModel.SelectedSession)
+                //{
                 int index = Sessions.IndexOf(session);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
@@ -130,8 +144,10 @@ namespace Worktile.Main
                     if (index != newindex)
                     {
                         Sessions.Move(index, newindex);
+                        MessageViewModel.Highlight(session);
                     }
                 }));
+                //}
             }
         }
 

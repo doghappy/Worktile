@@ -85,5 +85,10 @@ namespace Worktile.Setting
                 }
             }
         }
+
+        private void TestButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TestPage));
+        }
     }
 }

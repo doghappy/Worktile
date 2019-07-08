@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Main.Models;
 using Worktile.Message;
+using Worktile.Models.Exceptions;
 using Worktile.Profile;
 using Worktile.Setting;
 using Worktile.SignInOut;
@@ -70,9 +71,17 @@ namespace Worktile.Main
             else
             {
                 WtHttpClient.Domain = domain;
-                await ViewModel.RequestMeAsync();
-                await ViewModel.RequestTeamAsync();
-                await ViewModel.RequestChatsAsync();
+                try
+                {
+                    await ViewModel.RequestMeAsync();
+                    await ViewModel.RequestTeamAsync();
+                    await ViewModel.RequestChatsAsync();
+                }
+                catch (WtNotLoggedInException)
+                {
+                    ApplicationData.Current.LocalSettings.Values.Remove("Domain");
+                    UtilityTool.RootFrame.Navigate(typeof(SignInPage));
+                }
             }
         }
     }

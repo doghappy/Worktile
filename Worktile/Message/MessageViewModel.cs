@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using Worktile.Main;
 using Worktile.Models;
 using Worktile.Common;
+using Windows.UI.Xaml.Controls;
 
 namespace Worktile.Message
 {
@@ -18,7 +14,21 @@ namespace Worktile.Message
         public Session Session
         {
             get => _session;
-            set => SetProperty(ref _session, value);
+            set
+            {
+                if (SetProperty(ref _session, value) && value != null)
+                {
+                    Frame.Navigate(typeof(MessageDetailPage), value);
+                }
+            }
+        }
+
+        public Frame Frame { get; set; }
+
+        public void Highlight(Session session)
+        {
+            _session = session;
+            OnPropertyChanged(nameof(Session));
         }
     }
 }

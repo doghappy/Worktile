@@ -8,6 +8,7 @@
     xmlns:cvt="using:Worktile.Converters"
     xmlns:models="using:Worktile.Models"
     xmlns:msgcvt="using:Worktile.Message.Converters"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -38,8 +39,7 @@
             <ListView
                 Grid.Row="1"
                 ItemsSource="{x:Bind ViewModel.Sessions}"
-                SelectedItem="{x:Bind ViewModel.Session,Mode=TwoWay}"
-                SelectionChanged="ListView_SelectionChanged">
+                SelectedItem="{x:Bind ViewModel.Session, Mode=TwoWay}">
 
                 <ListView.Resources>
                     <Style TargetType="TextBlock" x:Key="DisplayNameTextBlock">

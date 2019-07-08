@@ -9,7 +9,8 @@
             <SolidColorBrush x:Key="SuccessBrush" Color="#22d7bb"/>
             <SolidColorBrush x:Key="WarningBrush" Color="#ffc442"/>
             <SolidColorBrush x:Key="DangerBrush" Color="#ff5b57"/>
-            
+
+            <SolidColorBrush x:Key="TaskBrush" Color="#22d7bb"/>
             <SolidColorBrush x:Key="CalendarBrush" Color="#1affc442"/>
             <SolidColorBrush x:Key="ProjectBrush" Color="#F76CAA"/>
             <SolidColorBrush x:Key="LeaveBrush" Color="#FFD234"/>

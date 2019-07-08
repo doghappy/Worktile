@@ -39,17 +39,9 @@ namespace Worktile.Common
             }
         }
 
-        public static MainPage MainPage
-        {
-            get
-            {
-                if (Window.Current.Content is Frame rootFrame)
-                {
-                    return rootFrame.Content as MainPage;
-                }
-                return null;
-            }
-        }
+        public static Frame RootFrame => Window.Current.Content as Frame;
+
+        public static MainPage MainPage => RootFrame.Content as MainPage;
 
         public static string GetS3FileUrl(string id)
         {

@@ -25,6 +25,8 @@
                 ItemsSource="{x:Bind ViewModel.Themes}"
                 SelectedItem="{x:Bind ViewModel.SelectedTheme, Mode=OneWay}"
                 DisplayMemberPath="Text"/>
+
+            <Button Content="Test" Click="TestButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

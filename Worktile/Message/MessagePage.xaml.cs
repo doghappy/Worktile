@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿using Windows.UI.Xaml.Controls;
+using Worktile.Main;
 
 namespace Worktile.Message
 {
@@ -25,9 +13,10 @@ namespace Worktile.Message
 
         public MessageViewModel ViewModel { get; }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            ContentFrame.Navigate(typeof(MessageDetailPage), ViewModel.Session);
+            ViewModel.Frame = ContentFrame;
+            MainViewModel.MessageViewModel = ViewModel;
         }
     }
 }
