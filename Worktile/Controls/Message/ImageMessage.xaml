@@ -25,8 +25,8 @@
         <Grid>
             <Image
                 Source="{x:Bind Message.Body.Attachment.Addition.Thumbnail, Converter={StaticResource ThumbnailImageSourceConverter}, Mode=OneWay}"
-                MaxWidth="480"
-                MaxHeight="320"/>
+                MaxWidth="240"
+                MaxHeight="160"/>
             <ProgressRing Width="40" Height="40" IsActive="{x:Bind IsActive, Mode=OneWay}"/>
         </Grid>
     </Button>
