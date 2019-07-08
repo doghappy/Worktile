@@ -17,7 +17,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="message:Message">
-                    <controls:MessageControl Message="{x:Bind}">
+                    <controls:MessageControl Message="{x:Bind}" OnImageMessageClick="MessageControl_OnImageMessageClick">
                         <controls:MessageControl.RightContent>
                             <Button
                                 DataContext="{x:Bind}"
