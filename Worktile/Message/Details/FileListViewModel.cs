@@ -36,6 +36,13 @@ namespace Worktile.Message.Details
             get => _selectionMode;
             set => SetProperty(ref _selectionMode, value);
         }
+
+        private bool _downloadIsEnabled;
+        public bool DownloadIsEnabled
+        {
+            get => _downloadIsEnabled;
+            set => SetProperty(ref _downloadIsEnabled, value);
+        }
     }
 
     public class EntitySource : IIncrementalSource<Entity>

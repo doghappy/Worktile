@@ -135,6 +135,9 @@
   <data name="Exception" xml:space="preserve">
     <value>Exception</value>
   </data>
+  <data name="FileListPageDownloadAppbarButton.Label" xml:space="preserve">
+    <value>Download</value>
+  </data>
   <data name="FileListPageMultiSelectAppBarToggleButton.Label" xml:space="preserve">
     <value>Multi Select</value>
   </data>

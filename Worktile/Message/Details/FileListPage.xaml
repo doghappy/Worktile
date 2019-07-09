@@ -25,7 +25,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <ListView ItemsSource="{x:Bind ViewModel.Entities}" SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=TwoWay}">
+        <ListView
+            x:Name="FilesListView"
+            ItemsSource="{x:Bind ViewModel.Entities}"
+            SelectionChanged="ListView_SelectionChanged"
+            SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=TwoWay}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -100,6 +104,11 @@
                     <FontIcon Glyph="&#xE762;"/>
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
+            <AppBarButton
+                x:Uid="FileListPageDownloadAppbarButton"
+                IsEnabled="{x:Bind ViewModel.DownloadIsEnabled, Mode=OneWay}"
+                Click="Download_Click"
+                Icon="Download"/>
         </CommandBar>
     </Grid>
 </Page>
