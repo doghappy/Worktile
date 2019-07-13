@@ -4,9 +4,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Models;
-using Worktile.SignInOut;
 
-namespace Worktile.Profile
+namespace Worktile.Main.Profile
 {
     public sealed partial class AccountInfoPage : Page
     {

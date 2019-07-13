@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Globalization;
+﻿using Windows.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Windows.ApplicationModel.Resources.Core;
-using System.Threading.Tasks;
 using System.Globalization;
 
-namespace Worktile.Setting
+namespace Worktile.Main
 {
     public sealed partial class SettingPage : Page
     {

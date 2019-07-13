@@ -1,26 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Main.Models;
+using Worktile.Main.Profile;
 using Worktile.Message;
 using Worktile.Models.Exceptions;
-using Worktile.Profile;
-using Worktile.Setting;
-using Worktile.SignInOut;
+using Worktile.Tool;
 
 namespace Worktile.Main
 {
@@ -59,6 +50,23 @@ namespace Worktile.Main
         {
             ViewModel.SelectedApp = null;
             ContentFrame.Navigate(typeof(AccountInfoPage), ViewModel.User);
+        }
+
+        private async void DownloadsNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ViewModel.SelectedApp = null;
+            CoreApplicationView newView = CoreApplication.CreateNewView();
+            int newViewId = 0;
+            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Frame frame = new Frame();
+                frame.Navigate(typeof(DownloadPage));
+                Window.Current.Content = frame;
+                Window.Current.Activate();
+
+                newViewId = ApplicationView.GetForCurrentView().Id;
+            });
+            await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)

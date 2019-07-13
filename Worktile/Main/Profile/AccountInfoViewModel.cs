@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Worktile.Common;
+﻿using Worktile.Common;
 using Worktile.Models;
 
-namespace Worktile.Profile
+namespace Worktile.Main.Profile
 {
     public class AccountInfoViewModel : BindableBase
     {

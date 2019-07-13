@@ -7,6 +7,13 @@ using Windows.Storage;
 using Windows.Networking.BackgroundTransfer;
 using Worktile.Common;
 using System.IO;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Worktile.Main;
+using Microsoft.Toolkit.Uwp.Helpers;
+using System.Threading;
+using System.Linq;
+using Worktile.Tool;
 
 namespace Worktile.Message.Details
 {
@@ -35,15 +42,21 @@ namespace Worktile.Message.Details
 
         private async void Download_Click(object sender, RoutedEventArgs e)
         {
+            var allDownloads = await BackgroundDownloader.GetCurrentDownloadsAsync();
             foreach (var item in FilesListView.SelectedItems)
             {
                 var entity = item as Entity;
                 Uri uri = new Uri(UtilityTool.GetS3FileUrl(entity.Id));
-                var file = await DownloadsFolder.CreateFileAsync(entity.Addition.Title, CreationCollisionOption.GenerateUniqueName);
-                var downloader = new BackgroundDownloader();
-                var download =  downloader.CreateDownload(uri, file);
-                await download.StartAsync();
-
+                if (!allDownloads.Any(d => d.RequestedUri.ToString() == uri.ToString()))
+                {
+                    var file = await DownloadsFolder.CreateFileAsync(entity.Addition.Title, CreationCollisionOption.GenerateUniqueName);
+                    var downloader = new BackgroundDownloader();
+                    await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
+                    {
+                        var download = downloader.CreateDownload(uri, file);
+                        await download.StartAsync();
+                    }));
+                }
             }
         }
 

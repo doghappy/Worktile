@@ -1,4 +1,4 @@
-﻿namespace Worktile.Setting.Models
+﻿namespace Worktile.Main.Models
 {
     public class Language
     {

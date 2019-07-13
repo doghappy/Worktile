@@ -195,6 +195,9 @@
     <Compile Include="Converters\IsNullOrEmptyConverter.cs" />
     <Compile Include="Converters\WtBoxImageSourceConverter.cs" />
     <Compile Include="Converters\ThumbnailImageSourceConverter.cs" />
+    <Compile Include="Tool\DownloadPage.xaml.cs">
+      <DependentUpon>DownloadPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -254,22 +257,22 @@
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\StorageBox.cs" />
     <Compile Include="Models\Team.cs" />
-    <Compile Include="Profile\AccountInfoPage.xaml.cs">
+    <Compile Include="Main\Profile\AccountInfoPage.xaml.cs">
       <DependentUpon>AccountInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Profile\AccountInfoViewModel.cs" />
-    <Compile Include="Profile\ProfilePage.xaml.cs">
+    <Compile Include="Main\Profile\AccountInfoViewModel.cs" />
+    <Compile Include="Main\Profile\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Setting\Models\Language.cs" />
-    <Compile Include="Setting\Models\Theme.cs" />
-    <Compile Include="Setting\SettingPage.xaml.cs">
+    <Compile Include="Main\Models\Language.cs" />
+    <Compile Include="Main\Models\Theme.cs" />
+    <Compile Include="Main\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Setting\SettingViewModel.cs" />
+    <Compile Include="Main\SettingViewModel.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="SignInOut\SignInPage.xaml.cs">
+    <Compile Include="Main\SignInPage.xaml.cs">
       <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestPage.xaml.cs">
@@ -278,6 +281,7 @@
     <Compile Include="Tool\ImageViewerPage.xaml.cs">
       <DependentUpon>ImageViewerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tool\Models\WtDownloadOperation.cs" />
     <Compile Include="Tool\Models\ImageViewerData.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -463,6 +467,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Tool\DownloadPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Main\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -499,19 +507,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Profile\AccountInfoPage.xaml">
+    <Page Include="Main\Profile\AccountInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Profile\ProfilePage.xaml">
+    <Page Include="Main\Profile\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Setting\SettingPage.xaml">
+    <Page Include="Main\SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SignInOut\SignInPage.xaml">
+    <Page Include="Main\SignInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

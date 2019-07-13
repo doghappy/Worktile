@@ -7,7 +7,7 @@ namespace Worktile.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            int size = (int)value;
+            long size = System.Convert.ToInt64(value);
             if (size <= 0)
             {
                 return "0 B";

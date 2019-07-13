@@ -29,10 +29,10 @@
             SelectedItem="{x:Bind ViewModel.SelectedApp, Mode=OneWay}"
             SelectionChanged="NavigationView_SelectionChanged"
             MenuItemsSource="{x:Bind ViewModel.Apps}">
-            
+
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:WtApp">
-                    <NavigationViewItem Content="{x:Bind DisplayName}" Tag="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind DisplayName}">
+                    <NavigationViewItem Content="{x:Bind DisplayName}" Tag="{x:Bind Name}">
                         <NavigationViewItem.Icon>
                             <FontIcon Style="{StaticResource WtfIcon}" Glyph="{x:Bind Icon}"/>
                         </NavigationViewItem.Icon>
@@ -54,14 +54,19 @@
                 </Frame.ContentTransitions>
             </Frame>
             <NavigationView.PaneFooter>
-                <NavigationViewItem
-                    Content="{x:Bind ViewModel.User.DisplayName, Mode=OneWay}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.User.DisplayName, Mode=OneWay}"
-                    Tapped="ProfileNavigationViewItem_Tapped">
-                    <NavigationViewItem.Icon>
-                        <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE642;"/>
-                    </NavigationViewItem.Icon>
-                </NavigationViewItem>
+                <StackPanel>
+                    <NavigationViewItem
+                        Content="{x:Bind ViewModel.User.DisplayName, Mode=OneWay}"
+                        Tapped="ProfileNavigationViewItem_Tapped">
+                        <NavigationViewItem.Icon>
+                            <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE642;"/>
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                    <NavigationViewItem
+                        x:Uid="MainPageDownloadNavigationViewItem"
+                        Icon="Download"
+                        Tapped="DownloadsNavigationViewItem_Tapped"/>
+                </StackPanel>
             </NavigationView.PaneFooter>
         </NavigationView>
     </Grid>

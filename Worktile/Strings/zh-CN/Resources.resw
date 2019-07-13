@@ -144,6 +144,9 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>浅色</value>
   </data>
+  <data name="MainPageDownloadNavigationViewItem.Content" xml:space="preserve">
+    <value>下载</value>
+  </data>
   <data name="MessageControlPinMenuFlyoutItem.Text" xml:space="preserve">
     <value>固定</value>
   </data>

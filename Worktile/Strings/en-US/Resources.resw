@@ -144,6 +144,9 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="MainPageDownloadNavigationViewItem.Content" xml:space="preserve">
+    <value>Downloads</value>
+  </data>
   <data name="MessageControlPinMenuFlyoutItem.Text" xml:space="preserve">
     <value>Pin</value>
   </data>

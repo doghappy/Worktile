@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Networking.BackgroundTransfer;
 using Worktile.Common;
 using Worktile.Main.Models;
 using Worktile.Message;
@@ -84,20 +85,6 @@ namespace Worktile.Main
             set => SetProperty(ref _logo, value);
         }
 
-        //private bool _imageViewerIsActive;
-        //public bool ImageViewerIsActive
-        //{
-        //    get => _imageViewerIsActive;
-        //    set => SetProperty(ref _imageViewerIsActive, value);
-        //}
-
-        //private List<string> _imageViewerImages;
-        //public List<string> ImageViewerImages
-        //{
-        //    get => _imageViewerImages;
-        //    set => SetProperty(ref _imageViewerImages, value);
-        //}
-
         public async Task RequestMeAsync()
         {
             var obj = await WtHttpClient.GetAsync("api/user/me");
@@ -148,8 +135,6 @@ namespace Worktile.Main
             }
             else
             {
-                //if (session != MessageViewModel.SelectedSession)
-                //{
                 int index = Sessions.IndexOf(session);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
@@ -162,7 +147,6 @@ namespace Worktile.Main
                         MessageViewModel.Highlight(session);
                     }
                 }));
-                //}
             }
         }
 
