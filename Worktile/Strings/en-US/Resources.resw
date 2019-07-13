@@ -132,6 +132,15 @@
   <data name="DefaultThemeDisplayName" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="DownloadCompleted" xml:space="preserve">
+    <value>Download completed</value>
+  </data>
+  <data name="DownloadFileDialogContent" xml:space="preserve">
+    <value>The files is being downloading and will be saved to "Downloads\Workitle".</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
   <data name="Exception" xml:space="preserve">
     <value>Exception</value>
   </data>
@@ -143,9 +152,6 @@
   </data>
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>Light</value>
-  </data>
-  <data name="MainPageDownloadNavigationViewItem.Content" xml:space="preserve">
-    <value>Downloads</value>
   </data>
   <data name="MessageControlPinMenuFlyoutItem.Text" xml:space="preserve">
     <value>Pin</value>

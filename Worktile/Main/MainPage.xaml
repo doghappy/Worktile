@@ -62,10 +62,6 @@
                             <FontIcon Style="{StaticResource WtfIcon}" Glyph="&#xE642;"/>
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
-                    <NavigationViewItem
-                        x:Uid="MainPageDownloadNavigationViewItem"
-                        Icon="Download"
-                        Tapped="DownloadsNavigationViewItem_Tapped"/>
                 </StackPanel>
             </NavigationView.PaneFooter>
         </NavigationView>

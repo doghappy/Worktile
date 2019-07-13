@@ -52,6 +52,11 @@ namespace Worktile.Common
             return JObject.Parse(json);
         }
 
+        public static async Task<HttpResponseMessage> GetResponseMessageAsync(string url)
+        {
+            return await _client.GetAsync(GetUri(url));
+        }
+
         public static async Task<JObject> PostAsync(string url, string json)
         {
             var content = new HttpStringContent(json, UnicodeEncoding.Utf8, ApplicationJson);
@@ -68,7 +73,7 @@ namespace Worktile.Common
             var resMsg = await _client.PostAsync(GetUri(url), content);
             if (resMsg.IsSuccessStatusCode)
             {
-                string json= await resMsg.Content.ReadAsStringAsync();
+                string json = await resMsg.Content.ReadAsStringAsync();
                 return JObject.Parse(json);
             }
             else

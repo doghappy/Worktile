@@ -52,23 +52,6 @@ namespace Worktile.Main
             ContentFrame.Navigate(typeof(AccountInfoPage), ViewModel.User);
         }
 
-        private async void DownloadsNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ViewModel.SelectedApp = null;
-            CoreApplicationView newView = CoreApplication.CreateNewView();
-            int newViewId = 0;
-            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Frame frame = new Frame();
-                frame.Navigate(typeof(DownloadPage));
-                Window.Current.Content = frame;
-                Window.Current.Activate();
-
-                newViewId = ApplicationView.GetForCurrentView().Id;
-            });
-            await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-        }
-
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();

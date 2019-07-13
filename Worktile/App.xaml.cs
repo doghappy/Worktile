@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,6 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
+using Worktile.Repository;
 
 namespace Worktile
 {
@@ -35,6 +37,10 @@ namespace Worktile
             InitializeComponent();
             Suspending += OnSuspending;
             UnhandledException += App_UnhandledException;
+            using (var db = new WorktileDbContext())
+            {
+                db.Database.Migrate();
+            }
         }
 
         private async void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)

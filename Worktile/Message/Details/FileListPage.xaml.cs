@@ -14,6 +14,13 @@ using Microsoft.Toolkit.Uwp.Helpers;
 using System.Threading;
 using System.Linq;
 using Worktile.Tool;
+using Worktile.Repository;
+using Worktile.Repository.Entities;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Microsoft.Toolkit.Uwp.Notifications;
+using Windows.UI.Notifications;
 
 namespace Worktile.Message.Details
 {
@@ -46,18 +53,88 @@ namespace Worktile.Message.Details
             foreach (var item in FilesListView.SelectedItems)
             {
                 var entity = item as Entity;
-                Uri uri = new Uri(UtilityTool.GetS3FileUrl(entity.Id));
-                if (!allDownloads.Any(d => d.RequestedUri.ToString() == uri.ToString()))
+                string url = UtilityTool.GetS3FileUrl(entity.Id);
+                if (!allDownloads.Any(d => d.RequestedUri.ToString() == url))
                 {
                     var file = await DownloadsFolder.CreateFileAsync(entity.Addition.Title, CreationCollisionOption.GenerateUniqueName);
                     var downloader = new BackgroundDownloader();
+                    //downloader.SuccessToastNotification = new ToastNotification();
+                    //downloader.FailureToastNotification = new ToastNotification();
+                    SendToast(entity.Addition.Title, url);
                     await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(async () =>
                     {
-                        var download = downloader.CreateDownload(uri, file);
+                        var download = downloader.CreateDownload(new Uri(url), file);
+                        download.RangesDownloaded += Download_RangesDownloaded;
                         await download.StartAsync();
                     }));
                 }
             }
+
+            string downloading = UtilityTool.GetStringFromResources("Downloading");
+            string content = UtilityTool.GetStringFromResources("DownloadFileDialogContent");
+            var dialog = new ContentDialog
+            {
+                Title = downloading,
+                Content = content,
+                PrimaryButtonText = "OK"
+            };
+            await dialog.ShowAsync();
+        }
+
+        private void SendToast(string fileName, string url)
+        {
+            string downloading = UtilityTool.GetStringFromResources("Downloading");
+            ToastContent content = new ToastContent()
+            {
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = $"{downloading} {fileName}..."
+                            },
+                            new AdaptiveProgressBar()
+                            {
+                                Title = fileName,
+                                Value = new BindableProgressBarValue("progressValue"),
+                                Status = new BindableString("progressStatus")
+                            }
+                        }
+                    }
+                }
+            };
+            var toast = new ToastNotification(content.GetXml())
+            {
+                Tag = UtilityTool.GetIdFromS3FileUrl(url),
+                Group = "Download"
+            };
+            toast.Data = new NotificationData();
+            toast.Data.Values["progressValue"] = "0";
+            toast.Data.Values["progressStatus"] = $"{downloading}...";
+            ToastNotificationManager.CreateToastNotifier().Show(toast);
+        }
+
+        private void Download_RangesDownloaded(DownloadOperation sender, BackgroundTransferRangesDownloadedEventArgs args)
+        {
+            string tag = UtilityTool.GetIdFromS3FileUrl(sender.RequestedUri);
+            var entity = ViewModel.Entities.Single(e => e.Id == tag);
+            string downloading = UtilityTool.GetStringFromResources("Downloading");
+            string downloadCompleted = UtilityTool.GetStringFromResources("DownloadCompleted");
+            var data = new NotificationData();
+            double progressValue = sender.Progress.BytesReceived / (ulong)entity.Addition.Size;
+            data.Values["progressValue"] = progressValue.ToString();
+            if (progressValue < 1)
+            {
+                data.Values["progressStatus"] = $"{downloading}...";
+            }
+            else
+            {
+                data.Values["progressStatus"] = $"{downloadCompleted}";
+            }
+            ToastNotificationManager.CreateToastNotifier().Update(data, tag, "Download");
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
