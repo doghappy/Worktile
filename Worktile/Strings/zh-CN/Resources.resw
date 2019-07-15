@@ -183,6 +183,9 @@
   <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
     <value>消息</value>
   </data>
+  <data name="PleaseEnterMessageToReplyQuickly" xml:space="preserve">
+    <value>请输入消息快速回复</value>
+  </data>
   <data name="SettingPageHeaderTextBlock.Text" xml:space="preserve">
     <value>设置</value>
   </data>

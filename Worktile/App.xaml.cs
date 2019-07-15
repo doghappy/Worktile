@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -19,7 +20,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
+using Worktile.Main;
 using Worktile.Repository;
+using Microsoft.QueryStringDotNET;
 
 namespace Worktile
 {
@@ -65,10 +68,17 @@ namespace Worktile
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+            OnLaunchedOrActivated(e);
+        }
 
-            // 不要在窗口已包含内容时重复应用程序初始化，
-            // 只需确保窗口处于活动状态
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            OnLaunchedOrActivated(e);
+        }
+
+        private void OnLaunchedOrActivated(IActivatedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
             {
                 // 创建要充当导航上下文的框架，并导航到第一页
@@ -85,18 +95,53 @@ namespace Worktile
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (e is LaunchActivatedEventArgs)
             {
-                if (rootFrame.Content == null)
+                var args = e as LaunchActivatedEventArgs;
+
+                if (args.PrelaunchActivated == false)
                 {
-                    // 当导航堆栈尚未还原时，导航到第一页，
-                    // 并通过将所需信息作为导航参数传入来配置
-                    // 参数
-                    rootFrame.Navigate(typeof(Main.MainPage), e.Arguments);
+                    if (rootFrame.Content == null)
+                    {
+                        // 当导航堆栈尚未还原时，导航到第一页，
+                        // 并通过将所需信息作为导航参数传入来配置
+                        // 参数
+                        rootFrame.Navigate(typeof(MainPage), args.Arguments);
+                    }
                 }
-                // 确保当前窗口处于活动状态
-                Window.Current.Activate();
             }
+            else if (e is ToastNotificationActivatedEventArgs)
+            {
+                var toastActivationArgs = e as ToastNotificationActivatedEventArgs;
+                QueryString args = QueryString.Parse(toastActivationArgs.Argument);
+                if (args.Any())
+                {
+                    string msg = toastActivationArgs.UserInput["msg"].ToString().Trim();
+                    if (msg != string.Empty && args["action"] == "reply")
+                    {
+                        //await WtSocket.SendMessageAsync(SocketMessageType.Message, new SendMessageRequestBody
+                        //{
+                        //    FromType = FromType.User,
+                        //    From = args["from"],
+                        //    ToType = EnumsNET.Enums.Parse<ToType>(args["toType"]),
+                        //    MessageType = MessageType.Text,
+                        //    Client = Client.Win8,
+                        //    IsMarkdown = true,
+                        //    Content = toastActivationArgs.UserInput["msg"].ToString()
+                        //});
+                        //await WtSocketClient.SendMessage()
+                    }
+                }
+                // If we're loading the app for the first time, place the main page on
+                // the back stack so that user can go back after they've been
+                // navigated to the specific page
+                //if (rootFrame.BackStack.Count == 0)
+                //    rootFrame.BackStack.Add(new PageStackEntry(typeof(MainPage), null, null));
+            }
+
+            // 确保当前窗口处于活动状态
+            Window.Current.Activate();
+            //CustomTitleBar();
         }
 
         /// <summary>

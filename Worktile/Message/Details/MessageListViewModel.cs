@@ -92,8 +92,11 @@ namespace Worktile.Message.Details
         public async void OnMessageReceived(JObject obj)
         {
             var msg = obj.ToObject<WtMessage.Message>();
-            msg.CompleteMessageFrom();
-            await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Messages.Add(msg)));
+            if (msg.To.Id == Session.Id)
+            {
+                msg.CompleteMessageFrom();
+                await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Messages.Add(msg)));
+            }
         }
 
         public void SendMessage(string msg)

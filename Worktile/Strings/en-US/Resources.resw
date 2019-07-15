@@ -183,6 +183,9 @@
   <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
     <value>Message</value>
   </data>
+  <data name="PleaseEnterMessageToReplyQuickly" xml:space="preserve">
+    <value>Please enter a message to reply quickly.</value>
+  </data>
   <data name="SettingPageHeaderTextBlock.Text" xml:space="preserve">
     <value>Settings</value>
   </data>

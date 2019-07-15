@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.Notifications;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Networking.BackgroundTransfer;
+using Windows.UI.Core;
+using Windows.UI.Notifications;
+using Windows.UI.Xaml;
 using Worktile.Common;
 using Worktile.Main.Models;
 using Worktile.Message;
+using Worktile.Message.Models;
 using Worktile.Models;
 using Worktile.Models.Exceptions;
+using Worktile.Modles;
 using WtMessage = Worktile.Message.Models;
 
 namespace Worktile.Main
@@ -49,6 +55,8 @@ namespace Worktile.Main
         public static ObservableCollection<WtService> Services { get; private set; }
 
         public static MessageViewModel MessageViewModel { get; set; }
+
+        public CoreWindowActivationState WindowActivationState { get; private set; }
 
         private Team _team;
         public Team Team
@@ -106,6 +114,7 @@ namespace Worktile.Main
                     WtBackgroundImage = Box.BaseUrl + "background-image/" + img + "/from-s3";
                 }
 
+                Window.Current.Activated += Window_Activated;
                 WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
                 WtSocketClient.Connect(imHost, imToken, User.Id);
             }
@@ -113,6 +122,11 @@ namespace Worktile.Main
             {
                 throw new WtNotLoggedInException();
             }
+        }
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            WindowActivationState = e.WindowActivationState;
         }
 
         private async void WtSocketClient_OnMessageReceived(JObject obj)
@@ -133,7 +147,7 @@ namespace Worktile.Main
                 int index = GetNewIndex(newSession);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Sessions.Insert(index, newSession)));
             }
-            else
+            else if (MessageViewModel.Session != null && MessageViewModel.Session != session)
             {
                 int index = Sessions.IndexOf(session);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
@@ -148,6 +162,81 @@ namespace Worktile.Main
                     }
                 }));
             }
+            SendToast(msg);
+        }
+
+        private void SendToast(WtMessage.Message msg)
+        {
+            if (msg.From.Uid == User.Id)
+            {
+                return;
+            }
+            else if (MessageViewModel.Session != null && MessageViewModel.Session.Id == msg.To.Id && WindowActivationState == CoreWindowActivationState.Deactivated)
+            {
+                return;
+            }
+            var member = Members.Single(m => m.Id == msg.From.Uid);
+            string avatar = "ms-appx:///Assets/StoreLogo.scale-400.png";
+            if (member.Avatar != string.Empty)
+            {
+                avatar = UtilityTool.GetAvatarUrl(member.Avatar, AvatarSize.X80, FromType.User);
+            }
+
+            var toastContent = new ToastContent()
+            {
+                DisplayTimestamp = msg.CreatedAt,
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = member.DisplayName,
+                                HintMaxLines = 1
+                            },
+                            new AdaptiveText()
+                            {
+                                //Text = MessageContentReader.ReadSummary(apiMsg)
+                                Text = msg.Body.Content
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = avatar,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        }
+                    }
+                }
+            };
+
+            if (msg.Body.At != null && msg.Body.At.Count == 1)
+            {
+                string quicklyReply = UtilityTool.GetStringFromResources("PleaseEnterMessageToReplyQuickly");
+                toastContent.Actions = new ToastActionsCustom()
+                {
+                    Inputs =
+                    {
+                        new ToastTextBox("msg")
+                        {
+                            PlaceholderContent = quicklyReply
+                        }
+                    },
+                    Buttons =
+                    {
+                        new ToastButton("Send", $"action=reply&toType={msg.To.Type}&to={msg.To.Id}&from={msg.Body.At.First()}")
+                        {
+                            ActivationType = ToastActivationType.Foreground,
+                            ImageUri = "Assets/Images/Icons/send.png",
+                            TextBoxId = "msg"
+                        }
+                    }
+                };
+                toastContent.Launch = "action=launch";
+            }
+            var toastNotif = new ToastNotification(toastContent.GetXml());
+            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
         }
 
         public async Task RequestTeamAsync()

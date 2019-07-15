@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Worktile.Main;
+using Worktile.Message.Models;
+using Worktile.Modles;
 
 namespace Worktile.Common
 {
@@ -53,6 +56,31 @@ namespace Worktile.Common
         {
             string segment = uri.Segments[2];
             return segment.Substring(0, segment.Length - 1);
+        }
+
+        public static string GetAvatarUrl(string avatar, AvatarSize size, FromType fromType)
+        {
+            if (string.IsNullOrWhiteSpace(avatar) || avatar == "default.png")
+            {
+                return null;
+            }
+            else
+            {
+                switch (fromType)
+                {
+                    case FromType.User:
+                        {
+                            string ext = Path.GetExtension(avatar);
+                            string name = Path.GetFileNameWithoutExtension(avatar);
+                            string sizeStr = ((int)size).ToString();
+                            return MainViewModel.Box.AvatarUrl + name + "_" + sizeStr + "x" + sizeStr + ext;
+                        }
+                    case FromType.Service:
+                    case FromType.Addition:
+                        return MainViewModel.Box.ServiceUrl + avatar;
+                    default: throw new NotImplementedException();
+                }
+            }
         }
     }
 }
