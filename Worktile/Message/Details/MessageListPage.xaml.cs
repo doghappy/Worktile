@@ -14,6 +14,7 @@ using Worktile.Tool;
 using Worktile.Tool.Models;
 using WtMessage = Worktile.Message.Models;
 using System.Linq;
+using Worktile.Main;
 
 namespace Worktile.Message.Details
 {
@@ -31,6 +32,7 @@ namespace Worktile.Message.Details
         {
             await ViewModel.LoadMessagesAsync();
             WtSocketClient.OnMessageReceived += ViewModel.OnMessageReceived;
+            MainViewModel.UnreadMessageCount -= ViewModel.Session.UnRead;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Worktile.Common;
+using Worktile.Main;
 using Worktile.Message.Models;
 using Worktile.Models;
 
@@ -54,6 +55,7 @@ namespace Worktile.Message
             var obj = await WtHttpClient.PutAsync(url);
             if (obj.Value<int>("code") == 200)
             {
+                MainViewModel.UnreadMessageCount -= Session.UnRead;
                 Session.UnRead = 0;
             }
         }

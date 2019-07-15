@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Data.Xml.Dom;
 using Windows.Networking.BackgroundTransfer;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
@@ -55,6 +56,20 @@ namespace Worktile.Main
         public static ObservableCollection<WtService> Services { get; private set; }
 
         public static MessageViewModel MessageViewModel { get; set; }
+
+        private static int _unreadMessageCount;
+        public static int UnreadMessageCount
+        {
+            get => _unreadMessageCount;
+            set
+            {
+                if (_unreadMessageCount != value || value == 0)
+                {
+                    _unreadMessageCount = value;
+                    UpdateBadgeNumber(value);
+                }
+            }
+        }
 
         public CoreWindowActivationState WindowActivationState { get; private set; }
 
@@ -147,13 +162,14 @@ namespace Worktile.Main
                 int index = GetNewIndex(newSession);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Sessions.Insert(index, newSession)));
             }
-            else if (MessageViewModel.Session != null && MessageViewModel.Session != session)
+            else if (MessageViewModel.Session != session)
             {
                 int index = Sessions.IndexOf(session);
                 await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
                     session.LatestMessageAt = msg.CreatedAt;
                     session.UnRead++;
+                    UnreadMessageCount++;
                     int newindex = GetNewIndex(session);
                     if (index != newindex)
                     {
@@ -309,6 +325,7 @@ namespace Worktile.Main
                 int index = GetNewIndex(session);
                 Sessions.Insert(index, session);
             }
+            UnreadMessageCount = Sessions.Sum(s => s.UnRead);
         }
 
         public int GetNewIndex(Session session)
@@ -357,6 +374,23 @@ namespace Worktile.Main
                 }
             }
             return Sessions.Count - 1;
+        }
+
+        private static void UpdateBadgeNumber(int count)
+        {
+            if (count > 0)
+            {
+                XmlDocument badgeXml = BadgeUpdateManager.GetTemplateContent(BadgeTemplateType.BadgeNumber);
+                XmlElement badgeElement = badgeXml.SelectSingleNode("/badge") as XmlElement;
+                badgeElement.SetAttribute("value", count.ToString());
+                BadgeNotification badge = new BadgeNotification(badgeXml);
+                BadgeUpdater badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication();
+                badgeUpdater.Update(badge);
+            }
+            else
+            {
+                BadgeUpdateManager.CreateBadgeUpdaterForApplication().Clear();
+            }
         }
     }
 }
