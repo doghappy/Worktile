@@ -96,12 +96,18 @@ namespace Worktile.Common
             }
         }
 
-        public static async Task<T> PutAsync<T>(string url, IHttpContent content)
+        public static async Task<JObject> PutAsync(string url)
+        {
+            return await PutAsync(url, default);
+        }
+
+        public static async Task<JObject> PutAsync(string url, IHttpContent content)
         {
             var resMsg = await _client.PutAsync(GetUri(url), content);
             if (resMsg.IsSuccessStatusCode)
             {
-                return await resMsg.ReadAsModelAsync<T>();
+                string json = await resMsg.Content.ReadAsStringAsync();
+                return JObject.Parse(json);
             }
             else
             {

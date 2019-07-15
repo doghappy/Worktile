@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Worktile.Common;
 using Worktile.Message.Models;
@@ -49,6 +46,16 @@ namespace Worktile.Message
                 Navs.Add(new MessageNav { Tag = "Pin", Content = pin });
             }
             Nav = Navs.First();
+        }
+
+        public async Task ClearUnreadAsync()
+        {
+            string url = $"api/messages/unread/clear?ref_id={Session.Id}";
+            var obj = await WtHttpClient.PutAsync(url);
+            if (obj.Value<int>("code") == 200)
+            {
+                Session.UnRead = 0;
+            }
         }
     }
 }

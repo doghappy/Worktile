@@ -67,5 +67,10 @@ namespace Worktile.Message
                 }
             }
         }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.ClearUnreadAsync();
+        }
     }
 }

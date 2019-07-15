@@ -8,6 +8,7 @@
     xmlns:cvt="using:Worktile.Converters"
     xmlns:msgcvt="using:Worktile.Message.Converters"
     xmlns:models="using:Worktile.Message.Models"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
