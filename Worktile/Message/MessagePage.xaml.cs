@@ -1,7 +1,9 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Worktile.Main;
+using Worktile.Message.Dialogs;
 using Worktile.Models;
 
 namespace Worktile.Message
@@ -44,10 +46,12 @@ namespace Worktile.Message
             await ViewModel.UnStarAsync();
         }
 
-        private void CreateChannel_Click(object sender, RoutedEventArgs e)
+        private async void CreateChannel_Click(object sender, RoutedEventArgs e)
         {
             //Type sourcePageType = typeof(CreateChannelPage);
             //EnableNavGoBack(sourcePageType);
+            var dialog = new CreateGroupDialog();
+            await dialog.ShowAsync();
         }
 
         private void JoinChannel_Click(object sender, RoutedEventArgs e)

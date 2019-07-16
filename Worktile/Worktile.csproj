@@ -123,7 +123,9 @@
     <Compile Include="Common\HttpClientExtension.cs" />
     <Compile Include="Common\MessageHelper.cs" />
     <Compile Include="Common\SafeUnixDateTimeConverter.cs" />
+    <Compile Include="Common\UIExtension.cs" />
     <Compile Include="Common\UtilityTool.cs" />
+    <Compile Include="Common\WtColorHelper.cs" />
     <Compile Include="Common\WtHttpClient.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="Common\WtSocketClient.cs" />
@@ -181,6 +183,9 @@
     <Compile Include="Controls\Message\TaskMessage.xaml.cs">
       <DependentUpon>TaskMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WtColorPicker.xaml.cs">
+      <DependentUpon>WtColorPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\EqualBooleanReverseConverter.cs" />
     <Compile Include="Converters\ExtensionIconConverter.cs" />
     <Compile Include="Converters\AvatarInitialsConverter.cs" />
@@ -195,7 +200,11 @@
     <Compile Include="Converters\IsNullOrEmptyConverter.cs" />
     <Compile Include="Converters\WtBoxImageSourceConverter.cs" />
     <Compile Include="Converters\ThumbnailImageSourceConverter.cs" />
+    <Compile Include="Message\Dialogs\CreateGroupDialog.xaml.cs">
+      <DependentUpon>CreateGroupDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\AvatarSize.cs" />
+    <Compile Include="Models\ColorMapItem.cs" />
     <Compile Include="Tool\DownloadPage.xaml.cs">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
     </Compile>
@@ -476,6 +485,14 @@
     <Page Include="Controls\Message\TaskMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\WtColorPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Message\Dialogs\CreateGroupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tool\DownloadPage.xaml">
       <SubType>Designer</SubType>

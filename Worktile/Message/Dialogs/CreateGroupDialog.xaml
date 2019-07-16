@@ -1,0 +1,43 @@
+﻿<ContentDialog
+    x:Class="Worktile.Message.Dialogs.CreateGroupDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Worktile.Message.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Worktile.Controls"
+    mc:Ignorable="d"
+    x:Uid="MessageCreateGroupDialog"
+    DefaultButton="Primary"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBox
+            x:Uid="MessageCreateGroupDialogGroupNameTextBox"
+            Margin="{StaticResource Bottom16}"
+            Text="{x:Bind ChannelName, Mode=TwoWay}"/>
+
+        <controls:WtColorPicker x:Name="WtColor" Grid.Row="1"/>
+
+        <TextBox
+            Grid.Row="2"
+            x:Uid="MessageCreateGroupDialogDescTextBox"
+            Margin="{StaticResource Bottom16}"
+            Text="{x:Bind Description, Mode=TwoWay}"
+            AcceptsReturn="True"/>
+
+        <ToggleSwitch
+            Grid.Row="3"
+            x:Uid="MessageCreateGroupDialogVisibilityToggleSwitch"
+            IsOn="{x:Bind IsPrivate, Mode=TwoWay}"
+            Margin="{StaticResource Bottom16}"/>
+    </Grid>
+</ContentDialog>
