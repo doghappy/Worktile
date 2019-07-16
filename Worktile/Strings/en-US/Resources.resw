@@ -180,6 +180,15 @@
   <data name="MessageListPageMsgTextBox.PlaceholderText" xml:space="preserve">
     <value>Press Ctrl+Enter to send message, Press Win+. to send Emoji.</value>
   </data>
+  <data name="MessagePageListViewDeleteMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MessagePageListViewStarMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Star</value>
+  </data>
+  <data name="MessagePageListViewUnStarMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Unstar</value>
+  </data>
   <data name="MessagePageMessageTitleTextBlock.Text" xml:space="preserve">
     <value>Message</value>
   </data>
