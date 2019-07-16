@@ -6,10 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Worktile.Controls"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
     x:Uid="MessageCreateGroupDialog"
     DefaultButton="Primary"
+    IsPrimaryButtonEnabled="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <ContentDialog.Resources>
+        <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
+    </ContentDialog.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,6 +27,7 @@
         </Grid.RowDefinitions>
 
         <TextBox
+            x:Name="GroupNameTextBox"
             x:Uid="MessageCreateGroupDialogGroupNameTextBox"
             Margin="{StaticResource Bottom16}"
             Text="{x:Bind ChannelName, Mode=TwoWay}"/>
@@ -39,5 +46,11 @@
             x:Uid="MessageCreateGroupDialogVisibilityToggleSwitch"
             IsOn="{x:Bind IsPrivate, Mode=TwoWay}"
             Margin="{StaticResource Bottom16}"/>
+
+        <TextBlock
+            Grid.Row="4"
+            Visibility="{x:Bind ShowError, Mode=OneWay}"
+            Foreground="{StaticResource DangerBrush}"
+            Text="{x:Bind ErrorText, Mode=OneWay}"/>
     </Grid>
 </ContentDialog>

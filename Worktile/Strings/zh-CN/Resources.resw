@@ -243,6 +243,9 @@
   <data name="SettingPageThemeComboBox.Header" xml:space="preserve">
     <value>主题</value>
   </data>
+  <data name="ThisOptionIsRequired" xml:space="preserve">
+    <value>该选项是必填项</value>
+  </data>
   <data name="WtAppMessageDisplayName" xml:space="preserve">
     <value>消息</value>
   </data>
