@@ -23,6 +23,7 @@ using Worktile.Common;
 using Worktile.Main;
 using Worktile.Repository;
 using Microsoft.QueryStringDotNET;
+using Worktile.Message.Models;
 
 namespace Worktile
 {
@@ -119,17 +120,9 @@ namespace Worktile
                     string msg = toastActivationArgs.UserInput["msg"].ToString().Trim();
                     if (msg != string.Empty && args["action"] == "reply")
                     {
-                        //await WtSocket.SendMessageAsync(SocketMessageType.Message, new SendMessageRequestBody
-                        //{
-                        //    FromType = FromType.User,
-                        //    From = args["from"],
-                        //    ToType = EnumsNET.Enums.Parse<ToType>(args["toType"]),
-                        //    MessageType = MessageType.Text,
-                        //    Client = Client.Win8,
-                        //    IsMarkdown = true,
-                        //    Content = toastActivationArgs.UserInput["msg"].ToString()
-                        //});
-                        //await WtSocketClient.SendMessage()
+                        string to = args["to"];
+                        var toType = EnumsNET.Enums.Parse<ToType>(args["toType"]);
+                        WtSocketClient.SendMessage(to, toType, msg, MessageType.Text);
                     }
                 }
                 // If we're loading the app for the first time, place the main page on

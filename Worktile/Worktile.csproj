@@ -543,6 +543,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Enums.NET">
+      <Version>2.3.2</Version>
+    </PackageReference>
     <PackageReference Include="FontAwesome.UWP">
       <Version>4.7.0.9</Version>
     </PackageReference>

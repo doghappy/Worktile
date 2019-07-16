@@ -241,7 +241,7 @@ namespace Worktile.Main
                     },
                     Buttons =
                     {
-                        new ToastButton("Send", $"action=reply&toType={msg.To.Type}&to={msg.To.Id}&from={msg.Body.At.First()}")
+                        new ToastButton("Send", $"action=reply&toType={msg.To.Type}&to={msg.To.Id}")
                         {
                             ActivationType = ToastActivationType.Foreground,
                             ImageUri = "Assets/Images/Icons/send.png",
