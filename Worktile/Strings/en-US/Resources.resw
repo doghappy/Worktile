@@ -180,6 +180,15 @@
   <data name="MessageListPageMsgTextBox.PlaceholderText" xml:space="preserve">
     <value>Press Ctrl+Enter to send message, Press Win+. to send Emoji.</value>
   </data>
+  <data name="MessagePageCreateChannelMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Create group</value>
+  </data>
+  <data name="MessagePageCreateSessionMenuFlyoutItem.Text" xml:space="preserve">
+    <value>New chat</value>
+  </data>
+  <data name="MessagePageJoinChannelMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Join group</value>
+  </data>
   <data name="MessagePageListViewDeleteMenuFlyoutItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>

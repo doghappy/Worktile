@@ -180,6 +180,15 @@
   <data name="MessageListPageMsgTextBox.PlaceholderText" xml:space="preserve">
     <value>Ctrl+Enter 发送消息，Win+. 发送 Emoji 表情。</value>
   </data>
+  <data name="MessagePageCreateChannelMenuFlyoutItem.Text" xml:space="preserve">
+    <value>创建组群</value>
+  </data>
+  <data name="MessagePageCreateSessionMenuFlyoutItem.Text" xml:space="preserve">
+    <value>发起私聊</value>
+  </data>
+  <data name="MessagePageJoinChannelMenuFlyoutItem.Text" xml:space="preserve">
+    <value>加入组群</value>
+  </data>
   <data name="MessagePageListViewDeleteMenuFlyoutItem.Text" xml:space="preserve">
     <value>删除</value>
   </data>

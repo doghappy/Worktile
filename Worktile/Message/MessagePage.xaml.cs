@@ -43,5 +43,28 @@ namespace Worktile.Message
         {
             await ViewModel.UnStarAsync();
         }
+
+        private void CreateChannel_Click(object sender, RoutedEventArgs e)
+        {
+            //Type sourcePageType = typeof(CreateChannelPage);
+            //EnableNavGoBack(sourcePageType);
+        }
+
+        private void JoinChannel_Click(object sender, RoutedEventArgs e)
+        {
+            //Type sourcePageType = typeof(JoinChannelPage);
+            //EnableNavGoBack(sourcePageType);
+        }
+
+        //private async void AddMember_Click(object sender, RoutedEventArgs e)
+        //{
+        //    await Launcher.LaunchUriAsync(new Uri(DataSource.SubDomain + "/console/members?add=true"));
+        //}
+
+        private void CreateChat_Click(object sender, RoutedEventArgs e)
+        {
+            //Type sourcePageType = typeof(CreateChatPage);
+            //EnableNavGoBack(sourcePageType);
+        }
     }
 }
