@@ -6,10 +6,160 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:Worktile.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:models="using:Worktile.Models"
+    xmlns:cvt="using:Worktile.Converters"
     mc:Ignorable="d"
+    Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <!--<uc:ImageViewer Images="{x:Bind Images}"/>-->
-    </Grid>
+    <Page.Resources>
+        <cvt:AvatarInitialsConverter x:Key="AvatarInitialsConverter"/>
+        <cvt:AvatarSourceConverter x:Key="AvatarSourceConverter"/>
+        <DataTemplate x:Key="MemberItemTemplate" x:DataType="models:User">
+            <StackPanel Orientation="Horizontal">
+                <PersonPicture
+                    Width="32"
+                    Initials="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                    ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+                <TextBlock
+                    Text="{x:Bind DisplayName}"
+                    VerticalAlignment="Center"
+                    Margin="{StaticResource Left8}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <StackPanel Margin="{StaticResource Top32}" Padding="16">
+        <Button
+            Padding="0"
+            Width="32"
+            Height="32"
+            CornerRadius="32"
+            Style="{ThemeResource ButtonRevealStyle}">
+            <SymbolIcon Symbol="AddFriend"/>
+        </Button>
+
+        <Ellipse Width="32" Height="32" Fill="Red"/>
+
+        <HyperlinkButton>
+            <SymbolIcon Symbol="AddFriend"/>
+        </HyperlinkButton>
+
+        <!--<StackPanel>
+            <Button Click="HyperlinkButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                <Button.Flyout>
+                    <Flyout>
+                        <ListView>
+                            <ListViewItem>
+                                <StackPanel Orientation="Horizontal">
+                                    <PersonPicture ProfilePicture="https://docs.microsoft.com/en-us/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png" Width="32" />
+                                    <TextBlock Text="Test" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ListViewItem>
+                        </ListView>
+                    </Flyout>
+                </Button.Flyout>
+
+                <FontIcon Glyph="&#xECC8;" FontSize="32"/>
+            </Button>
+            <ItemsControl ItemsSource="{x:Bind Items}" x:Name="Members">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RelativePanel Width="40">
+                            <PersonPicture
+                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                                ProfilePicture="https://docs.microsoft.com/en-us/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png"
+                                Width="32" />
+                            <Button
+                                RelativePanel.AlignTopWithPanel="True"
+                                RelativePanel.AlignRightWithPanel="True"
+                                Background="{StaticResource DangerBrush}"
+                                Foreground="White"
+                                CornerRadius="14"
+                                Width="14"
+                                Height="14"
+                                Padding="0">
+                                <Viewbox Width="10" Height="10">
+                                    <SymbolIcon Symbol="Cancel"/>
+                                </Viewbox>
+                            </Button>
+                        </RelativePanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>-->
+
+        <HyperlinkButton>
+            <SymbolIcon Symbol="AddFriend"/>
+        </HyperlinkButton>
+
+        <!--<ListView>
+            <ListViewItem>
+                <StackPanel Orientation="Horizontal">
+                    <PersonPicture ProfilePicture="https://docs.microsoft.com/en-us/windows/uwp/contacts-and-calendar/images/shoulder-tap-static-payload.png" Width="32" />
+                    <TextBlock Text="Test" VerticalAlignment="Center"/>
+                </StackPanel>
+            </ListViewItem>
+        </ListView>-->
+
+        <ItemsControl ItemsSource="{x:Bind SelectedMembers}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="models:User">
+                    <PersonPicture
+                        Width="32"
+                        Margin="2"
+                        Initials="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                        ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Pivot Width="300" Height="500">
+            <PivotItem Header="团队">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <AutoSuggestBox
+                        PlaceholderText="Search by name"
+                        QueryIcon="Find"
+                        ItemsSource="{x:Bind AutoSuggestBoxItems}"
+                        UpdateTextOnSelect="False"
+                        TextChanged="AutoSuggestBox_TextChanged"
+                        QuerySubmitted="AutoSuggestBox_QuerySubmitted"
+                        ItemTemplate="{StaticResource MemberItemTemplate}"/>
+
+                    <ListView
+                        Grid.Row="1"
+                        ItemsSource="{x:Bind Members}"
+                        x:Name="MemberListView"
+                        SelectionMode="Multiple"
+                        SelectionChanged="ListView_SelectionChanged"
+                        ItemTemplate="{StaticResource MemberItemTemplate}"/>
+                    <CommandBar Grid.Row="2" DefaultLabelPosition="Right">
+                        <AppBarButton Icon="SelectAll" Label="Select All" Click="SelectAll_Click"/>
+                        <AppBarButton Icon="ClearSelection" Label="Clear Selection" Click="ClearSelection_Click"/>
+                    </CommandBar>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="部门">
+                
+            </PivotItem>
+        </Pivot>
+    </StackPanel>
 </Page>

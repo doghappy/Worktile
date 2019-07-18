@@ -34,10 +34,11 @@
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
 
-                            <local:MemberPickerEditor MaxHeight="580"
-                                                      Title="选择成员"
-                                                      OnPrimaryButtonClick="MemberPickerEditor_OnPrimaryButtonClick"
-                                                      OnCloseButtonClick="MemberPickerEditor_OnCloseButtonClick"/>
+                            <local:MemberPickerEditor
+                                MaxHeight="580"
+                                Title="选择成员"
+                                OnPrimaryButtonClick="MemberPickerEditor_OnPrimaryButtonClick"
+                                OnCloseButtonClick="MemberPickerEditor_OnCloseButtonClick"/>
                         </Flyout>
                     </Button.Flyout>
 
