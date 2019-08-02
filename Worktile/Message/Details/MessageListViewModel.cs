@@ -99,7 +99,7 @@ namespace Worktile.Message.Details
             }
         }
 
-        public void SendMessage(string msg)
+        public async Task SendMessageAsync(string msg)
         {
             string to = Session.Id;
             WtMessage.ToType toType = WtMessage.ToType.Channel;
@@ -110,7 +110,7 @@ namespace Worktile.Message.Details
             string message = msg.Trim();
             if (message != string.Empty)
             {
-                WtSocketClient.SendMessage(to, toType, message, WtMessage.MessageType.Text);
+                await WtSocketClient.SendMessageAsync(to, toType, message, WtMessage.MessageType.Text);
             }
         }
 

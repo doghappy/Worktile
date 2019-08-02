@@ -67,17 +67,17 @@ namespace Worktile
         /// 将在启动应用程序以打开特定文件等情况下使用。
         /// </summary>
         /// <param name="e">有关启动请求和过程的详细信息。</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            OnLaunchedOrActivated(e);
+            await OnLaunchedOrActivatedAsync(e);
         }
 
-        protected override void OnActivated(IActivatedEventArgs e)
+        protected override async void OnActivated(IActivatedEventArgs e)
         {
-            OnLaunchedOrActivated(e);
+            await OnLaunchedOrActivatedAsync(e);
         }
 
-        private void OnLaunchedOrActivated(IActivatedEventArgs e)
+        private async Task OnLaunchedOrActivatedAsync(IActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
@@ -122,7 +122,7 @@ namespace Worktile
                     {
                         string to = args["to"];
                         var toType = EnumsNET.Enums.Parse<ToType>(args["toType"]);
-                        WtSocketClient.SendMessage(to, toType, msg, MessageType.Text);
+                        await WtSocketClient.SendMessageAsync(to, toType, msg, MessageType.Text);
                     }
                 }
                 // If we're loading the app for the first time, place the main page on

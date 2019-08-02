@@ -603,9 +603,6 @@
     <PackageReference Include="QueryString.NET">
       <Version>1.0.0</Version>
     </PackageReference>
-    <PackageReference Include="SocketIoClientDotNet">
-      <Version>0.9.13</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Fonts\iconfont.ttf" />
@@ -617,6 +614,10 @@
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\socket.io-client-csharp\SocketIOClient\SocketIOClient.csproj">
+      <Project>{3d624c55-f550-49e1-96de-2d0a84010d6e}</Project>
+      <Name>SocketIOClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Worktile.Repository\Worktile.Repository.csproj">
       <Project>{bb1ef942-2afb-49e0-bcfb-9eb4478c1834}</Project>
       <Name>Worktile.Repository</Name>

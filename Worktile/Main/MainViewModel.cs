@@ -131,7 +131,7 @@ namespace Worktile.Main
 
                 Window.Current.Activated += Window_Activated;
                 WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
-                WtSocketClient.Connect(imHost, imToken, User.Id);
+                await WtSocketClient.ConnectAsync(imHost, imToken, User.Id);
             }
             else
             {

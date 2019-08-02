@@ -15,6 +15,7 @@ using Worktile.Tool.Models;
 using WtMessage = Worktile.Message.Models;
 using System.Linq;
 using Worktile.Main;
+using System.Threading.Tasks;
 
 namespace Worktile.Message.Details
 {
@@ -45,9 +46,9 @@ namespace Worktile.Message.Details
             WtSocketClient.OnMessageReceived -= ViewModel.OnMessageReceived;
         }
 
-        private void SendButton_Click(object sender, RoutedEventArgs e)
+        private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            SendMessage();
+            await SendMessageAsync();
         }
 
         private async void AttachmentButton_Click(object sender, RoutedEventArgs e)
@@ -62,13 +63,13 @@ namespace Worktile.Message.Details
             await ViewModel.UploadFileAsync(files);
         }
 
-        private void MsgTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        private async void MsgTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {
                 if (Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
                 {
-                    SendMessage();
+                    await SendMessageAsync();
                 }
                 else
                 {
@@ -79,9 +80,9 @@ namespace Worktile.Message.Details
             }
         }
 
-        private void SendMessage()
+        private async Task SendMessageAsync()
         {
-            ViewModel.SendMessage(MsgTextBox.Text);
+            await ViewModel.SendMessageAsync(MsgTextBox.Text);
             MsgTextBox.Text = string.Empty;
         }
 

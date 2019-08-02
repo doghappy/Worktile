@@ -1,35 +1,46 @@
 ﻿using Newtonsoft.Json.Linq;
+using SocketIOClient;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Worktile.Main;
 using Worktile.Models;
-using SocketIO = Quobject.SocketIoClientDotNet.Client;
 using WtMessage = Worktile.Message.Models;
 
 namespace Worktile.Common
 {
     public static class WtSocketClient
     {
-        private static SocketIO.Socket _socket;
+        private static SocketIO _socket;
 
         public static event Action<JObject> OnMessageReceived;
 
-        public static void Connect(string imHost, string imToken, string uid)
+        public static async Task ConnectAsync(string imHost, string imToken, string uid)
         {
-            _socket = SocketIO.IO.Socket(imHost, new SocketIO.IO.Options
+            _socket = new SocketIO(imHost)
             {
-                Transports = Quobject.Collections.Immutable.ImmutableList.Create<string>().Add("websocket"),
-                Query = new Dictionary<string, string>
+                Parameters = new Dictionary<string, string>
                 {
                     { "token", imToken },
                     { "uid", uid },
-                    { "client", "Windows 10" },
+                    { "client", "Windows 10" }
                 }
+            };
+            _socket.OnOpened += async args =>
+            {
+                string text = "40" + _socket.Namespace;
+                text = text.Insert(text.Length - 1, $"?token={imToken}&uid={uid}&client=web");
+                await _socket.SendMessageAsync(text);
+            };
+            await _socket.ConnectAsync();
+            _socket.On("message", args =>
+            {
+                var jobj = JObject.Parse(args.Text);
+                OnMessageReceived?.Invoke(jobj);
             });
-            _socket.On("message", obj => OnMessageReceived?.Invoke(obj as JObject));
         }
 
-        public static void SendMessage(string to, WtMessage.ToType toType, string msg, WtMessage.MessageType messageType)
+        public static async Task SendMessageAsync(string to, WtMessage.ToType toType, string msg, WtMessage.MessageType messageType)
         {
             var obj = JObject.FromObject(new
             {
@@ -42,7 +53,7 @@ namespace Worktile.Common
                 markdown = 1,
                 content = msg
             });
-            _socket.Emit("message", obj);
+            await _socket.EmitAsync("message", obj);
         }
     }
 }
