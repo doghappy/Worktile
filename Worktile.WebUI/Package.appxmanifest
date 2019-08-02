@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="e59f88e2-4b4b-470d-aee1-7999f64feb9b"
-    Publisher="CN=HeroWong"
-    Version="1.0.0.0" />
+    Name="22778BF0BAC21.Worktile"
+    Publisher="CN=81B153BE-B5CF-46D4-BE96-73AC2EAA6CCF"
+    Version="1.1.4.0" />
 
-  <mp:PhoneIdentity PhoneProductId="e59f88e2-4b4b-470d-aee1-7999f64feb9b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="f429bb80-ec03-471f-8791-fdd3646cbbb4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>Worktile.WebUI</DisplayName>
-    <PublisherDisplayName>HeroWong</PublisherDisplayName>
+    <DisplayName>Worktile</DisplayName>
+    <PublisherDisplayName>熊掌不好吃</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

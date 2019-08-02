@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -69,6 +70,11 @@ namespace Worktile.WebUI
             }
             url = url.TrimEnd('/');
 
+            if (args.Uri.Host == "lcoriginal.s3.cn-north-1.amazonaws.com.cn")
+            {
+                await Launcher.LaunchUriAsync(args.Uri);
+            }
+
             if (Domain == null)
             {
                 var regex = new Regex(@"^https://([a-zA-Z]+\w+)\.worktile\.com$");
@@ -94,10 +100,13 @@ namespace Worktile.WebUI
         private async Task ConnectSocketAsync()
         {
             await RequestMeAsync();
-            await RequestTeamAsync();
+            if (Domain != null)
+            {
+                await RequestTeamAsync();
 
-            WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
-            WtSocketClient.Connect(IMHost, IMToken);
+                WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
+                WtSocketClient.Connect(IMHost, IMToken);
+            }
         }
 
         private async Task RequestMeAsync()
@@ -115,7 +124,9 @@ namespace Worktile.WebUI
             }
             else
             {
-                throw new Exception();
+                ApplicationData.Current.LocalSettings.Values.Remove("Domain");
+                Domain = null;
+                RootWebView.Navigate(new Uri("https://worktile.com/signin"));
             }
         }
 

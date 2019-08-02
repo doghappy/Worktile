@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:Worktile.Controls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     xmlns:models="using:Worktile.Models"
     xmlns:cvt="using:Worktile.Converters"
+    xmlns:department="using:Worktile.Models.Department"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -16,6 +18,7 @@
     <Page.Resources>
         <cvt:AvatarInitialsConverter x:Key="AvatarInitialsConverter"/>
         <cvt:AvatarSourceConverter x:Key="AvatarSourceConverter"/>
+        <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
         <DataTemplate x:Key="MemberItemTemplate" x:DataType="models:User">
             <StackPanel Orientation="Horizontal">
                 <PersonPicture
@@ -108,8 +111,10 @@
                 </StackPanel>
             </ListViewItem>
         </ListView>-->
+        
+        
 
-        <ItemsControl ItemsSource="{x:Bind SelectedMembers}">
+        <!--<ItemsControl ItemsSource="{x:Bind SelectedMembers}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsWrapGrid Orientation="Horizontal"/>
@@ -158,8 +163,33 @@
                 </Grid>
             </PivotItem>
             <PivotItem Header="部门">
-                
+                <TreeView ItemsSource="{x:Bind DepartmentNodes, Mode=OneWay}" SelectionMode="Multiple">
+                    <TreeView.ItemTemplate>
+                        <DataTemplate x:DataType="department:DepartmentNode">
+                            <TreeViewItem ItemsSource="{x:Bind Children}" IsSelected="{x:Bind IsSelected, Mode=TwoWay}">
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon x:Name="DepartmentIcon"
+                                      x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Department}"
+                                      Style="{StaticResource LcFontIcon}"
+                                      Glyph="&#xE621;"/>
+                                    
+                                    <PersonPicture
+                                        x:Name="AvatarInTree"
+                                        x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=Member}"
+                                        Width="32"
+                                        Margin="2"
+                                        Initials="{x:Bind Title, Converter={StaticResource AvatarInitialsConverter}}"
+                                        ProfilePicture="{x:Bind Addition.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+                                    
+                                    <TextBlock Text="{x:Bind Title}" VerticalAlignment="Center" Margin="4 0 0 0"/>
+                                </StackPanel>
+                            </TreeViewItem>
+                        </DataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
             </PivotItem>
-        </Pivot>
+        </Pivot>-->
+
+        <uc:MemberPicker/>
     </StackPanel>
 </Page>

@@ -129,6 +129,9 @@
     <Compile Include="Common\WtHttpClient.cs" />
     <Compile Include="Common\WtIconHelper.cs" />
     <Compile Include="Common\WtSocketClient.cs" />
+    <Compile Include="Controls\MemberPicker.xaml.cs">
+      <DependentUpon>MemberPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Message\AppraisalMessage.xaml.cs">
       <DependentUpon>AppraisalMessage.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,9 @@
     </Compile>
     <Compile Include="Models\AvatarSize.cs" />
     <Compile Include="Models\ColorMapItem.cs" />
+    <Compile Include="Models\Department\DepartmentNode.cs" />
+    <Compile Include="Models\Department\DepartmentNodeAddition.cs" />
+    <Compile Include="Models\Department\DepartmentNodeType.cs" />
     <Compile Include="Tool\DownloadPage.xaml.cs">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
     </Compile>
@@ -414,6 +420,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\MemberPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Message\AppraisalMessage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -611,6 +621,9 @@
       <Project>{bb1ef942-2afb-49e0-bcfb-9eb4478c1834}</Project>
       <Name>Worktile.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\lc-iconfont.ttf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

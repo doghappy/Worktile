@@ -23,8 +23,12 @@
             <SolidColorBrush x:Key="ReportBrush" Color="#2DBCFF"/>
 
             <FontFamily x:Key="Wtf">ms-appx:///Worktile,,,/Assets/Fonts/iconfont.ttf#wtf</FontFamily>
+            <FontFamily x:Key="LcFont">ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont</FontFamily>
             <Style TargetType="FontIcon" x:Key="WtfIcon">
                 <Setter Property="FontFamily" Value="{StaticResource Wtf}"/>
+            </Style>
+            <Style TargetType="FontIcon" x:Key="LcFontIcon">
+                <Setter Property="FontFamily" Value="{StaticResource LcFont}"/>
             </Style>
 
             <Thickness x:Key="Left4">4 0 0 0</Thickness>
