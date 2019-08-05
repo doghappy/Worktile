@@ -75,5 +75,16 @@ namespace Worktile.Controls
         {
             MemberListView.SelectedItems.Add(args.ChosenSuggestion);
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in MainViewModel.Members)
+            {
+                if (item.Role != UserRoleType.Bot)
+                {
+                    Members.Add(item);
+                }
+            }
+        }
     }
 }

@@ -49,6 +49,7 @@ namespace Worktile.Main
         private void ProfileNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ViewModel.SelectedApp = null;
+
             ContentFrame.Navigate(typeof(AccountInfoPage), ViewModel.User);
         }
 

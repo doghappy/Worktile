@@ -10,12 +10,11 @@
     mc:Ignorable="d"
     x:Uid="MessageCreateGroupDialog"
     DefaultButton="Primary"
-    IsPrimaryButtonEnabled="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BooleanReverseConverter}}"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 
-    <ContentDialog.Resources>
+    <!--<ContentDialog.Resources>
         <cvt:BooleanReverseConverter x:Key="BooleanReverseConverter"/>
-    </ContentDialog.Resources>
+    </ContentDialog.Resources>-->
 
     <Grid>
         <Grid.RowDefinitions>

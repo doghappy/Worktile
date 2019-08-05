@@ -4,9 +4,29 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Worktile.Models"
+    xmlns:cvt="using:Worktile.Converters"
+    Loaded="UserControl_Loaded"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <cvt:AvatarInitialsConverter x:Key="AvatarInitialsConverter"/>
+        <cvt:AvatarSourceConverter x:Key="AvatarSourceConverter"/>
+        <DataTemplate x:Key="MemberItemTemplate" x:DataType="models:User">
+            <StackPanel Orientation="Horizontal">
+                <PersonPicture
+                    Width="32"
+                    Initials="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                    ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+                <TextBlock
+                    Text="{x:Bind DisplayName}"
+                    VerticalAlignment="Center"
+                    Margin="{StaticResource Left8}"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>

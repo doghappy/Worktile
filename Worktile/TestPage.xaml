@@ -190,6 +190,6 @@
             </PivotItem>
         </Pivot>-->
 
-        <uc:MemberPicker/>
+        <uc:MemberPicker Height="500" Width="300"/>
     </StackPanel>
 </Page>
