@@ -7,6 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Worktile.Tethys/Themes/Generic.xaml"/>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="SuccessBrush" Color="#22d7bb"/>
@@ -22,7 +23,7 @@
             <SolidColorBrush x:Key="AppraisalBrush" Color="#7076FA"/>
             <SolidColorBrush x:Key="ReportBrush" Color="#2DBCFF"/>
 
-            <FontFamily x:Key="Wtf">ms-appx:///Worktile,,,/Assets/Fonts/iconfont.ttf#wtf</FontFamily>
+            <!--<FontFamily x:Key="Wtf">ms-appx:///Worktile,,,/Assets/Fonts/iconfont.ttf#wtf</FontFamily>-->
             <FontFamily x:Key="LcFont">ms-appx:///Worktile,,,/Assets/Fonts/lc-iconfont.ttf#lcfont</FontFamily>
             <Style TargetType="FontIcon" x:Key="WtfIcon">
                 <Setter Property="FontFamily" Value="{StaticResource Wtf}"/>

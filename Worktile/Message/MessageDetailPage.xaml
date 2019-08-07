@@ -8,33 +8,42 @@
     xmlns:cvt="using:Worktile.Converters"
     xmlns:msgcvt="using:Worktile.Message.Converters"
     xmlns:models="using:Worktile.Message.Models"
+    xmlns:tethys="using:Worktile.Tethys"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Page.Resources>
         <cvt:AvatarInitialsConverter x:Key="AvatarInitialsConverter"/>
         <cvt:AvatarSourceConverter x:Key="AvatarSourceConverter"/>
+        <cvt:AvatarBackgroundConverter x:Key="AvatarBackgroundConverter"/>
         <msgcvt:IsGroupConverter x:Key="IsGroupConverter"/>
     </Page.Resources>
 
     <NavigationView
+        Padding="{StaticResource Top32}"
         PaneDisplayMode="Top"
         IsSettingsVisible="False"
         IsBackButtonVisible="Collapsed"
         SelectionChanged="NavigationView_SelectionChanged"
-        MenuItemsSource="{x:Bind ViewModel.Navs}"
-        SelectedItem="{x:Bind ViewModel.Nav, Mode=TwoWay}">
+        MenuItemsSource="{x:Bind Navs}"
+        SelectedItem="{x:Bind Nav, Mode=TwoWay}">
         <NavigationView.PaneHeader>
             <StackPanel Orientation="Horizontal" Padding="12 0">
-                <PersonPicture
+                <!--<PersonPicture
                     Width="32"
                     HorizontalAlignment="Left"
                     IsGroup="{x:Bind ViewModel.Session.Type, Converter={StaticResource IsGroupConverter}}"
                     Initials="{x:Bind ViewModel.Session.DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                    ProfilePicture="{x:Bind ViewModel.Session.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+                    ProfilePicture="{x:Bind ViewModel.Session.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
+                <tethys:Avatar
+                    Width="32"
+                    HorizontalAlignment="Left"
+                    DisplayName="{x:Bind Session.DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                    Background="{x:Bind Session.DisplayName, Converter={StaticResource AvatarBackgroundConverter}}"
+                    Source="{x:Bind Session.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
                 <TextBlock
                     Margin="{StaticResource Left8}"
-                    Text="{x:Bind ViewModel.Session.DisplayName}"
+                    Text="{x:Bind Session.DisplayName}"
                     VerticalAlignment="Center"/>
             </StackPanel>
         </NavigationView.PaneHeader>

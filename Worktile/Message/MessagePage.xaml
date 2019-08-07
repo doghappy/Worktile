@@ -8,6 +8,8 @@
     xmlns:cvt="using:Worktile.Converters"
     xmlns:models="using:Worktile.Models"
     xmlns:msgcvt="using:Worktile.Message.Converters"
+    xmlns:tethys="using:Worktile.Tethys"
+    xmlns:controls="using:Worktile.Controls"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
@@ -77,8 +79,9 @@
 
             <ListView
                 Grid.Row="1"
-                ItemsSource="{x:Bind ViewModel.Sessions}"
-                SelectedItem="{x:Bind ViewModel.Session, Mode=TwoWay}"
+                ItemsSource="{x:Bind Sessions, Mode=OneWay}"
+                SelectedItem="{x:Bind SelectedSession, Mode=TwoWay}"
+                SelectionChanged="ListView_SelectionChanged"
                 RightTapped="ListView_RightTapped">
 
                 <ListView.Resources>
@@ -86,12 +89,12 @@
                         <Setter Property="VerticalAlignment" Value="Center"/>
                         <Setter Property="Margin" Value="{StaticResource Left8}"/>
                     </Style>
-                    
+
                     <MenuFlyout x:Name="ListViewItemMenuFlyout">
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
                                 x:Uid="MessagePageListViewStarMenuFlyoutItem"
-                                Visibility="{x:Bind ViewModel.RightTappedSession.IsStar, Converter={StaticResource BooleanReverseVisibilityConverter}, Mode=OneWay}"
+                                Visibility="{x:Bind RightTappedSession.IsStar, Converter={StaticResource BooleanReverseVisibilityConverter}, Mode=OneWay}"
                                 Click="StarButton_Click">
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon Glyph="&#xE11C;"/>
@@ -99,7 +102,7 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 x:Uid="MessagePageListViewUnStarMenuFlyoutItem"
-                                Visibility="{x:Bind ViewModel.RightTappedSession.IsStar, Converter={StaticResource BooleanVisibilityConverter}, Mode=OneWay}"
+                                Visibility="{x:Bind RightTappedSession.IsStar, Converter={StaticResource BooleanVisibilityConverter}, Mode=OneWay}"
                                 Click="UnStarButton_Click">
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon Glyph="&#xE845;"/>
@@ -134,11 +137,28 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <PersonPicture
+                                    <!--<PersonPicture
                                         Width="32"
                                         IsGroup="{x:Bind Type, Converter={StaticResource IsGroupConverter}}"
                                         Initials="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                                        ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+                                        ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
+
+                                    <!--<tethys:Avatar
+                                        x:Name="SessionAvatar"
+                                        x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Session'}"
+                                        Width="32"
+                                        DisplayName="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                                        Background="{x:Bind DisplayName, Converter={StaticResource AvatarBackgroundConverter}}"
+                                        Source="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
+
+                                    <tethys:Avatar
+                                        x:Name="ChannelAvatar"
+                                        x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Channel'}"
+                                        Width="32"
+                                        DisplayName="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
+                                        Background="{x:Bind DisplayName, Converter={StaticResource AvatarBackgroundConverter}}"
+                                        Source="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
+                                    <controls:SessionAvatar Session="{x:Bind}"/>
 
                                     <TextBlock
                                         Grid.Column="1"

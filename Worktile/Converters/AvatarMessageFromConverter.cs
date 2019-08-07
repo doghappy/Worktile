@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
-using Worktile.Main;
+using Worktile.Common;
 using Worktile.Message.Models;
 
 namespace Worktile.Converters
@@ -18,7 +18,7 @@ namespace Worktile.Converters
                     string url = null;
                     if (mf.Type == FromType.Service)
                     {
-                        url = MainViewModel.Box.ServiceUrl + mf.Avatar;
+                        url = SharedData.Box.ServiceUrl + mf.Avatar;
                     }
                     else
                     {
@@ -28,7 +28,7 @@ namespace Worktile.Converters
                             size = parameter.ToString();
                         }
                         string avatar = mf.Avatar.Insert(index, '_' + size);
-                        url = MainViewModel.Box.AvatarUrl + avatar;
+                        url = SharedData.Box.AvatarUrl + avatar;
                     }
                     var img = new BitmapImage
                     {

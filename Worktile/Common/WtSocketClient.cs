@@ -26,12 +26,6 @@ namespace Worktile.Common
                     { "client", "Windows 10" }
                 }
             };
-            _socket.OnOpened += async args =>
-            {
-                string text = "40" + _socket.Namespace;
-                text = text.Insert(text.Length - 1, $"?token={imToken}&uid={uid}&client=web");
-                await _socket.SendMessageAsync(text);
-            };
             await _socket.ConnectAsync();
             _socket.On("message", args =>
             {

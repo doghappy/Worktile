@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
+using Worktile.Common;
 using Worktile.Main;
 
 namespace Worktile.Converters
@@ -21,7 +22,8 @@ namespace Worktile.Converters
                         size = parameter.ToString();
                     }
                     avatar = avatar.Insert(index, '_' + size);
-                    string uri = MainViewModel.Box.AvatarUrl + avatar;
+                    //string uri = MainViewModel.Box.AvatarUrl + avatar;
+                    string uri = SharedData.Box.AvatarUrl + avatar;
                     var img = new BitmapImage
                     {
                         UriSource = new Uri(uri)

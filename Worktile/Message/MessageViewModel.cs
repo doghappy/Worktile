@@ -45,47 +45,15 @@ namespace Worktile.Message
 
         public async Task StarAsync()
         {
-            string url = $"api/{RightTappedSessionType}/{RightTappedSession.Id}/star";
-            var data = await WtHttpClient.PutAsync(url);
-            if (data.Value<int>("code") == 200 && data.Value<bool>("data"))
-            {
-                RightTappedSession.IsStar = true;
-            }
         }
 
         public async Task UnStarAsync()
         {
-            string url = $"api/{RightTappedSessionType}/{RightTappedSession.Id}/unstar";
-            var data = await WtHttpClient.PutAsync(url);
-            if (data.Value<int>("code") == 200 && data.Value<bool>("data"))
-            {
-                RightTappedSession.IsStar = false;
-            }
         }
 
         public async Task DeleteRightTappedSessionAsync()
         {
-            if (Sessions.Count > 1)
-            {
-                bool success;
-                if (RightTappedSession.Type == SessionType.Channel)
-                {
-                    string url = $"api/channels/{RightTappedSession.Id}/disable";
-                    var data = await WtHttpClient.PutAsync(url);
-                    success = data.Value<int>("code") == 200;
-                }
-                else
-                {
-                    string url = $"api/sessions/{RightTappedSession.Id}";
-                    var data = await WtHttpClient.DeleteAsync(url);
-                    success = data.Value<int>("code") == 200 && data.Value<bool>("data");
-                }
-                if (success)
-                {
-                    Sessions.Remove(RightTappedSession);
-                    Session = Sessions.First();
-                }
-            }
+            
         }
     }
 }

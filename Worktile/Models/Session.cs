@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Windows.UI.Xaml.Media;
 
 namespace Worktile.Models
 {
@@ -62,6 +63,10 @@ namespace Worktile.Models
         public bool IsAAssistant { get; set; }
 
         public int RefType { get; set; }
+
+        public WtVisibility Visibility { get; set; }
+
+        public SolidColorBrush Color { get; set; }
     }
 
     public enum SessionType
