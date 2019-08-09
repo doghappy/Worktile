@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worktilea", "Worktilea\Work
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worktile.WebUI", "Worktile.WebUI\Worktile.WebUI.csproj", "{C33CE03B-1130-4B4D-9657-3F4B8107989A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketIOClient", "..\socket.io-client-csharp\SocketIOClient\SocketIOClient.csproj", "{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,26 @@ Global
 		{C33CE03B-1130-4B4D-9657-3F4B8107989A}.Release|x86.ActiveCfg = Release|x86
 		{C33CE03B-1130-4B4D-9657-3F4B8107989A}.Release|x86.Build.0 = Release|x86
 		{C33CE03B-1130-4B4D-9657-3F4B8107989A}.Release|x86.Deploy.0 = Release|x86
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|ARM.Build.0 = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|x64.Build.0 = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Debug|x86.Build.0 = Debug|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|ARM.ActiveCfg = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|ARM.Build.0 = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|ARM64.Build.0 = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|x64.ActiveCfg = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|x64.Build.0 = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|x86.ActiveCfg = Release|Any CPU
+		{979211D0-B6F4-4A9C-BDF0-1CCFF464AFBF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

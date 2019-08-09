@@ -26,16 +26,16 @@ namespace Worktile.Message
 
         public ObservableCollection<MessageNav> Navs { get; }
 
-        private MessageNav _nav;
-        public MessageNav Nav
+        private MessageNav _selectedNav;
+        public MessageNav SelectedNav
         {
-            get => _nav;
+            get => _selectedNav;
             set
             {
-                if (_nav != value)
+                if (_selectedNav != value)
                 {
-                    _nav = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Nav)));
+                    _selectedNav = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedNav)));
                 }
             }
         }
@@ -43,25 +43,6 @@ namespace Worktile.Message
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Session = e.Parameter as Session;
-            if (Session.IsAAssistant)
-            {
-                string unread = UtilityTool.GetStringFromResources("MessageDetailPageNavUnread");
-                string read = UtilityTool.GetStringFromResources("MessageDetailPageNavRead");
-                string later = UtilityTool.GetStringFromResources("MessageDetailPageNavLater");
-                Navs.Add(new MessageNav { Tag = "Unread", Content = unread });
-                Navs.Add(new MessageNav { Tag = "Read", Content = read });
-                Navs.Add(new MessageNav { Tag = "Later", Content = later });
-            }
-            else
-            {
-                string message = UtilityTool.GetStringFromResources("MessageDetailPageNavMessage");
-                string file = UtilityTool.GetStringFromResources("MessageDetailPageNavFiles");
-                string pin = UtilityTool.GetStringFromResources("MessageDetailPageNavPinnedMessages");
-                Navs.Add(new MessageNav { Tag = "Message", Content = message });
-                Navs.Add(new MessageNav { Tag = "File", Content = file });
-                Navs.Add(new MessageNav { Tag = "Pin", Content = pin });
-            }
-            Nav = Navs.First();
         }
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -100,6 +81,26 @@ namespace Worktile.Message
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Session.IsAAssistant)
+            {
+                string unread = UtilityTool.GetStringFromResources("MessageDetailPageNavUnread");
+                string read = UtilityTool.GetStringFromResources("MessageDetailPageNavRead");
+                string later = UtilityTool.GetStringFromResources("MessageDetailPageNavLater");
+                Navs.Add(new MessageNav { Tag = "Unread", Content = unread });
+                Navs.Add(new MessageNav { Tag = "Read", Content = read });
+                Navs.Add(new MessageNav { Tag = "Later", Content = later });
+            }
+            else
+            {
+                string message = UtilityTool.GetStringFromResources("MessageDetailPageNavMessage");
+                string file = UtilityTool.GetStringFromResources("MessageDetailPageNavFiles");
+                string pin = UtilityTool.GetStringFromResources("MessageDetailPageNavPinnedMessages");
+                Navs.Add(new MessageNav { Tag = "Message", Content = message });
+                Navs.Add(new MessageNav { Tag = "File", Content = file });
+                Navs.Add(new MessageNav { Tag = "Pin", Content = pin });
+            }
+            SelectedNav = Navs.First();
+
             string url = $"api/messages/unread/clear?ref_id={Session.Id}";
             var obj = await WtHttpClient.PutAsync(url);
             if (obj.Value<int>("code") == 200)

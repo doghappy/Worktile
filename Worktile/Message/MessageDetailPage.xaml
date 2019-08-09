@@ -9,6 +9,8 @@
     xmlns:msgcvt="using:Worktile.Message.Converters"
     xmlns:models="using:Worktile.Message.Models"
     xmlns:tethys="using:Worktile.Tethys"
+    xmlns:controls="using:Worktile.Controls"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
@@ -19,47 +21,38 @@
         <msgcvt:IsGroupConverter x:Key="IsGroupConverter"/>
     </Page.Resources>
 
-    <NavigationView
-        Padding="{StaticResource Top32}"
-        PaneDisplayMode="Top"
-        IsSettingsVisible="False"
-        IsBackButtonVisible="Collapsed"
-        SelectionChanged="NavigationView_SelectionChanged"
-        MenuItemsSource="{x:Bind Navs}"
-        SelectedItem="{x:Bind Nav, Mode=TwoWay}">
-        <NavigationView.PaneHeader>
-            <StackPanel Orientation="Horizontal" Padding="12 0">
-                <!--<PersonPicture
-                    Width="32"
-                    HorizontalAlignment="Left"
-                    IsGroup="{x:Bind ViewModel.Session.Type, Converter={StaticResource IsGroupConverter}}"
-                    Initials="{x:Bind ViewModel.Session.DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                    ProfilePicture="{x:Bind ViewModel.Session.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
-                <tethys:Avatar
-                    Width="32"
-                    HorizontalAlignment="Left"
-                    DisplayName="{x:Bind Session.DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                    Background="{x:Bind Session.DisplayName, Converter={StaticResource AvatarBackgroundConverter}}"
-                    Source="{x:Bind Session.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
-                <TextBlock
-                    Margin="{StaticResource Left8}"
-                    Text="{x:Bind Session.DisplayName}"
-                    VerticalAlignment="Center"/>
-            </StackPanel>
-        </NavigationView.PaneHeader>
+    <Border BorderThickness="{StaticResource Top32}" BorderBrush="{ThemeResource NavigationViewTopPaneBackground}">
+        <NavigationView
+            PaneDisplayMode="Top"
+            IsSettingsVisible="False"
+            IsBackButtonVisible="Collapsed"
+            SelectionChanged="NavigationView_SelectionChanged"
+            MenuItemsSource="{x:Bind Navs}"
+            SelectedItem="{x:Bind SelectedNav, Mode=TwoWay}">
 
-        <NavigationView.MenuItemTemplate>
-            <DataTemplate x:DataType="models:MessageNav">
-                <NavigationViewItem Content="{x:Bind Content}" Tag="{x:Bind Tag}" />
-            </DataTemplate>
-        </NavigationView.MenuItemTemplate>
+            <NavigationView.PaneHeader>
+                <StackPanel Orientation="Horizontal" Padding="12 0">
+                    <controls:SessionAvatar Session="{x:Bind Session}" Width="32" Height="32"/>
+                    <TextBlock
+                        Margin="{StaticResource Left8}"
+                        Text="{x:Bind Session.DisplayName}"
+                        VerticalAlignment="Center"/>
+                </StackPanel>
+            </NavigationView.PaneHeader>
 
-        <Frame x:Name="ContentFrame">
-            <Frame.ContentTransitions>
-                <TransitionCollection>
-                    <NavigationThemeTransition/>
-                </TransitionCollection>
-            </Frame.ContentTransitions>
-        </Frame>
-    </NavigationView>
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate x:DataType="models:MessageNav">
+                    <NavigationViewItem Content="{x:Bind Content}" Tag="{x:Bind Tag}" />
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
+
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>
+    </Border>
 </Page>

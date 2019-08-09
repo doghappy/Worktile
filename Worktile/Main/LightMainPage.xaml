@@ -5,7 +5,6 @@
     xmlns:local="using:Worktile.Main"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:mtc="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:tethys="using:Worktile.Tethys"
     xmlns:cvt="using:Worktile.Converters"
     xmlns:models="using:Worktile.Main.Models"
@@ -34,6 +33,12 @@
         <cvt:ImageSourceConverter x:Key="ImageSourceConverter"/>
         <cvt:AvatarSourceConverter x:Key="AvatarSourceConverter"/>
     </Page.Resources>
+
+    <Page.Background>
+        <ImageBrush
+            ImageSource="{x:Bind WtBackgroundImage, Converter={StaticResource ImageSourceConverter}, Mode=OneWay}"
+            Stretch="UniformToFill"/>
+    </Page.Background>
 
     <Grid>
         <Grid.ColumnDefinitions>

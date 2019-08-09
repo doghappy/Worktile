@@ -39,7 +39,7 @@ namespace Worktile.Common
             var obj = JObject.FromObject(new
             {
                 fromType = WtMessage.FromType.User,
-                from = MainViewModel.Me.Id,
+                from = SharedData.Me.Id,
                 to,
                 toType,
                 messageType,

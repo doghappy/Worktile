@@ -4,7 +4,6 @@ using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Worktile.Main;
 using Worktile.Message.Dialogs;
 using Worktile.Models;
 using Worktile.Common;
@@ -153,6 +152,12 @@ namespace Worktile.Message
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ContentFrame.Navigate(typeof(MessageDetailPage), e.AddedItems[0]);
+        }
+
+        public void Highlight(Session session)
+        {
+            _selectedSession = session;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSession)));
         }
     }
 }

@@ -1,29 +1,24 @@
 ﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.Notifications;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using Worktile.Common;
 using Worktile.Main.Models;
 using Worktile.Message;
+using Worktile.Message.Models;
 using Worktile.Models;
 using Worktile.Models.Exceptions;
+using Worktile.Modles;
 using WtMessage = Worktile.Message.Models;
 
 namespace Worktile.Main
@@ -48,6 +43,14 @@ namespace Worktile.Main
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Fields
+        private string _imHost;
+        private string _imToken;
+        #endregion
+
+        #region Properties
+        public CoreWindowActivationState WindowActivationState { get; private set; }
 
         public ObservableCollection<WtApp> Apps { get; }
         public ObservableCollection<User> Members { get; }
@@ -143,18 +146,9 @@ namespace Worktile.Main
                 }
             }
         }
+        #endregion
 
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void GoBack_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-        }
-
+        #region Event Methods
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             string domain = ApplicationData.Current.LocalSettings.Values["Domain"]?.ToString();
@@ -168,22 +162,31 @@ namespace Worktile.Main
                 await RequestMeAsync();
                 await RequestChatsAsync();
                 SelectedApp = Apps.First();
+
+                Window.Current.Activated += Window_Activated;
+                WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
+                await WtSocketClient.ConnectAsync(_imHost, _imToken, Me.Id);
                 Parallel.Invoke(
-                    async () => await RequestTeamAsync()
+                    async () => await RequestTeamAsync()//,
+                    //async () => await WtSocketClient.ConnectAsync(_imHost, _imToken, Me.Id)
                 );
-                //try
-                //{
-                //    await ViewModel.RequestMeAsync();
-                //    await ViewModel.RequestTeamAsync();
-                //    await ViewModel.RequestChatsAsync();
-                //}
-                //catch (WtNotLoggedInException)
-                //{
-                //    ApplicationData.Current.LocalSettings.Values.Remove("Domain");
-                //    UtilityTool.RootFrame.Navigate(typeof(SignInPage));
-                //}
             }
         }
+        private void Window_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            WindowActivationState = e.WindowActivationState;
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void GoBack_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+        #endregion
 
         #region Request API
         private async Task RequestMeAsync()
@@ -196,8 +199,9 @@ namespace Worktile.Main
                 //{
                 SharedData.Box = data["config"]["box"].ToObject<StorageBox>();
                 Me = data["me"].ToObject<User>();
-                string imToken = data["me"].Value<string>("imToken");
-                string imHost = data["config"]["feed"].Value<string>("newHost");
+                SharedData.Me = Me;
+                _imToken = data["me"].Value<string>("imToken");
+                _imHost = data["config"]["feed"].Value<string>("newHost");
                 string img = data["me"]["preferences"].Value<string>("background_image");
                 if (img.StartsWith("desktop-") && img.EndsWith(".jpg"))
                 {
@@ -207,9 +211,6 @@ namespace Worktile.Main
                 {
                     WtBackgroundImage = SharedData.Box.BaseUrl + "background-image/" + img + "/from-s3";
                 }
-                //Window.Current.Activated += Window_Activated;
-                //WtSocketClient.OnMessageReceived += WtSocketClient_OnMessageReceived;
-                //await WtSocketClient.ConnectAsync(imHost, imToken, Me.Id);
                 //}));
             }
             else
@@ -260,41 +261,47 @@ namespace Worktile.Main
         }
         #endregion
 
+        #region Socket Messages
         private async void WtSocketClient_OnMessageReceived(JObject obj)
         {
-            //var msg = obj.ToObject<WtMessage.Message>();
-            //var session = Sessions.FirstOrDefault(s => s.Id == msg.To.Id);
-            //if (session == null)
-            //{
-            //    string url = $"api/{msg.To.Type.ToString().ToLower()}s/{msg.To.Id}";
-            //    var sessionObj = await WtHttpClient.GetAsync(url);
-            //    Session newSession = null;
-            //    if (msg.To.Type == WtMessage.ToType.Channel)
-            //        newSession = GetChannelSession(sessionObj);
-            //    else
-            //        newSession = GetMemberSession(sessionObj);
-            //    newSession.UnRead++;
-            //    newSession.LatestMessageAt = msg.CreatedAt;
-            //    int index = GetNewIndex(newSession);
-            //    await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Sessions.Insert(index, newSession)));
-            //}
-            //else if (SharedData.SelectedSession != session)
-            //{
-            //    int index = Sessions.IndexOf(session);
-            //    await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
-            //    {
-            //        session.LatestMessageAt = msg.CreatedAt;
-            //        session.UnRead++;
-            //        UnreadMessageCount++;
-            //        int newindex = GetNewIndex(session);
-            //        if (index != newindex)
-            //        {
-            //            Sessions.Move(index, newindex);
-            //            MessageViewModel.Highlight(session);
-            //        }
-            //    }));
-            //}
-            //SendToast(msg);
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var msg = obj.ToObject<WtMessage.Message>();
+                var session = Sessions.FirstOrDefault(s => s.Id == msg.To.Id);
+                if (session == null)
+                {
+                    string url = $"api/{msg.To.Type.ToString().ToLower()}s/{msg.To.Id}";
+                    var sessionObj = await WtHttpClient.GetAsync(url);
+                    Session newSession = null;
+                    if (msg.To.Type == WtMessage.ToType.Channel)
+                        newSession = GetChannelSession(sessionObj);
+                    else
+                        newSession = GetMemberSession(sessionObj);
+                    newSession.UnRead++;
+                    newSession.LatestMessageAt = msg.CreatedAt;
+                    int index = GetNewIndex(newSession);
+                    //await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Sessions.Insert(index, newSession)));
+                    Sessions.Insert(index, newSession);
+                }
+                else// if (SharedData.SelectedSession != session)
+                {
+                    var messagePage = ContentFrame.Content as MessagePage;
+                    if (messagePage != null && messagePage.SelectedSession != session)
+                    {
+                        int index = Sessions.IndexOf(session);
+                        session.LatestMessageAt = msg.CreatedAt;
+                        session.UnRead++;
+                        // UnreadMessageCount++;
+                        int newindex = GetNewIndex(session);
+                        if (index != newindex)
+                        {
+                            Sessions.Move(index, newindex);
+                            messagePage.Highlight(session);
+                        }
+                    }
+                }
+                SendToast(msg);
+            });
         }
 
         private Session GetChannelSession(JObject obj)
@@ -379,5 +386,86 @@ namespace Worktile.Main
             }
             return Sessions.Count - 1;
         }
+
+        private void SendToast(WtMessage.Message msg)
+        {
+            if (msg.From.Uid == Me.Id)
+            {
+                return;
+            }
+            else
+            {
+                if (ContentFrame.Content is MessagePage messagePage
+                    && messagePage.SelectedSession != null
+                    && messagePage.SelectedSession.Id == msg.To.Id
+                    && WindowActivationState == CoreWindowActivationState.Deactivated)
+                {
+                    return;
+                }
+            }
+            var member = Members.Single(m => m.Id == msg.From.Uid);
+            string avatar = "ms-appx:///Assets/StoreLogo.scale-400.png";
+            if (member.Avatar != string.Empty)
+            {
+                avatar = UtilityTool.GetAvatarUrl(member.Avatar, AvatarSize.X80, FromType.User);
+            }
+
+            var toastContent = new ToastContent()
+            {
+                DisplayTimestamp = msg.CreatedAt,
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText()
+                            {
+                                Text = member.DisplayName,
+                                HintMaxLines = 1
+                            },
+                            new AdaptiveText()
+                            {
+                                //Text = MessageContentReader.ReadSummary(apiMsg)
+                                Text = msg.Body.Content
+                            }
+                        },
+                        AppLogoOverride = new ToastGenericAppLogo()
+                        {
+                            Source = avatar,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        }
+                    }
+                }
+            };
+
+            if (msg.Body.At != null && msg.Body.At.Count == 1)
+            {
+                string quicklyReply = UtilityTool.GetStringFromResources("PleaseEnterMessageToReplyQuickly");
+                toastContent.Actions = new ToastActionsCustom()
+                {
+                    Inputs =
+                    {
+                        new ToastTextBox("msg")
+                        {
+                            PlaceholderContent = quicklyReply
+                        }
+                    },
+                    Buttons =
+                    {
+                        new ToastButton("Send", $"action=reply&toType={msg.To.Type}&to={msg.To.Id}")
+                        {
+                            ActivationType = ToastActivationType.Foreground,
+                            ImageUri = "Assets/Images/Icons/send.png",
+                            TextBoxId = "msg"
+                        }
+                    }
+                };
+                toastContent.Launch = "action=launch";
+            }
+            var toastNotif = new ToastNotification(toastContent.GetXml());
+            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+        }
+        #endregion
     }
 }

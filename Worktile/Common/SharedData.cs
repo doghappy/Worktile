@@ -41,6 +41,8 @@ namespace Worktile.Common
 
         public static StorageBox Box { get; set; }
 
+        public static User Me { get; set; }
+
         public static LightMainPage GetMainPage()
         {
             var rootFrame = Window.Current.Content as Frame;

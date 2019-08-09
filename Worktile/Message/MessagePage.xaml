@@ -158,7 +158,7 @@
                                         DisplayName="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
                                         Background="{x:Bind DisplayName, Converter={StaticResource AvatarBackgroundConverter}}"
                                         Source="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
-                                    <controls:SessionAvatar Session="{x:Bind}"/>
+                                    <controls:SessionAvatar Session="{x:Bind}" Width="32" Height="32"/>
 
                                     <TextBlock
                                         Grid.Column="1"

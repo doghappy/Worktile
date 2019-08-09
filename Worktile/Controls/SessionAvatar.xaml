@@ -23,7 +23,8 @@
         <tethys:Avatar
             x:Name="MemberAvatar"
             x:Load="{x:Bind Session.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Session'}"
-            Width="32"
+            Width="{x:Bind Width}"
+            Height="{x:Bind Height}"
             DisplayName="{x:Bind Session.DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
             Background="{x:Bind Session.DisplayName, Converter={StaticResource AvatarBackgroundConverter}}"
             Source="{x:Bind Session.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
@@ -31,7 +32,8 @@
         <tethys:Avatar
             x:Name="ChannelAvatar"
             x:Load="{x:Bind Session.Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Channel'}"
-            Width="32"
+            Width="{x:Bind Width}"
+            Height="{x:Bind Height}"
             Background="{x:Bind Session.Color}"
             Source="{x:Bind Session.Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
     </Grid>

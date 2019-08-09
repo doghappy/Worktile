@@ -16,34 +16,65 @@ using WtMessage = Worktile.Message.Models;
 using System.Linq;
 using Worktile.Main;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using Windows.Storage;
+using System.Collections.Generic;
+using Windows.Storage.AccessCache;
+using Windows.Web.Http;
 
 namespace Worktile.Message.Details
 {
-    public sealed partial class MessageListPage : Page
+    public sealed partial class MessageListPage : Page, INotifyPropertyChanged
     {
         public MessageListPage()
         {
             InitializeComponent();
-            ViewModel = new MessageListViewModel();
+            Messages = new ObservableCollection<WtMessage.Message>();
+            HasMore = true;
         }
 
-        public MessageListViewModel ViewModel { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ObservableCollection<WtMessage.Message> Messages { get; }
+
+        public bool HasMore { get; private set; }
+
+        public Session Session { get; private set; }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsActive)));
+                }
+            }
+        }
+
+        string _latestId = null;
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel.LoadMessagesAsync();
-            WtSocketClient.OnMessageReceived += ViewModel.OnMessageReceived;
-            MainViewModel.UnreadMessageCount -= ViewModel.Session.UnRead;
+            await LoadMessagesAsync();
+            WtSocketClient.OnMessageReceived += OnMessageReceived;
+            //MainViewModel.UnreadMessageCount -= ViewModel.Session.UnRead;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModel.Session = e.Parameter as Session;
+            Session = e.Parameter as Session;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            WtSocketClient.OnMessageReceived -= ViewModel.OnMessageReceived;
+            WtSocketClient.OnMessageReceived -= OnMessageReceived;
         }
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
@@ -60,7 +91,7 @@ namespace Worktile.Message.Details
             };
             picker.FileTypeFilter.Add("*");
             var files = await picker.PickMultipleFilesAsync();
-            await ViewModel.UploadFileAsync(files);
+            await UploadFileAsync(files);
         }
 
         private async void MsgTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -80,9 +111,33 @@ namespace Worktile.Message.Details
             }
         }
 
+        private async void OnMessageReceived(JObject obj)
+        {
+            var msg = obj.ToObject<WtMessage.Message>();
+            if (msg.To.Id == Session.Id)
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    msg.CompleteMessageFrom();
+                    Messages.Add(msg);
+                });
+                //await Task.Run(async () => await DispatcherHelper.ExecuteOnUIThreadAsync(() => Messages.Add(msg)));
+            }
+        }
+
         private async Task SendMessageAsync()
         {
-            await ViewModel.SendMessageAsync(MsgTextBox.Text);
+            string to = Session.Id;
+            WtMessage.ToType toType = WtMessage.ToType.Channel;
+            if (Session.Type == SessionType.Session)
+            {
+                toType = WtMessage.ToType.Session;
+            }
+            string message = MsgTextBox.Text.Trim();
+            if (message != string.Empty)
+            {
+                await WtSocketClient.SendMessageAsync(to, toType, message, WtMessage.MessageType.Text);
+            }
             MsgTextBox.Text = string.Empty;
         }
 
@@ -92,12 +147,12 @@ namespace Worktile.Message.Details
         {
             var scrollViewer = sender as ScrollViewer;
             long ticks = DateTime.Now.Ticks;
-            if (ViewModel.HasMore
+            if (HasMore
                 && scrollViewer.VerticalOffset <= 10
                 && (_ticks == 0 || new TimeSpan(ticks - _ticks).TotalSeconds > .5))
             {
                 _ticks = ticks;
-                await ViewModel.LoadMessagesAsync();
+                await LoadMessagesAsync();
             }
         }
 
@@ -105,14 +160,33 @@ namespace Worktile.Message.Details
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as WtMessage.Message;
-            await ViewModel.PinAsync(msg);
+            string idType = Session.Type == SessionType.Session ? "session_id" : "channel_id";
+            var req = new
+            {
+                type = 1,
+                message_id = msg.Id,
+                worktile = Session.Id
+            };
+            string json = JsonConvert.SerializeObject(req);
+            json = json.Replace("worktile", idType);
+            var obj = await WtHttpClient.PostAsync("api/pinneds", json);
+            if (obj.Value<int>("code") == 200)
+            {
+                msg.IsPinned = true;
+            }
         }
 
         private async void UnPin_Click(object sender, RoutedEventArgs e)
         {
             var flyoutItem = sender as MenuFlyoutItem;
             var msg = flyoutItem.DataContext as WtMessage.Message;
-            await ViewModel.UnPinAsync(msg);
+            string idType = Session.Type == SessionType.Session ? "session_id" : "channel_id";
+            string url = $"api/messages/{msg.Id}/unpinned?{idType}={Session.Id}";
+            var obj = await WtHttpClient.DeleteAsync(url);
+            if (obj.Value<int>("code") == 200 && obj.Value<bool>("data"))
+            {
+                msg.IsPinned = false;
+            }
         }
 
         private async void MessageControl_OnImageMessageClick(WtMessage.Message message)
@@ -120,7 +194,7 @@ namespace Worktile.Message.Details
             var data = new ImageViewerData
             {
                 SelectedItem = UtilityTool.GetS3FileUrl(message.Body.Attachment.Id),
-                ItemSource = ViewModel.Messages
+                ItemSource = Messages
                     .Where(m => m.Type == WtMessage.MessageType.Image)
                     .Select(m => UtilityTool.GetS3FileUrl(m.Body.Attachment.Id))
                     .ToList()
@@ -138,6 +212,50 @@ namespace Worktile.Message.Details
                 newViewId = ApplicationView.GetForCurrentView().Id;
             });
             await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+        }
+
+        private async Task LoadMessagesAsync()
+        {
+            if (HasMore)
+            {
+                IsActive = true;
+                string url = $"api/messages?ref_id={Session.Id}&ref_type={Session.RefType}&latest_id={_latestId}&size=20";
+                var obj = await WtHttpClient.GetAsync(url);
+                if (_latestId != null)
+                {
+                    HasMore = obj["data"].Value<bool>("more");
+                }
+                _latestId = obj["data"].Value<string>("latest_id");
+                var msgs = obj["data"]["messages"].Children<JObject>().OrderByDescending(g => g.Value<double>("created_at"));
+                foreach (var item in msgs)
+                {
+                    Messages.Insert(0, item.ToObject<WtMessage.Message>());
+                }
+                IsActive = false;
+            }
+        }
+
+        private async Task UploadFileAsync(IReadOnlyList<StorageFile> files)
+        {
+            if (files.Any())
+            {
+                string refType = Session.Type == SessionType.Session ? "2" : "1";
+                string url = $"{MainViewModel.Box.BaseUrl}/entities/upload?team_id={MainViewModel.TeamId}&ref_id={Session.Id}&ref_type={refType}";
+                foreach (var file in files)
+                {
+                    StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);
+                    using (var stream = await file.OpenReadAsync())
+                    {
+                        string fileName = file.DisplayName + file.FileType;
+                        var content = new HttpMultipartFormDataContent
+                        {
+                            { new HttpStringContent(fileName), "name" },
+                            { new HttpStreamContent(stream), "file", fileName }
+                        };
+                        await WtHttpClient.PostAsync(url, content);
+                    }
+                }
+            }
         }
     }
 }
