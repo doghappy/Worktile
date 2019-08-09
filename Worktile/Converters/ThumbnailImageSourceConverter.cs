@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
+using Worktile.Common;
 using Worktile.Main;
 
 namespace Worktile.Converters
@@ -11,7 +12,7 @@ namespace Worktile.Converters
         {
             if (value != null)
             {
-                string uri = $"{MainViewModel.Box.BaseUrl}/thumb/{value.ToString()}";
+                string uri = $"{SharedData.Box.BaseUrl}/thumb/{value.ToString()}";
                 return new BitmapImage
                 {
                     UriSource = new Uri(uri)

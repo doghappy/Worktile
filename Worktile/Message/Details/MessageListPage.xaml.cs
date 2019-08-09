@@ -64,7 +64,8 @@ namespace Worktile.Message.Details
         {
             await LoadMessagesAsync();
             WtSocketClient.OnMessageReceived += OnMessageReceived;
-            //MainViewModel.UnreadMessageCount -= ViewModel.Session.UnRead;
+            var mainPage = SharedData.GetMainPage();
+            mainPage.UnreadMessageCount -= Session.UnRead;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -240,7 +241,8 @@ namespace Worktile.Message.Details
             if (files.Any())
             {
                 string refType = Session.Type == SessionType.Session ? "2" : "1";
-                string url = $"{MainViewModel.Box.BaseUrl}/entities/upload?team_id={MainViewModel.TeamId}&ref_id={Session.Id}&ref_type={refType}";
+                var mainPage = SharedData.GetMainPage();
+                string url = $"{SharedData.Box.BaseUrl}/entities/upload?team_id={mainPage.Team.Id}&ref_id={Session.Id}&ref_type={refType}";
                 foreach (var file in files)
                 {
                     StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", file);

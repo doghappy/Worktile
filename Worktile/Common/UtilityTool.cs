@@ -17,7 +17,7 @@ namespace Worktile.Common
             return srcLoader.GetString(key);
         }
 
-        public static void ReloadPageTheme(ElementTheme startTheme, MainPage mainPage)
+        public static void ReloadPageTheme(ElementTheme startTheme, LightMainPage mainPage)
         {
             if (mainPage.RequestedTheme == ElementTheme.Dark)
                 mainPage.RequestedTheme = ElementTheme.Light;
@@ -34,17 +34,15 @@ namespace Worktile.Common
         {
             if (Window.Current.Content is Frame rootFrame)
             {
-                rootFrame.Navigate(typeof(MainPage));
+                rootFrame.Navigate(typeof(LightMainPage));
             }
         }
 
         public static Frame RootFrame => Window.Current.Content as Frame;
 
-        public static MainPage MainPage => RootFrame.Content as MainPage;
-
         public static string GetS3FileUrl(string id)
         {
-            return $"{MainViewModel.Box.BaseUrl}/entities/{id}/from-s3?team_id={MainViewModel.TeamId}";
+            return $"{SharedData.Box.BaseUrl}/entities/{id}/from-s3?team_id={MainViewModel.TeamId}";
         }
 
         public static string GetIdFromS3FileUrl(string uri)
@@ -73,11 +71,11 @@ namespace Worktile.Common
                             string ext = Path.GetExtension(avatar);
                             string name = Path.GetFileNameWithoutExtension(avatar);
                             string sizeStr = ((int)size).ToString();
-                            return MainViewModel.Box.AvatarUrl + name + "_" + sizeStr + "x" + sizeStr + ext;
+                            return SharedData.Box.AvatarUrl + name + "_" + sizeStr + "x" + sizeStr + ext;
                         }
                     case FromType.Service:
                     case FromType.Addition:
-                        return MainViewModel.Box.ServiceUrl + avatar;
+                        return SharedData.Box.ServiceUrl + avatar;
                     default: throw new NotImplementedException();
                 }
             }

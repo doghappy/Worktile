@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Data.Xml.Dom;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Notifications;
@@ -14,12 +15,14 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Worktile.Common;
 using Worktile.Main.Models;
+using Worktile.Main.Profile;
 using Worktile.Message;
 using Worktile.Message.Models;
 using Worktile.Models;
 using Worktile.Models.Exceptions;
 using Worktile.Modles;
 using WtMessage = Worktile.Message.Models;
+using Windows.UI.Xaml.Navigation;
 
 namespace Worktile.Main
 {
@@ -137,12 +140,21 @@ namespace Worktile.Main
                 {
                     _selectedApp = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedApp)));
-                    switch (value.Name)
-                    {
-                        case "message":
-                            ContentFrame.Navigate(typeof(MessagePage));
-                            break;
-                    }
+                }
+            }
+        }
+
+        private int _unreadMessageCount;
+        public int UnreadMessageCount
+        {
+            get => _unreadMessageCount;
+            set
+            {
+                if (_unreadMessageCount != value || value == 0)
+                {
+                    _unreadMessageCount = value;
+                    Apps[0].UnreadCount = value;
+                    UpdateBadgeNumber(value);
                 }
             }
         }
@@ -177,14 +189,41 @@ namespace Worktile.Main
             WindowActivationState = e.WindowActivationState;
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AppsNav_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            switch (SelectedApp.Name)
+            {
+                case "message":
+                    ContentFrame.Navigate(typeof(MessagePage));
+                    break;
+            }
         }
 
         private void GoBack_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            ContentFrame.GoBack();
+        }
 
+        private void SettingsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            AppsNav.SelectionChanged -= AppsNav_SelectionChanged;
+            SelectedApp = null;
+            ContentFrame.Navigate(typeof(SettingPage));
+            AppsNav.SelectionChanged += AppsNav_SelectionChanged;
+        }
+
+        private void ProfileMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            AppsNav.SelectionChanged -= AppsNav_SelectionChanged;
+            SelectedApp = null;
+            ContentFrame.Navigate(typeof(AccountInfoPage));
+            AppsNav.SelectionChanged += AppsNav_SelectionChanged;
+        }
+
+        private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            var frame = sender as Frame;
+            CanGoBack = frame.CanGoBack;
         }
         #endregion
 
@@ -257,7 +296,7 @@ namespace Worktile.Main
                 int index = GetNewIndex(session);
                 Sessions.Insert(index, session);
             }
-            //UnreadMessageCount = Sessions.Sum(s => s.UnRead);
+            UnreadMessageCount = Sessions.Sum(s => s.UnRead);
         }
         #endregion
 
@@ -291,7 +330,7 @@ namespace Worktile.Main
                         int index = Sessions.IndexOf(session);
                         session.LatestMessageAt = msg.CreatedAt;
                         session.UnRead++;
-                        // UnreadMessageCount++;
+                        UnreadMessageCount++;
                         int newindex = GetNewIndex(session);
                         if (index != newindex)
                         {
@@ -465,6 +504,23 @@ namespace Worktile.Main
             }
             var toastNotif = new ToastNotification(toastContent.GetXml());
             ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+        }
+
+        private void UpdateBadgeNumber(int count)
+        {
+            if (count > 0)
+            {
+                XmlDocument badgeXml = BadgeUpdateManager.GetTemplateContent(BadgeTemplateType.BadgeNumber);
+                XmlElement badgeElement = badgeXml.SelectSingleNode("/badge") as XmlElement;
+                badgeElement.SetAttribute("value", count.ToString());
+                BadgeNotification badge = new BadgeNotification(badgeXml);
+                BadgeUpdater badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication();
+                badgeUpdater.Update(badge);
+            }
+            else
+            {
+                BadgeUpdateManager.CreateBadgeUpdaterForApplication().Clear();
+            }
         }
         #endregion
     }

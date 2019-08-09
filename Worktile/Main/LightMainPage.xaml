@@ -9,6 +9,7 @@
     xmlns:cvt="using:Worktile.Converters"
     xmlns:models="using:Worktile.Main.Models"
     mc:Ignorable="d"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     Loaded="Page_Loaded">
 
     <Page.Resources>
@@ -32,6 +33,7 @@
         <cvt:AvatarBackgroundConverter x:Key="AvatarBackgroundConverter"/>
         <cvt:ImageSourceConverter x:Key="ImageSourceConverter"/>
         <cvt:AvatarSourceConverter x:Key="AvatarSourceConverter"/>
+        <cvt:EqualBooleanConverter x:Key="EqualBooleanConverter"/>
     </Page.Resources>
 
     <Page.Background>
@@ -56,8 +58,9 @@
             <Image Width="50" Height="50" Margin="0 0 0 16" Source="{x:Bind Logo, Mode=OneWay, Converter={StaticResource ImageSourceConverter}}"/>
 
             <ListView
+                x:Name="AppsNav"
                 Grid.Row="1"
-                SelectionChanged="ListView_SelectionChanged"
+                SelectionChanged="AppsNav_SelectionChanged"
                 ItemsSource="{x:Bind Apps}"
                 SelectedItem="{x:Bind SelectedApp, Mode=TwoWay}"
                 ItemContainerStyle="{StaticResource WtAppListViewItem}">
@@ -79,63 +82,56 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:WtApp">
-                        <StackPanel x:Name="AppIconGroup" VerticalAlignment="Center">
-                            <!--<FontIcon Glyph="&#xe618;" Style="{StaticResource WtAppIcon}"/>
-                            <TextBlock x:Name="AppIcon2" Text="Message" Style="{StaticResource WtAppLabel}"/>-->
-                            <FontIcon Glyph="{x:Bind Icon}" Style="{StaticResource WtAppIcon}"/>
-                            <TextBlock Text="{x:Bind DisplayName}" Style="{StaticResource WtAppLabel}"/>
-                        </StackPanel>
+                        <Grid>
+                            <StackPanel x:Name="AppIconGroup" VerticalAlignment="Center">
+                                <FontIcon Glyph="{x:Bind Icon}" Style="{StaticResource WtAppIcon}"/>
+                                <TextBlock Text="{x:Bind DisplayName}" Style="{StaticResource WtAppLabel}"/>
+                            </StackPanel>
+                            <tethys:Badge
+                                x:Name="MessageBadge"
+                                Number="{x:Bind UnreadCount, Mode=OneWay}"
+                                Margin="0 12 12 0"
+                                x:Load="{x:Bind Name, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=message}"/>
+                        </Grid>
                     </DataTemplate>
-
-                    <!--<tethys:Badge x:Name="MessageBadge" Number="{x:Bind UnreadCount, Mode=OneWay}" Margin="0 12 12 0" x:Load="{x:Bind Name, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=message}"/>-->
-                    <!--<DataTemplate x:DataType="models:WtApp">
-                        <ListViewItem PointerEntered="ListViewItem_PointerEntered" PointerExited="ListViewItem_PointerExited">
-                            <UserControl x:Name="AppItem">
-                                <Grid>
-                                    <VisualStateManager.VisualStateGroups>
-                                        <VisualStateGroup>
-                                            <VisualState x:Name="Normal"/>
-                                            <VisualState x:Name="PointOver">
-                                                <VisualState.Setters>
-                                                    <Setter Target="AppIcon.Visibility" Value="Collapsed"/>
-                                                    <Setter Target="AppIconGroup.Visibility" Value="Visible"/>
-                                                </VisualState.Setters>
-                                            </VisualState>
-                                            <VisualState x:Name="Pressed">
-                                                <VisualState.Setters>
-                                                    <Setter Target="AppIcon.Visibility" Value="Collapsed"/>
-                                                    <Setter Target="AppIconGroup.Visibility" Value="Visible"/>
-                                                    <Setter Target="AppIcon2.Visibility" Value="Collapsed"/>
-                                                </VisualState.Setters>
-                                            </VisualState>
-                                        </VisualStateGroup>
-                                    </VisualStateManager.VisualStateGroups>
-                                    <FontIcon x:Name="AppIcon" Glyph="{x:Bind Icon}" Style="{StaticResource WtAppIcon}"/>
-                                    <StackPanel x:Name="AppIconGroup" Visibility="Collapsed" VerticalAlignment="Center">
-                                        <FontIcon Glyph="{x:Bind Icon2}" Style="{StaticResource WtAppIcon}"/>
-                                        <TextBlock x:Name="AppIcon2" Text="{x:Bind DisplayName}" Style="{StaticResource WtAppLabel}"/>
-                                    </StackPanel>
-
-                                    <tethys:Badge x:Name="MessageBadge" Number="{x:Bind UnreadCount, Mode=OneWay}" Margin="0 12 12 0" x:Load="{x:Bind Name, Converter={StaticResource EqualBooleanConverter}, ConverterParameter=message}"/>
-                                </Grid>
-                            </UserControl>
-                        </ListViewItem>
-                    </DataTemplate>-->
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button Grid.Row="2" Margin="0 16" Padding="0" Width="52" Height="52" CornerRadius="52" HorizontalAlignment="Center">
+            <Button
+                Grid.Row="2"
+                Margin="0 16"
+                Padding="0"
+                CornerRadius="50"
+                HorizontalAlignment="Center"
+                extensions:Mouse.Cursor="Hand"
+                BorderThickness="0">
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            x:Uid="MainPageLeftNavAvatarSettingsMenuFlyoutItem"
+                            Click="SettingsMenuFlyoutItem_Click">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Setting"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
+                            x:Uid="MainPageLeftNavAvatarProfileMenuFlyoutItem"
+                            Click="ProfileMenuFlyoutItem_Click">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xEF58;"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
                 <tethys:Avatar
-                    Width="48" Height="48"
+                    Width="50" Height="50"
                     DisplayName="{x:Bind Me.DisplayName, Mode=OneWay}"
                     Background="{x:Bind Me.DisplayName, Mode=OneWay, Converter={StaticResource AvatarBackgroundConverter}}"
                     Source="{x:Bind Me.Avatar, Mode=OneWay, Converter={StaticResource AvatarSourceConverter}}"/>
             </Button>
-            <!--<mtc:ImageEx Grid.Row="2" CornerRadius="52" Width="52" Height="52" Source="/Assets/StoreLogo.scale-100.png" />
-            <Image Grid.Row="2" Width="52" Height="52" cor Margin="0 16" Source="/Assets/StoreLogo.scale-100.png"/>-->
         </Grid>
 
-        <Frame Grid.Column="1" x:Name="ContentFrame">
+        <Frame Grid.Column="1" x:Name="ContentFrame" Navigated="ContentFrame_Navigated">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>

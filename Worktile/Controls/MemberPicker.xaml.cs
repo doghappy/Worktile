@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Worktile.Common;
 using Worktile.Main;
 using Worktile.Models;
 
@@ -78,7 +79,8 @@ namespace Worktile.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (var item in MainViewModel.Members)
+            var mainPage = SharedData.GetMainPage();
+            foreach (var item in mainPage.Members)
             {
                 if (item.Role != UserRoleType.Bot)
                 {

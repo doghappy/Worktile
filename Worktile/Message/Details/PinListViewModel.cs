@@ -7,6 +7,7 @@ using Microsoft.Toolkit.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Microsoft.Toolkit.Uwp;
+using System;
 
 namespace Worktile.Message.Details
 {

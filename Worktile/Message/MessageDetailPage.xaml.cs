@@ -105,7 +105,8 @@ namespace Worktile.Message
             var obj = await WtHttpClient.PutAsync(url);
             if (obj.Value<int>("code") == 200)
             {
-                //MainViewModel.UnreadMessageCount -= Session.UnRead;
+                var mainPage = SharedData.GetMainPage();
+                mainPage.UnreadMessageCount -= Session.UnRead;
                 Session.UnRead = 0;
             }
         }

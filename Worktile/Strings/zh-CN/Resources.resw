@@ -153,6 +153,12 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>浅色</value>
   </data>
+  <data name="MainPageLeftNavAvatarProfileMenuFlyoutItem.Text" xml:space="preserve">
+    <value>个人资料</value>
+  </data>
+  <data name="MainPageLeftNavAvatarSettingsMenuFlyoutItem.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
   <data name="MessageControlPinMenuFlyoutItem.Text" xml:space="preserve">
     <value>固定</value>
   </data>

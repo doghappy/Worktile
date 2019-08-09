@@ -46,7 +46,6 @@ namespace Worktile.Message
                 {
                     _selectedSession = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSession)));
-                    //ContentFrame.Navigate(typeof(MessageDetailPage), value);
                 }
             }
         }
@@ -69,7 +68,10 @@ namespace Worktile.Message
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             var mainPage = SharedData.GetMainPage();
-            Sessions = mainPage.Sessions;
+            if (mainPage != null)
+            {
+                Sessions = mainPage.Sessions;
+            }
         }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)

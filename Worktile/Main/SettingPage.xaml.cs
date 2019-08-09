@@ -29,7 +29,8 @@ namespace Worktile.Main
         private void Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var theme = e.AddedItems[0] as Models.Theme;
-            UtilityTool.ReloadPageTheme(theme.Value, UtilityTool.MainPage);
+            var mainPage = SharedData.GetMainPage();
+            UtilityTool.ReloadPageTheme(theme.Value, mainPage);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -64,7 +65,8 @@ namespace Worktile.Main
         {
             foreach (var item in ViewModel.Themes)
             {
-                if (item.Value == UtilityTool.MainPage.RequestedTheme)
+                var mainPage = SharedData.GetMainPage();
+                if (item.Value == mainPage.RequestedTheme)
                 {
                     ViewModel.SelectedTheme = item;
                     ThemeComboBox.SelectionChanged += Theme_SelectionChanged;

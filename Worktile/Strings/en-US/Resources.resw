@@ -153,6 +153,12 @@
   <data name="LightThemeDisplayName" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="MainPageLeftNavAvatarProfileMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="MainPageLeftNavAvatarSettingsMenuFlyoutItem.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="MessageControlPinMenuFlyoutItem.Text" xml:space="preserve">
     <value>Pin</value>
   </data>

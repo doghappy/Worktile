@@ -136,28 +136,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-
-                                    <!--<PersonPicture
-                                        Width="32"
-                                        IsGroup="{x:Bind Type, Converter={StaticResource IsGroupConverter}}"
-                                        Initials="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                                        ProfilePicture="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
-
-                                    <!--<tethys:Avatar
-                                        x:Name="SessionAvatar"
-                                        x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Session'}"
-                                        Width="32"
-                                        DisplayName="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                                        Background="{x:Bind DisplayName, Converter={StaticResource AvatarBackgroundConverter}}"
-                                        Source="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>
-
-                                    <tethys:Avatar
-                                        x:Name="ChannelAvatar"
-                                        x:Load="{x:Bind Type, Converter={StaticResource EqualBooleanConverter}, ConverterParameter='Channel'}"
-                                        Width="32"
-                                        DisplayName="{x:Bind DisplayName, Converter={StaticResource AvatarInitialsConverter}}"
-                                        Background="{x:Bind DisplayName, Converter={StaticResource AvatarBackgroundConverter}}"
-                                        Source="{x:Bind Avatar, Converter={StaticResource AvatarSourceConverter}}"/>-->
+                                    
                                     <controls:SessionAvatar Session="{x:Bind}" Width="32" Height="32"/>
 
                                     <TextBlock
@@ -165,10 +144,7 @@
                                         Style="{StaticResource DisplayNameTextBlock}"
                                         Text="{x:Bind DisplayName}"/>
 
-                                    <TextBlock
-                                        Grid.Column="2"
-                                        Visibility="{x:Bind UnRead, Converter={StaticResource UnReadVisibilityConverter}, Mode=OneWay}"
-                                        Text="{x:Bind UnRead, Mode=OneWay}"/>
+                                    <tethys:Badge Grid.Column="1" Number="{x:Bind UnRead, Mode=OneWay}"/>
                                 </Grid>
 
                                 <Polygon
